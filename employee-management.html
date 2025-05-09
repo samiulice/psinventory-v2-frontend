@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Manage Employee</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+  <script src="src/assets/js/app.js"></script>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <!-- Content Title -->
+        <h2 class="text-center tale fa-2x">Employee Management</h2>
+        <!-- Page content here -->
+        <div class="col-lg-2 col-md-2 col-sm-0 col-xs-0"></div>
+        <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+          <div class="x_panel">
+            <div class="x_content">
+              <div class="x_title">
+                <div class="pull-right">
+                  <form action="#" id="search-account">
+                    <div class="custom-search">
+                      <input type="text" class="custom-search-input" id="search-input"
+                        placeholder="Mobile number or Account Code" required autocomplete="off">
+                      <button class="custom-search-botton" type="submit" id="search-btn">Search</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+
+              <form action="#" id="employee_details">
+                <!-- id -->
+                <input type="hidden" name="account_id" id="account_id">
+                <!-- Account Code -->
+
+                <div class="col-md-6 col-sm-6 col-xs-6 form-group has-feedback">
+                  <label for="account_code">Account Code:</label>
+                  <input type="text" class="form-control has-feedback-left input-sm" id="account_code"
+                    name="account_code" placeholder="Account Code" disabled autocomplete="off">
+                  <span style="color: rgba(0, 0, 0, 1);"
+                    class="form-control-feedback left glyphicon glyphicon-tag input-sm-feedback"
+                    aria-hidden="true"></span>
+                </div>
+
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                  <label for="account_status">Account Status:</label>
+                  <div class="toggle-wrapper" style="transform: translate(0,-5px);">
+                    <input type="radio" id="status_active" name="status" checked>
+                    <label class="label-xl" for="status_active">Active</label>
+                    <input type="radio" id="status_inactive" name="status">
+                    <label class="label-xl" for="status_inactive">Inactive</label>
+                  </div>
+                </div>
+
+                <!-- Account Name -->
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                  <label for="name">Account Name * :</label>
+                  <input type="text" class="form-control has-feedback-left" id="account_name" name="account_name"
+                    placeholder="Account Name" required autocomplete="off">
+                  <span style="color: rgba(0, 0, 0, 1);" class="form-control-feedback left glyphicon glyphicon-user"
+                    aria-hidden="true"></span>
+                </div>
+                <!-- Contact Person Namen -->
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                  <label for="cp_name">Contact Person Name:</label>
+                  <input type="text" class="form-control has-feedback-left" id="cp_name" name="cp_name"
+                    placeholder="Enter name" autocomplete="off">
+                  <span style="color: rgba(0, 0, 0, 1);" class="form-control-feedback left glyphicon glyphicon-user"
+                    aria-hidden="true"></span>
+                </div>
+                <!-- Address -->
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                  <label for="address">Address * :</label>
+                  <input type="text" class="form-control has-feedback-left" id="area" name="area" placeholder="Address"
+                    autocomplete="off">
+                  <span style="color: rgba(0, 0, 0, 1);" class="form-control-feedback left glyphicon glyphicon-home"
+                    aria-hidden="true"></span>
+                </div>
+                <!-- Mobile Numbers -->
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                  <label for="mobile">Mobile * :</label>
+                  <input type="text" class="form-control has-feedback-left" id="mobile" name="mobile"
+                    placeholder="Comma-separated multiple mobile numbers" required autocomplete="off">
+                  <span style="color: rgba(0, 0, 0, 0.75);"
+                    class="form-control-feedback left glyphicon glyphicon-earphone" aria-hidden="true"></span>
+                </div>
+                <!-- Email Address -->
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                  <label for="email">Email:</label>
+                  <input type="text" class="form-control has-feedback-left" id="email" name="email"
+                    placeholder="Email Address" autocomplete="off">
+                  <span style="color: rgba(0, 0, 0, 0.75);"
+                    class="form-control-feedback left glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                </div>
+                <!-- Monthly Salary -->
+                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
+                  <label for="monthly_salary">Monthly Salary:</label>
+                  <input type="number" class="form-control has-feedback-left" id="monthly_salary" name="monthly_salary"
+                    placeholder="Monthly Salary" autocomplete="off">
+                  <span style="color: rgba(0, 0, 0, 0.75);" class="form-control-feedback left glyphicon glyphicon-gift"
+                    aria-hidden="true"></span>
+                </div>
+                <div class="row text-center">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <button type="submit" id="submitBtn" class="btn btn-sm btn-danger" style="margin-top: 10px;">Save
+                      Changes</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div> <!-- /page content -->
+  </div> <!-- /page content -->
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
+  <script>
+
+    window.addEventListener("DOMContentLoaded", event => {
+      // Search account by mobile or account code
+      document.getElementById("search-account").addEventListener("submit", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        let text = document.getElementById("search-input").value
+        if (text.trim() === "") {
+          Swal.fire({
+            title: "Enter Mobile Number or Account code",
+            icon: "error"
+          });
+          return
+        }
+        document.getElementById("search-btn").classList.add("d-none");
+
+        const requestOptions = {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            search_parameter: text
+          }),
+        }
+        console.log(text)
+        fetch('https://psinventory-v2.onrender.com/admin/hr/employee/search', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log("resp : ", data)
+            if (data.error === true) {
+              Swal.fire({
+                title: "Account Not Found",
+                text: "Please enter valid account code and mobile",
+                icon: "question",
+                width:350,
+              });
+              document.getElementById("search-btn").classList.remove("d-none");
+            } else {
+              updateFields(data.employee_account);
+              document.getElementById("search-btn").classList.remove("d-none");
+            }
+          })
+      })
+      document.getElementById("employee_details").addEventListener("submit", event => {
+        event.preventDefault();
+        event.stopPropagation();
+
+        let btn = document.getElementById("submitBtn")
+        // Disable button during save
+        btn.disabled = true;
+        btn.innerHTML = 'Saving <i class="fa fa-spinner fa-spin"></i>';
+        let requestBody = {
+          id: parseInt(document.getElementById("account_id").value),
+          account_name: document.getElementById("account_name").value,
+          contact_person: document.getElementById("cp_name").value,
+          area: document.getElementById("area").value,
+          mobile: document.getElementById("mobile").value,
+          email: document.getElementById("email").value,
+          account_status: document.getElementById("status_active").checked,
+          monthly_salary: parseInt(document.getElementById("monthly_salary").value),
+        }
+        const requestOptions = {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        }
+        console.log(requestBody)
+        fetch('https://psinventory-v2.onrender.com/admin/hr/employee/update', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log("resp : ", data)
+            if (data.error === true) {
+              showErrorMessage(data.message)
+            } else {
+              setTimeout(() => {
+                btn.innerHTML = 'Saved';
+                btn.disabled = false;
+              }, 3000);
+              setTimeout(() => {
+                btn.innerHTML = 'Save';
+                btn.disabled = false;
+                document.getElementById("employee_details").reset();
+              }, 5000);
+            }
+          })
+      })
+    })
+
+    function updateFields(employee) {
+      document.getElementById("account_id").value = employee.id
+      document.getElementById("account_name").value = employee.account_name
+      document.getElementById("account_code").value = employee.account_code
+      document.getElementById("cp_name").value = employee.contact_person
+      document.getElementById("area").value = employee.area
+      document.getElementById("mobile").value = employee.mobile
+      document.getElementById("email").value = employee.email
+      document.getElementById("status_active").checked = employee.account_status
+      document.getElementById("status_inactive").checked = !employee.account_status
+      document.getElementById("monthly_salary").value = employee.monthly_salary
+    }
+  </script>
+</body>
+
+</html>

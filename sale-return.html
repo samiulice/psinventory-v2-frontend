@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Sale Return</title>
+
+    <!-- Bootstrap -->
+    <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <!-- bootstrap-progressbar -->
+    <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+    <!-- bootstrap-daterangepicker -->
+    <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="src/assets/css/custom.min.css" rel="stylesheet">
+    <link href="src/assets/css/invoice_1_Style.css" rel="stylesheet">
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col menu_fixed">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Welcome,</span>
+                            <h2 id="profile-name"></h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <ul class="nav side-menu">
+                                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="index.html">Dashboard</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="customer-list.html">Customer List</a></li>
+                                        <li><a href="supplier-list.html">Supplier List</a></li>
+                                        <li><a href="employee-list.html">Employee List</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-table"></i> Inventory <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="sale.html">Sale</a></li>
+                                        <li><a href="sale-return.html">Sale Return</a></li>
+                                        <li><a href="purchase.html">Purchase</a></li>
+                                        <li><a href="purchase-return.html">Purchase Return</a></li>
+                                        <li><a href="warranty.html">Warranty</a></li>
+                                        <li><a href="service.html">Service</a></li>
+                                        <li><a href="memo-list.html">Memo List</a></li>
+                                        <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="receive-collection.html">Receive & Collection</a></li>
+                                        <li><a href="payment.html">Payment</a></li>
+                                        <li><a href="expenses.html">Expenses</a></li>
+                                        <li><a href="investment.html">Investment</a></li>
+                                    </ul>
+                                </li>
+                                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                                        <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                                        <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                                        <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                                        <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                                        <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                                        <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                                    </ul>
+                                </li>
+
+                                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span
+                                            class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li class="sub_menu"><a href="transaction-history.html">Transaction History</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                                        <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                                        <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                                        <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                                        <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+
+                    <!-- /menu footer buttons -->
+                    <div class="sidebar-footer hidden-small">
+                        <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+                            <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Relaunch"
+                            onclick="window.runtime.WindowReloadApp()">
+                            <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+                            <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                        </a>
+                        <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+                            <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+            <!-- page content -->
+            <div id="page-content" class="right_col" role="main">
+                <!-- Content Title -->
+                <h2 class="text-center text-warning fa-2x"><label>SALE RETURN</label></h2>
+                <!-- Page content here -->
+                <form action="#" id="salesReturnForm">
+                    <!-- Sale Details Secetion  -->
+                    <div class="x_panel ">
+                        <div class="x_content">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <!-- Date -->
+                                    <div class="row form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <label for="return_date">Date * :</label>
+                                            <input type="text" class="form-control has-feedback-left" id="return_date"
+                                                placeholder="Select date" aria-describedby="inputSuccess2Status4"
+                                                required>
+                                            <i style="color: rgba(0, 0, 0, 1);"
+                                                class="fa fa-calendar form-control-feedback left"
+                                                aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <!-- Customer Account -->
+                                    <div class="row form-group has-feedback">
+                                        <div class="col-md-10 col-sm-8 col-xs-9">
+                                            <label for="customer">Customer * :</label>
+                                            <select id="customer"
+                                                class="form-control form-select has-feedback-left input-sm" required>
+                                                <!--Updated by JS DOM -->
+                                            </select>
+                                            <span style="color: rgba(0, 0, 0, 1);"
+                                                class="form-control-feedback left glyphicon glyphicon-user input-sm-feedback"
+                                                aria-hidden="true"></span>
+                                        </div>
+                                        <div style="margin-top: 24px;">
+                                            <button type="button" class="btn btn-sm btn-primary pull-left"
+                                                id="searchCustomerBtn">
+                                                <i class="fa fa-search"></i>&nbsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- Memo No. -->
+                                    <div class="row form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <label for="memo">Memo No. * :</label>
+                                            <select id="memo" class="form-control form-select has-feedback-left"
+                                                required>
+                                                <option value="" selected disabled>Select Memo No</option>
+                                                <!--Updated by JS DOM -->
+                                            </select>
+                                            <span style="color: rgba(0, 0, 0, 1);"
+                                                class="form-control-feedback left glyphicon glyphicon-list"
+                                                aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                    <div class="row form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <label for="total_return_items">Customer Due Amount</label>
+                                            <input type="text" class="form-control has-feedback-left"
+                                                id="customer_due_amount" placeholder="00" value="0" disabled>
+                                            <i style="color: rgba(0, 0, 0, 1);"
+                                                class="fa fa-money form-control-feedback left" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <label for="total_return_items">Total Return Items :</label>
+                                            <input type="text" class="form-control has-feedback-left"
+                                                id="total_return_items" placeholder="00" value="0" disabled>
+                                            <i style="color: rgba(0, 0, 0, 1);"
+                                                class="fa fa-money form-control-feedback left" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                    <div class="row form-group has-feedback">
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <label for="total_return_values">Total Return Values :</label>
+                                            <input type="text" class="form-control has-feedback-left"
+                                                id="total_return_values" value="0" placeholder="00" disabled>
+                                            <i style="color: rgba(0, 0, 0, 1);"
+                                                class="fa fa-money form-control-feedback left" aria-hidden="true"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row form-group text-center">
+                                <br>
+                                <button type="submit" id="submitBtn" class="btn btn-danger">Complete Sale
+                                    Return</button>
+                                <button class="btn btn-warning d-none" type="button" id="invoiceBtn"
+                                    onclick="printSaleReturnInvoice()">Print
+                                    Invoice</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Product Code Section -->
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="x_panel ">
+                                        <div class="x_title">
+                                            <h2>Returned Product list</h2>
+                                            <div class="clearfix"></div>
+                                        </div>
+                                        <div class="x_content">
+
+                                            <section class="content invoice">
+                                                <!-- Table row -->
+                                                <div class="row">
+                                                    <div class="col-xs-12 table">
+                                                        <table class="table table-striped bulk_action">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>No.</th>
+                                                                    <th>Product Code</th>
+                                                                    <th>Product Name</th>
+                                                                    <th>Category</th>
+                                                                    <th>Brand</th>
+                                                                    <th>Qty</th>
+                                                                    <th>Sale Date</th>
+                                                                    <th class="text-center" style="width: 33%">Serial #
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="product-list-container">
+                                                                <!-- DOM JS -->
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!-- /.col -->
+                                                </div>
+                                            </section>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!-- /page content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+    <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="src/assets/js/custom.js"></script>
+    <script src="src/assets/js/app.js"></script>
+    <script src="src/assets/js/swal-popup-form.js"></script>
+    <script src="src/assets/js/invoice.js"></script>
+
+    <!-- sweetalert2 script -->
+    <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
+    <script>
+        let customers = [], products = [], salesHistory, customerDiv, memoDiv, productListContainer;
+        let returnedID = [], total_returned_values = 0, total_returned_items = 0, InvoiceData, company;
+        window.addEventListener("DOMContentLoaded", e => {
+            initSingleDatePicker("#return_date")
+            customerDiv = document.getElementById("customer");
+            memoDiv = document.getElementById("memo");
+            productListContainer = document.getElementById("product-list-container");
+            //Start fetch-1: On loading window, fetch customer list and populate customer dropdown
+            let requestOptions = {
+                method: "post"
+            }
+            fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/active', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    customers = data.customers
+                    if (data.error === true) {
+                        document.getElementById("page-content").innerHTML = `
+                            <h4 class="text-info">Please contact to the app provider</h4>
+                            <br>
+                            <h4 class="text-danger">${data.message}</h4>`
+                    } else {
+                        customerDiv.innerHTML = '';
+                        if (customers) {
+                            customers.forEach((c, i) => {
+                                customerDiv.innerHTML += `<option value="${i}">${c.account_name}(${c.account_code})</option>`
+                            });
+                            customerDiv.selectedIndex = 0;
+                            updateMemoList(0);
+                        }
+                    }
+                })
+            document.getElementById("searchCustomerBtn").addEventListener("click", e => {
+                SearchCustomerByMobile("sale-return", customers);
+            });
+            //End fetch-1
+            //Start fetch-2: on changing customer, fetch associated memo list for the customer and populate memo dropdown 
+            customerDiv.addEventListener('change', e => {
+                updateMemoList(parseInt(customerDiv.value))
+            })
+
+        })
+        function updateMemoList(customerIndex) {
+            //refresh UI
+            refreshContent()
+            document.getElementById("customer_due_amount").value = customers[customerIndex].due_amount
+
+            let customerID = {
+                customer_id: customers[customerIndex].id
+            }
+            const requestOptions = {
+                method: 'post',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                body: JSON.stringify(customerID)
+            }
+            fetch('https://psinventory-v2.onrender.com/admin/inventory/customer/memos', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Memo: ", data)
+                    let memoDiv = document.getElementById("memo")
+                    if (data.error === true) {
+                        document.getElementById("page-content").innerHTML = `
+                            <h4 class="text-info">Please contact to the app provider</h4>
+                            <br>
+                            <h4 class="text-danger">${data.message}</h4>`
+                    } else if (data.message.includes("No Memo Available")) {
+                        memoDiv.innerHTML = '<option value="" selected disabled>No memo available for this supplier</option>'
+                    } else {
+                        memoDiv.innerHTML = '<option value="" selected disabled>No memo available for this supplier</option>'
+                        if (data.sales) {
+                            memoDiv.innerHTML = '<option value="" selected disabled>Select Memo No</option>'
+                            data.sales.forEach(m => {
+                                memoDiv.innerHTML += `<option style="color: rgba(0, 0, 0, 1); font-weight: bold;" value="${m.id}">${m.memo_no}</option>`
+                            })
+                        }
+                    }
+                })
+
+            // on changing memo, fetch associated products details with serial number list for the memo and populate product list dropdown 
+            memoDiv.addEventListener('change', e => {
+                //refresh UI
+                refreshContent()
+                let memoBody = {
+                    sales_history_id: parseInt(memoDiv.value)
+                }
+                const requestOptions = {
+                    method: "post",
+                    'Accept': "application/json",
+                    'Content-Type': "application/json",
+                    body: JSON.stringify(memoBody)
+                }
+                fetch('https://psinventory-v2.onrender.com/admin/inventory/customer/memo/products', requestOptions)
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("sales:", data)
+                        if (data.error === true) {
+                            document.getElementById("page-content").innerHTML = `
+                                <h4 class="text-info">Please contact to the app provider</h4>
+                                <br>
+                                <h4 class="text-danger">${data.message}</h4>
+                                `
+                        } else {
+
+                            if (data.products) {
+                                products = data.products
+                                salesHistory = data.sales_history
+                                document.getElementById("product-list-container").innerHTML = '';
+                                products.forEach((pr, i) => {
+                                    if (pr.product_metadata.length > 0) {
+                                        let serial = ''
+                                        pr.product_metadata.forEach(pm => {
+                                            serial += `<input type="checkbox" id="${pm.id}" onclick="singleItemSelection(this, ${pm.id}, ${pm.sold_rate - pm.sold_discount})">&nbsp;&nbsp;${pm.serial_number}</b></br>`
+                                        })
+                                        document.getElementById("product-list-container").innerHTML += `
+                                                <tr id="${pr.id}">  
+                                                    <td>${i + 1}</td>
+                                                    <td>${pr.product_code}</td>
+                                                    <td>${pr.product_name}</td>
+                                                    <td>${pr.category.name}</td>
+                                                    <td>${pr.brand.name}</td>
+                                                    <td>${pr.product_metadata.length}</td>
+                                                    <td>${moment(salesHistory.sale_date).format("DD-MMM-YYYY")}</td>
+                                                    <td id="serial-${pr.id}" class="text-center" style="width: 33%">
+                                                        ${serial}
+                                                    </td>
+                                                </tr>
+                                            `
+                                    } else {
+                                        document.getElementById("product-list-container").innerHTML = '<tr><td colspan=8>No items available</td>';
+                                    }
+                                })
+                            } else {
+                                document.getElementById("product-list-container").innerHTML = '<tr class="text-center text-danger"><td colspan=8><label>No items available</label></td>';
+                            }
+                        }
+                    })
+            })
+        }
+        function singleItemSelection(checkBox, id, sold_rate) {
+            if (checkBox.checked) {
+                //insert item id to the array 
+                returnedID.push(id)
+                total_returned_items += 1;
+                total_returned_values += sold_rate;
+            } else {
+                //remove item id from the array
+                returnedID = returnedID.filter(num => num !== id)
+                total_returned_items -= 1;
+                total_returned_values -= sold_rate;
+            }
+            //set disabled field values
+            document.getElementById("total_return_items").value = total_returned_items;
+            document.getElementById("total_return_values").value = total_returned_values;
+        }
+
+        //refresh the UI
+        function refreshContent() {
+            document.getElementById("product-list-container").innerHTML = '';
+            returnedID = [];
+            total_returned_values = 0;
+            total_returned_items = 0;
+            document.getElementById("total_return_items").value = 0;
+            document.getElementById("total_return_values").value = 0;
+        }
+    </script>
+
+    <script>
+        document.getElementById("salesReturnForm").addEventListener('submit', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+            if (total_returned_items < 1) {
+                Swal.fire({
+                    title: "Select At least One Item",
+                    icon: "error"
+                });
+                return
+            }
+            document.getElementById("submitBtn").classList.add("d-none");
+
+            //retrieve selected product
+            // Filter product metadata
+            const filteredProductItems = products.map(product => {
+                const filteredMetadata = product.product_metadata.filter(metadata =>
+                    returnedID.includes(metadata.id)
+                );
+                return {
+                    ...product,
+                    product_metadata: filteredMetadata,
+                };
+            }).filter(product => product.product_metadata.length > 0); // Keep only products with metadata
+
+            let sales_return_details = {
+                customer_info: customers[parseInt(document.getElementById("customer").value)],
+                product_Items: filteredProductItems,
+                sales_history: salesHistory,
+                sale_return_date: document.getElementById("return_date").value,
+                return_items_number: total_returned_items,
+                return_items_amount: total_returned_values,
+            }
+            const requestOptions = {
+                method: 'post',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(sales_return_details),
+            }
+
+            fetch('https://psinventory-v2.onrender.com/admin/inventory/products/sale/return', requestOptions)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Result: ", data)
+                    if (data.error === true) {
+                        showErrorMessage(data.message)
+                    } else {
+                        InvoiceData = data.sales_return_invoice_data;
+                        company = data.company_profile
+                        showSuccessMessage(data.message);
+                        //show print button
+                        document.getElementById('invoiceBtn').classList.remove('d-none')
+                    }
+                });
+        })
+        // function printSaleReturnInvoice() {
+        //     const newWindow = window.open("", "_blank");
+        //     // //product list table
+        //     let tBody = ""
+        //     let company_info = ""
+        //     let name = company.name.split(":::").filter(p => p.trim() !== "")
+        //     const companyFName = name[0]
+        //     const companyLName = name[1] || ""
+        //     let pLn = InvoiceData.product_Items.length
+        //     let totalReturnAmount = 0
+        //     for (let i = 0; i < pLn; i++) {
+        //         const items = InvoiceData.product_Items[i]
+        //         let serialNumbers = ""
+        //         let quantity = 0;
+        //         items.product_metadata.forEach((s, j) => {
+        //             quantity++;
+        //             if (s.serial_number !== 'unmarked') {
+        //                 serialNumbers += `S/N:&nbsp;&nbsp;${s.serial_number}    `
+        //             }
+        //             //Increment totalReturnAmount
+        //             totalReturnAmount += (s.sold_rate - s.sold_discount)
+        //         })
+        //         tBody += `
+        //       <tr class="item-row">
+        //         <td>${i + 1}</td>
+        //         <td class="item-name">
+        //           ${items.product_name} <br>
+        //           <small> ${serialNumbers} </small>
+        //         </td>
+        //         <td class="item-quantity text-center">${quantity}</td>
+        //         <td class="item-price text-right">${items.product_metadata[0].sold_rate - items.product_metadata[0].sold_discount}</td>
+        //         <td class="item-total text-right">${quantity * (items.product_metadata[0].sold_rate - items.product_metadata[0].sold_discount)}</td>
+        //       </tr>
+        //     `
+        //     }
+        //     let amount_payable = company.currency === "Taka" ? numberToWordsBDT(totalReturnAmount + InvoiceData.customer_info.due_amount) : numberToWords(totalReturnAmount + InvoiceData.customer_info.due_amount) + " " + company.currency
+
+        //     tBody += `
+        //     <tr class="item-row">
+        //       <td rowspan="3" colspan="3" style="border: none; text-align:left; font-weight:bold">
+        //         Amount Chargeable (In Words): 
+        //         <span style="padding:5px; font-weight:normal; text-transform: capitalize;" id="total-amount-in-words">
+        //           ${amount_payable.trim() === "Taka" ? "" : amount_payable + " Only"}.
+        //         </span>
+        //       </td>
+        //       <td class="text-right item-total">Subtotal</td>
+        //       <td id="subtotal" class="text-right item-total">${totalReturnAmount}</td>
+        //     </tr>
+        //     <tr class="item-row">
+        //       <td class="text-right item-total">Customer's Due</td>
+        //       <td id="subtotal" class="text-right item-total">${InvoiceData.customer_info.due_amount}</td>
+        //     </tr>
+        //     <!-- <tr class="item-row">
+        //         <td id="tax-percentage" class="text-right item-total">Tax(%)</td>
+        //         <td id="tax-total" class="text-right item-total">10</td>
+        //     </tr> -->
+
+        //     <tr class="item-row">
+        //         <td class="text-right total">Total</td>
+        //         <td id="total" class="text-right total">${totalReturnAmount - InvoiceData.customer_info.due_amount}</td>
+        //     </tr>
+        //   `
+        //     //terms and conditions
+        //     let terms = "This invoice is generated electronically. The company reserves the right to make changes in case of any inconsistencies or mistakes.";
+
+
+        //     //member of associations
+        //     let members_of = "";
+        //     members_of += `<span>Member of:</span>`
+        //     const associations = company.associations_logo_links.split("#").filter(association => association.trim() !== "")
+        //     associations.forEach(association => {
+        //         members_of += `<img src="${association}" alt="${association}">`
+        //     });
+        //     const content = `
+        //   <!DOCTYPE html>
+        //   <html lang="en">
+        //   <head>
+        //       <meta charset="UTF-8">
+        //       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        //       <title>Invoice</title>
+        //       <style>
+        //           :root {
+        //               --primary-color: #6ab023;
+        //               --black-color: #000000;
+        //               --dark-color: #282b30;
+        //               --light-gray: #f2f2f2;
+        //               --border-color: #bfbebe;
+        //               --white-color: #ffffff;
+        //           }
+
+        //           body {
+        //               font-family: Arial, Helvetica, sans-serif;
+        //               font-weight: normal;
+        //               margin: 0;
+        //               padding: 10px;
+        //               color: var(--black-color);
+        //               font-size: 11px;
+        //               line-height: 1.3;
+        //           }
+
+        //           .container {
+        //               max-width: 800px;
+        //               margin: 0 auto;
+        //           }
+
+        //           .header {
+        //               display: flex;
+        //               justify-content: space-between;
+        //               margin-bottom: 5px;
+        //           }
+
+        //           .logo-section {
+        //               display: flex;
+        //               align-items: center;
+        //           }
+
+        //           .logo {
+        //               width: 48px;
+        //               height: 42px;
+        //               margin-right: 0px;
+        //           }
+
+        //           .logo img {
+        //               width: 100%;
+        //               height: 100%;
+        //               object-fit: contain;
+        //               background-color: var(--white-color);
+        //           }
+
+        //           .company-name {
+        //               color: var(--primary-color);
+        //               font-weight: bold;
+        //               font-size: 26px;
+        //               line-height: 0.8;
+        //               padding-left: 2px;
+        //               text-transform: uppercase;
+        //           }
+
+        //           .enterprise {
+        //               color: var(--black-color);
+        //               font-size: 20px;
+        //               letter-spacing: 1.5px;
+        //           }
+
+        //           .company-address {
+        //               font-size: 9px;
+        //               max-width: 400px;
+        //               margin-top: 4px;
+        //               line-height: 1.2;
+        //               font-weight: bold;
+        //           }
+
+        //           .contact-info {
+        //               text-align: right;
+        //               font-size: 10px;
+        //               font-weight: bold;
+        //               font-weight: 500;
+        //           }
+
+        //           .contact-info a {
+        //               color: var(--primary-color);
+        //               text-decoration: none;
+        //               font-weight: bold;
+        //           }
+
+        //           .invoice-title {
+        //               background-color: white;
+        //               color: var(--dark-color);
+        //               text-align: center;
+        //               padding: 3px;
+        //               margin: 5px auto;
+        //               width: 90px;
+        //               font-size: 12px;
+        //               font-weight: bold;
+        //               border: 1px solid var(--black-color);
+        //               border-radius: 2px;
+        //               box-shadow: 1px 1px 0px 1px var(--black-color);
+        //           }
+
+        //           .dotted-line {
+        //               border-top: 1px dotted #999;
+        //               margin: 5px 0;
+        //           }
+
+        //           .details {
+        //               display: flex;
+        //               justify-content: space-between;
+        //               margin-bottom: 10px;
+        //           }
+
+        //           .left-details {
+        //               width: 60%;
+        //           }
+
+        //           .right-details {
+        //               width: 35%;
+        //           }
+
+        //           .detail-row {
+        //               display: flex;
+        //               margin-bottom: 2px;
+        //           }
+
+        //           .detail-label {
+        //               width: 80px;
+        //               font-weight: bold;
+        //               font-size: 11px;
+        //           }
+
+        //           .detail-value {
+        //               flex: 1;
+        //               font-size: 11px;
+        //           }
+
+        //           table {
+        //               width: 100%;
+        //               border-collapse: collapse;
+        //           }
+
+        //           th {
+        //               background-color: var(--light-gray);
+        //               color: var(--black-color);
+        //               text-transform: capitalize;
+        //               font-weight: bolder;
+        //               text-align: center;
+        //               padding: 5px 5px;
+        //               font-size: 10px;
+        //               border: 1px solid var(--dark-color);
+        //           }
+
+        //           td {
+        //               padding: 1px 5px;
+        //               font-size: 10px;
+        //               color: var(--black-color);
+        //               font-weight: 500;
+        //               border: 1px solid var(--dark-color);
+        //               border-top: none;
+        //           }
+
+        //           .item-row .item-name {
+        //               font-size: 10px;
+        //               font-weight: 600;
+        //               color: var(--black-color);
+        //               max-width: 55% !important;
+        //           }
+
+        //           .item-row .item-name small {
+        //             font-size: 9px;
+        //             font-weight: 400;
+        //             color: var(--black-color);
+        //             white-space: normal;
+        //             word-break: break-word;
+        //             overflow-wrap: anywhere;
+        //         }
+
+        //           .empty-row td {
+        //               padding: 4px 8px;
+        //               border-bottom: 1px solid var(--border-color);
+        //           }
+
+        //           .item-total {
+        //               padding: 3px 5px;
+        //           }
+
+        //           .total {
+        //               background-color: var(--light-gray);
+        //               font-weight: bold;
+        //               padding: 3px 5px;
+        //           }
+
+        //           .text-right {
+        //               text-align: right;
+        //           }
+
+        //           .text-center {
+        //               text-align: center;
+        //           }
+
+        //           /* Payment info section */
+        //           .payment-section {
+        //               font-size: 9px;
+        //               margin: 10px 0;
+        //           }
+
+        //           .payment-section h4 {
+        //               margin-bottom: 3px;
+        //               margin-top: 0;
+        //               font-size: 10px;
+        //               text-decoration: underline;
+        //           }
+
+        //           .payment-section .detail-label,
+        //           .payment-section .detail-value {
+        //               font-size: 9px;
+        //           }
+
+        //           .terms {
+        //               font-size: 9px;
+        //               margin: 10px 0;
+        //           }
+
+        //           .terms h4 {
+        //               margin-bottom: 3px;
+        //               margin-top: 0;
+        //               font-size: 10px;
+        //               text-decoration: underline;
+        //           }
+
+        //           .terms ul {
+        //               margin: 0;
+        //               padding-left: 15px;
+        //               line-height: 1.2;
+        //           }
+
+        //           .terms ul ul {
+        //               padding-left: 10px;
+        //           }
+
+        //           .terms li {
+        //               margin-bottom: 1px;
+        //           }
+
+
+        //           .invoice-footer-fixed {
+        //               position: absolute;
+        //               bottom: 0;
+        //               left: 50%;
+        //               transform: translate(-50%);
+        //               width: 100%;
+        //               max-width: 800px;
+        //               padding: 10px;
+        //               box-sizing: border-box;
+        //               background: #fff;
+        //               break-inside: avoid;
+        //           }
+
+        //           .invoice-footer-scroll {
+        //               width: 100%;
+        //               max-width: 800px;
+        //               padding: 40px;
+        //               box-sizing: border-box;
+        //               background: #fff;
+        //               break-inside: avoid;
+        //           }
+
+        //           .signature-section {
+        //               display: flex;
+        //               justify-content: space-around;
+        //               padding-bottom: 8px;
+        //               margin-bottom: 8px;
+        //           }
+
+        //           .signature-box {
+        //               width: 180px;
+        //               text-align: center;
+        //               border-top: 1px solid #000;
+        //               padding-top: 3px;
+        //               font-size: 10px;
+        //           }
+
+        //           .remark {
+        //               font-size: 8px;
+        //               margin-top: 2px;
+        //           }
+
+        //           .invoice-footer-info {
+        //               display: flex;
+        //               justify-content: space-between;
+        //               align-items: center;
+        //               font-size: 9px;
+        //           }
+
+        //           .member-logos {
+        //               display: flex;
+        //               align-items: center;
+        //               font-weight:bold;
+        //               gap: 6px;
+        //           }
+
+        //           .member-logos img {
+        //               height: 24px;
+        //           }
+
+        //           .print-info {
+        //               text-align: right;
+        //               font-weight: 500;
+        //           }
+
+        //           .footer-remark{
+        //               font-size: 8px;
+        //               text-align:center;
+        //               color: rgb(0, 94, 255);
+        //           }
+
+        //           .watermark-container {
+        //               position: fixed;
+        //               top: 50%;
+        //               left: 50%;
+        //               transform: translate(-50%, -50%);
+        //               z-index: 0;
+        //               pointer-events: none;
+        //               /* Allow clicks through the watermark */
+        //           }
+
+        //           .watermark {
+        //               opacity: 0.1;
+        //               width: 400px;
+        //               /* adjust as needed */
+        //               height: auto;
+        //           }
+        //       </style>
+        //   </head>
+
+        //   <body>
+            
+        //     ${company.watermark === "" ? "" :
+        //             `<div class="watermark-container">
+        //         <img src="${company.watermark}" alt="Watermark" class="watermark">
+        //       </div>`
+        //         }
+        //       <div class="container">
+        //         <div id="invoice-content">
+        //             <div class="header">
+        //                 <div>
+        //                     <div class="logo-section">
+        //                         <div class="logo">
+        //                             <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="">
+        //                         </div>
+        //                         <div>
+        //                             <div class="company-name">
+        //                               ${companyFName}
+        //                               ${companyLName === "" ? "" : `<br>
+        //                               <span class="enterprise">${companyLName}</span>`}
+        //                             </div>
+        //                         </div>
+        //                     </div>
+        //                     <div class="company-address">
+        //                         ${company.area} <br>
+        //                        ${company.mobile === "" ? "" : ' Hotline: ' + company.mobile}
+        //                     </div>
+        //                 </div>
+        //                 <div class="contact-info">
+        //                     ${company.website === "" ? "" : `<a href="${company.website}">${company.website}</a>`} <br>
+        //                     ${company.email === "" ? "" : `<a href="mailto:${company.email}">${company.email}</a>`}
+        //                 </div>
+        //             </div>
+
+        //             <div class="dotted-line"></div>
+        //             <div class="invoice-title">Invoice/Bill</div>
+
+        //             <div class="details">
+        //                 <div class="left-details">
+        //                     <div class="detail-row">
+        //                         <div class="detail-label">Invoice To</div>
+        //                         <div class="detail-value">: ${InvoiceData.customer_info.account_name.toUpperCase()}</div>
+        //                     </div>
+        //                     <div class="detail-row">
+        //                         <div class="detail-label">Address</div>
+        //                         <div class="detail-value">: ${InvoiceData.customer_info.area === "" ? "-" : InvoiceData.customer_info.area}</div>
+        //                     </div>
+        //                     <div class="detail-row">
+        //                         <div class="detail-label">Mobile</div>
+        //                         <div class="detail-value">: ${InvoiceData.customer_info.mobile}</div>
+        //                     </div>
+        //                 </div>
+        //                 <div class="right-details">
+        //                     <div class="detail-row">
+        //                         <div class="detail-label">Invoice No.</div>
+        //                         <div class="detail-value">: ${InvoiceData.memo_no}</div>
+        //                     </div>
+        //                     <div class="detail-row">
+        //                         <div class="detail-label">Date & Time</div>
+        //                         <div class="detail-value">: ${moment(InvoiceData.sale_return_date).format("DD-MMMM-YYYY")}</div>
+        //                     </div>
+        //                     <div class="detail-row">
+        //                         <div class="detail-label">Prepared By</div>
+        //                         <div class="detail-value">: ${appUser.username}</div>
+        //                     </div>
+        //                 </div>
+        //             </div>
+
+        //             <table id="invoice-items">
+        //                 <thead>
+        //                     <tr>
+        //                         <th style="width: 5%;">No</th>
+        //                         <th style="width: 55%;max-width: 45%;">Item Description</th>
+        //                         <th style="width: 10%;">Qty</th>
+        //                         <th style="width: 15%;">Price</th>
+        //                         <th style="width: 15%;">Total</th>
+        //                     </tr>
+        //                 </thead>
+        //                 <tbody id="product-items">
+        //                     <!-- will be updated by JS -->
+        //                     ${tBody}
+        //                 </tbody>
+        //             </table>
+        //             <div class="dotted-line"></div>
+        //             <div class="terms">
+        //                 <h4>Terms & Condition</h4>
+        //                 <ul>
+        //                   ${terms}
+        //                 </ul>
+        //             </div>
+        //         </div>
+
+        //         <div class="invoice-footer-fixed" id="invoice-footer">
+        //             <div class="signature-section">
+        //                 <div class="signature-box">
+        //                     Customer Signature
+        //                     <div class="remark">(Received the above goods in good condition)</div>
+        //                 </div>
+        //                 <div class="signature-box">
+        //                     Authorized Signature
+        //                 </div>
+        //             </div>
+        //             <div class="dotted-line"></div>
+        //             <div class="invoice-footer-info">
+        //               <div class="member-logos">
+        //                 ${members_of}
+        //               </div>
+        //                 <div class="print-info">
+        //                     <div class="print-date">
+        //                         Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
+        //                     </div>
+        //                 </div>
+        //             </div>
+        //         </div>
+        //       </div>
+        //   </body>
+        //   </html>
+        //   `
+
+        //     // Write content to the new window
+        //     newWindow.document.write(content);
+        //     newWindow.document.close();
+        //     // Add a slight delay before printing to ensure content is fully loaded
+        //     setTimeout(() => {
+        //         const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
+        //         const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
+        //         if (!invoiceContentDiv || !invoiceFooterDiv) return;
+
+        //         const rect1 = invoiceContentDiv.getBoundingClientRect();
+        //         const rect2 = invoiceFooterDiv.getBoundingClientRect();
+
+        //         // Check if elements overlap
+        //         const noOverlap =
+        //             rect1.right < rect2.left ||
+        //             rect1.left > rect2.right ||
+        //             rect1.bottom < rect2.top ||
+        //             rect1.top > rect2.bottom;
+
+        //         if (!noOverlap) {
+        //             invoiceFooterDiv.classList.remove('invoice-footer-fixed');
+        //             invoiceFooterDiv.classList.add('invoice-footer-scroll');
+        //         }
+        //         newWindow.print();
+        //     }, 500);
+
+        // }
+    
+    </script>
+
+</body>
+
+</html>

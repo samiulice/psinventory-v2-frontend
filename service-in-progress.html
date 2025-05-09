@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSINVENTORY</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+
+  <!-- sweetalert2 style -->
+  <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
+  <!--  -->
+
+  <style>
+    /* Autocomplete container - NEW */
+    .autocomplete-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      /* Match parent width */
+    }
+
+    /* Suggestion list styling */
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      background: #fff;
+      top: 100%;
+      /* Position below input */
+      left: 0;
+      margin-top: 2px;
+      display: none;
+      /* Hidden by default */
+    }
+
+    .autocomplete-item {
+      padding: 5px 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .autocomplete-item:hover {
+      background: #D0F1E6;
+    }
+
+    table td,
+    th {
+      border: 1px solid #eee;
+      padding: 2px 0;
+      margin: 0;
+    }
+  </style>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <nav class="inner-navbar">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="service.html">Registration</a></li>
+            <li class="nav-item"><a href="service-in-progress.html" class="active">Processing</a></li>
+            <li class="nav-item"><a href="service-delivery.html">Delivery</a></li>
+            <li class="nav-item"><a href="service-history.html">History</a></li>
+          </ul>
+        </nav>
+
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <table class="border">
+              <thead>
+                <th>Date</th>
+                <th>Service Name</th>
+                <th>Customer Name</th>
+                <th>Memo No.</th>
+                <th>Product SN</th>
+                <th>Problem Description</th>
+                <th>Fee</th>
+                <th>Action</th>
+              </thead>
+              <tbody id="tBody">
+                <!-- will be updated by js -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+
+      </div>
+      <!-- /top tiles -->
+    </div>
+    <!-- /page content -->
+  </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- DateJS -->
+  <script src="src/assets/vendors/DateJS/build/date.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+  <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
+  <script>
+    let purchaseHistory = [], company, remark, deliveredBy, deliveryDate
+    window.addEventListener("DOMContentLoaded", () => {
+      // Fetch all data once and let DataTables handle searching/pagination on client side
+      const requestOptions = {
+        method: 'post'
+      }
+      fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase/history?status=1', requestOptions)
+        .then(response => response.json())
+        .then(function (responseData) {
+          purchaseHistory = responseData.result || [];
+          company = responseData.company;
+          updateTable(purchaseHistory)
+          console.log("History: ", responseData)
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    })
+
+    function updateTable(data) {
+      //1:Running, 2:Completed, 3:Delivered, 4:Canceled
+      let st = ["Running", "Completed", "Delivered", "Canceled"]
+      if (data.length > 0) {
+        data.forEach((v, i) => {
+          const row = `
+          <td style="text-align:center">${v.date}</td>
+          <td style="text-align:center">${v.service.name}</td>
+          <td style="text-align:center">${v.customer.account_name}</td>
+          <td style="text-align:center">${v.memo_no}</td>
+          <td style="text-align:center">${v.product_serial_number}</td>
+          <td style="text-align:center">${v.problem_description}</td>
+          <td style="text-align:center">${v.amount - v.amount * v.discount / 100}</td>
+          <td style="text-align:center">
+            <button type="button" id="print-btn-${v.id}" class="btn btn-dark btn-xs" onclick="showDetails(${v.id})">Show</button>
+            <button type="button" id="checkout-btn-${v.id}" class="btn btn-primary btn-xs" onclick="checkoutService(${v.id})">Complete</button>
+            <button type="button" id="cancel-btn-${v.id}" class="btn btn-danger btn-xs" onclick="cancelService(${v.id})">Cancel</button>
+          </th>
+        `
+          document.getElementById("tBody").innerHTML += row
+        });
+
+      } else {
+        document.getElementById("tBody").innerHTML += `<tr><td colspan=9 style="text-align:center">No data available</td></tr>`
+      }
+
+    }
+
+    function checkoutService(id) {
+      let btn = document.getElementById(`checkout-btn-${id}`);
+      btn.innerHTML = `Processing <i class="fa fa-spinner fa-spin"></i>`;
+      btn.disabled = true;
+      const requestOptions = {
+        method: 'post'
+      }
+      fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase/checkout?id=' + id, requestOptions)
+        .then(response => response.json())
+        .then(function (data) {
+          if (data.error === true) {
+            alertQuestion(data.message)
+          } else {
+            setTimeout(() => {
+              btn.innerHTML = 'Saved'
+            }, 1000);
+          }
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }
+
+    
+    function showDetails(id) {
+      const invoiceData = purchaseHistory.find(ph => ph.id = id)
+      let content = `
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Service Invoice</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+                background-color: #fff;
+                color: black;
+            }
+            .page-container {
+                background: #fff;
+                padding: 20px;
+                border-radius: 6px;
+                font-size: 13px;
+                box-sizing: border-box;
+            }
+            h1, h3 {
+                color: #265166;
+            }
+            h1 {
+                font-size: 18px;
+                text-align: center;
+            }
+            .header, .footer {
+                text-align: center;
+                font-size: 12px;
+                color: #555;
+            }
+            .section {
+                margin-bottom: 20px;
+                padding: 10px;
+            }
+            .section-title {
+                font-size: 15px;
+                margin: 5px 0px;
+                padding-top: 5px;
+                font-weight: bold;
+                color: #265166;
+            }
+            .voucher-details table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .voucher-details th, .voucher-details td {
+                padding: 5px;
+                border: 1px solid #ddd;
+                text-align: left;
+            }
+            .voucher-details th {
+                width: 200px;
+                background-color: #f1f4f5;
+                color: #265166;
+            }
+            .signature {
+                margin-top: 10px;
+                display: flex;
+                justify-content: space-between;
+            }
+        </style>
+    </head>
+    <body>
+      <div class="page-container">
+        <div class="section">
+          <div class="header">
+            <h3>${company.name}</h3>
+            <p>Mobile: ${company.mobile} || Email: ${company.email}</p>
+            <p>Address: ${company.area}</p>
+            <h1>
+              <span style="border-bottom: 1px dashed #161616;">Service Invoice</span>
+            </h1>
+          </div>
+          <div style="border: 1px solid #265166;"></div>
+
+          <div class="voucher-details">
+            <div class="section-title">Customer Details</div>
+            <table>
+              <tr>
+                    <th>Account Code</th>
+                    <td>${invoiceData.customer.account_code}</td>
+                </tr>
+                <tr>
+                    <th>Customer Name</th>
+                    <td>${invoiceData.customer.account_name}</td>
+                </tr>
+                <tr>
+                    <th>Mobile</th>
+                    <td>${invoiceData.customer.mobile}</td>
+                </tr>
+                <tr>
+                    <th>Address</th>
+                    <td>${invoiceData.customer.area}</td>
+                </tr>
+            </table>
+          </div>
+
+          <div class="voucher-details">
+              <div class="section-title">Service Details</div>
+              <table>
+                  <tr>
+                      <th>Service Name</th>
+                      <td>${invoiceData.service.name}</td>
+                  </tr>
+                  <tr>
+                      <th>Service Code</th>
+                      <td>${invoiceData.service.code}</td>
+                  </tr>
+                  <tr>
+                      <th>Problem Description</th>
+                      <td><strong>${invoiceData.problem_description}</strong></td>
+                  </tr>
+                  <tr>
+                      <th>Product Serial Number</th>
+                      <td>${invoiceData.product_serial_number}</td>
+                  </tr>
+                  <tr>
+                      <th>Invoice Date</th>
+                      <td>${invoiceData.date}</td>
+                  </tr>
+                  <tr>
+                      <th>Bill Amount</th>
+                      <td>${invoiceData.amount} BDT</td>
+                  </tr>
+                  <tr>
+                      <th>Discount</th>
+                      <td>${invoiceData.amount * invoiceData.discount / 100} BDT</td>
+                  </tr>
+                  <tr>
+                      <th>Total Amount</th>
+                      <td>${invoiceData.amount - invoiceData.amount * invoiceData.discount / 100} BDT</td>
+                  </tr>
+                  <tr>
+                      <th>Received By</th>
+                      <td>${invoiceData.received_by}</td>
+                  </tr>
+              </table>
+          </div>
+        </div>
+      </div>
+    </body>
+    </html>
+    `;
+
+      Swal.fire({
+        html: content,
+        draggable: true,
+        width: 720,
+        heigh: 400
+      });
+    }
+
+
+  </script>
+</body>
+
+</html>

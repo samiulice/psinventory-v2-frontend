@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Expenses</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+  <script src="src/assets/js/app.js"></script>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+                
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <!-- Content Title -->
+        <h2 class="text-center tale fa-2x">EXPENSES</h2>
+        <!-- Page content here -->
+        <!-- expenses Details Section  -->
+        <div class="x_panel " id="form-content">
+          <div class="x_title">
+            <h2>Expenses Form</h2>
+            <button class="btn btn-sm btn-dark pull-right" id="createExpenseType">
+              <i class="fa fa-plus">&nbsp;</i> Create New Expense Type</button>
+            <div class="clearfix"></div>
+          </div>
+          <div class="x_content">
+            <div class="row">
+              <!-- first col -->
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row form-group has-feedback">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label for="expense-type">Expense Type*: </label>
+                    <select class="form-control  has-feedback-left" name="expense-type" id="expense-type"
+                      class="form-select">
+                      <option value="" disabled selected>Select Expense Type</option>
+                      <!-- Will be updated using JS DOM -->
+                    </select>
+
+                    <i style="color: black;" class="form-control-feedback glyphicon glyphicon-user left"
+                      aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="row form-group has-feedback">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label for="account">Cash/Bank *: </label>
+                    <select class="form-control  has-feedback-left" id="account" required>
+                      <option value="" selected disabled>Select Account</option>
+                    </select>
+                    <i style="color: black;" class="form-control-feedback fa fa-bank left" aria-hidden="true"></i>
+                  </div>
+                </div>
+
+              </div>
+              <!-- /first col -->
+              <!-- second col -->
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row form-group has-feedback">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label for="transfer_date">Date *:</label>
+                    <input type="text" id="transfer_date" class="form-control has-feedback-left"
+                      placeholder="Select Date" aria-describedby="inputSuccess2Status4" required>
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-calendar form-control-feedback left "
+                      aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="row form-group has-feedback">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label for="paid-amount">Paid Amount *:</label>
+                    <input type="number" id="paid-amount" class="form-control has-feedback-left"
+                      placeholder="Enter amount" required>
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-money form-control-feedback left "
+                      aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- /second col -->
+              <!-- third col -->
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row form-group has-feedback">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label for="carrier">Carrier:</label>
+                    <input type="text" class="form-control form-select has-feedback-left" id="carrier"
+                      placeholder="Enter name(optional)">
+                    <i style="color:rgba(0, 0, 0, 1);" class="fa fa-user form-control-feedback left"
+                      aria-hidden="true"></i>
+                  </div>
+                </div>
+                <div class="row form-group has-feedback">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label for="chq-no">Receipt No:</label>
+                    <input type="text" class="form-control form-select has-feedback-left" id="chq-no"
+                      placeholder="Enter Receipt/Cheque No(optional)">
+                    <i style="color:rgba(0, 0, 0, 1);" class="fa fa-book form-control-feedback left"
+                      aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- /third col -->
+              <!-- New Row -->
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row form-group has-feedback">
+                  <div class="col-md-12 col-sm-12 col-xs-12">
+                    <label for="description">Description :</label>
+                    <input type="text" name="description" id="description" class="form-control has-feedback-left"
+                      placeholder="Enter payment details(optional)">
+                    <i style="color:rgba(0, 0, 0, 1);" class="fa fa-bars form-control-feedback left"
+                      aria-hidden="true"></i>
+                  </div>
+                </div>
+              </div>
+              <!-- /New Row -->
+            </div>
+            <div class="row text-center">
+              <button type="button" class="btn btn-primary" id="add-transaction-info" onclick="addToSummary()"><i
+                  class="fa fa-arrow-down"></i> Add
+              </button>
+            </div>
+
+          </div>
+        </div>
+        <form action="#" id="expenseForm">
+          <!-- /page content -->
+          <!-- Received section -->
+          <!-- Table row -->
+          <caption><b style="font-size: 20px;">Summary</b></caption>
+          <table class="table table-striped table-bordered">
+            <thead style="background-color: rgba(4, 209, 209, 0.1);">
+              <tr>
+                <th>Voucher No.</th>
+                <th>Expense Type</th>
+                <th>Cash/Bank</th>
+                <th>Paid Amount</th>
+                <th>Receipt No</th>
+                <th>Carrier</th>
+                <th>Description</th>
+                <th>Payment Date</th>
+                <th class="remove-item-btn">Remove</th>
+              </tr>
+            </thead>
+            <tbody id="tBody">
+              <!-- DOM JS -->
+            </tbody>
+          </table>
+          <!-- /Received section -->
+          <div class="row">
+            <div class="col-md-12 com-sm-12 col-xs-12 text-center">
+              <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
+              <button id="printInvoice" class="btn btn-dark d-none" type="button"
+                onclick="renderPrintWindow()">Print</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="src/assets/vendors/fastclick/lib/fastclick.js"></script>
+    <!-- NProgress -->
+    <script src="src/assets/vendors/nprogress/nprogress.js"></script>
+    <!-- Chart.js -->
+    <script src="src/assets/vendors/Chart.js/dist/Chart.min.js"></script>
+    <!-- gauge.js -->
+    <script src="src/assets/vendors/gauge.js/dist/gauge.min.js"></script>
+    <!-- bootstrap-progressbar -->
+    <script src="src/assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <!-- iCheck -->
+    <script src="src/assets/vendors/iCheck/icheck.min.js"></script>
+    <!-- Skycons -->
+    <script src="src/assets/vendors/skycons/skycons.js"></script>
+    <!-- Flot -->
+    <script src="src/assets/vendors/Flot/jquery.flot.js"></script>
+    <script src="src/assets/vendors/Flot/jquery.flot.pie.js"></script>
+    <script src="src/assets/vendors/Flot/jquery.flot.time.js"></script>
+    <script src="src/assets/vendors/Flot/jquery.flot.stack.js"></script>
+    <script src="src/assets/vendors/Flot/jquery.flot.resize.js"></script>
+    <!-- Flot plugins -->
+    <script src="src/assets/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+    <script src="src/assets/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+    <script src="src/assets/vendors/flot.curvedlines/curvedLines.js"></script>
+    <!-- DateJS -->
+    <script src="src/assets/vendors/DateJS/build/date.js"></script>
+    <!-- JQVMap -->
+    <script src="src/assets/vendors/jqvmap/dist/jquery.vmap.js"></script>
+    <script src="src/assets/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+    <script src="src/assets/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+    <!-- bootstrap-daterangepicker -->
+    <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+    <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="src/assets/js/custom.js"></script>
+    <script src="src/assets/js/app.js"></script>
+    <script src="src/assets/js/swal-popup-form.js"></script>
+
+    <!-- sweetalert2 script -->
+    <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
+    <script>
+      let accounts, suppliers, payment_summary = [], expense_types = [];
+      window.addEventListener("DOMContentLoaded", () => {
+        initSingleDatePicker("#transfer_date");
+        document.getElementById("createExpenseType").addEventListener("click", ()=>{
+          addNewExpenseType("expense", expense_types)
+        })
+        // fetch-1: On load window Get head_accounts and update account dropdown
+        const requestOptions = {
+          method: 'post'
+        }
+        fetch('https://psinventory-v2.onrender.com/admin/accounts/expenses/get-page-details', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+            if (data.error === true) {
+              showErrorMessage(data.message)
+            } else {
+              head_accounts = data.head_accounts;
+              expense_types = data.expense_list;
+              updatePage();
+            }
+          })
+      })
+
+      function updatePage() {
+        let accountsDiv = document.getElementById("account");
+        let expenseTypeDiv = document.getElementById("expense-type");
+        accountsDiv.innerHTML = `<option value="" selected disabled>Select Account</option>`;
+        if (head_accounts) {
+          head_accounts.forEach((ac, i) => {
+            accountsDiv.innerHTML += `<option value="${i}">${ac.account_name}-${ac.account_type}</option>`;
+          });
+        } else {
+          accountsDiv.innerHTML = `<option value="" selected disabled>No Account Available</option>`;
+          accountsDiv.ariaDisabled = true;
+        }
+
+        expenseTypeDiv.innerHTML = `<option value="" disabled selected>Select Expense Type</option>`
+        if (expense_types) {
+          expense_types.forEach((exp, i) => {
+            expenseTypeDiv.innerHTML += `<option value="${i}">${exp.expense_name}</option>`;
+          });
+        } else {
+          expenseTypeDiv.innerHTML = `<option value="" selected disabled>No Type Available</option>`;
+          expenseTypeDiv.ariaDisabled = true;
+        }
+      }
+
+      function addToSummary() {
+        let expenseDate = document.getElementById("transfer_date").value;
+        let expenseType = document.getElementById("expense-type");
+        let paidAmount = document.getElementById("paid-amount");
+        let account = document.getElementById("account");
+        let chqNo = document.getElementById("chq-no");
+        let carrier = document.getElementById("carrier");
+        let description = document.getElementById("description");
+        let voucherNo = `V-EXP-${generateRandomAlphanumericCode(6)}`
+        let ps = {
+          voucher_no: voucherNo,
+          expense_type: expense_types[parseInt(expenseType.value)],
+          expense_date: expenseDate,
+          expense_amount: parseInt(paidAmount.value),
+          source_account: head_accounts[parseInt(account.value)],
+          cheque_no: chqNo.value,
+          carrier_info: carrier.value,
+          description: description.value,
+        }
+
+        //push to table
+        if (expenseDate == "") {
+          Swal.fire({
+            title: "Select expense date",
+            icon: "error"
+          });
+          return
+        } else if (account.value === "") {
+          Swal.fire({
+            title: "Select Cash-bank Account",
+            icon: "error"
+          });
+          return
+        } else if (paidAmount.value === '') {
+          Swal.fire({
+            title: "Paid Amount must be greater than 0",
+            icon: "error"
+          });
+          return
+        }
+        //push data to the array
+        payment_summary.push(ps);
+
+        document.getElementById("tBody").innerHTML += `
+          <tr id="${voucherNo}">
+            <td>${voucherNo}</td>
+            <td>${expense_types[parseInt(expenseType.value)].expense_name}</td>
+            <td>${head_accounts[parseInt(account.value)].account_name}</td>
+            <td>${paidAmount.value}</td>
+            <td>${chqNo.value}</td>
+            <td>${carrier.value}</td>
+            <td>${description.value}</td>
+            <td>${expenseDate}</td>
+            <td class="remove-item-btn"><button class="btn btn-xs btn-dark" onclick="removeFromSummary('${voucherNo}')">Remove</button></td>
+          </tr>
+        `;
+        //clear the input field values
+        voucherNo = "";
+        account.value = "";
+        paidAmount.value = "";
+        chqNo.value = "";
+        carrier.value = "";
+        description.value = "";
+      }
+
+      function removeFromSummary(vcr_no) {
+        //remove row from the table
+        let r = document.getElementById(vcr_no);
+        if (r) {
+          r.remove()//removing row
+        }
+        //remove entry from the payment_summary
+        payment_summary = payment_summary.filter(item => item.voucher_no !== vcr_no)
+      }
+
+      //submit the form
+      document.getElementById("expenseForm").addEventListener("submit", event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (payment_summary.length === 0) {
+          Swal.fire({
+            title: "Empty Transaction list",
+            icon: "error"
+          });
+          return
+        }
+        document.getElementById("submitBtn").classList.add("d-none");
+
+        const requestOptions = {
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(payment_summary),
+        }
+        console.log(payment_summary)
+        fetch('https://psinventory-v2.onrender.com/admin/accounts/expenses/complete-submission', requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            console.log("resp : ", data)
+            if (data.error === true) {
+              showErrorMessage(data.message)
+            } else {
+              showSuccessMessage(data.message);
+              //hide form fields
+              document.getElementById("form-content").style.display = 'none'
+              let elements = document.querySelectorAll('.remove-item-btn');
+              if (elements.length !== 0) {
+                elements.forEach(element => {
+                  element.remove(); // This won't execute since the list is empty
+                });
+              }
+              //show print button
+              document.getElementById('printInvoice').classList.remove('d-none')
+            }
+          })
+
+      })
+
+      //renderPrintWindow renders printing window 
+      function renderPrintWindow() {
+        let n = payment_summary.length;
+        let tBody = '';
+
+        if (n > 0) {
+          for (let i = 0; i < n; i++) {
+            const ps = payment_summary[i];
+            tBody += `
+            <tr id="${ps.voucher_no}">
+            <td>${ps.voucher_no}</td>
+            <td>${ps.expense_type.expense_name}</td>
+            <td>${ps.source_account.account_name}-${ps.source_account.account_code}</td>
+            <td>${ps.expense_amount}</td>
+            <td>${ps.cheque_no}</td>
+            <td>${ps.carrier_info}</td>
+            <td>${ps.description}</td>
+            <td>${moment(ps.expense_date).format('MMM D, YYYY')}</td>
+            `;
+          }
+        } else {
+          tBody = `
+          <tr><td colspan="9" style="text-align:center;">No data available</td></tr>`;
+        }
+
+        const content = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <title>Company Report</title>
+          <link rel="stylesheet" type="text/css" href="styles.css">
+          <style>
+              /* Header styling */
+            .header {
+              text-align: center;
+              margin-bottom: 20px;
+              padding: 10px;
+              border-bottom: 2px solid #265166;
+            }
+            .header h1 {
+              font-size: 28px;
+              color: #265166;
+              font-weight: bold;
+              margin: 0;
+              text-transform: uppercase;
+            }
+            .header h2 {
+              font-size: 16px;
+              color: #444;
+              margin: 5px 0 15px 0;
+              font-style: italic;
+              font-weight: normal;
+            }
+            .header p {
+              margin: 3px 0;
+              font-size: 14px;
+              color: #666;
+            }
+            
+            /* table caption and printing date section */
+            .caption-section {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              font-size: 18px;
+              color: #444;
+              padding-top: 10px;
+            }
+            .caption-section .caption {
+              font-weight: bold;
+              color: #265166;
+            }
+            .caption-section .print-date {
+              font-style: italic;
+              color: #666;
+            }
+
+            /* Table styling */
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              font-family: Arial, sans-serif;
+            }
+            th, td {
+              padding: 5px;
+              font-size: 12px;
+              text-align: left;
+              border: 0.1em solid rgba(0, 0, 0, 0.25);
+            }
+            th {
+              background-color: rgba(186, 207, 255, 0.5);
+              color: black;
+              text-align: center;
+            }
+            tr:nth-child(even) {
+              background-color: rgba(0, 128, 128, 0.1);
+            }
+            tr:nth-child(odd) {
+              background-color: #ffffff;
+            }
+
+            /* Footer styling */
+            .footer {
+              position: fixed;
+              bottom: 0;
+              width: 100%;
+              text-align: center;
+              font-size: 12px;
+              color: #666;
+              padding: 10px 0;
+            }
+            .footer .page-number:after {
+              content: counter(page);
+            }
+          </style>
+        </head>
+        <body>
+          <!-- Header Section -->
+          <div class="header">
+            ${payment_summary.company ? `
+              <h1>${payment_summary.company.name || ""}</h1>
+              <h2>${payment_summary.company.slogan || ""}</h2>
+              <p>${payment_summary.company.address || ""}</p>
+              <p>Mobile: ${payment_summary.company.mobile || ""} | Email: ${payment_summary.company.email || ""}</p>
+            ` : `
+              <h1>ProjuktiSheba Inventory</h1>
+              <h2>Track Smarter, Stock Better</h2>
+              <p>Teri Bazar, Netrakona Shadar, Netrakona, Mymensingh</p>
+              <p>Mobile: +8801742135093 | Email: psi@projuktisheba.com</p>
+            `}
+            
+            <!-- Line with Caption and Print Date -->
+            <div class="caption-section">
+              <div class="caption">Expense Summary</div>
+              <div class="print-date">Printed on: ${getShortDate()}</div>
+            </div>
+          </div>
+
+          <!-- Table Section -->
+          <table>
+            <thead>
+              <tr>
+                <th>Voucher No#</th>
+                <th>Expense Type</th>
+                <th>Cash/Bank</th>
+                <th>Paid Amount</th>
+                <th>Receipt No.</th>
+                <th>Carrier</th>
+                <th>Description</th>
+                <th>Expense Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${tBody}
+            </tbody>
+          </table>
+        </body>
+        </html>
+      `;
+
+        // Create an iframe to load the content
+        const iframe = document.createElement('iframe');
+        document.body.appendChild(iframe);
+        iframe.style.display = 'none';
+        const doc = iframe.contentDocument || iframe.contentWindow.document;
+        doc.open();
+        doc.write(content);
+        doc.close();
+
+        // Wait for content to load and then print
+        iframe.onload = () => {
+          iframe.contentWindow.print();
+          document.body.removeChild(iframe);
+        };
+      }
+
+    </script>
+
+</body>
+
+</html>

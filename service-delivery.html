@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSINVENTORY</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+
+  <!-- sweetalert2 style -->
+  <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
+  <!--  -->
+
+  <style>
+    /* Autocomplete container - NEW */
+    .autocomplete-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      /* Match parent width */
+    }
+
+    /* Suggestion list styling */
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      background: #fff;
+      top: 100%;
+      /* Position below input */
+      left: 0;
+      margin-top: 2px;
+      display: none;
+      /* Hidden by default */
+    }
+
+    .autocomplete-item {
+      padding: 5px 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .autocomplete-item:hover {
+      background: #D0F1E6;
+    }
+  </style>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <nav class="inner-navbar">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="service.html">Registration</a></li>
+            <li class="nav-item"><a href="service-in-progress.html">Processing</a></li>
+            <li class="nav-item"><a href="service-delivery.html" class="active">Delivery</a></li>
+            <li class="nav-item"><a href="service-history.html">History</a></li>
+          </ul>
+        </nav>
+
+        <form id="itemForm">
+          <div class="x_panel">
+            <div class="x_content">
+              <div class="row">
+                <!-- Customer Account -->
+                <div class="form-group has-feedback">
+                  <div class="row">
+                    <div class="col-md-2 col-sm-0 col-xs-0"></div>
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+                      <label for="customer">Customer * :</label>
+                      <div id="customer-autocomplete-container" class="autocomplete-container">
+                        <input type="text" id="customer" class="form-control form-select has-feedback-left input-sm"
+                          placeholder="Enter Name/Mobile/Code" autocomplete="off" required>
+                        <i style="color: rgba(0, 0, 0, 1);"
+                          class="form-control-feedback left fa fa-user input-sm-feedback" aria-hidden="true">
+                        </i>
+                        <div id="customer-suggestions" class="autocomplete-items"></div>
+                      </div>
+                    </div>
+                    <!-- Memo No -->
+                    <div class="col-md-4 col-sm-6 col-xs-6">
+                      <label for="memo_no">Memo No *:</label>
+                      <div id="memo-autocomplete-container" class="autocomplete-container">
+                        <input type="text" id="memo_no" class="form-control form-select has-feedback-left input-sm"
+                          placeholder="Enter Memo No" autocomplete="off" required>
+                        <i style="color: rgba(0, 0, 0, 1);"
+                          class="form-control-feedback left fa fa-list input-sm-feedback" aria-hidden="true">
+                        </i>
+                        <div id="memo-suggestions" class="autocomplete-items"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            style="background-color:#fff; overflow-y: scroll; scrollbar-width: thin; scrollbar-color: #4f6969 #f1f1f1; height: 320px;">
+
+            <table id="service_item" class="table table-sm">
+              <thead>
+                <th>ID</th>
+                <th>Service Name</th>
+                <th>Product S/N</th>
+                <th>Problem Description</th>
+                <th>amount</th>
+                <th>Status</th>
+              </thead>
+              <tbody id="service_item_body">
+                <!-- Rows will be dynamically added here -->
+              </tbody>
+            </table>
+            <div class="x_title">
+              <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+              <div class="col-md-12 col-sm-12 col-xs-12 d-none" id="inputFields">
+                <div class="form-group has-feedback">
+                  <div class="col-md-3 col-sm-4 col-xs-12">
+                    <label for="delivery_date">Delivery Date :</label>
+                    <input type="text" class="form-control has-feedback-left" id="delivery_date">
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-calendar form-control-feedback left"
+                      aria-hidden="true">
+                    </i>
+                  </div>
+                  <div class="col-md-3 col-sm-4 col-xs-12">
+                    <label for="delivered_by">Delivered By :</label>
+                    <input type="text" class="form-control has-feedback-left" id="delivered_by" value=""
+                      placeholder="Employee Name (Optional)">
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-user form-control-feedback left"
+                      aria-hidden="true">
+                    </i>
+                  </div>
+                  <div class="col-md-3 col-sm-4 col-xs-12">
+                    <label for="received_amount">Received Amount* :</label>
+                    <input type="number" class="form-control has-feedback-left" id="received_amount" placeholder="Tk"
+                      required>
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-money form-control-feedback left"
+                      aria-hidden="true">
+                    </i>
+                  </div>
+
+                  <div class="col-md-2 col-sm-12 col-xs-12">
+                    <button type="submit" id="submitBtn" class="btn btn-sm btn-danger"
+                      style="margin-top:24px">Submit</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- /top tiles -->
+    </div>
+    <!-- /page content -->
+  </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- DateJS -->
+  <script src="src/assets/vendors/DateJS/build/date.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+  <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+  <script>
+    let serviceHistory = [], memos = [], selectedMemo = null, deliveredItems = [], uniqueMemoNos, selectedCustomer = null, customers = [], headAccounts = [], InvoiceData, company;
+    window.addEventListener("DOMContentLoaded", event => {
+      initSingleDatePicker('#delivery_date')
+      // Initialize fetch promises
+      const fetchCustomers = fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/active', { method: "post" })
+        .then(response => response.json())
+        .then(function (responseData) {
+          customers = responseData.customers || [];
+        })
+        .catch(function (error) {
+          console.error('Error fetching customers data:', error);
+        });
+
+      const fetchHeadAccounts = fetch('https://psinventory-v2.onrender.com/admin/accounts/get-cash-bank-accounts', { method: "post" })
+        .then(response => response.json())
+        .then(function (responseData) {
+          headAccounts = responseData.head_accounts || [];
+        })
+        .catch(function (error) {
+          console.error('Error fetching head accounts data:', error);
+        });
+
+
+      const fetchServicesHistory = fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase/history?status=2', { method: "post" })
+        .then(response => response.json())
+        .then(function (responseData) {
+          serviceHistory = responseData.result || [];
+          company = responseData.company;
+          console.log("Services: ", serviceHistory);
+          uniqueMemoNos = Array.from(new Map(serviceHistory.map(item => [item.memo_no, item])).values());
+        })
+        .catch(function (error) {
+          console.error('Error fetching services data:', error);
+        });
+
+
+
+      // Wait for all fetch requests to complete
+      Promise.all([fetchCustomers, fetchHeadAccounts, fetchServicesHistory])
+        .then(() => {
+          updateCustomerDiv();   // Update customers after fetching
+        })
+        .catch(error => {
+          console.error("Error completing all fetch requests:", error);
+        });
+    });
+    
+    //updateCustomerDiv updates customer selection options with the fetched data
+    function updateCustomerDiv() {
+      const container = document.getElementById('customer-autocomplete-container');
+      const input = document.getElementById("customer");
+      const suggestions = document.getElementById("customer-suggestions");
+
+      // Function to populate suggestions
+      function populateSuggestions(filteredCustomers) {
+        suggestions.innerHTML = '';
+        if (filteredCustomers.length === 0) {
+          suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
+          return;
+        }
+        filteredCustomers.forEach(customer => {
+          const div = document.createElement("div");
+          div.className = "autocomplete-item";
+          div.innerHTML = `
+            <div class="d-flex justify-content-between">
+              <span>${customer.account_name}</span>
+              <small class="text-muted">${customer.account_code}</small>
+            </div>
+          `;
+          div.onclick = () => {
+            input.value = customer.account_name;
+            suggestions.style.display = 'none';
+            selectedCustomer = customer;
+            updateMemoDiv()
+          };
+          suggestions.appendChild(div);
+        });
+
+      }
+
+      input.addEventListener("input", function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        suggestions.style.display = 'block';
+
+        if (!searchTerm) {
+          suggestions.style.display = 'none';
+          return;
+        }
+
+        const filtered = customers
+          .filter(s =>
+            s.account_name.toLowerCase().includes(searchTerm) ||
+            s.mobile.includes(searchTerm)
+          )
+          .slice(0, 15);
+        populateSuggestions(filtered);
+      });
+
+      // Show all suggestions on first click
+      input.addEventListener("focus", function () {
+        const filtered = customers.slice(0, 15);
+        suggestions.style.display = 'block';
+        populateSuggestions(filtered);
+      });
+
+      // Hide suggestions when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+          suggestions.style.display = 'none';
+        }
+      });
+    }
+
+    //updateAccountsDiv updates account selection options with the fetched data 
+    function updateAccountsDiv() {
+      const account = document.getElementById("head_account")
+      account.innerHTML = '';
+
+      if (headAccounts) {
+        headAccounts.forEach((ac, i) => {
+          account.innerHTML += `<option value=${i}>${ac.account_name}</option>`;
+        });
+        account.selectedIndex = 0
+      } else {
+        account.innerHTML = `<option value="" selected disabled>No Account Available</option>`;
+      }
+    }
+
+    //updateMemoDiv updates the memo list with unique memo based on customer id 
+    function updateMemoDiv() {
+      const container = document.getElementById('memo-autocomplete-container');
+      const input = document.getElementById("memo_no");
+      const suggestions = document.getElementById("memo-suggestions");
+      input.value = ""
+      document.getElementById("service_item_body").innerHTML = ""
+      document.getElementById("inputFields").classList.add('d-none')
+      // Function to populate suggestions
+      function populateSuggestions(filteredList) {
+        suggestions.innerHTML = '';
+        if (filteredList.length === 0) {
+          suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
+          return;
+        }
+        filteredList.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "autocomplete-item";
+          div.innerHTML = `
+            <div class="d-flex justify-content-between">
+              <span>${item.memo_no}</span>
+              <small class="text-muted">${item.date}</small>
+            </div>
+          `;
+          div.onclick = () => {
+            input.value = item.memo_no;
+            suggestions.style.display = 'none';
+            selectedMemo = item.memo_no
+            updateServicesDiv()
+          };
+          suggestions.appendChild(div);
+        });
+
+      }
+
+      input.addEventListener("input", function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        suggestions.style.display = 'block';
+
+        if (!searchTerm) {
+          suggestions.style.display = 'none';
+          return;
+        }
+
+        const filtered = uniqueMemoNos
+          .filter(s =>
+            s.memo_no.toLowerCase().includes(searchTerm) && s.customer.id === selectedCustomer.id
+          )
+          .slice(0, 15);
+        populateSuggestions(filtered);
+      });
+
+      // Show all suggestions on first click
+      input.addEventListener("focus", function () {
+        const filtered = uniqueMemoNos.filter(s =>
+          s.customer.id === selectedCustomer.id
+        )
+          .slice(0, 15);
+        suggestions.style.display = 'block';
+        populateSuggestions(filtered);
+      });
+
+      // Hide suggestions when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+          suggestions.style.display = 'none';
+        }
+      });
+    }
+
+    function updateServicesDiv() {
+      let div = document.getElementById("service_item_body")
+      div.innerHTML = ""
+      let flag = true;
+      let st = ["", `<span class="label label-warning">Running</span>`, `<span class="label label-primary">Completed</span>`, `<span class="label label-success">Delivered</span>`, `<span class="label label-danger">Canceled</span>`]
+      let totalAmount = 0;
+      serviceHistory.forEach(item => {
+        if (item.memo_no == selectedMemo) {
+          flag = false;
+          let row = `
+            <tr>
+              <td style="text-align:center">${item.id}</td>
+              <td style="text-align:center">${item.service.name}</td>
+              <td style="text-align:center">${item.product_serial_number}</td>
+              <td style="text-align:center">${item.problem_description}</td>
+              <td style="text-align:right"><strong>${item.amount - item.amount * item.discount / 100}</strong></td>
+              <td style="text-align:center" id="status-${item.id}">${st[parseInt(item.status)]}</td>
+            </tr>`;
+          div.innerHTML += row;
+          totalAmount += item.amount - item.amount * item.discount / 100;
+          deliveredItems.push(item)
+        }
+      });
+      if (flag) {
+        div.innerHTML += "<tr><td>No data available</td>"
+      } else {
+        let row = `
+            <tr>
+              <td colspan=5 style="text-align:right;"><span class="label" style="font-size:12px; padding:2px 5px;background-color:black;">Total: &#x09F3; <strong>${totalAmount}<strong></span></td>
+              <td style="text-align:center;"><span class="label" style="font-size:12px; padding:2px 5px;background-color:#CB2027; color:#fff">Due: &#x09F3; <strong>${selectedCustomer.due_amount}<strong></span></td>
+            </tr>`;
+        div.innerHTML += row;
+        document.getElementById("inputFields").classList.remove('d-none')
+        document.getElementById("delivered_by").value = appUser.username
+        document.getElementById("received_amount").max = selectedCustomer.due_amount
+      }
+    }
+
+    //submit form 
+    document.getElementById("submitBtn").addEventListener("click", event => {
+      const form = document.getElementById("itemForm")
+      // Prevent actual form submission
+      if (!form.checkValidity()) {
+        form.preventDefault
+        return;
+      }
+      let btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      btn.innerHTML = 'Processing <i class="fa fa-spinner fa-spin"></i>';
+
+      const reqBody = {
+        delivery_date: document.getElementById("delivery_date").value,
+        customer: selectedCustomer,
+        head_account: headAccounts[0],
+        memo_no: selectedMemo,
+        delivered_items: deliveredItems,
+        delivered_by: document.getElementById("delivered_by").value,
+        received_amount: parseInt(document.getElementById("received_amount").value),
+      }
+      console.log("Request body:",reqBody); // Log table data to console
+      const requestOptions = {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody),
+      }
+      fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase/delivered', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log("purchase response:", data)
+          if (data.error === true) {
+            alertQuestion(data.message)
+            btn.innerHTML = 'Error!'
+          } else {
+            showSuccessMessage(data.message);
+            setTimeout(() => {
+              btn.innerHTML = 'Success';
+              btn.classList.remove('btn-danger');
+              btn.classList.add('btn-success');
+            }, 1000);
+            // setTimeout(() => {
+            //   btn.innerHTML = 'Reset Form';
+            //   btn.disabled = false;
+            //   btn.onclick = () => {
+            //     location.reload();
+            //   }
+            // }, 2000);
+            // InvoiceData = data.invoice_data;
+            // document.getElementById("printInvoiceBtn").classList.remove('d-none')
+          }
+        });
+    })
+  </script>
+</body>
+
+</html>

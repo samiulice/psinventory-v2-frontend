@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSINVENTORY</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+  <link href="src/assets/css/styles.css" rel="stylesheet">
+
+  <!-- sweetalert2 style -->
+  <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
+  <style>
+    /* Autocomplete container - NEW */
+    .autocomplete-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      /* Match parent width */
+    }
+
+    /* Suggestion list styling */
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      background: #fff;
+      bottom: 100%;
+      left: 0;
+      margin-top: 2px;
+      display: none;
+    }
+
+    .autocomplete-item {
+      padding: 5px 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .autocomplete-item:hover {
+      background: #D0F1E6;
+    }
+
+    table td,
+    th {
+      text-align: center;
+      border: 1px solid #eee;
+      padding: 2px 0;
+      margin: 0;
+    }
+  </style>
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> -->
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <!-- Settings Content -->
+        <div class="settings-page">
+          <div class="tabs-container">
+            <div class="tabs text-center">
+              <button class="tab-btn active" data-tab="sale">Sale</button>
+              <button class="tab-btn" data-tab="sale-return">Sale Return</button>
+              <button class="tab-btn" data-tab="purchase">Purchase</button>
+              <button class="tab-btn" data-tab="purchase-return">Purchase Return</button>
+            </div>
+
+            <!-- Sale Tab -->
+            <div id="sale-tab" class="tab-content active">
+              <div class="settings-section">
+                <table>
+                  <thead>
+                    <th>S/N</th>
+                    <th>Customer</th>
+                    <th>Memo No</th>
+                    <th>Sale Date</th>
+                    <th>Entry Date</th>
+                    <th>Last Update</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody id="sale-tbody">
+                    <td colspan="7" class="text-primary text-center">Loading &nbsp;<i class="fa fa-spin fa-spinner"></i>
+                    </td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Sale Return Tab -->
+            <div id="sale-return-tab" class="tab-content">
+              <div class="settings-section">
+                <table>
+                  <thead>
+                    <th>S/N</th>
+                    <th>Customer</th>
+                    <th>Memo No</th>
+                    <th>Return Date</th>
+                    <th>Entry Date</th>
+                    <th>Last Update</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody id="sale-return-tbody">
+                    <td colspan="7" class="text-primary text-center">
+                      Loading &nbsp;<i class="fa fa-spin fa-spinner"></i>
+                    </td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Purchase Tab -->
+            <div id="purchase-tab" class="tab-content">
+              <div class="settings-section">
+                <table>
+                  <thead>
+                    <th>S/N</th>
+                    <th>Supplier</th>
+                    <th>Memo No</th>
+                    <th>Purchase Date</th>
+                    <th>Entry Date</th>
+                    <th>Last Update</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody id="purchase-tbody">
+                    <td colspan="7" class="text-primary text-center">Loading &nbsp;<i class="fa fa-spin fa-spinner"></i>
+                    </td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Purchase Return Tab -->
+            <div id="purchase-return-tab" class="tab-content">
+              <div class="settings-section">
+                <table>
+                  <thead>
+                    <th>S/N</th>
+                    <th>Supplier</th>
+                    <th>Memo No</th>
+                    <th>Return Date</th>
+                    <th>Entry Date</th>
+                    <th>Last Update</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody id="purchase-return-tbody">
+                    <td colspan="7" class="text-primary text-center">Loading &nbsp;<i class="fa fa-spin fa-spinner"></i>
+                    </td>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <!-- /page content -->
+    </div>
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+  <!-- DateJS -->
+  <script src="src/assets/vendors/DateJS/build/date.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+  <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+  <script src="src/assets/js/invoice.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+  <script>
+    let memos, InvoiceData, company
+    document.addEventListener('DOMContentLoaded', function () {
+      updateTable("sale")
+      // Tab switching
+      const tabButtons = document.querySelectorAll('.tab-btn');
+      const tabContents = document.querySelectorAll('.tab-content');
+
+      tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          // Remove active class from all buttons and contents
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          tabContents.forEach(content => content.classList.remove('active'));
+
+          // Add active class to clicked button and corresponding content
+          button.classList.add('active');
+          const tabId = button.getAttribute('data-tab');
+          document.getElementById(`${tabId}-tab`).classList.add('active');
+
+          //update table
+          updateTable(tabId)
+        });
+      });
+    });
+
+    function updateTable(tabId) {
+      // Fetch all data once and let DataTables handle searching/pagination on client side
+      const requestOptions = {
+        method: 'post'
+      }
+      fetch('https://psinventory-v2.onrender.com/admin/inventory/memos/list?type=' + tabId, requestOptions)
+        .then(response => response.json())
+        .then(function (responseData) {
+          memos = responseData.memos || [];
+          company = responseData.company;
+          console.log("History: ", responseData)
+          const tbody = document.getElementById(tabId + "-tbody")
+          tbody.innerHTML = ""
+          if (responseData.error === false) {
+            if (memos.length === 0) {
+              document.getElementById(tabId + "-tbody").innerHTML =
+                `<td colspan="7" class="text-primary text-center">
+                    No data available
+                  </td>`
+            } else {
+              memos.forEach((v, i) => {
+                const tr = document.createElement('tr');
+
+                tr.innerHTML = `
+                  <td>${i + 1}</td>
+                  <td data-user="${v.user_id}">${v.user_name}</td>
+                  <td>${v.memo_no}</td>
+                  <td>${v.date}</td>
+                  <td>${moment(v.created_at).format("DD-MMM-YYYY")}</td>
+                  <td>${moment(v.updated_at).format("DD-MMM-YYYY")}</td>
+                `;
+
+                // Create the Print button
+                const td = document.createElement('td');
+                const btn = document.createElement('button');
+                btn.className = "btn btn-primary btn-xs";
+                btn.textContent = "Print";
+                btn.dataset.memo = v.memo_no; // attach memo_no to button
+
+                btn.addEventListener("click", function () {
+                  printInvoice(tabId, this.dataset.memo);
+                });
+
+                td.appendChild(btn);
+                tr.appendChild(td);
+                tbody.appendChild(tr);
+              })
+            }
+          }
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }
+
+    function printInvoice(tabId, memo_no) {
+      //fetch details
+      const requestOptions = {
+        method: 'post'
+      }
+      fetch(`https://psinventory-v2.onrender.com/admin/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
+        .then(response => response.json())
+        .then(function (responseData) {
+          InvoiceData = responseData.invoice_data;
+          company = responseData.company;
+          console.log(responseData)
+          if (tabId === "purchase") {
+            printPurchaseInvoice()
+          } else if (tabId === "purchase-return") {
+            printPurchaseReturnInvoice()
+          } else if (tabId === "sale") {
+            printSaleInvoice()
+          } else if (tabId === "sale-return") {
+            printSaleReturnInvoice()
+          }
+
+
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+
+
+      //render the invoice
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Add CSS for settings page
+      const style = document.createElement('style');
+      style.textContent = `
+        .settings-section {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            padding: 20px;
+        }
+        .settings-section h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        .settings-form {
+            margin-bottom: 20px;
+        }
+        .form-actions {
+            margin-top: 20px;
+        }
+        .table-actions {
+            margin-top: 15px;
+        }
+        .user-info-cell {
+            display: flex;
+            align-items: center;
+        }
+        .user-avatar-small {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .notification-settings {
+            margin-bottom: 20px;
+        }
+        .notification-group {
+            margin-bottom: 20px;
+        }
+        .notification-group h4 {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+        .notification-info {
+            flex: 1;
+        }
+        .notification-info h5 {
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        .notification-info p {
+            color: var(--text-muted);
+            font-size: 12px;
+        }
+        .notification-toggle {
+            margin-left: 20px;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+        }
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+        input:focus + .slider {
+            box-shadow: 0 0 1px var(--primary-color);
+        }
+        input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+        input:checked + .slider.xl:before {
+            transform: translateX(26px);
+        }
+        .slider.round {
+            border-radius: 24px;
+        }
+        .slider.round:before {
+            border-radius: 50%;
+        }
+        .additional-settings-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 10px;
+        }
+        .additional-setting-card {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-hover);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .additional-setting-logo {
+            width: 100px;
+            height: 100px;
+            margin-right: 15px;
+        }
+        .additional-setting-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .additional-setting-info {
+            flex: 1;
+        }
+        .additional-setting-info h4 {
+            margin-bottom: 5px;
+        }
+        .additional-setting-info p {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        .additional-setting-status {
+            margin-bottom: 5px;
+        }
+        .additional-setting-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: 15px;
+        }
+        .api-settings {
+            margin-top: 15px;
+        }
+        .api-key-section {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: var(--bg-hover);
+            border-radius: 8px;
+        }
+        .api-key-section h4 {
+            margin-bottom: 10px;
+        }
+        .api-key-display {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .api-key-display input {
+            flex: 1;
+            padding: 8px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: monospace;
+            background-color: var(--bg-input);
+            color: var(--text-color);
+        }
+        .api-key-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .api-documentation {
+            margin-top: 20px;
+        }
+        .api-documentation h4 {
+            margin-bottom: 10px;
+        }
+        .api-documentation p {
+            margin-bottom: 15px;
+        }
+        .data-management-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .data-option {
+            background-color: var(--bg-hover);
+            border-radius: 8px;
+            padding: 15px;
+        }
+        .data-option h4 {
+            margin-bottom: 10px;
+        }
+        .data-option p {
+            margin-bottom: 15px;
+            color: var(--text-muted);
+        }
+        .export-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .system-info {
+            background-color: var(--bg-hover);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        .info-label {
+            font-weight: 500;
+        }
+        .system-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .dark-mode-section {
+            margin-top: 20px;
+        }
+        .dark-mode-toggle {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        .dark-mode-toggle label {
+            margin-right: 10px;
+        }
+        `;
+      document.head.appendChild(style);
+
+
+      // Data management buttons
+      const purgeDataBtn = document.querySelector('.danger-btn');
+      if (purgeDataBtn && purgeDataBtn.textContent.includes('Purge Data')) {
+        purgeDataBtn.addEventListener('click', function () {
+          const dataType = document.getElementById('purge-data-type').value;
+          const olderThan = document.getElementById('purge-older-than').value;
+
+          if (confirm(`Are you sure you want to permanently delete all ${dataType} data older than ${olderThan}? This action cannot be undone.`)) {
+            alert(`${dataType} data older than ${olderThan} has been purged successfully`);
+          }
+        });
+      }
+
+      // Export data buttons
+      document.querySelectorAll('.export-options .secondary-btn').forEach(button => {
+        button.addEventListener('click', function () {
+          const format = this.textContent.trim();
+          alert(`Exporting data in ${format} format...`);
+        });
+      });
+
+      // System actions
+      const checkUpdatesBtn = document.querySelector('.system-actions .secondary-btn');
+      if (checkUpdatesBtn && checkUpdatesBtn.textContent.includes('Check for Updates')) {
+        checkUpdatesBtn.addEventListener('click', function () {
+          alert('Checking for updates...');
+          setTimeout(() => {
+            alert('Your system is up to date!');
+          }, 1500);
+        });
+      }
+
+      const clearCacheBtn = document.querySelector('.system-actions .secondary-btn:nth-child(2)');
+      if (clearCacheBtn && clearCacheBtn.textContent.includes('Clear Cache')) {
+        clearCacheBtn.addEventListener('click', function () {
+          if (confirm('Are you sure you want to clear the system cache?')) {
+            alert('Cache cleared successfully');
+          }
+        });
+      }
+
+      // Toggle switches for notifications
+      document.querySelectorAll('.switch input[type="checkbox"]').forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+          const notificationItem = this.closest('.notification-item');
+          const notificationName = notificationItem.querySelector('h5').textContent;
+
+          if (this.checked) {
+            alert(`${notificationName} notifications enabled`);
+          } else {
+            alert(`${notificationName} notifications disabled`);
+          }
+        });
+      });
+
+      // Theme switcher
+      const themeSwitcher = document.getElementById('theme-switcher');
+      if (themeSwitcher) {
+        themeSwitcher.addEventListener('change', function () {
+          const selectedTheme = this.value;
+          alert(`Theme changed to ${selectedTheme}`);
+
+          // Here you would actually implement the theme change
+          // For demonstration, we'll just change some colors based on the selected theme
+          let primaryColor, primaryLight, primaryDark;
+
+          if (selectedTheme === 'teal') {
+            primaryColor = '#008080';
+            primaryLight = '#e0f2f1';
+            primaryDark = '#006666';
+          } else if (selectedTheme === 'blue') {
+            primaryColor = '#1976d2';
+            primaryLight = '#e3f2fd';
+            primaryDark = '#0d47a1';
+          } else if (selectedTheme === 'purple') {
+            primaryColor = '#6a1b9a';
+            primaryLight = '#f3e5f5';
+            primaryDark = '#4a148c';
+          } else if (selectedTheme === 'green') {
+            primaryColor = '#2e7d32';
+            primaryLight = '#e8f5e9';
+            primaryDark = '#1b5e20';
+          } else if (selectedTheme === 'orange') {
+            primaryColor = '#e65100';
+            primaryLight = '#fff3e0';
+            primaryDark = '#bf360c';
+          }
+
+          //save color to local storage
+          localStorage.setItem('primaryColor', primaryColor);
+          localStorage.setItem('primaryLight', primaryLight);
+          localStorage.setItem('primaryDark', primaryDark);
+
+          // Apply the theme colors
+          document.documentElement.style.setProperty('--primary-color', localStorage.getItem('primaryColor'));
+          document.documentElement.style.setProperty('--primary-light', localStorage.getItem('primaryLight'));
+          document.documentElement.style.setProperty('--primary-dark', localStorage.getItem('primaryDark'));
+        });
+      }
+
+      // Language switcher
+      const languageSwitcher = document.getElementById('language-switcher');
+      if (languageSwitcher) {
+        languageSwitcher.addEventListener('change', function () {
+          const selectedLanguage = this.value;
+          alert(`Language changed to ${selectedLanguage}`);
+        });
+      }
+
+      // Timezone switcher
+      const timezoneSwitcher = document.getElementById('timezone-switcher');
+      if (timezoneSwitcher) {
+        timezoneSwitcher.addEventListener('change', function () {
+          const selectedTimezone = this.value;
+          alert(`Timezone changed to ${selectedTimezone}`);
+        });
+      }
+
+      // Date format switcher
+      const dateFormatSwitcher = document.getElementById('date-format-switcher');
+      if (dateFormatSwitcher) {
+        dateFormatSwitcher.addEventListener('change', function () {
+          const selectedFormat = this.value;
+          alert(`Date format changed to ${selectedFormat}`);
+        });
+      }
+
+      // Password change form
+      const changePasswordForm = document.getElementById('change-password-form');
+      if (changePasswordForm) {
+        changePasswordForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          const currentPassword = document.getElementById('current-password').value;
+          const newPassword = document.getElementById('new-password').value;
+          const confirmPassword = document.getElementById('confirm-password').value;
+
+          if (!currentPassword || !newPassword || !confirmPassword) {
+            alert('Please fill in all password fields');
+            return;
+          }
+
+          if (newPassword !== confirmPassword) {
+            alert('New password and confirm password do not match');
+            return;
+          }
+
+          alert('Password changed successfully');
+          this.reset();
+        });
+      }
+
+      // Two-factor authentication toggle
+      const twoFactorToggle = document.getElementById('two-factor-toggle');
+      if (twoFactorToggle) {
+        twoFactorToggle.addEventListener('change', function () {
+          if (this.checked) {
+            alert('Two-factor authentication enabled. You will be prompted to set up an authentication app.');
+          } else {
+            if (confirm('Are you sure you want to disable two-factor authentication? This will make your account less secure.')) {
+              alert('Two-factor authentication disabled');
+            } else {
+              this.checked = true;
+            }
+          }
+        });
+      }
+
+      // Backup now button
+      const backupNowBtn = document.querySelector('.data-option .primary-btn');
+      if (backupNowBtn && backupNowBtn.textContent.includes('Backup Now')) {
+        backupNowBtn.addEventListener('click', function () {
+          alert('Creating backup...');
+          setTimeout(() => {
+            alert('Backup created successfully');
+          }, 2000);
+        });
+      }
+
+      // Restore backup button
+      const restoreBackupBtn = document.querySelector('.data-option .secondary-btn');
+      if (restoreBackupBtn && restoreBackupBtn.textContent.includes('Restore Backup')) {
+        restoreBackupBtn.addEventListener('click', function () {
+          if (confirm('Are you sure you want to restore from a backup? This will overwrite current data.')) {
+            alert('Please select a backup file to restore from');
+          }
+        });
+      }
+
+      // Auto-backup toggle
+      const autoBackupToggle = document.getElementById('auto-backup-toggle');
+      if (autoBackupToggle) {
+        autoBackupToggle.addEventListener('change', function () {
+          if (this.checked) {
+            alert('Automatic backups enabled');
+          } else {
+            alert('Automatic backups disabled');
+          }
+        });
+      }
+
+      // Auto-backup frequency
+      const backupFrequency = document.getElementById('backup-frequency');
+      if (backupFrequency) {
+        backupFrequency.addEventListener('change', function () {
+          alert(`Backup frequency set to ${this.value}`);
+        });
+      }
+
+      // Initialize tooltips
+      const tooltips = document.querySelectorAll('[data-tooltip]');
+      tooltips.forEach(tooltip => {
+        tooltip.addEventListener('mouseenter', function () {
+          const tooltipText = this.getAttribute('data-tooltip');
+          const tooltipEl = document.createElement('div');
+          tooltipEl.className = 'tooltip';
+          tooltipEl.textContent = tooltipText;
+          document.body.appendChild(tooltipEl);
+
+          const rect = this.getBoundingClientRect();
+          tooltipEl.style.position = 'absolute';
+          tooltipEl.style.top = `${rect.bottom + 10}px`;
+          tooltipEl.style.left = `${rect.left + (rect.width / 2) - (tooltipEl.offsetWidth / 2)}px`;
+          tooltipEl.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+          tooltipEl.style.color = 'white';
+          tooltipEl.style.padding = '5px 10px';
+          tooltipEl.style.borderRadius = '4px';
+          tooltipEl.style.fontSize = '12px';
+          tooltipEl.style.zIndex = '1000';
+        });
+
+        tooltip.addEventListener('mouseleave', function () {
+          const tooltipEl = document.querySelector('.tooltip');
+          if (tooltipEl) {
+            tooltipEl.remove();
+          }
+        });
+      });
+
+      // Update color scheme to match teal theme
+      document.querySelectorAll('.stat-icon, .activity-icon, .overview-icon').forEach(icon => {
+        if (icon.style.backgroundColor === '#6884e7') {
+          icon.style.backgroundColor = 'var(--primary-light)';
+          icon.style.color = 'var(--primary-color)';
+        }
+      });
+
+      // Update active tab indicator color
+      document.querySelectorAll('.tab-btn.active').forEach(tab => {
+        const indicator = tab.querySelector('::after');
+        if (indicator) {
+          indicator.style.backgroundColor = 'var(--primary-color)';
+        }
+      });
+
+      // Dark Mode Toggle
+      // Check for saved dark mode preference
+      const savedDarkMode = localStorage.getItem('darkMode') === 'true';
+
+      // Apply dark mode if saved preference exists
+      if (savedDarkMode) {
+        document.body.classList.add('dark-mode');
+      }
+
+      // Add dark mode section to appearance settings if it exists
+      const appearanceTab = document.getElementById('appearance-tab');
+      if (appearanceTab && !appearanceTab.querySelector('.dark-mode-section')) {
+        const darkModeSection = document.createElement('div');
+        darkModeSection.className = 'dark-mode-section';
+        darkModeSection.innerHTML = `
+        <h4>Dark Mode</h4>
+        <p>Enable dark mode for a more comfortable viewing experience in low light environments.</p>
+        <div class="dark-mode-toggle">
+            <label for="dark-mode-settings">Enable Dark Mode</label>
+            <label class="switch">
+                <input type="checkbox" id="dark-mode-settings" ${savedDarkMode ? 'checked' : ''}>
+                <span class="slider round"></span>
+            </label>
+        </div>
+    `;
+        appearanceTab.appendChild(darkModeSection);
+
+        // Add event listener to the settings toggle
+        const darkModeSettingsCheckbox = darkModeSection.querySelector('#dark-mode-settings');
+        darkModeSettingsCheckbox.addEventListener('change', function () {
+          if (this.checked) {
+            document.body.classList.add('dark-mode');
+            localStorage.setItem('darkMode', 'true');
+          } else {
+            document.body.classList.remove('dark-mode');
+            localStorage.setItem('darkMode', 'false');
+          }
+        });
+      }
+
+      // Add dark mode toggle to mobile sidebar if it exists
+      const sidebarToggle = document.querySelector('.sidebar-toggle');
+      if (sidebarToggle) {
+        sidebarToggle.addEventListener('click', function () {
+          const sidebar = document.querySelector('.sidebar');
+          sidebar.classList.toggle('active');
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

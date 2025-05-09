@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSINVENTORY</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+
+  <!-- sweetalert2 style -->
+  <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
+  <!--  -->
+
+  <style>
+    /* Autocomplete container - NEW */
+    .autocomplete-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      /* Match parent width */
+    }
+
+    /* Suggestion list styling */
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      background: #fff;
+      top: 100%;
+      /* Position below input */
+      left: 0;
+      margin-top: 2px;
+      display: none;
+      /* Hidden by default */
+    }
+
+    .autocomplete-item {
+      padding: 5px 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .autocomplete-item:hover {
+      background: #D0F1E6;
+    }
+  </style>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <nav class="inner-navbar">
+          <ul class="nav-list">
+            <li class="nav-item"><a href="service.html" class="active">Registration</a></li>
+            <li class="nav-item"><a href="service-in-progress.html">Processing</a></li>
+            <li class="nav-item"><a href="service-delivery.html">Delivery</a></li>            
+            <li class="nav-item"><a href="service-history.html">History</a></li>
+          </ul>
+        </nav>
+        
+          <form id="itemForm">
+            <div class="x_panel">
+              <div class="x_content">
+                <div class="row">
+                  <div class="col-md-3 col-sm-6 col-xs-12">
+                    <!-- Date -->
+                    <div class="form-group has-feedback">
+                      <label for="date">Date * :</label>
+                      <input type="text" class="form-control has-feedback-left input-sm" id="date"
+                        placeholder="Select date" required>
+                      <i style="color: rgba(0, 0, 0, 1);"
+                        class="fa fa-calendar form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
+                    </div>
+                    <!-- Delivery Date -->
+                    <div class="form-group has-feedback">
+                      <label for="delivery_date">Delivery Date * :</label>
+                      <input type="text" class="form-control has-feedback-left input-sm" id="delivery_date"
+                        placeholder="Select Delivery Date" required>
+                      <i style="color: rgba(0, 0, 0, 1);"
+                        class="fa fa-calendar form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
+                    </div>
+                    <!-- Note -->
+                    <div class="form-group has-feedback">
+                      <label for="note">Note :</label>
+                      <input type="text" class="form-control has-feedback-left input-sm" id="note" placeholder="Note">
+                      <i style="color: rgba(0, 0, 0, 1);"
+                        class="fa fa-comment form-control-feedback left input-sm-feedback" aria-hidden="true">
+                      </i>
+                    </div>
+                  </div>
+                  <div class="col-md-4 col-sm-6 col-xs-12">
+                    <!-- Customer Account -->
+                    <div class="form-group has-feedback">
+                      <div class="row">
+                        <div class="col-md-10 col-sm-10 col-xs-10">
+                          <label for="customer">Customer * :</label>
+                          <div id="customer-autocomplete-container" class="autocomplete-container">
+                            <input type="text" id="customer" class="form-control form-select has-feedback-left input-sm"
+                              placeholder="Enter Name/Mobile/Code" autocomplete="off" required>
+                            <i style="color: rgba(0, 0, 0, 1);"
+                              class="form-control-feedback left fa fa-user input-sm-feedback" aria-hidden="true">
+                            </i>
+                            <div id="customer-suggestions" class="autocomplete-items"></div>
+                          </div>
+                        </div>
+                        <div style="margin-top: 24px; margin-right: 5px;" class="pull-right">
+                          <button type="button" class="btn btn-sm btn-danger pull-right" id="createCustomerBtn">
+                            <i class="fa fa-plus"></i>&nbsp;
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- Memo No -->
+                    <div class="form-group has-feedback">
+                      <div class="row">
+                        <div class="col-md-10 col-sm-10 col-xs-10">
+                          <label for="memo_no">Memo No :</label>
+                          <div id="memo-autocomplete-container" class="autocomplete-container">
+                            <input type="text" id="memo_no" class="form-control form-select has-feedback-left input-sm"
+                              placeholder="Enter Memo No" autocomplete="off">
+                            <i style="color: rgba(0, 0, 0, 1);"
+                              class="form-control-feedback left fa fa-list input-sm-feedback" aria-hidden="true">
+                            </i>
+                            <div id="memo-suggestions" class="autocomplete-items"></div>
+                          </div>
+                        </div>
+                        <div style="margin-top: 24px; margin-right: 5px;" class="pull-right">
+                          <button type="button" class="btn btn-sm btn-danger pull-left" id="edit_purchase_btn">
+                            <i class="fa fa-edit"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>                  
+                    <!-- Received By -->
+                    <div class="form-group has-feedback">
+                      <label for="received_by">Received By :</label>
+                      <input type="text" class="form-control has-feedback-left input-sm" id="received_by" placeholder="Received By">
+                      <i style="color: rgba(0, 0, 0, 1);"
+                        class="fa fa-user form-control-feedback left input-sm-feedback" aria-hidden="true">
+                      </i>
+                    </div>
+                  </div>
+                  <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="form-group has-feedback">
+                      <!-- Bill Amount -->
+                      <label for="bill_amount">Bill Amount * :</label>
+                      <input type="number" min="0" class="form-control has-feedback-left input-sm" id="bill_amount"
+                        placeholder="0" readonly>
+                      <i style="color: rgba(0, 0, 0, 1);"
+                        class="fa fa-money form-control-feedback left input-sm-feedback" aria-hidden="true">
+                      </i>
+                    </div>
+                    <!-- Discount -->
+                    <div class="form-group has-feedback">
+                      <label for="discount">Discount :</label>
+                      <input type="number" step="0.01" min="0" max="100.00" value="0"
+                        class="form-control has-feedback-left has-feedback-right input-sm" id="discount" placeholder="%"
+                        required>
+                      <i style="color: rgba(0, 0, 0, 1);"
+                        class="fa fa-gift form-control-feedback left input-sm-feedback" aria-hidden="true">
+                      </i>
+                      <span style="color: rgba(0, 0, 0, 1); font-weight: bold; border: none;"
+                        class="form-control-feedback right input-sm-feedback" aria-hidden="true">%
+                      </span>
+                    </div>
+                    <!-- Cash-Bank Account -->
+                    <div class="form-group has-feedback">
+                      <label for="head_account">Cash-Bank Account * :</label>
+                      <select id="head_account" class="form-control form-select has-feedback-left input-sm" required>
+                        <option value="" selected disabled>Select Account</option>
+                        <!--Updated by JS DOM -->
+                      </select>
+                      <i style="color: rgba(0, 0, 0, 1);"
+                        class="form-control-feedback left fa fa-bank input-sm-feedback" aria-hidden="true">
+                      </i>
+                    </div>
+                  </div>
+                  <div class="col-md-2 col-sm-6 col-xs-12">
+                    <!-- Total amount -->
+                    <div class="form-group">
+                      <label for="total_amount">Total Amount * :</label>
+                      <input type="number" min="0" class="form-control input-sm" id="total_amount"
+                        placeholder="Total Amount">
+
+                      </i>
+                    </div>
+                    <!-- Received amount -->
+                    <div class="form-group">
+                      <label for="received_amount">Received Amount * :</label>
+                      <input type="number" min="0" class="form-control input-sm" id="received_amount"
+                        placeholder="Received Amount" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="due_amount">Due Amount * :</label>
+                      <input type="number" min="0" class="form-control input-sm" id="due_amount"
+                        placeholder="Due Amount" readonly>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="input-group">
+                  <div id="service-autocomplete-container" class="autocomplete-container">
+                    <input type="text" id="service_item" class="form-control form-select input-sm"
+                      placeholder="Enter Service Name/Code" autocomplete="off">
+                    <div id="service-suggestions" class="autocomplete-items"></div>
+                  </div>
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-sm btn-dark pull-right" id="addItem"> Add</button>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-8 col-sm-6 col-xs-12">
+                <div class="pull-left">
+                  <button type="button" class="btn btn-sm btn-primary pull-right" id="createServiceBtn">
+                    <i class="fa fa-plus">&nbsp;&nbsp;</i>Create Service
+                  </button>
+                </div>
+                <div class="pull-right">
+                  <div class="col-md-12 col-sm-12 col-xs-12 text-center" style="margin-top: 5px;">
+                    <button type="button" id="submitBtn" onclick="submitForm()" class="btn btn-danger btn-sm">Submit</button>
+                    <button type="button" id="printInvoiceBtn" onclick="printPurchaseInvoice()"
+                      class="d-none btn btn-dark btn-sm"><i class="fa fa-print"></i>&nbsp;&nbsp;Print Invoice</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              style="background-color:#fff; overflow-y: scroll; scrollbar-width: thin; scrollbar-color: #4f6969 #f1f1f1; height: 320px;">
+
+              <table id="itemTable" class="table table-sm">
+                <thead>
+                  <tr>
+                    <th>Service Name</th>
+                    <th>Product S/N</th>
+                    <th>Problem Description</th>
+                    <th>amount</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Rows will be dynamically added here -->
+                </tbody>
+              </table>
+            </div>
+
+          </form>
+        
+      </div>
+      <!-- /top tiles -->
+    </div>
+    <!-- /page content -->
+  </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  
+  <!-- DateJS -->
+  <script src="src/assets/vendors/DateJS/build/date.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+  <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+  <script>
+    let services = [], memos = [], selectedServiceItem = null, selectedServiceIndex = 0, selectedMemo=null, selectedCustomer = null, customers = [], headAccounts = [], purchased_service = [], purchase_details = [], InvoiceData, company;
+    window.addEventListener("DOMContentLoaded", event => {
+      initSingleDatePicker("#date");
+      initSingleDatePicker("#delivery_date");
+      document.getElementById("received_by").value = appUser.username
+      // Show popup form for adding a new customer
+      document.getElementById("createCustomerBtn").addEventListener("click", e => {
+            addNewCustomer("sale", customers);
+          });
+      // Show popup form for adding a new service
+      document.getElementById("createServiceBtn").addEventListener("click", e => {
+        let flag = addNewService("service", services);
+      });
+      // add a row for selected service
+      document.getElementById("addItem").addEventListener("click", e => {
+        if(!selectedServiceItem){
+          alertQuestion("Please Select a Service")
+        } else{
+          addRow(selectedServiceItem)
+        }
+      });
+
+      // Initialize fetch promises
+      const fetchCustomers = fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/active', { method: "post" })
+        .then(response => response.json())
+        .then(function (responseData) {
+          customers = responseData.customers || [];
+        })
+        .catch(function (error) {
+          console.error('Error fetching customers data:', error);
+        });
+
+      const fetchHeadAccounts = fetch('https://psinventory-v2.onrender.com/admin/accounts/get-cash-bank-accounts', { method: "post" })
+        .then(response => response.json())
+        .then(function (responseData) {
+          headAccounts = responseData.head_accounts || [];
+        })
+        .catch(function (error) {
+          console.error('Error fetching head accounts data:', error);
+        });
+
+
+      const fetchServices = fetch('https://psinventory-v2.onrender.com/admin/inventory/services/list?status=true', { method: "post" })
+        .then(response => response.json())
+        .then(function (responseData) {
+          services = responseData.result || [];
+          company = responseData.company;
+          console.log("Services: ", services);
+        })
+        .catch(function (error) {
+          console.error('Error fetching services data:', error);
+        });
+
+      
+
+      // Wait for all fetch requests to complete
+      Promise.all([fetchCustomers, fetchHeadAccounts, fetchServices])
+        .then(() => {
+          updateCustomerDiv();   // Update customers after fetching
+          updateAccountsDiv();   // Update head accounts after fetching
+          updateServicesDiv();   // Update services after fetching
+        })
+        .catch(error => {
+          console.error("Error completing all fetch requests:", error);
+        });
+    });
+    //updateCustomerDiv updates customer selection options with the fetched data
+    function updateCustomerDiv() {
+      const container = document.getElementById('customer-autocomplete-container');
+      const input = document.getElementById("customer");
+      const suggestions = document.getElementById("customer-suggestions");
+
+      // Function to populate suggestions
+      function populateSuggestions(filteredCustomers) {
+        suggestions.innerHTML = '';
+        if (filteredCustomers.length === 0) {
+          suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
+          return;
+        }
+        filteredCustomers.forEach(customer => {
+          const div = document.createElement("div");
+          div.className = "autocomplete-item";
+          div.innerHTML = `
+            <div class="d-flex justify-content-between">
+              <span>${customer.account_name}</span>
+              <small class="text-muted">${customer.account_code}</small>
+            </div>
+          `;
+          div.onclick = () => {
+            input.value = customer.account_name;
+            suggestions.style.display = 'none';
+            selectedCustomer = customer;
+          };
+          suggestions.appendChild(div);
+        });
+
+      }
+
+      input.addEventListener("input", function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        suggestions.style.display = 'block';
+
+        if (!searchTerm) {
+          suggestions.style.display = 'none';
+          return;
+        }
+
+        const filtered = customers
+          .filter(s =>
+            s.account_name.toLowerCase().includes(searchTerm) ||
+            s.mobile.includes(searchTerm)
+          )
+          .slice(0, 15);
+        populateSuggestions(filtered);
+      });
+
+      // Show all suggestions on first click
+      input.addEventListener("focus", function () {
+        const filtered = customers.slice(0, 15);
+        suggestions.style.display = 'block';
+        populateSuggestions(filtered);
+      });
+
+      // Hide suggestions when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+          suggestions.style.display = 'none';
+        }
+      });
+    }
+
+    //updateAccountsDiv updates account selection options with the fetched data 
+    function updateAccountsDiv() {
+      const account = document.getElementById("head_account")
+      account.innerHTML = '';
+
+      if (headAccounts) {
+        headAccounts.forEach((ac, i) => {
+          account.innerHTML += `<option value=${i}>${ac.account_name}</option>`;
+        });
+        account.selectedIndex = 0
+      } else {
+        account.innerHTML = `<option value="" selected disabled>No Account Available</option>`;
+      }
+    }
+
+    
+    function updateServicesDiv() {
+      const container = document.getElementById('service-autocomplete-container');
+      const input = document.getElementById("service_item");
+      const suggestions = document.getElementById("service-suggestions");
+
+      // Function to populate suggestions
+      function populateSuggestions(filteredServices) {
+        suggestions.innerHTML = '';
+        if (filteredServices.length === 0) {
+          suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
+          return;
+        }
+        filteredServices.forEach((item, index) => {
+          const div = document.createElement("div");
+          div.className = "autocomplete-item";
+          div.innerHTML = `
+            <div class="d-flex justify-content-between">
+              <span>${item.name}</span>
+              <small>${item.code}</small>
+            </div>
+          `;
+          div.onclick = () => {
+            input.value = item.name;
+            suggestions.style.display = 'none';
+            selectedServiceItem = item;
+            selectedServiceIndex = index;
+          };
+          suggestions.appendChild(div);
+        });
+      }
+
+      input.addEventListener("input", function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        suggestions.style.display = 'block';
+
+        if (!searchTerm) {
+          suggestions.style.display = 'none';
+          return;
+        }
+
+        const filtered = services
+          .filter(p =>
+            p.name.toLowerCase().includes(searchTerm) ||
+            p.code.toLowerCase().includes(searchTerm)
+          )
+          .slice(0, 15);
+        populateSuggestions(filtered);
+      });
+
+      // Show all suggestions on first click
+      input.addEventListener("focus", function () {
+        const filtered = services.slice(0, 15);
+        suggestions.style.display = 'block';
+        populateSuggestions(filtered);
+      });
+
+      // Hide suggestions when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+          suggestions.style.display = 'none';
+        }
+      });
+    }
+
+    // Function to add a new row
+    function addRow(item) {
+      // const item = selectedServiceItem;
+      const tableBody = document.querySelector("#itemTable tbody");
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td><input type="text" name="itemName[]" class="form-control input-sm" value='${item.name + "-" + item.id}' required readonly></td>
+        <td><input type="text" name="productSN[]" class="form-control input-sm" placeholder="Enter serial number"></td>
+        <td><input type="text" name="problemDescription[]" class="form-control input-sm" placeholder="Problem Description"></td>
+        <td><input type="number" name="amount[]" class="form-control input-sm" min="0" onchange="updateTotal()" value='${item.base_fee}' required></td>
+        <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)">Delete</button></td>
+      `;
+
+      // Store the service ID in a data attribute of the row
+      row.dataset.serviceId = item.id;
+      tableBody.appendChild(row);
+      updateTotal();
+    }
+
+    // Function to update the total amount
+    function updateTotal() {
+      let billAmount = 0, discountAmount = 0, totalAmount = 0;
+      document.querySelectorAll('input[name="amount[]"]').forEach(amountField => {
+        billAmount += parseInt(parseFloat(amountField.value) || 0); // Convert amount to integer
+      });
+      document.getElementById("bill_amount").value = billAmount;
+      discountAmount = parseFloat(document.getElementById("discount").value) || 0;
+      totalAmount = Math.round(billAmount - billAmount * discountAmount / 100)
+      document.getElementById("total_amount").value = totalAmount;
+      document.getElementById("received_amount").max = totalAmount;
+      document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("received_amount").value) || 0;
+    }
+    //updating total amount on change discount input
+    document.getElementById("discount").addEventListener("change", e => {
+      let billAmount = parseInt(document.getElementById("bill_amount").value) || 0;
+      let discountAmount = parseFloat(document.getElementById("discount").value) || 0;
+      let totalAmount = Math.round(billAmount - billAmount * discountAmount / 100)
+      document.getElementById("total_amount").value = totalAmount;
+      document.getElementById("received_amount").max = totalAmount;
+      document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("received_amount").value) || 0;
+    })
+    //updating discount on change total_amount input
+    document.getElementById("total_amount").addEventListener("change", e => {
+      let totalAmount = parseInt(document.getElementById("total_amount").value) || 0;
+      let billAmount = parseInt(document.getElementById("bill_amount").value) || 0;
+      document.getElementById("discount").value = parseFloat((billAmount - totalAmount) * 100 / billAmount).toFixed(2);
+      document.getElementById("received_amount").max = totalAmount
+      document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("received_amount").value) || 0;
+    })
+    //updating due amount on change received_amount input
+    document.getElementById("received_amount").addEventListener("change", e => {
+      let totalAmount = parseInt(document.getElementById("total_amount").value) || 0
+      let receivedAmount = parseInt(document.getElementById("received_amount").value) || 0
+      document.getElementById("due_amount").value = totalAmount - receivedAmount;
+    })
+
+    // Function to remove a row
+    function removeRow(button) {
+      const row = button.closest("tr");
+      row.remove();
+      updateTotal();
+    }
+
+    // Function to get all table data including serial numbers
+    function getTableData() {
+      const tableBody = document.querySelector("#itemTable tbody");
+      const rows = tableBody.querySelectorAll("tr");
+      const data = [];
+
+      rows.forEach(row => {
+        const name = row.querySelector('input[name="itemName[]"]').value;
+        const serial_number = row.querySelector('input[name="productSN[]"]').value;
+        const problem_description = row.querySelector('input[name="problemDescription[]"]').value;
+        const amount = parseInt(row.querySelector('input[name="amount[]"]').value);
+        
+        const parts = name.split("-");
+        let item = services[parseInt(parts[parts.length - 1])]
+        let id = parseInt(parts[1])
+        let actualName = parts[0]
+        data.push({
+          id,
+          actualName,
+          serial_number,
+          problem_description,
+          amount,
+        });
+      });
+
+      return data;
+    }
+
+
+    //submit form 
+    function submitForm() {
+      const form = document.getElementById("itemForm")
+      // Prevent actual form submission
+      if (!form.checkValidity()) {
+        form.preventDefault
+        return;
+      }
+      let btn = document.getElementById("submitBtn");
+      btn.disabled = true;
+      btn.innerHTML = 'Processing <i class="fa fa-spinner fa-spin"></i>';
+
+      const tableData = getTableData();
+      
+      const reqBody = {
+        date: document.getElementById("date").value,
+        delivery_date: document.getElementById("delivery_date").value,
+        customer: selectedCustomer,
+        head_account: headAccounts[parseInt(document.getElementById("head_account").value)],
+        memo_no: document.getElementById("memo_no").value,
+        received_by: document.getElementById("received_by").value,
+        note: document.getElementById("note").value,
+        bill_amount: parseInt(document.getElementById("bill_amount").value),
+        discount: Math.round(document.getElementById("discount").value),
+        total_amount: parseInt(document.getElementById("total_amount").value),
+        received_amount: parseInt(document.getElementById("received_amount").value),
+        due_amount: parseInt(document.getElementById("due_amount").value),
+        purchased_service: tableData
+      }
+      console.log(reqBody); // Log table data to console
+      const requestOptions = {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody),
+      }
+      fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log("purchase response:", data)
+          if (data.error === true) {
+            alertQuestion(data.message)
+            btn.innerHTML = 'Error!'
+          } else {
+            showSuccessMessage(data.message);
+            setTimeout(() => {
+              btn.innerHTML = 'Success';
+              btn.classList.remove('btn-danger');
+              btn.classList.add('btn-success');
+              btn.onclick = ()=>{
+                location.reload();
+              }
+            }, 1000);
+            setTimeout(() => {
+              btn.innerHTML = 'Reset Form';
+              btn.disabled = false;
+              btn.onclick = ()=>{
+                location.reload();
+              }
+            }, 2000);
+            InvoiceData = data.invoice_data;
+            document.getElementById("printInvoiceBtn").classList.remove('d-none')
+          }
+        });
+    }
+    //printPurchaseInvoice prints the current invoice
+    function printPurchaseInvoice() {
+      //service list table
+      let tBody = ""
+      let company_info = ""
+      let pLn = InvoiceData.purchased_service.length
+      for (let i = 0; i < pLn; i++) {
+        const items = InvoiceData.purchased_service[i]
+        let sn = ""
+        items.serial_numbers.forEach((s, j) => {
+          if (j % 2 === 1) {
+            sn += `#${s}<br>`
+          } else {
+            sn += `#${s}&nbsp;&nbsp;&nbsp;&nbsp;`
+          }
+        })
+        tBody += `
+        <tr>
+          <td>${i + 1}</td>
+          <td>
+              ${items.item.service_name}<br>
+              <span class="service-deatils">
+                ${sn}
+              </span>
+          </td>
+          <td style="text-align:center">${items.warranty} Days</td>
+          <td style="text-align:center">${items.quantity}</td>
+          <td style="text-align:right">${items.amount}</td>
+          <td style="text-align:right">${items.quantity * items.amount}</td>
+        </tr>`
+      }
+
+      //company
+      company_info = ` 
+      <div class="company-info">
+          <p class="company-name">${company.name}</p>
+          <p class="company-slogan">${company.slogan} </p>
+          <p>Address: ${company.area}<br>
+            ${company.mobile === "" ? "" : 'Mobile: ' + company.mobile + "<br>"}
+            ${company.email === "" ? "" : 'Email: ' + company.email} ${company.email === "" ? "" : '|| Website: ' + company.website + "<br>"}
+              <span class="basic" style="float: inline-end; margin-top: 5px; font-weight: bold;">Date: ${moment(InvoiceData.purchase_date).format("DD-MMM-YYYY")}</span>
+          </p>
+      </div>`
+
+      const content = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Purchase Invoice</title>
+        <style>
+            /* General Styling */
+            * {
+                box-sizing: border-box;
+                margin: 0;
+                padding: 0;
+                font-family: IBMPlexSans-Regular;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                color: #000000;
+                background-color: #ffffff;
+                padding: 5px;
+            }
+
+            /* A4 Page Setup */
+            .invoice-container {
+                margin: auto;
+                padding: 10px;
+                background-color: #fff;
+            }
+
+            /* Header Styling */
+            .header {
+                background-color: #10455f;
+                color: white;
+                padding: 10px;
+                text-align: center;
+                border-radius: 5px;
+                margin-bottom: 5px;
+            }
+
+            .header h1 {
+                font-family: 'Georgia', serif;
+                font-size: 24px;
+                font-weight: 700;
+                margin: 0;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            /* Info Section */
+            .info-section {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 0px;
+                padding: 5px;
+                background-color: #F7F9FB;
+                border-bottom: 2px solid #1E3A5F;
+            }
+
+            .info-section div {
+                width: 45%;
+            }
+
+            /* Customer Info and Company Info Styling */
+            .customer-info h2 {
+                font-family: IBMPlexSans-Regular;
+                font-size: 20px;
+                color: #1E3A5F;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+
+            .customer-info p {
+                font-size: 14px;
+                color: #000000;
+                line-height: 2;
+            }
+
+            .basic {
+                font-family: IBMPlexSans-Regular;
+                letter-spacing: 0.5px;
+                padding-left: 2px;
+                padding-right: 2px;
+                border-bottom: 1px dotted #000000;
+            }
+
+            .invoice {
+                font-family: IBMPlexSans-Bold;
+                float: left;
+                letter-spacing: 0.5px;
+            }
+
+            .customer-info .date {
+                font-family: IBMPlexSans-Bold;
+                float: right;
+                letter-spacing: 0.5px;
+            }
+
+            .company-info p {
+                font-family: IBMPlexSans-Regular;
+                font-size: 14px;
+                color: #000000;
+                line-height: 1.5;
+            }
+
+            .company-info {
+                text-align: right;
+            }
+
+            /* Company Info Enhanced Styling */
+            .company-info .company-name {
+                font-family: IBMPlexSans-Regular;
+                font-size: 24px;
+                font-weight: bold;
+                color: #1E3A5F;
+            }
+
+            .company-info .company-slogan {
+                font-style: italic;
+                color: #092635;
+                font-size: 12px;
+            }
+
+            /* Table Styling */
+            .items-table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 10px;
+                font-size: 12px;
+                color: #000000;
+            }
+
+            .service-deatils {
+                font-size: 10px;
+                line-height: 1.25em;
+            }
+
+            .items-table th,
+            .items-table td {
+                padding: 8px;
+                border: 1px solid #373737;
+                text-align: left;
+            }
+
+            .items-table th {
+                font-family: Arial, sans-serif;
+                background-color: #10455f;
+                color: white;
+                font-weight: bold;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+                word-spacing: 2px;
+            }
+
+            /* Totals and Payment Info */
+            .totals-section {
+                font-family: IBMPlexSans-Regular;
+                display: flex;
+                justify-content: space-between;
+                margin-top: 10px;
+                gap: 10px;
+                font-size: 12px;
+                color: #ffffff;
+            }
+
+            .totals,
+            .payment-info {
+                flex: 1;
+                padding: 10px;
+                background-color: #ffffff;
+                border-radius: 5px;
+                border: 1px solid #ddd;
+            }
+
+            .totals .total-row,
+            .payment-info .info-row {
+                display: flex;
+                justify-content: space-between;
+                padding: 5px 0;
+                color: #444;
+            }
+
+            .totals .total-label,
+            .payment-info .info-label {
+                color: #1f1f1f;
+            }
+
+            /* Signature Section */
+            .signature-section {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 20px;
+                padding: 10px;
+            }
+
+            .signature-box {
+                width: 45%;
+                text-align: center;
+            }
+
+            .signature-box h3 {
+                font-size: 14px;
+                color: #1E3A5F;
+                margin-bottom: 40px;
+            }
+
+            .signature-line {
+                border-top: 1px dotted #949593;
+                margin: 0 auto;
+                width: 80%;
+            }
+
+            /* Remarks Section */
+            .remarks {
+                font-size: 14px;
+                color: #4b4949;
+                background-color: #F7F9FB;
+                padding: 10px;
+                border-left: 3px solid #4C91B3;
+                margin-top: 10px;
+            }
+        </style>
+      </head>
+
+      <body>
+        <div class="invoice-container" id="invoice-content">
+            <!-- Header Title with Solid Background Color and Updated Font Style -->
+            <div class="header">
+                <h1>Purchase Invoice</h1>
+            </div>
+
+            <!-- Info Section with Customer and Company Info Side by Side -->
+            <div class="info-section">
+                <!-- Customer Info -->
+                <div class="customer-info">
+                    <h2>Vendor Details</h2>
+                    <p>Name: <span class="basic" style="margin-left: 20px;">${InvoiceData.customer.account_name}</span><br>
+                        Mobile: <span class="basic" style="margin-left: 18px;">${InvoiceData.customer.mobile}<br></span>
+                        Address: <span class="basic" style="margin-left: 8px;">${InvoiceData.customer.area != "" ? InvoiceData.customer.area + "," : ""}<br></span>
+                        Invoice: <span class="basic" style="margin-left: 15px; font-weight: bold;">${InvoiceData.memo_no}</span>
+                    </p>
+                </div>
+
+                <!-- Logo Section -->
+                <div class="logo-section" style="width: 20%; display: flex; align-items: center;">
+                    <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="Company Logo" style="max-width: 100%; max-height: 100px; object-fit: contain; padding-top:0">
+                </div>
+                <!-- Company Info -->
+                ${company_info}
+            </div>
+
+            <!-- Items Table -->
+            <table class="items-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Description</th>
+                        <th>Warranty</th>
+                        <th>Quantity</th>
+                        <th>Unit Price</th>
+                        <th>Total Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  ${tBody}
+                    <!-- rows will be add using JS DOM -->
+                </tbody>
+            </table>
+
+            <!-- Totals and Payment Info Section with Consistent Spacing -->
+            <div class="totals-section">
+
+                <!-- Payment Info Section -->
+                <div class="payment-info">
+                    <div class="info-row"><span class="info-label">Payment Method</span><span>${InvoiceData.challan_no === "" ? "Cash Payment" : "Bank Payment"}</span></div>
+                    <div class="info-row"><span class="info-label">Cheque No.</span><span>${InvoiceData.challan_no || ""}</span></div>
+                    <div class="info-row"><span class="info-label">Due</span><span>${InvoiceData.total_amount - InvoiceData.received_amount}</span></div>
+                    <div class="info-row"><span class="info-label">Customer's Total Due</span><span>${-1 * InvoiceData.customer.due_amount + InvoiceData.total_amount - InvoiceData.received_amount}</span></div>
+                </div>
+                <!-- Totals Section -->
+                <div class="totals">
+                    <div class="total-row"><span class="total-label">amount</span><span>${InvoiceData.bill_amount}</span></div>
+                    <div class="total-row"><span class="total-label">Discount</span><span>${InvoiceData.bill_amount - InvoiceData.total_amount}</span></div>
+                    <div class="total-row"><strong>Total Amount</strong><span><strong>${InvoiceData.total_amount}</strong></span></div>
+                    <div class="total-row"><strong>Received Amount</strong><span><strong>${InvoiceData.received_amount}</strong></span></div>
+                </div>
+            </div>
+
+            <!-- Signature Section -->
+            <div class="signature-section">
+                <div class="signature-box"> 
+                    <div class="signature-line"></div>
+                    <h4>Authorized Signature</h4>
+                </div>
+            </div>
+
+            <!-- Remarks Section -->
+            <div class="remarks">
+                <p>
+                  <strong>Remarks:</strong><br>
+                  This invoice is generated electronically. The company reserves the right to make changes in case of any inconsistencies or mistakes.
+                </p>
+            </div>
+        </div>
+      </body>
+      </html>
+
+
+      `
+      // Create an iframe to load the content
+      const iframe = document.createElement('iframe');
+      document.body.appendChild(iframe);
+      iframe.style.display = 'none';
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      doc.open();
+      doc.write(content);
+      doc.close();
+
+      // Wait for content to load and then print
+      iframe.onload = () => {
+        iframe.contentWindow.print();
+        document.body.removeChild(iframe);
+      };
+    }
+  </script>
+</body>
+
+</html>

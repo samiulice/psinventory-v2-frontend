@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSINVENTORY</title>
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+
+  <!-- sweetalert2 style -->
+  <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
+  <!--  -->
+  <style>
+    /*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+
+    #footer {
+      all: unset;
+      background: #10171F;
+      margin: 0;
+      padding: 0;
+      height: max-content;
+      color: #eee;
+      font-size: 14px;
+    }
+
+    #footer .footer-top {
+      background: #10171F;
+      margin: 30px 0px;
+      padding: 20px;
+      padding-top: 50px;
+      border-radius: 10px;
+    }
+
+    #footer .footer-top .footer-info{
+      margin-bottom: 50px;
+    }
+    #footer .footer-top .footer-info h3 {
+      font-size: 34px;
+      margin: 0 0 10px 0;
+      padding: 2px 0 2px 10px;
+      line-height: 1;
+      font-family: "Montserrat", sans-serif;
+      font-weight: 700;
+      letter-spacing: 3px;
+      border-left: 4px solid #08C9C9;
+    }
+
+    #footer .footer-top .footer-info p {
+      font-size: 14px;
+      line-height: 24px;
+      margin-bottom: 0;
+      font-family: "Montserrat", sans-serif;
+      color: #eee;
+    }
+
+    #footer .footer-top .social-links a {
+      display: inline-block;
+      background: #333;
+      color: #eee;
+      line-height: 1;
+      margin-right: 4px;
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #footer .footer-top .social-links a i {
+      line-height: 0;
+      font-size: 16px;
+    }
+
+    #footer .footer-top .social-links a:hover {
+      background: #08C9C9;
+      color: #fff;
+    }
+
+    #footer .footer-top h4 {
+      font-size: 14px;
+      font-weight: bold;
+      color: #fff;
+      text-transform: uppercase;
+      position: relative;
+      padding-bottom: 12px;
+    }
+
+    #footer .footer-top h4::before,
+    #footer .footer-top h4::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 2px;
+    }
+
+    #footer .footer-top h4::before {
+      right: 0;
+      background: #555;
+    }
+
+    #footer .footer-top h4::after {
+      background: #08C9C9;
+      width: 60px;
+    }
+
+    #footer .footer-top .footer-links {
+      margin-bottom: 50px;
+    }
+
+    #footer .footer-top .footer-links ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #footer .footer-top .footer-links ul i {
+      padding-right: 8px;
+      color: #ddd;
+    }
+
+    #footer .footer-top .footer-links ul li {
+      border-bottom: 1px solid #333;
+      padding: 10px 0;
+    }
+
+    #footer .footer-top .footer-links ul li:first-child {
+      padding-top: 0;
+    }
+
+    #footer .footer-top .footer-links ul a {
+      color: #eee;
+    }
+
+    #footer .footer-top .footer-links ul a:hover {
+      color: #08C9C9;
+    }
+
+    #footer .footer-top .footer-contact {
+      margin-bottom: 20px;
+    }
+
+    #footer .footer-top .footer-contact p {
+      line-height: 26px;
+    }
+
+    #footer .footer-top .copyright {
+      text-align: center;
+      background-color: #0e8080;
+      color: #00181c;
+      padding: 5px;
+      margin-top: 50px;
+    }
+  </style>
+
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <div id="page-content" class="right_col" role="main">
+        <!-- ======= Footer ======= -->
+        <div id="footer">
+          <div class="footer-top">
+            <div class="container">
+              <div class="footer-info" style="display: flex; justify-content: center; padding: 5px;">
+                <img src="src/assets/images/logo-alt-white.png" alt="Projuktisheba Logo"
+                  style="margin-right:10px; max-width: 150px; height: 75px; padding: 5px;">
+                <h3>PROJUKTI<br>SHEBA</h3>
+
+              </div>
+              <div class="col-lg-4 col-md-4 footer-contact">
+                <h4>Our Goals</h4>
+                <p>
+                  Our goal is to empower businesses with innovative digital solutions for growth and success. We offer
+                  tailored inventory software, website design, Ads Campaign management, video editing, graphics
+                  design, YouTube SEO, and SMO/SMM services.
+                </p>
+              </div>
+              <div class="col-lg-4 col-md-4 footer-contact">
+                <h4>Contact Us</h4>
+                <p>
+                  Teribazar, UCB Bank Building (3rd Floor)<br> Netrakona Sadar, Netrakona-2400. <br>
+                  <strong>Phone:</strong> +8801712377406<br>
+                  <strong>Email:</strong> support@projuktisheba.com<br>
+                </p>
+
+                <div class="social-links">
+                  <a href="https://wa.me/+8801712377406" target="_blank" class="whatsapp"><i
+                      class="fa-brands fa-whatsapp"></i></a>
+                  <a href="https://www.facebook.com/projuktishebaofficial" target="_blank" class="facebook"><i
+                      class="fa-brands fa-facebook"></i></a>
+                  <a href="https://www.youtube.com/@projuktishebaofficial" target="_blank" class="youtube"><i
+                      class="fa-brands fa-youtube"></i></a>
+                  <a href="https://projuktisheba.com" target="_blank" class="website"><i
+                      class="fa-solid fa-globe"></i></i></a>
+                  <a href="https://www.linkedin.com/in/projuktishebaofficial/" target="_blank" class="linkedin"><i
+                      class="fa-brands fa-linkedin"></i></a>
+                  <a href="https://www.instagram.com/projukti_sheba/" target="_blank" class="instagram"><i
+                      class="fa-brands fa-instagram"></i></a>
+                </div>
+              </div>
+
+              <div class="col-lg-4 col-md-4 footer-links">
+                <h4>Useful Links</h4>
+                <ul>
+                  <li><i class="bi bi-chevron-right"></i> <a href="https://projuktisheba.com/" target="_blank">Home</a>
+                  </li>
+                  <li><i class="bi bi-chevron-right"></i> <a href="https://projuktisheba.com/contact-us/"
+                      target="_blank">About us</a>
+                  </li>
+                  <li><i class="bi bi-chevron-right"></i> <a href="https://projuktisheba.com/our-services/"
+                      target="_blank">Services</a></li>
+                  <!-- <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
+                    <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy policy</a></li> -->
+                </ul>
+              </div>
+            </div>
+            <div class="copyright">
+              &copy; Copyright <strong>Projukti Sheba</strong>. All Rights Reserved
+            </div>
+          </div>
+        </div><!-- End Footer -->
+      </div>
+      <!-- /page content -->
+    </div>
+  </div>
+
+
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="src/assets/vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="src/assets/vendors/nprogress/nprogress.js"></script>
+  <!-- Chart.js -->
+  <script src="src/assets/vendors/Chart.js/dist/Chart.min.js"></script>
+  <!-- gauge.js -->
+  <script src="src/assets/vendors/gauge.js/dist/gauge.min.js"></script>
+  <!-- bootstrap-progressbar -->
+  <script src="src/assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+  <!-- iCheck -->
+  <script src="src/assets/vendors/iCheck/icheck.min.js"></script>
+  <!-- Skycons -->
+  <script src="src/assets/vendors/skycons/skycons.js"></script>
+  <!-- Flot -->
+  <script src="src/assets/vendors/Flot/jquery.flot.js"></script>
+  <script src="src/assets/vendors/Flot/jquery.flot.pie.js"></script>
+  <script src="src/assets/vendors/Flot/jquery.flot.time.js"></script>
+  <script src="src/assets/vendors/Flot/jquery.flot.stack.js"></script>
+  <script src="src/assets/vendors/Flot/jquery.flot.resize.js"></script>
+  <!-- Flot plugins -->
+  <script src="src/assets/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
+  <script src="src/assets/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
+  <script src="src/assets/vendors/flot.curvedlines/curvedLines.js"></script>
+  <!-- DateJS -->
+  <script src="src/assets/vendors/DateJS/build/date.js"></script>
+  <!-- JQVMap -->
+  <script src="src/assets/vendors/jqvmap/dist/jquery.vmap.js"></script>
+  <script src="src/assets/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
+  <script src="src/assets/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+  <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+  
+  <script src="fronted/wailsjs/runtime/runtime.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
+</body>
+
+</html>
