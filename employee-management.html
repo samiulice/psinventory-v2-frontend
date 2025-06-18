@@ -287,7 +287,7 @@
           }),
         }
         console.log(text)
-        fetch('https://psinventory-v2.onrender.com/admin/hr/employee/search', requestOptions)
+        fetch(`${api}/admin/hr/employee/search`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)
@@ -332,7 +332,7 @@
           body: JSON.stringify(requestBody),
         }
         console.log(requestBody)
-        fetch('https://psinventory-v2.onrender.com/admin/hr/employee/update', requestOptions)
+        fetch(`${api}/admin/hr/employee/update`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

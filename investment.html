@@ -16,8 +16,6 @@
   <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
   <!-- NProgress -->
   <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
-  <!-- iCheck -->
-  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
   <!-- bootstrap-progressbar -->
   <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
@@ -475,11 +473,12 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('psitoken')
           },
           body: JSON.stringify(transaction_summary),
         }
         console.log(transaction_summary)
-        fetch('https://psinventory-v2.onrender.com/admin/accounts/fund-acquisition/complete-submission', requestOptions)
+        fetch(`${api}/admin/accounts/fund-acquisition/complete-submission`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

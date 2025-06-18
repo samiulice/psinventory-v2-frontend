@@ -61,7 +61,7 @@
       border-radius: 3px;
       cursor: pointer;
       background: #adadad;
-      color:white;
+      color: white;
       transition: all 0.3s ease;
     }
 
@@ -84,6 +84,7 @@
       table-layout: auto;
       /* Fix column width to prevent overflow */
     }
+
     .datatable-buttons tbody tr:nth-child(even) {
       background-color: #e1ebeb;
       /* Light teal for even rows */
@@ -343,15 +344,15 @@
               { data: "total_expense", title: "Total Expense", className: "total-expense" },
               {
                 title: "First Expense",
-                 className: "created-at",
-                 render: function (data, type, row, meta) {
+                className: "created-at",
+                render: function (data, type, row, meta) {
                   return moment(row.created_at).format("DD-MMM-YYYY")
                 },
               },
               {
                 title: "Last Expense",
-                 className: "updated-at",
-                 render: function (data, type, row, meta) {
+                className: "updated-at",
+                render: function (data, type, row, meta) {
                   return moment(row.updated_at).format("DD-MMM-YYYY")
                 },
               },
@@ -364,7 +365,7 @@
                 }
               },
             ],
-            
+
             buttons: [
               { extend: "copy", className: "btn-sm" },
               {
@@ -400,9 +401,13 @@
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
               const requestOptions = {
-                method: 'post',
-              }
-              fetch('https://psinventory-v2.onrender.com/admin/inventory/expenses/type/list', requestOptions)
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                }
+              };
+              fetch(`${api}/admin/inventory/expenses/type/list`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)

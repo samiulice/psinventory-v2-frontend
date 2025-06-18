@@ -362,9 +362,13 @@
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
               const requestOptions = {
-                method: 'post'
-              }
-              fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/all', requestOptions)
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                }
+              };
+              fetch(`${api}/admin/mis/customer/view/all`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.customers || [];

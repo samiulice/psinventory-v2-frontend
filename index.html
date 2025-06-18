@@ -304,7 +304,14 @@
   <script>
     window.addEventListener("DOMContentLoaded", event => {
       let pageData, products;
-      fetch("https://psinventory-v2.onrender.com/admin/get-dash-board-data", { method: 'POST' })
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+        }
+      };
+      fetch(`${api}/admin/get-dash-board-data`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {

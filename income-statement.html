@@ -16,8 +16,6 @@
     <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
     <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="src/assets/vendors/iCheck/skexpenses/flat/green.css" rel="stylesheet">
 
     <!-- bootstrap-progressbar -->
     <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
@@ -54,7 +52,8 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+                            <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..."
+                                class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -90,7 +89,7 @@
                                         <li><a href="warranty.html">Warranty</a></li>
                                         <li><a href="service.html">Service</a></li>
                                         <li><a href="memo-list.html">Memo List</a></li>
-                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                                        <li><a href="transaction-posting.html">Transaction Posting</a></li>
                                     </ul>
                                 </li>
                                 <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span
@@ -130,8 +129,9 @@
                                         </li>
                                         <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a>
                                         </li>
-                                        <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
-                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                                        <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a>
+                                        </li>
+                                        <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
                                         <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
                                         <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
                                         <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
@@ -271,14 +271,18 @@
             //fetch income statement data from backend
             const requestOptions = {
                 method: 'POST',
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                },
+
                 body: JSON.stringify({
                     start_date: startDate,
                     end_date: endDate
                 })
             }
-            fetch('https://psinventory-v2.onrender.com/admin/reports/accounts/income-statement', requestOptions)
+            fetch(`${api}/admin/reports/accounts/income-statement`, requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error === true) {

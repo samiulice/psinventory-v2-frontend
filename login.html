@@ -260,7 +260,7 @@
     <!-- jQuery -->
     <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
     <!-- sweetalert2 script -->
-    <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         function togglePassword() {
@@ -298,7 +298,10 @@
                 },
                 body: JSON.stringify(user),
             }
-            fetch('https://psinventory-v2.onrender.com/admin/user/session/init', requestOptions)
+            const api = "https://psinventory-v2.onrender.com";
+            // const api = "http://localhost:8080"; // Use this for local development
+
+            fetch(`${api}/user/session/init`, requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log("resp : ", data)
@@ -308,16 +311,10 @@
                             icon: "question"
                         });
                     } else {
-                        const currentSession = data.session
-                        // Convert the object to a JSON string
-                        const userString = JSON.stringify(currentSession);
-                        // Store the object in localStorage
-                        localStorage.setItem("user", userString);
-
-                        if (currentSession.role === "admin" || currentSession.role === "operator") {
-                            console.log("Admin login...")
-                            window.location.href = "index.html"
-                        }
+                        localStorage.setItem("psitoken", data.token);
+                        localStorage.setItem("psiuser", data.user.username);
+                        localStorage.setItem("psiuserrole", data.user.role);
+                        window.location.href = 'index.html';
                     }
                 })
         }

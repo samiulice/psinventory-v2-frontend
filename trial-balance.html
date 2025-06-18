@@ -313,8 +313,12 @@
         window.addEventListener("DOMContentLoaded", () => {
             //fetch income statement data from backend
             const requestOptions = {
-                method: 'POST',
-            }
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+        }
+      };
             fetch('https://psinventory-v2.onrender.com/admin/reports/accounts/trial-balance', requestOptions)
                 .then(response => response.json())
                 .then(data => {

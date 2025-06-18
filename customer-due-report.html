@@ -49,6 +49,7 @@
       table-layout: auto;
       /* Fix column width to prevent overflow */
     }
+
     .datatable-buttons tbody tr:nth-child(even) {
       background-color: #e1ebeb;
       /* Light teal for even rows */
@@ -149,7 +150,7 @@
                     <li class="sub_menu"><a href="service-list.html">Service List</a></li>
                   </ul>
                 </li>
-                
+
                 <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
@@ -165,7 +166,7 @@
                     <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
                   </ul>
                 </li>
-                
+
               </ul>
             </div>
           </div>
@@ -287,7 +288,7 @@
   <script src="src/assets/js/custom.js"></script>
   <script src="src/assets/js/app.js"></script>
   <script src="src/assets/js/invoice.js"></script>
-  
+
 
 
   <!-- sweetalert2 script -->
@@ -319,7 +320,8 @@
               { data: "account_code", title: "Account Code", className: "account-code", width: "10%" },
               { data: "account_name", title: "Account Name", className: "account-name", width: "20%" },
               { data: "mobile", title: "Mobile", className: "contact-number", width: "10%" },
-              { title: "Status",
+              {
+                title: "Status",
                 className: "account-status",
                 width: "5%",
                 render: function (data, type, row, meta) {
@@ -348,7 +350,7 @@
                 }
               }
             ],
-            
+
             responsive: true,
             language: {
               "emptyTable": "No data available" // Custom message when there is no data
@@ -359,9 +361,13 @@
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
               const requestOptions = {
-                method: 'post'
-              }
-              fetch('https://psinventory-v2.onrender.com/admin/reports/accounts/customer-due-report', requestOptions)
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                }
+              };
+              fetch(`${api}/admin/reports/accounts/customer-due-report`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData);

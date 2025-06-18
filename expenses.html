@@ -477,11 +477,13 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('psitoken')
           },
           body: JSON.stringify(payment_summary),
         }
+        
         console.log(payment_summary)
-        fetch('https://psinventory-v2.onrender.com/admin/accounts/expenses/complete-submission', requestOptions)
+        fetch(`${api}/admin/accounts/expenses/complete-submission`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

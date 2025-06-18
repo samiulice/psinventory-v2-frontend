@@ -1,42 +1,39 @@
-//terminateSession terminates the current session
-// async function terminateSession() {
-//   try {
-//     const response = await fetch('https://psinventory-v2.onrender.com/admin/user/session/terminate', { method: "POST" });
+// terminateSession terminates the current session
+async function terminateSession() {
+  localStorage.removeItem("psitoken");
+  localStorage.removeItem("psiuser");
+  localStorage.removeItem("psiuserrole");
 
-//     const result = await response.json();
-
-//     if (response.ok && result.message === "Logout Successful") {
-//       // Remove the 'user' item from localStorage
-//       localStorage.removeItem("user");
-
-//       window.location.href = "login.html"
-//     } else {
-//       throw new Error("Failed to Logout!",result.message);
-//     }
-//   } catch (error) {
-//     alertQuestion(error)
-//   }
-// }
-
+  window.appUser = null; // Clear the global appUser object
+  // Redirect to login page
+  window.location.href = "login.html";
+}
+const api = 'https://psinventory-v2.onrender.com'
+// const api = 'http://localhost:8080'
 function checkAuth() {
-  console.log('Checking access level...')
-  const user = localStorage.getItem("user");
+  console.log('Checking access level...');
+  const token = localStorage.getItem("psitoken");
+  const username = localStorage.getItem("psiuser");
+  const role = localStorage.getItem("psiuserrole");
 
-  if (user === null) {
-    console.log("No user data found in localStorage.");
-    window.location.href = "login.html"
-    return null
+  if (token && username && role) {
+    console.log("User is authenticated.");
+    // Set the appUser object globally for use in other functions
+    window.appUser = { username, token, role }; // Make appUser globally accessible 
+  } else{
+    console.log("User is not authenticated.");
+    // Redirect to login page if no user data found
+    window.appUser = null; // Ensure appUser is set to null if not authenticated
+    window.location.href = "login.html";
   }
-  return JSON.parse(user)
 }
-// appUser = checkAuth()
-appUser = {
-  username:"samiul",
-  role:"admin"
-}
+
+// Initialize appUser with the authenticated user data
+checkAuth();
+
 function buildUserPage() {
-  document.getElementById("profile-name").innerHTML = appUser.username
-  if (appUser.role == "operator") {
+  document.getElementById("profile-name").innerHTML = window.appUser.username;
+  if (window.appUser.role == "operator") {
     const options = new Set([
       "supplier-list.html", "employee-list.html", "memo-list.html",
       "transaction-posting.html", "investment.html",
@@ -58,22 +55,22 @@ function buildUserPage() {
 
     // Check if the current page is "settings.html" and apply the overlay to tab-content inside page-content div
     // if (window.location.href.includes("settings.html")) {
-      // Find the div with id="page-content"
-      const pageContent = document.getElementById("page-content");
+    // Find the div with id="page-content"
+    const pageContent = document.getElementById("page-content");
 
-      if (pageContent) {
-        // Find all elements with the class "tab-content"
-        const adminAccess = pageContent.querySelectorAll(".admin-access");
-        adminAccess.forEach(elem => {
-          // Disable interaction with this div
-          elem.style.pointerEvents = "none";
-          elem.style.opacity = "0.9"; // Optional visual feedback (dim the page-content)
-        });
-        const adminAccessShow = pageContent.querySelectorAll(".admin-access-show");
-        adminAccessShow.forEach(elem => {
-         elem.remove();
-        });
-      }
+    if (pageContent) {
+      // Find all elements with the class "tab-content"
+      const adminAccess = pageContent.querySelectorAll(".admin-access");
+      adminAccess.forEach(elem => {
+        // Disable interaction with this div
+        elem.style.pointerEvents = "none";
+        elem.style.opacity = "0.9"; // Optional visual feedback (dim the page-content)
+      });
+      const adminAccessShow = pageContent.querySelectorAll(".admin-access-show");
+      adminAccessShow.forEach(elem => {
+        elem.remove();
+      });
+    }
     // }
   }
 
