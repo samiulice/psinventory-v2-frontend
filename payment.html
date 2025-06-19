@@ -333,9 +333,14 @@
         initSingleDatePicker("#transfer_date")
         // fetch-1: On load window Get accounts for destination and suppliers who have due amount
         const requestOptions = {
-          method: 'post'
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          },
         }
-        fetch('https://psinventory-v2.onrender.com/admin/accounts/payment/get-page-details', requestOptions)
+        fetch(api+'/admin/accounts/payment/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.error === true) {
@@ -490,11 +495,12 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
           body: JSON.stringify(payment_summary),
         }
         console.log(payment_summary)
-        fetch('https://psinventory-v2.onrender.com/admin/accounts/payment/complete-submission', requestOptions)
+        fetch(api+'/admin/accounts/payment/complete-submission', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

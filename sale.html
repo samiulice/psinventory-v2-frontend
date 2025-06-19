@@ -543,7 +543,15 @@
           });
 
           // Initialize promises for fetch requests
-          const fetchCustomers = fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/active', { method: "post" })
+          const requestOptions = {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+localStorage.getItem("token")
+            }
+          };
+          const fetchCustomers = fetch(api+'/admin/mis/customer/view/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               customers = responseData.customers || [];
@@ -553,7 +561,7 @@
               console.error('Error fetching customers data:', error);
             });
 
-          const fetchHeadAccounts = fetch('https://psinventory-v2.onrender.com/admin/accounts/get-cash-bank-accounts', { method: "post" })
+          const fetchHeadAccounts = fetch(api+'/admin/accounts/get-cash-bank-accounts', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               headAccounts = responseData.head_accounts || [];
@@ -562,7 +570,7 @@
               console.error('Error fetching head_accounts data:', error);
             });
 
-          const fetchCategories = fetch('https://psinventory-v2.onrender.com/admin/inventory/category/list/active', { method: "post" })
+          const fetchCategories = fetch(api+'/admin/inventory/category/list/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               categories = responseData.categories || [];
@@ -571,7 +579,7 @@
               console.error('Error fetching categories data:', error);
             });
 
-          const fetchProducts = fetch('https://psinventory-v2.onrender.com/admin/inventory/products/available', { method: "post" })
+          const fetchProducts = fetch(api+'/admin/inventory/products/available', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               products = responseData.products || [];
@@ -581,7 +589,7 @@
               console.error('Error fetching products data:', error);
             });
 
-          const fetchBrands = fetch('https://psinventory-v2.onrender.com/admin/inventory/brand/list/active', { method: "post" })
+          const fetchBrands = fetch(api+'/admin/inventory/brand/list/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               brands = responseData.brands || [];
@@ -1083,10 +1091,11 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
             body: JSON.stringify(reqBody),
           }
-          fetch('https://psinventory-v2.onrender.com/admin/inventory/products/sale', requestOptions)
+          fetch(api+'/admin/inventory/products/sale', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log("Response: ", data)

@@ -327,7 +327,8 @@
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(payload)
       }
@@ -403,11 +404,12 @@
           method: 'post',
           headers: {
             'Accept': 'application/json',
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
           body: JSON.stringify(payload)
         }
-        fetch('https://psinventory-v2.onrender.com/admin/inventory/products/search-sold-products-by-serial', requestOptions)
+        fetch(api + '/admin/inventory/products/search-sold-products-by-serial', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -469,11 +471,13 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
+
           body: JSON.stringify(warrantyClaimBody),
         }
 
-        fetch('https://psinventory-v2.onrender.com/admin/inventory/products/claim-warranty-by-serial-id', requestOptions)
+        fetch(api + '/admin/inventory/products/claim-warranty-by-serial-id', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("Claim warranty: ", data)

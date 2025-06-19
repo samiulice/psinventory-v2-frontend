@@ -364,9 +364,13 @@
             autoWidth:true,
             ajax: function (data, callback, settings) {
               const requestOptions = {
-                method: 'post'
-              };
-              fetch('https://psinventory-v2.onrender.com/admin/reports/accounts/top-sheet-report', requestOptions)
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                }
+            };
+              fetch(api+'/admin/reports/accounts/top-sheet-report', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData);

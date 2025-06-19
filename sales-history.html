@@ -53,6 +53,7 @@
       table-layout: auto;
       /* Fix column width to prevent overflow */
     }
+
     .datatable-buttons tbody tr:nth-child(even) {
       background-color: #e1ebeb;
       /* Light teal for even rows */
@@ -153,7 +154,7 @@
                     <li class="sub_menu"><a href="service-list.html">Service List</a></li>
                   </ul>
                 </li>
-                
+
                 <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
@@ -169,7 +170,7 @@
                     <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
                   </ul>
                 </li>
-                
+
               </ul>
             </div>
           </div>
@@ -308,7 +309,7 @@
             pageLength: 10, // Default page size
             lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]], // Add -1 for 'All' option
             columns: [
-            {
+              {
                 title: "Sale Date", className: "sale-date",
                 render: function (data, type, row, meta) {
                   return moment(row.sale_date).format('DD-MMM-YYYY');
@@ -357,13 +358,13 @@
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
               const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
-        }
-      };
-              fetch('https://psinventory-v2.onrender.com/admin/reports/inventory/sales-history', requestOptions)
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                }
+              };
+              fetch(api + '/admin/reports/inventory/sales-history', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)
@@ -417,7 +418,7 @@
               <tr>
                 <td>${moment(p.sale_date).format("DD-MMM-YYY") || "-"}</td>
                 <td>${p.memo_no || "-"}</td>
-                <td><b>${p.customer_info.account_name || "" + "-"+p.customer_info.account_code || ""}</b><br></td>
+                <td><b>${p.customer_info.account_name || "" + "-" + p.customer_info.account_code || ""}</b><br></td>
                 <td style="text-align:right">${p.discount || "0"}</td>
                 <td style="text-align:right">${p.total_amount || "-"}</td>
                 <td style="text-align:right">${p.paid_amount || "-"}</td>

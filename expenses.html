@@ -103,7 +103,7 @@
                     <li class="sub_menu"><a href="service-list.html">Service List</a></li>
                   </ul>
                 </li>
-                
+
                 <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
@@ -119,7 +119,7 @@
                     <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
                   </ul>
                 </li>
-                
+
               </ul>
             </div>
           </div>
@@ -339,14 +339,19 @@
       let accounts, suppliers, payment_summary = [], expense_types = [];
       window.addEventListener("DOMContentLoaded", () => {
         initSingleDatePicker("#transfer_date");
-        document.getElementById("createExpenseType").addEventListener("click", ()=>{
+        document.getElementById("createExpenseType").addEventListener("click", () => {
           addNewExpenseType("expense", expense_types)
         })
         // fetch-1: On load window Get head_accounts and update account dropdown
         const requestOptions = {
-          method: 'post'
+          method: 'post',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+          }
         }
-        fetch('https://psinventory-v2.onrender.com/admin/accounts/expenses/get-page-details', requestOptions)
+        fetch(api + '/admin/accounts/expenses/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log(data);
@@ -477,11 +482,11 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
           body: JSON.stringify(payment_summary),
         }
-        
+
         console.log(payment_summary)
         fetch(`${api}/admin/accounts/expenses/complete-submission`, requestOptions)
           .then(response => response.json())

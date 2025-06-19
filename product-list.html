@@ -269,7 +269,7 @@
                     <li class="sub_menu"><a href="service-list.html">Service List</a></li>
                   </ul>
                 </li>
-                
+
                 <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
@@ -285,7 +285,7 @@
                     <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
                   </ul>
                 </li>
-                
+
               </ul>
             </div>
           </div>
@@ -401,7 +401,15 @@
   <script>
     let reportData, company, brands = [], categories = [];
     //Fetch categories list
-    fetch('https://psinventory-v2.onrender.com/admin/inventory/category/list/active', { method: "post" })
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+      },
+    };
+    fetch(api + '/admin/inventory/category/list/active', requestOptions)
       .then(response => response.json())
       .then(function (responseData) {
         categories = responseData.categories || [];
@@ -411,7 +419,7 @@
         console.error('Error fetching categories data:', error);
       });
     //Fetch brands list
-    fetch('https://psinventory-v2.onrender.com/admin/inventory/brand/list/active', { method: "post" })
+    fetch(api + '/admin/inventory/brand/list/active', requestOptions)
       .then(response => response.json())
       .then(function (responseData) {
         brands = responseData.brands || [];
@@ -496,14 +504,7 @@
             order: [[0, 'asc']],
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
-              const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
-        }
-      };
-              fetch('https://psinventory-v2.onrender.com/admin/reports/inventory/product-list', requestOptions)
+              fetch(api + '/admin/reports/inventory/product-list', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.products || [];

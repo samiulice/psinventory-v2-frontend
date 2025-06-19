@@ -346,9 +346,14 @@
     function updateTable(tabId) {
       // Fetch all data once and let DataTables handle searching/pagination on client side
       const requestOptions = {
-        method: 'post'
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
       }
-      fetch('https://psinventory-v2.onrender.com/admin/inventory/memos/list?type=' + tabId, requestOptions)
+      fetch(api+'/admin/inventory/memos/list?type=' + tabId, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           memos = responseData.memos || [];
@@ -401,9 +406,14 @@
     function printInvoice(tabId, memo_no) {
       //fetch details
       const requestOptions = {
-        method: 'post'
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
       }
-      fetch(`https://psinventory-v2.onrender.com/admin/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
+      fetch(api+`/admin/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           InvoiceData = responseData.invoice_data;

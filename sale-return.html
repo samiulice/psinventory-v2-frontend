@@ -328,10 +328,15 @@
             memoDiv = document.getElementById("memo");
             productListContainer = document.getElementById("product-list-container");
             //Start fetch-1: On loading window, fetch customer list and populate customer dropdown
-            let requestOptions = {
-                method: "post"
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
             }
-            fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/active', requestOptions)
+            fetch(api+'/admin/mis/customer/view/active', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
@@ -372,11 +377,14 @@
             }
             const requestOptions = {
                 method: 'post',
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                },
                 body: JSON.stringify(customerID)
             }
-            fetch('https://psinventory-v2.onrender.com/admin/inventory/customer/memos', requestOptions)
+            fetch(api+'/admin/inventory/customer/memos', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log("Memo: ", data)
@@ -408,11 +416,14 @@
                 }
                 const requestOptions = {
                     method: "post",
-                    'Accept': "application/json",
-                    'Content-Type': "application/json",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
                     body: JSON.stringify(memoBody)
                 }
-                fetch('https://psinventory-v2.onrender.com/admin/inventory/customer/memo/products', requestOptions)
+                fetch(api+'/admin/inventory/customer/memo/products', requestOptions)
                     .then(response => response.json())
                     .then(data => {
                         console.log("sales:", data)
@@ -525,11 +536,12 @@
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(sales_return_details),
             }
 
-            fetch('https://psinventory-v2.onrender.com/admin/inventory/products/sale/return', requestOptions)
+            fetch(api+'/admin/inventory/products/sale/return', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log("Result: ", data)

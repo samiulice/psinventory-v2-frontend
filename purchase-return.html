@@ -103,7 +103,7 @@
                     <li class="sub_menu"><a href="service-list.html">Service List</a></li>
                   </ul>
                 </li>
-                
+
                 <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
@@ -119,7 +119,7 @@
                     <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
                   </ul>
                 </li>
-                
+
               </ul>
             </div>
           </div>
@@ -161,8 +161,8 @@
                 <div class="row form-group has-feedback">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <label for="invoice_date">Date * :</label>
-                    <input type="text" class="form-control has-feedback-left" id="invoice_date" placeholder="Select date"
-                      aria-describedby="inputSuccess2Status4" required>
+                    <input type="text" class="form-control has-feedback-left" id="invoice_date"
+                      placeholder="Select date" aria-describedby="inputSuccess2Status4" required>
                     <i style="color: rgba(0, 0, 0, 1);" class="fa fa-calendar form-control-feedback left"
                       aria-hidden="true"></i>
                   </div>
@@ -281,7 +281,7 @@
     <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    
+
     <!-- DateJS -->
     <script src="src/assets/vendors/DateJS/build/date.js"></script>
 
@@ -320,9 +320,14 @@
 
         //Fetch active supplier from the server
         const requestOptions = {
-          method: 'post',
-        }
-        fetch('https://psinventory-v2.onrender.com/admin/mis/supplier/view/active', requestOptions)
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          }
+        };
+        fetch(api + '/admin/mis/supplier/view/active', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.error === true) {
@@ -351,10 +356,11 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
             },
             body: JSON.stringify(sup),
           }
-          fetch('https://psinventory-v2.onrender.com/admin/inventory/supplier/memos', requestOptions)
+          fetch(api + '/admin/inventory/supplier/memos', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log(data)
@@ -385,11 +391,12 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
             },
             body: JSON.stringify(payload),
           }
           console.log(payload)
-          fetch('https://psinventory-v2.onrender.com/admin/inventory/supplier/memo/products', requestOptions)
+          fetch(api + '/admin/inventory/supplier/memo/products', requestOptions)
             .then(response => response.json())
             .then(data => {
               if (data.error === true) {
@@ -413,13 +420,13 @@
                   if (p.product_metadata) {
                     counts += p.product_metadata.length;
                     p.product_metadata.forEach(pm => {
-                      if(pm.serial_number === "unmarked"){
+                      if (pm.serial_number === "unmarked") {
                         pm.serial_number = generateRandomAlphanumericCode(15)
                       }
                       metadata += `
                       <div class="checkbox">
                         <label>
-                          <input type="checkbox" id="${pm.serial_number}" class="flat product-list" value="${pm.purchase_rate-pm.purchase_discount}"> ${pm.serial_number}
+                          <input type="checkbox" id="${pm.serial_number}" class="flat product-list" value="${pm.purchase_rate - pm.purchase_discount}"> ${pm.serial_number}
                         </label>
                         <input type="hidden" id="id-${pm.serial_number}" value="${pm.id}">
                       </div>`
@@ -493,7 +500,7 @@
           let products = product_data.product
           // Filter product metadata
           const filteredProductItems = products.map(product => {
-            if(!product.product_metadata){
+            if (!product.product_metadata) {
               product.product_metadata = []
             }
             const filteredMetadata = product.product_metadata.filter(metadata =>
@@ -521,11 +528,12 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
             },
             body: JSON.stringify(returned_products_details),
           }
 
-          fetch('https://psinventory-v2.onrender.com/admin/inventory/products/purchase/return', requestOptions)
+          fetch(api + '/admin/inventory/products/purchase/return', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log(data);
@@ -546,7 +554,7 @@
 
         if (suppliers) {
           supplier.innerHTML = `<option value="" selected disabled>Select Supplier Account</option>`;
-          suppliers.forEach((s,i) => {
+          suppliers.forEach((s, i) => {
             supplier.innerHTML += `<option value="${i}">${s.account_name}(${s.account_code})</option>`;
           });
         } else {
@@ -592,7 +600,7 @@
                 elem.checked = true;
                 //Update selected product units and prices counter
                 totalUnits += 1;
-                totalPrices += (pm.purchase_rate-pm.purchase_discount);
+                totalPrices += (pm.purchase_rate - pm.purchase_discount);
               }
             })
             btn.classList.remove("btn-success");
@@ -623,7 +631,7 @@
           elem.innerHTML = `<i class="fa fa-eye"></i>&nbsp;&nbsp;Show`;
         }
       }
-  </script>
+    </script>
 
 </body>
 

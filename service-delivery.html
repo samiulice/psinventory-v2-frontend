@@ -323,7 +323,15 @@
     window.addEventListener("DOMContentLoaded", event => {
       initSingleDatePicker('#delivery_date')
       // Initialize fetch promises
-      const fetchCustomers = fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/active', { method: "post" })
+      const requestOptions = {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+      };
+      const fetchCustomers = fetch(api+'/admin/mis/customer/view/active', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           customers = responseData.customers || [];
@@ -332,7 +340,7 @@
           console.error('Error fetching customers data:', error);
         });
 
-      const fetchHeadAccounts = fetch('https://psinventory-v2.onrender.com/admin/accounts/get-cash-bank-accounts', { method: "post" })
+      const fetchHeadAccounts = fetch(api+'/admin/accounts/get-cash-bank-accounts', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           headAccounts = responseData.head_accounts || [];
@@ -342,7 +350,7 @@
         });
 
 
-      const fetchServicesHistory = fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase/history?status=2', { method: "post" })
+      const fetchServicesHistory = fetch(api+'/admin/inventory/services/purchase/history?status=2', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           serviceHistory = responseData.result || [];
@@ -582,10 +590,11 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify(reqBody),
       }
-      fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase/delivered', requestOptions)
+      fetch(api+'/admin/inventory/services/purchase/delivered', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("purchase response:", data)

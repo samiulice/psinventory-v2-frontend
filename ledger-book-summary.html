@@ -334,7 +334,15 @@
         link = "https://psinventory-v2.onrender.com/admin/hr/employee/view/all";
       }
       // fetch-1: On changes account type fetch head_accounts details list 
-      fetch(link, { method: 'POST' })
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+        }
+      };
+      fetch(link, requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -462,7 +470,8 @@
               method: 'POST',
               headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
               },
               body: JSON.stringify({
                 account_type: acc_type,
@@ -470,7 +479,7 @@
               })
             };
 
-            fetch('https://psinventory-v2.onrender.com/admin/reports/accounts/ledger-book/summary', requestOptions)
+            fetch(api+'/admin/reports/accounts/ledger-book/summary', requestOptions)
               .then(response => response.json())
               .then(responseData => {
                 console.log("Data fetched successfully:", responseData);

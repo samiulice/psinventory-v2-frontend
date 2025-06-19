@@ -501,8 +501,8 @@
                         style="padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-logo">
-                      <img id="logo-rounded" src="https://psinventory-v2.onrender.com/images/logo.png" alt="Logo Preview"
-                        style="border-radius: 50%; padding: 5px; object-fit: cover;">
+                      <img id="logo-rounded" src="https://psinventory-v2.onrender.com/images/logo.png"
+                        alt="Logo Preview" style="border-radius: 50%; padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-info">
                       <h4>Logo</h4>
@@ -519,8 +519,8 @@
                   <!-- Watermark -->
                   <div class="additional-setting-card">
                     <div class="additional-setting-logo">
-                      <img id="watermark" src="https://psinventory-v2.onrender.com/images/watermark.png" alt="watermark Preview"
-                        style="padding: 5px; object-fit: cover;">
+                      <img id="watermark" src="https://psinventory-v2.onrender.com/images/watermark.png"
+                        alt="watermark Preview" style="padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-logo">
                       <img id="watermark-rounded" src="https://psinventory-v2.onrender.com/images/watermark.png"
@@ -1101,9 +1101,14 @@
 
     function fetchDetails() {
       const requestOptions = {
-        method: 'post'
-      }
-      fetch('https://psinventory-v2.onrender.com/admin/company-profile', requestOptions)
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+        }
+      };
+      fetch(api+'/admin/company-profile', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -1210,10 +1215,16 @@
       formData.append("image", file); // "image" is the field name expected by backend
       formData.append("filename", filename)
       formData.append("filetype", fileType)
-      fetch("https://psinventory-v2.onrender.com/admin/images/upload", {
-        method: "POST",
+      const requestOptions = {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+        },
         body: formData
-      })
+      }
+      fetch("https://psinventory-v2.onrender.com/admin/images/upload", requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1235,10 +1246,16 @@
     function removeImage(filename, removeBtnID) {
       const rmBtn = document.getElementById(removeBtnID)
       rmBtn.innerHTML = 'Removing &nbsp;<i class="fa fa-spinner fa-spin"></i>';
-      fetch("https://psinventory-v2.onrender.com/admin/images/remove", {
-        method: "POST",
+      const requestOptions = {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+        },
         body: JSON.stringify({ file_name: filename })
-      })
+      }
+      fetch("https://psinventory-v2.onrender.com/admin/images/remove", requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1342,11 +1359,12 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
           body: JSON.stringify(body),
         }
         console.log(body)
-        fetch('https://psinventory-v2.onrender.com/admin/update-company-info', requestOptions)
+        fetch(api+'/admin/update-company-info', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)
@@ -1372,7 +1390,14 @@
   <script>
     let userList = []
     // //Fetch user list
-    fetch('https://psinventory-v2.onrender.com/admin/user/get/all', { method: 'POST' })
+    const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          },
+        };
+    fetch(api+'/admin/user/get/all', requestOptions)
       .then(Response => Response.json())
       .then(data => {
         console.log('data fetched successfully: ', data)
@@ -1487,12 +1512,15 @@
         }
 
         const data = { username, password, role };
-
-        const response = await fetch('https://psinventory-v2.onrender.com/admin/user/' + path, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          },
           body: JSON.stringify(data)
-        });
+        };
+        const response = await fetch(api+'/admin/user/' + path, requestOptions);
 
         const result = await response.json();
 
@@ -1549,12 +1577,15 @@
           password: row.querySelector('.password').value,
           role: row.querySelector("input[name^='role']:checked").value
         };
-
-        const response = await fetch('https://psinventory-v2.onrender.com/admin/user/delete', {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          },
           body: JSON.stringify(data)
-        });
+        };
+        const response = await fetch(api+'/admin/user/delete', requestOptions);
 
         const result = await response.json();
 
@@ -1672,10 +1703,15 @@
           // Disable the button and show spinner
           button.disabled = true;
           button.innerHTML = 'Restoring &nbsp;<i class="fa fa-spin fa-spinner"></i>';
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+            }
+          };
           try {
-            const response = await fetch('https://psinventory-v2.onrender.com/admin/db/restore?filetype=' + fileType, {
-              method: 'POST'
-            });
+            const response = await fetch(api+'/admin/db/restore?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);
@@ -1710,9 +1746,14 @@
           button.disabled = true;
           button.innerHTML = 'Saving &nbsp;<i class="fa fa-spin fa-spinner"></i>';
           try {
-            const response = await fetch('https://psinventory-v2.onrender.com/admin/db/backup?filetype=' + fileType, {
-              method: 'POST'
-            });
+            const requestOptions = {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              }
+            };
+            const response = await fetch(api+'/admin/db/backup?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);
@@ -1732,60 +1773,9 @@
           }
         });
       });
-
-      // localBackupLocationBtn.addEventListener("click", async () => {
-      //   // Disable the button and show spinner
-      //   localBackupLocationBtn.disabled = true;
-      //   localBackupLocationBtn.innerHTML = 'Saving &nbsp;<i class="fa fa-spin fa-spinner"></i>';
-      //   try {
-      //     const response = await fetch('https://psinventory-v2.onrender.com/admin/db/backup/settings/default-location', {
-      //       method: 'POST'
-      //     });
-
-      //     const resp = await response.json();
-      //     console.log(resp);
-
-      //     if (resp.error === true) {
-      //       alertQuestion(resp.message, reloadUI);
-      //     } else {
-      //       alertSuccess(resp.message, reloadUI);
-      //     }
-      //   } catch (error) {
-      //     console.error('Error fetching data:', error);
-      //     alertQuestion("Something went wrong while restoring the database.");
-      //   } finally {
-      //     // Restore button state
-      //     localBackupLocationBtn.disabled = false;
-      //     localBackupLocationBtn.innerHTML = `<i class="fa fa-plus">&nbsp;</i>Choose Backup Folder`;
-      //   }
-      // });
-    
-    
     });
 
   </script>
-
-<script type="module">
-  import * as App from "/wailsjs/go/main/App.js";
-
-  async function pickFolder() {
-    if (App.OpenFolder) {
-      try {
-        const path = await App.OpenFolder();
-        document.getElementById("folderPath").textContent = path
-          ? `Selected: ${path}`
-          : "No folder selected.";
-      } catch (e) {
-        console.error("Error using OpenFolder:", e);
-      }
-    } else {
-      document.getElementById("folderPath").textContent = "OpenFolder is not available.";
-      console.warn("OpenFolder not found in App.js exports", App);
-    }
-  }
-
-  window.pickFolder = pickFolder;
-</script>
 
 </body>
 

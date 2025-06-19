@@ -441,7 +441,15 @@
       });
 
       // Initialize fetch promises
-      const fetchCustomers = fetch('https://psinventory-v2.onrender.com/admin/mis/customer/view/active', { method: "post" })
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+      }
+      const fetchCustomers = fetch(api+'/admin/mis/customer/view/active', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           customers = responseData.customers || [];
@@ -450,7 +458,7 @@
           console.error('Error fetching customers data:', error);
         });
 
-      const fetchHeadAccounts = fetch('https://psinventory-v2.onrender.com/admin/accounts/get-cash-bank-accounts', { method: "post" })
+      const fetchHeadAccounts = fetch(api+'/admin/accounts/get-cash-bank-accounts', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           headAccounts = responseData.head_accounts || [];
@@ -460,7 +468,7 @@
         });
 
 
-      const fetchServices = fetch('https://psinventory-v2.onrender.com/admin/inventory/services/list?status=true', { method: "post" })
+      const fetchServices = fetch(api+'/admin/inventory/services/list?status=true', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           services = responseData.result || [];
@@ -757,10 +765,11 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(reqBody),
       }
-      fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase', requestOptions)
+      fetch(api+'/admin/inventory/services/purchase', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("purchase response:", data)

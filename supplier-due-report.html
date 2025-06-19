@@ -49,6 +49,7 @@
       table-layout: auto;
       /* Fix column width to prevent overflow */
     }
+
     .datatable-buttons tbody tr:nth-child(even) {
       background-color: #e1ebeb;
       /* Light teal for even rows */
@@ -149,7 +150,7 @@
                     <li class="sub_menu"><a href="service-list.html">Service List</a></li>
                   </ul>
                 </li>
-                
+
                 <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
                   <ul class="nav child_menu">
                     <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
@@ -165,7 +166,7 @@
                     <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
                   </ul>
                 </li>
-                
+
               </ul>
             </div>
           </div>
@@ -356,9 +357,13 @@
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
               const requestOptions = {
-                method: 'post'
-              }
-              fetch('https://psinventory-v2.onrender.com/admin/reports/accounts/supplier-due-report', requestOptions)
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                }
+              };
+              fetch(api + '/admin/reports/accounts/supplier-due-report', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)

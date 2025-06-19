@@ -264,9 +264,14 @@
     window.addEventListener("DOMContentLoaded", () => {
       // Fetch all data once and let DataTables handle searching/pagination on client side
       const requestOptions = {
-        method: 'post'
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
       }
-      fetch('https://psinventory-v2.onrender.com/admin/inventory/services/purchase/history?status=1&status=2&status=3&status=4', requestOptions)
+      fetch(api+'/admin/inventory/services/purchase/history?status=1&status=2&status=3&status=4', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           purchaseHistory = responseData.result || [];

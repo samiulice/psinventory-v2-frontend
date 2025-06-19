@@ -334,7 +334,7 @@
         const requestOptions = {
           method: 'post'
         }
-        fetch('https://psinventory-v2.onrender.com/admin/accounts/fund-acquisition/get-page-details', requestOptions)
+        fetch(api+'/admin/accounts/fund-acquisition/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log(data)

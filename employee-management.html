@@ -281,6 +281,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
           body: JSON.stringify({
             search_parameter: text
@@ -328,6 +329,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+localStorage.getItem('psitoken')
           },
           body: JSON.stringify(requestBody),
         }

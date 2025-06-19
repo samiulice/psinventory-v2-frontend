@@ -368,9 +368,13 @@
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
               const requestOptions = {
-                method: 'post'
+                method: 'post',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                },
               }
-              fetch('https://psinventory-v2.onrender.com/admin/inventory/services/list', requestOptions)
+              fetch(api+'/admin/inventory/services/list', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.result || [];
