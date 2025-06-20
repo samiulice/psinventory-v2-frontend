@@ -336,7 +336,7 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
             }
-            fetch(api+'/admin/mis/customer/view/active', requestOptions)
+            fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)
@@ -384,7 +384,7 @@
                 },
                 body: JSON.stringify(customerID)
             }
-            fetch(api+'/admin/inventory/customer/memos', requestOptions)
+            fetch(api+'/api/v2/inventory/customer/memos', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log("Memo: ", data)
@@ -423,7 +423,7 @@
                     },
                     body: JSON.stringify(memoBody)
                 }
-                fetch(api+'/admin/inventory/customer/memo/products', requestOptions)
+                fetch(api+'/api/v2/inventory/customer/memo/products', requestOptions)
                     .then(response => response.json())
                     .then(data => {
                         console.log("sales:", data)
@@ -541,7 +541,7 @@
                 body: JSON.stringify(sales_return_details),
             }
 
-            fetch(api+'/admin/inventory/products/sale/return', requestOptions)
+            fetch(api+'/api/v2/inventory/products/sale/return', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log("Result: ", data)

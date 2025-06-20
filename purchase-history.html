@@ -381,7 +381,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
               };
-              fetch(api + '/admin/reports/inventory/purchase-history', requestOptions)
+              fetch(api + '/api/v2/reports/inventory/purchase-history', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)

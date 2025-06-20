@@ -449,7 +449,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
       }
-      const fetchCustomers = fetch(api+'/admin/mis/customer/view/active', requestOptions)
+      const fetchCustomers = fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           customers = responseData.customers || [];
@@ -458,7 +458,7 @@
           console.error('Error fetching customers data:', error);
         });
 
-      const fetchHeadAccounts = fetch(api+'/admin/accounts/get-cash-bank-accounts', requestOptions)
+      const fetchHeadAccounts = fetch(api+'/api/v2/accounts/get-cash-bank-accounts', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           headAccounts = responseData.head_accounts || [];
@@ -468,7 +468,7 @@
         });
 
 
-      const fetchServices = fetch(api+'/admin/inventory/services/list?status=true', requestOptions)
+      const fetchServices = fetch(api+'/api/v2/inventory/services/list?status=true', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           services = responseData.result || [];
@@ -769,7 +769,7 @@
         },
         body: JSON.stringify(reqBody),
       }
-      fetch(api+'/admin/inventory/services/purchase', requestOptions)
+      fetch(api+'/api/v2/inventory/services/purchase', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("purchase response:", data)

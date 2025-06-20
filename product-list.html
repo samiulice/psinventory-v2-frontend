@@ -409,7 +409,7 @@
         'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
       },
     };
-    fetch(api + '/admin/inventory/category/list/active', requestOptions)
+    fetch(api + '/api/v2/inventory/category/list/active', requestOptions)
       .then(response => response.json())
       .then(function (responseData) {
         categories = responseData.categories || [];
@@ -419,7 +419,7 @@
         console.error('Error fetching categories data:', error);
       });
     //Fetch brands list
-    fetch(api + '/admin/inventory/brand/list/active', requestOptions)
+    fetch(api + '/api/v2/inventory/brand/list/active', requestOptions)
       .then(response => response.json())
       .then(function (responseData) {
         brands = responseData.brands || [];
@@ -504,7 +504,7 @@
             order: [[0, 'asc']],
             ajax: function (data, callback, settings) {
               // Fetch all data once and let DataTables handle searching/pagination on client side
-              fetch(api + '/admin/reports/inventory/product-list', requestOptions)
+              fetch(api + '/api/v2/reports/inventory/product-list', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.products || [];

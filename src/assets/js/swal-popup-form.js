@@ -99,7 +99,7 @@ function addNewBrand(page, brands) {
         body: JSON.stringify(brand),
       }
 
-      fetch(api+'/admin/inventory/brand/new', requestOptions)
+      fetch(api+'/api/v2/inventory/brand/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -232,7 +232,7 @@ function updateBrand(brand) {
       let btn = document.getElementById('edit-btn-' + btnIndex);
       btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
-      fetch(api+'/admin/inventory/brand/edit', requestOptions)
+      fetch(api+'/api/v2/inventory/brand/edit', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -443,7 +443,7 @@ function addNewProduct(page, brands, categories, products) {
       }
       console.log(product)
 
-      fetch(api+'/admin/inventory/product/new', requestOptions)
+      fetch(api+'/api/v2/inventory/product/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -674,7 +674,7 @@ function updateProduct(brands, categories, product) {
       }
       console.log(UpdatedInfo)
 
-      fetch(api+'/admin/inventory/product/update', requestOptions)
+      fetch(api+'/api/v2/inventory/product/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -790,7 +790,7 @@ function addNewCategory(page, categories) {
         body: JSON.stringify(category),
       }
 
-      fetch(api+'/admin/inventory/category/new', requestOptions)
+      fetch(api+'/api/v2/inventory/category/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -927,7 +927,7 @@ function updateCategory(category, btnIndex) {
       let btn = document.getElementById('edit-btn-' + btnIndex);
       btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
-      fetch(api+'/admin/inventory/category/update', requestOptions)
+      fetch(api+'/api/v2/inventory/category/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1062,7 +1062,7 @@ function addNewService(src, services) {
         body: JSON.stringify(service),
       }
 
-      fetch(api+'/admin/inventory/service/new', requestOptions)
+      fetch(api+'/api/v2/inventory/service/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1218,7 +1218,7 @@ function updateService(serviceInfo, btnIndex) {
       btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/admin/inventory/service/update', requestOptions)
+      fetch(api+'/api/v2/inventory/service/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1376,7 +1376,7 @@ function addNewCustomer(page, customers) {
         body: JSON.stringify(customer),
       }
 
-      fetch(api+'/admin/mis/customer/new', requestOptions)
+      fetch(api+'/api/v2/mis/customer/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1551,7 +1551,7 @@ function updateCustomer(cusInfo, btnIndex) {
       btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/admin/mis/customer/update', requestOptions)
+      fetch(api+'/api/v2/mis/customer/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1720,7 +1720,7 @@ function addNewEmployee(page, employees) {
         body: JSON.stringify(employee),
       }
 
-      fetch(api+'/admin/hr/employee/new', requestOptions)
+      fetch(api+'/api/v2/hr/employee/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (page === "") {
@@ -1904,7 +1904,7 @@ function updateEmployee(empInfo, btnIndex) {
       btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/admin/hr/employee/update', requestOptions)
+      fetch(api+'/api/v2/hr/employee/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2062,7 +2062,7 @@ function addNewSupplier(page, suppliers) {
         body: JSON.stringify(supplier),
       }
 
-      fetch(api+'/admin/mis/supplier/new', requestOptions)
+      fetch(api+'/api/v2/mis/supplier/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2237,7 +2237,7 @@ function updateSupplier(supInfo, btnIndex) {
       btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/admin/mis/supplier/update', requestOptions)
+      fetch(api+'/api/v2/mis/supplier/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2410,7 +2410,7 @@ function addNewStakeHolder() {
         body: JSON.stringify(proprietor),
       }
 
-      fetch(api+'/admin/add-stake-holder', requestOptions)
+      fetch(api+'/api/v2/add-stake-holder', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -2550,7 +2550,7 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
       }
       console.log(wpData)
 
-      fetch(api+'/admin/inventory/products/warranty/checkout', requestOptions)
+      fetch(api+'/api/v2/inventory/products/warranty/checkout', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -2596,7 +2596,7 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
       console.log(wpData);
 
       // Send a POST request to the API endpoint for warranty delivery
-      fetch(api+'/admin/inventory/products/warranty/delivery', requestOptions)
+      fetch(api+'/api/v2/inventory/products/warranty/delivery', requestOptions)
         .then(response => response.json())  // Parse the response as JSON
         .then(data => {
           // Check if the API returned an error
@@ -2859,7 +2859,7 @@ function cancelService(id) {
         },
         body: JSON.stringify(reqBody),
       }
-      fetch(api+'/admin/inventory/services/purchase/cancel', requestOptions)
+      fetch(api+'/api/v2/inventory/services/purchase/cancel', requestOptions)
         .then(response => response.json())
         .then(function (data) {
           if (data.error === true) {
@@ -2983,7 +2983,7 @@ function addNewExpenseType(page, expenses) {
         body: JSON.stringify(expense_type),
       }
 
-      fetch(api+'/admin/inventory/expenses/type/new', requestOptions)
+      fetch(api+'/api/v2/inventory/expenses/type/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data);
@@ -3109,7 +3109,7 @@ function updateExpense(expenseType, btnIndex) {
         body: JSON.stringify(payload),
       }
       console.log("Payload:", payload)
-      fetch(api+'/admin/inventory/expenses/type/update', requestOptions)
+      fetch(api+'/api/v2/inventory/expenses/type/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("Response:", data)

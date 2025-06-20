@@ -305,7 +305,7 @@
   <script>
     window.addEventListener("DOMContentLoaded", event => {
       let pageData, products;
-      fetch("http://localhost:4321/admin/get-dash-board-data", { method: 'POST' })
+      fetch("http://localhost:4321/api/v2/get-dash-board-data", { method: 'POST' })
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {

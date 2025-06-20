@@ -370,7 +370,7 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
             };
-              fetch(api+'/admin/reports/accounts/top-sheet-report', requestOptions)
+              fetch(api+'/api/v2/reports/accounts/top-sheet-report', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData);

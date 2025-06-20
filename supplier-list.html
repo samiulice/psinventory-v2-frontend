@@ -384,7 +384,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
               };
-              fetch(api + '/admin/mis/supplier/view/all', requestOptions)
+              fetch(api + '/api/v2/mis/supplier/view/all', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.suppliers || [];

@@ -311,7 +311,7 @@
           'Authorization': 'Bearer '+localStorage.getItem('psitoken')
         }
       };
-      fetch(`${api}/admin/get-dash-board-data`, requestOptions)
+      fetch(`${api}/api/v2/get-dash-board-data`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {

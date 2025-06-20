@@ -340,7 +340,7 @@
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
         }
-        fetch(api+'/admin/accounts/payment/get-page-details', requestOptions)
+        fetch(api+'/api/v2/accounts/payment/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.error === true) {
@@ -500,7 +500,7 @@
           body: JSON.stringify(payment_summary),
         }
         console.log(payment_summary)
-        fetch(api+'/admin/accounts/payment/complete-submission', requestOptions)
+        fetch(api+'/api/v2/accounts/payment/complete-submission', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

@@ -567,7 +567,7 @@
             },
           }
 
-          const fetchSuppliers = fetch(api+'/admin/mis/supplier/view/active', requestOptions)
+          const fetchSuppliers = fetch(api+'/api/v2/mis/supplier/view/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               suppliers = responseData.suppliers || [];
@@ -576,7 +576,7 @@
               console.error('Error fetching suppliers data:', error);
             });
 
-          const fetchHeadAccounts = fetch(api+'/admin/accounts/get-cash-bank-accounts', requestOptions)
+          const fetchHeadAccounts = fetch(api+'/api/v2/accounts/get-cash-bank-accounts', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               headAccounts = responseData.head_accounts || [];
@@ -585,7 +585,7 @@
               console.error('Error fetching head accounts data:', error);
             });
 
-          const fetchCategories = fetch(api+'/admin/inventory/category/list/active', requestOptions)
+          const fetchCategories = fetch(api+'/api/v2/inventory/category/list/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               categories = responseData.categories || [];
@@ -594,7 +594,7 @@
               console.error('Error fetching categories data:', error);
             });
 
-          const fetchProducts = fetch(api+'/admin/inventory/products/active', requestOptions)
+          const fetchProducts = fetch(api+'/api/v2/inventory/products/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               products = responseData.products || [];
@@ -604,7 +604,7 @@
               console.error('Error fetching products data:', error);
             });
 
-          const fetchBrands = fetch(api+'/admin/inventory/brand/list/active', requestOptions)
+          const fetchBrands = fetch(api+'/api/v2/inventory/brand/list/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               brands = responseData.brands || [];
@@ -1073,7 +1073,7 @@
             },
             body: JSON.stringify(payload)
           };
-          fetch(api+'/admin/inventory/transaction/get-list', requestOptions)
+          fetch(api+'/api/v2/inventory/transaction/get-list', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log(data.result)
@@ -1129,7 +1129,7 @@
             },
             body: JSON.stringify(reqBody),
           }
-          fetch(api+'/admin/inventory/products/purchase', requestOptions)
+          fetch(api+'/api/v2/inventory/products/purchase/new', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log("purchase response:", data)

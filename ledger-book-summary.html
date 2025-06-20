@@ -327,11 +327,11 @@
       //update account_holder table
       let link = "";
       if (ac === "customers") {
-        link = "https://psinventory-v2.onrender.com/admin/mis/customer/view/all"
+        link = "https://psinventory-v2.onrender.com/api/v2/mis/customer/view/all"
       } else if (ac === "suppliers") {
-        link = "https://psinventory-v2.onrender.com/admin/mis/supplier/view/all";
+        link = "https://psinventory-v2.onrender.com/api/v2/mis/supplier/view/all";
       } else if (ac === "employees") {
-        link = "https://psinventory-v2.onrender.com/admin/hr/employee/view/all";
+        link = "https://psinventory-v2.onrender.com/api/v2/hr/employee/view/all";
       }
       // fetch-1: On changes account type fetch head_accounts details list 
       const requestOptions = {
@@ -479,7 +479,7 @@
               })
             };
 
-            fetch(api+'/admin/reports/accounts/ledger-book/summary', requestOptions)
+            fetch(api+'/api/v2/reports/accounts/ledger-book/summary', requestOptions)
               .then(response => response.json())
               .then(responseData => {
                 console.log("Data fetched successfully:", responseData);

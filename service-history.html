@@ -271,7 +271,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
       }
-      fetch(api+'/admin/inventory/services/purchase/history?status=1&status=2&status=3&status=4', requestOptions)
+      fetch(api+'/api/v2/inventory/services/purchase/history?status=1&status=2&status=3&status=4', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           purchaseHistory = responseData.result || [];

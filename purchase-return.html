@@ -327,7 +327,7 @@
             'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           }
         };
-        fetch(api + '/admin/mis/supplier/view/active', requestOptions)
+        fetch(api + '/api/v2/mis/supplier/view/active', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.error === true) {
@@ -360,7 +360,7 @@
             },
             body: JSON.stringify(sup),
           }
-          fetch(api + '/admin/inventory/supplier/memos', requestOptions)
+          fetch(api + '/api/v2/inventory/supplier/memos', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log(data)
@@ -396,7 +396,7 @@
             body: JSON.stringify(payload),
           }
           console.log(payload)
-          fetch(api + '/admin/inventory/supplier/memo/products', requestOptions)
+          fetch(api + '/api/v2/inventory/supplier/memo/products', requestOptions)
             .then(response => response.json())
             .then(data => {
               if (data.error === true) {
@@ -533,7 +533,7 @@
             body: JSON.stringify(returned_products_details),
           }
 
-          fetch(api + '/admin/inventory/products/purchase/return', requestOptions)
+          fetch(api + '/api/v2/inventory/products/purchase/return', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log(data);

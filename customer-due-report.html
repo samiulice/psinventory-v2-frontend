@@ -367,7 +367,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
               };
-              fetch(`${api}/admin/reports/accounts/customer-due-report`, requestOptions)
+              fetch(`${api}/api/v2/reports/accounts/customer-due-report`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData);

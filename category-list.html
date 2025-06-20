@@ -412,7 +412,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
               };
-              fetch(`${api}/admin/reports/inventory/category-list`, requestOptions)
+              fetch(`${api}/api/v2/reports/inventory/category-list`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.categories || [];

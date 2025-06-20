@@ -331,7 +331,7 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
             };
-            fetch(api + '/admin/reports/accounts/trial-balance', requestOptions)
+            fetch(api + '/api/v2/reports/accounts/trial-balance', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)

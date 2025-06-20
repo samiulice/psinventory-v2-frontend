@@ -332,7 +332,7 @@
         },
         body: JSON.stringify(payload)
       }
-      fetch(`https://psinventory-v2.onrender.com/admin/inventory/products/warranty/get-history`, requestOptions)
+      fetch(`https://psinventory-v2.onrender.com/api/v2/inventory/products/warranty/get-history`, requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -409,7 +409,7 @@
           },
           body: JSON.stringify(payload)
         }
-        fetch(api + '/admin/inventory/products/search-sold-products-by-serial', requestOptions)
+        fetch(api + '/api/v2/inventory/products/search-sold-products-by-serial', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -477,7 +477,7 @@
           body: JSON.stringify(warrantyClaimBody),
         }
 
-        fetch(api + '/admin/inventory/products/claim-warranty-by-serial-id', requestOptions)
+        fetch(api + '/api/v2/inventory/products/claim-warranty-by-serial-id', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("Claim warranty: ", data)

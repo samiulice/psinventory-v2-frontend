@@ -303,10 +303,10 @@
                 },
                 body: JSON.stringify(user),
             }
-            const api = "https://psinventory-v2.onrender.com";
-            // const api = "http://localhost:8080"; // Use this for local development
+            // const api = "https://psinventory-v2.onrender.com";
+            const api = "http://localhost:8080"; // Use this for local development
 
-            fetch(`${api}/user/session/init`, requestOptions)
+            fetch(api+'/api/v2/user/signin', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log("resp : ", data)

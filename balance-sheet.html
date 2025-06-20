@@ -348,7 +348,7 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
             };
-            fetch(`${api}/admin/reports/accounts/balance-sheet`, requestOptions)
+            fetch(`${api}/api/v2/reports/accounts/balance-sheet`, requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)

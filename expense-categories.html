@@ -407,7 +407,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
               };
-              fetch(`${api}/admin/inventory/expenses/type/list`, requestOptions)
+              fetch(`${api}/api/v2/inventory/expenses/type/list`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)

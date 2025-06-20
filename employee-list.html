@@ -387,7 +387,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
               };
-              fetch(`${api}/admin/hr/employee/view/all`, requestOptions)
+              fetch(`${api}/api/v2/hr/employee/view/all`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.employees || [];

@@ -282,7 +282,7 @@
                     end_date: endDate
                 })
             }
-            fetch(`${api}/admin/reports/accounts/income-statement`, requestOptions)
+            fetch(`${api}/api/v2/reports/accounts/income-statement`, requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     if (data.error === true) {

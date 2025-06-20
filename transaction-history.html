@@ -414,7 +414,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 },
               };
-              fetch(api + '/admin/reports/accounts/transactions-report', requestOptions)
+              fetch(api + '/api/v2/reports/accounts/transactions-report', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData);

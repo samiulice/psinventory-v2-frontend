@@ -1108,7 +1108,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         }
       };
-      fetch(api+'/admin/company-profile', requestOptions)
+      fetch(api+'/api/v2/company-profile', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -1224,7 +1224,7 @@
         },
         body: formData
       }
-      fetch("https://psinventory-v2.onrender.com/admin/images/upload", requestOptions)
+      fetch("https://psinventory-v2.onrender.com/api/v2/images/upload", requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1255,7 +1255,7 @@
         },
         body: JSON.stringify({ file_name: filename })
       }
-      fetch("https://psinventory-v2.onrender.com/admin/images/remove", requestOptions)
+      fetch("https://psinventory-v2.onrender.com/api/v2/images/remove", requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1364,7 +1364,7 @@
           body: JSON.stringify(body),
         }
         console.log(body)
-        fetch(api+'/admin/update-company-info', requestOptions)
+        fetch(api+'/api/v2/update-company-info', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)
@@ -1397,7 +1397,7 @@
             'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
         };
-    fetch(api+'/admin/user/get/all', requestOptions)
+    fetch(api+'/api/v2/user/get/all', requestOptions)
       .then(Response => Response.json())
       .then(data => {
         console.log('data fetched successfully: ', data)
@@ -1520,7 +1520,7 @@
           },
           body: JSON.stringify(data)
         };
-        const response = await fetch(api+'/admin/user/' + path, requestOptions);
+        const response = await fetch(api+'/api/v2/user/' + path, requestOptions);
 
         const result = await response.json();
 
@@ -1585,7 +1585,7 @@
           },
           body: JSON.stringify(data)
         };
-        const response = await fetch(api+'/admin/user/delete', requestOptions);
+        const response = await fetch(api+'/api/v2/user/delete', requestOptions);
 
         const result = await response.json();
 
@@ -1711,7 +1711,7 @@
             }
           };
           try {
-            const response = await fetch(api+'/admin/db/restore?filetype=' + fileType, requestOptions);
+            const response = await fetch(api+'/api/v2/db/restore?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);
@@ -1753,7 +1753,7 @@
                 'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
               }
             };
-            const response = await fetch(api+'/admin/db/backup?filetype=' + fileType, requestOptions);
+            const response = await fetch(api+'/api/v2/db/backup?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);
