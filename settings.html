@@ -32,8 +32,6 @@
 
   <!-- sweetalert2 style -->
   <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
-  <script src="/wails/runtime.js"></script>
-
   <style>
     /* Autocomplete container - NEW */
     .autocomplete-container {
@@ -72,204 +70,6 @@
       background: #D0F1E6;
     }
   </style>
-  <style>
-    input[type="password"]::-ms-reveal,
-    input[type="password"]::-ms-clear,
-    input[type="password"]::-webkit-contacts-auto-fill-button,
-    input[type="password"]::-webkit-credentials-auto-fill-button {
-      display: none;
-    }
-
-    .users-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #004d4d;
-    }
-
-    .users-table th,
-    .users-table td {
-      padding: 0.7rem 1rem;
-      text-align: left;
-      border-bottom: 1px solid #e0f2f1;
-    }
-
-    .users-table th {
-      background: #e0f2f1;
-      color: #004d4d;
-      font-size: 1.25rem;
-      font-weight: 600;
-      text-transform: uppercase;
-    }
-
-    .input-field {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #b2dfdb;
-      border-radius: 5px;
-      font-size: 1.25rem;
-      transition: all 0.2s ease;
-      color: #006666;
-    }
-
-    #terms-condition tr {
-      background-color: #ffffff;
-    }
-
-    .input-field:focus {
-      outline: none;
-      border-color: #008080;
-      box-shadow: 0 0 0 3px rgba(0, 128, 128, 0.1);
-    }
-
-    .password-container {
-      position: relative;
-      width: 100%;
-    }
-
-    .toggle-password,
-    .copy-password {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      cursor: pointer;
-      background: none;
-      border: none;
-      padding: 0;
-      font-size: 1.4rem;
-      color: #008080;
-      transition: color 0.2s ease;
-    }
-
-    .toggle-password:hover,
-    .copy-password:hover {
-      color: #006666;
-    }
-
-    .toggle-password {
-      right: 35px;
-      /* Adjusted for space between icons */
-    }
-
-    .copy-password {
-      right: 5px;
-    }
-
-
-    .edit-btn {
-      background: #006891;
-      color: white;
-      padding: 5px;
-      border: none;
-      height: 25px;
-      border-radius: 2px;
-      font-size: 1.25rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .edit-btn:hover {
-      background: #009bd8;
-      transform: translateY(-1px);
-    }
-
-    .save-btn {
-      background: #008080;
-      color: rgb(255, 255, 255);
-      padding: 0.5rem 1.2rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1.25rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .save-btn:hover {
-      background: #009797;
-      transform: translateY(-1px);
-    }
-
-    .delete-btn {
-      background: #b60101;
-      color: rgb(255, 255, 255);
-      padding: 0.5rem 1.2rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1.25rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .delete-btn:hover {
-      background: #c50000;
-      transform: translateY(-1px);
-    }
-
-
-    tr:last-child td {
-      border-bottom: none;
-    }
-
-    tr:hover td {
-      background: #f7fdfd;
-    }
-
-    .input-field::placeholder {
-      color: #99b3b3;
-      font-weight: 300;
-    }
-
-    .highlight-field {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #f39c12;
-      border-radius: 5px;
-      font-size: 1.25rem;
-      transition: all 0.2s ease;
-      color: #0c1a1a;
-    }
-
-    .highlight-field:focus {
-      outline: none;
-      border-color: #cf8a1c;
-      box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
-    }
-
-    .highlight {
-      color: #cf8a1c;
-    }
-
-    .add-row-btn {
-      background: #008080;
-      color: white;
-      padding: 0.8rem 1.5rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-bottom: 1rem;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .add-row-btn:hover {
-      background: #006666;
-      transform: translateY(-1px);
-    }
-
-    .add-row-btn i {
-      font-size: 1rem;
-    }
-  </style>
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> -->
 </head>
 
 <body class="nav-md">
@@ -396,13 +196,13 @@
             <div class="tabs">
               <button class="tab-btn active" data-tab="general">General</button>
               <button class="tab-btn" data-tab="additional-settings">Additional Settings</button>
-              <button class="tab-btn" data-tab="users">Users & Permissions</button>
-              <button class="tab-btn" data-tab="data">Data Management</button>
+              <button class="tab-btn admin-access-show" data-tab="users">Users & Permissions</button>
+              <button class="tab-btn admin-access-show" data-tab="data">Data Management</button>
               <!-- <button class="tab-btn" data-tab="system">System</button> -->
             </div>
 
             <!-- General Tab -->
-            <div id="general-tab" class="tab-content admin-access active">
+            <div id="general-tab" class="tab-content admin-access-tab active">
               <div class="settings-section">
                 <h3>Company Information</h3>
                 <form class="settings-form" id="basic-info">
@@ -491,7 +291,7 @@
             </div>
 
             <!-- Additional-settings Tab -->
-            <div class="tab-content admin-access" id="additional-settings-tab">
+            <div class="tab-content admin-access-tab" id="additional-settings-tab">
               <div class="settings-section">
                 <h3>Company Logo & Watermark</h3>
                 <div class="additional-settings-list">
@@ -561,21 +361,22 @@
           </div>
 
           <!-- Users & Permissions Tab -->
-          <div id="users-tab" class="tab-content admin-access">
+          <div id="users-tab" class="tab-content admin-access-show">
             <div class="settings-section">
               <h2 class="text-center tale fa-2x">User Management</h2>
-              <button type="button" id="add-new-user" onclick="addNewRow()" class="pull-right btn btn-primary"><i
+              <button type="button" id="add-new-user" onclick="addNewUser()" class="pull-right btn btn-primary"><i
                   class="fa fa-plus"></i>&nbsp;Add New
                 User</button>
               <div class="clearfix"></div>
               <table class="users-table">
                 <thead>
-                  <tr>
-                    <th style="width: 10%;">Username</th>
-                    <th style="width: 50%;">Password</th>
-                    <th style="width: 15%;">Role</th>
-                    <th style="width: 25%;">Actions</th>
-                  </tr>
+                  <th style="text-align: left;">Full Name</th>
+                  <th style="text-align: left;">Mobile</th>
+                  <th style="text-align: left;">Email</th>
+                  <th style="text-align: left;">Username</th>
+                  <th style="text-align: left;">Role</th>
+                  <th style="text-align: left;">Status</th>
+                  <th style="text-align: left;">Actions</th>
                 </thead>
                 <tbody id="usersTableBody">
                   <!-- update table body dynamically by using JS DOM -->
@@ -585,7 +386,7 @@
           </div>
 
           <!-- Data Management Tab -->
-          <div id="data-tab" class="tab-content admin-access">
+          <div id="data-tab" class="tab-content admin-access-show">
             <div class="settings-section">
               <h3>Data Management</h3>
               <div class="data-management-options">
@@ -715,6 +516,10 @@
   <!-- Common js-script -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+      if (window.appUser.role === "operator") {
+        const tabUI = document.getElementById("general-tab");
+        tabUI.querySelectorAll("button").forEach(btn => btn.remove());
+      }
       // Tab switching
       const tabButtons = document.querySelectorAll('.tab-btn');
       const tabContents = document.querySelectorAll('.tab-content');
@@ -728,10 +533,13 @@
           // Add active class to clicked button and corresponding content
           button.classList.add('active');
           const tabId = button.getAttribute('data-tab');
-          document.getElementById(`${tabId}-tab`).classList.add('active');
+          const tabUI = document.getElementById(`${tabId}-tab`);
+          if (window.appUser.role === "operator") {
+            tabUI.querySelectorAll("button").forEach(btn => btn.remove());
+          }
+          tabUI.classList.add('active');
         });
       });
-
 
       // Add CSS for settings page
       const style = document.createElement('style');
@@ -987,21 +795,6 @@
         `;
       document.head.appendChild(style);
 
-
-
-      // Toggle switches for notifications
-      document.querySelectorAll('.switch input[type="checkbox"]').forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-          const notificationItem = this.closest('.notification-item');
-          const notificationName = notificationItem.querySelector('h5').textContent;
-
-          if (this.checked) {
-            alert(`${notificationName} notifications enabled`);
-          } else {
-            alert(`${notificationName} notifications disabled`);
-          }
-        });
-      });
     });
   </script>
 
@@ -1108,7 +901,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         }
       };
-      fetch(api+'/api/v2/company-profile', requestOptions)
+      fetch(api + '/api/v2/company-profile', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -1150,10 +943,10 @@
     function addTermsRow(value = "") {
       const tableBody = document.querySelector("#terms-conditions tbody");
       const row = document.createElement("tr");
-
+      let hidden = 'd-none';
       row.innerHTML = `
         <td style="width:95%"><input type="text" name="terms[]" value="${value}" class="form-control input-sm" required></td>
-        <td class="pull-right"><button type="button" class="btn btn-danger btn-sm" onclick="removeTermsRow(this)"><i class="fa fa-trash"></i></button></td>
+        <td class="pull-right"><button type="button" class="btn btn-danger btn-sm ${hidden}" onclick="removeTermsRow(this)"><i class="fa fa-trash"></i></button></td>
       `;
 
       tableBody.appendChild(row);
@@ -1216,7 +1009,7 @@
       formData.append("filename", filename)
       formData.append("filetype", fileType)
       const requestOptions = {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1224,7 +1017,7 @@
         },
         body: formData
       }
-      fetch("https://psinventory-v2.onrender.com/api/v2/images/upload", requestOptions)
+      fetch(api + '/api/v2/images/upload', requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1247,7 +1040,7 @@
       const rmBtn = document.getElementById(removeBtnID)
       rmBtn.innerHTML = 'Removing &nbsp;<i class="fa fa-spinner fa-spin"></i>';
       const requestOptions = {
-        method: 'post',
+        method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -1255,7 +1048,7 @@
         },
         body: JSON.stringify({ file_name: filename })
       }
-      fetch("https://psinventory-v2.onrender.com/api/v2/images/remove", requestOptions)
+      fetch(api + '/api/v2/images/remove', requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1277,9 +1070,9 @@
       let imgID = imgLink
       if (isNew) {
         imgID = "psi_membership_image_" + moment().format('YYYY-MM-DD_HH-mm-ss')
-        imgLink = "https://psinventory-v2.onrender.com/images/logo.png"
+        imgLink = api + '/images/logo.png'
       } else {
-        imgLink = "https://psinventory-v2.onrender.com/images/" + imgID
+        imgLink = api + '/images/' + imgID
       }
 
       let div = `
@@ -1355,7 +1148,7 @@
         }
         // console.log(body)
         const requestOptions = {
-          method: 'post',
+          method: 'POST',
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -1364,7 +1157,7 @@
           body: JSON.stringify(body),
         }
         console.log(body)
-        fetch(api+'/api/v2/update-company-info', requestOptions)
+        fetch(api + '/api/v2/update-company-info', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)
@@ -1388,282 +1181,60 @@
 
   <!-- User management -->
   <script>
-    let userList = []
-    // //Fetch user list
-    const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
-          },
-        };
-    fetch(api+'/api/v2/user/get/all', requestOptions)
-      .then(Response => Response.json())
-      .then(data => {
-        console.log('data fetched successfully: ', data)
-        if (!data.error) {
-          userList = data.users || []
-          if (userList.length === 0) {
-            const tbody = document.getElementById("usersTableBody");
-            tbody.innerHTML = `<tr><td colspan=4 class="text-danger" style="text-align:center">Empty User List</td></tr>`
-          } else {
-            userList.forEach(u => addNewRow(u))
+    let userList = [];
+    let editableUser = null;
+    //Fetch user list if user is an admin
+    if (window.appUser.role === "admin") {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+        },
+      };
+      fetch(api + '/api/v2/user/get/all', requestOptions)
+        .then(Response => Response.json())
+        .then(data => {
+          console.log('data fetched successfully: ', data)
+          if (!data.error) {
+            userList = data.users || []
+            if (userList.length === 0) {
+              const tbody = document.getElementById("usersTableBody");
+              tbody.innerHTML = `<tr><td colspan=4 class="text-danger" style="text-align:center">Empty User List</td></tr>`
+            } else {
+              userList.forEach((u, i) => addNewRow(u, i))
+            }
           }
-        }
-      })
-    // Enable row editing function
-    function enableRowEditing(event) {
-      const row = event.target.closest('tr');
-      const inputs = row.querySelectorAll('input');
-
-      inputs.forEach(input => {
-        input.disabled = false;
-        if (input.classList.contains('username') && !input.value) {
-          input.focus();
-        }
-      });
-      row.querySelectorAll('.toggle-password').forEach(btn => {
-        btn.style.cursor = 'pointer';
-        btn.style.color = '#008080';
-      });
-    }
-    // Disable row editing function
-    function disableRowEditing(event) {
-      const row = event.target.closest('tr');
-      const inputs = row.querySelectorAll('input');
-
-      inputs.forEach(input => {
-        input.disabled = true;
-
-      });
-      const radioButtons = row.querySelectorAll('input[type="radio"]');
-      radioButtons.forEach(radio => {
-        radio.disabled = true;
-      });
-      row.querySelectorAll('.toggle-password').forEach(btn => {
-        btn.style.cursor = 'not-allowed';
-        btn.style.color = '#008080';
-      });
-    }
-    function toggleVisibility(event) {
-      const input = event.currentTarget.closest('.password-container').querySelector('input');
-      const icon = event.currentTarget.querySelector('i');
-
-      if (input.type === 'password') {
-        input.type = 'text';
-        icon.classList.remove('fa-eye');
-        icon.classList.add('fa-eye-slash');
-      } else {
-        input.type = 'password';
-        icon.classList.remove('fa-eye-slash');
-        icon.classList.add('fa-eye');
-      }
-    }
-    function copyPassword(event) {
-      const container = event.currentTarget.closest('.password-container');
-      const input = container.querySelector('input');
-
-      if (input) {
-        const password = input.value;
-
-        // Use modern Clipboard API
-        navigator.clipboard.writeText(password)
-          .then(() => {
-            alert('Password copied to clipboard!');
-          })
-          .catch(err => {
-            alert('Failed to copy password.');
-            console.error('Copy failed:', err);
-          });
-      }
+        })
+        .catch(error => {
+          console.error('Error fetching user list:', error);
+          alertError("Failed to fetch user list.");
+        });
     }
 
-
-    // Save changes function
-    async function saveChanges(event, path) {
-      const row = event.target.closest('tr');
-      const inputs = row.querySelectorAll('input');
-      const editBtn = row.querySelector('.edit-btn');
-      const saveBtn = row.querySelector('.save-btn');
-      const btn = event.target;
-
-      // Disable button during save
-      btn.disabled = true;
-      btn.innerHTML = 'Saving <i class="fa fa-spinner fa-spin"></i>';
-
-      try {
-        const username = row.querySelector('.username').value;
-        const password = row.querySelector('.password').value;
-        const role = row.querySelector("input[name^='role']:checked").value;
-
-        //Checks blank Fields
-        if (username.trim() == "" || password.trim() == "") {
-          alertQuestion("Fields cannot be blank!");
-          throw new Error("Fields cannot be blank!");
-        }
-        // Check if username is unique
-        let n = userList.length
-        if (n > 0 && path !== "update") {
-          const isUnique = !userList.some(user => user.username === username);
-          if (!isUnique) {
-            alertQuestion("Username already exists!");
-            throw new Error("Username already exists!");
-          }
-        }
-
-        const data = { username, password, role };
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
-          },
-          body: JSON.stringify(data)
-        };
-        const response = await fetch(api+'/api/v2/user/' + path, requestOptions);
-
-        const result = await response.json();
-
-        if (response.ok) {
-          // Add the new user to the list
-          userList.push({ username, name: "", password });
-
-          // Disable inputs after save
-          inputs.forEach(input => input.disabled = true);
-
-          // Disable password toggles
-          row.querySelectorAll('.toggle-password').forEach(toggle => {
-            toggle.style.cursor = 'not-allowed';
-            toggle.style.color = '#cbd5e1';
-          });
-
-          setTimeout(() => {
-            btn.innerHTML = 'Saved';
-            btn.disabled = false;
-          }, 2000);
-        } else {
-          throw new Error("Failed to save changes");
-        }
-        setTimeout(() => {
-          btn.innerHTML = 'Save';
-          btn.disabled = false;
-        }, 4500);
-
-      } catch (error) {
-        console.error("Error:", error);
-        btn.innerHTML = error.message || 'Error!';
-        btn.style.backgroundColor = 'red'; // Change color to red
-        setTimeout(() => {
-          btn.innerHTML = 'Save';
-          btn.disabled = false;
-          btn.style.backgroundColor = '#008080'; // Change color to red
-        }, 2000);
-      }
-    }
-
-    //deleteRegistry deletes the use from the registry
-    async function deleteRegistry(event) {
-      const row = event.target.closest('tr');
-      const inputs = row.querySelectorAll('input');
-      const btn = event.target;
-
-      // Disable button during save
-      btn.disabled = true;
-      btn.innerHTML = 'Deleting <i class="fa fa-spinner fa-spin"></i>';
-
-      try {
-        const data = {
-          username: row.querySelector('.username').value,
-          password: row.querySelector('.password').value,
-          role: row.querySelector("input[name^='role']:checked").value
-        };
-        const requestOptions = {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
-          },
-          body: JSON.stringify(data)
-        };
-        const response = await fetch(api+'/api/v2/user/delete', requestOptions);
-
-        const result = await response.json();
-
-        if (response.ok) {
-          showSuccessMessage(result.message);
-          setTimeout(() => {
-            location.reload()
-          }, 2000,);
-        } else {
-          throw new Error("Failed to delete user");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        btn.innerHTML = 'Error!';
-        setTimeout(() => {
-          btn.innerHTML = 'Save';
-          btn.disabled = false;
-        }, 2000);
-      }
-    }
-
-    function addNewRow(data = null) {
-      let path = 'update'
-      let highlight = ''
-      let isDisabled = 'disabled'
-      if (data === null) {
-        //dummy data
-        data = {
-          username: "",
-          password: "",
-          role: "admin",
-        }
-        path = 'add'
-        highlight = 'highlight-field'
-        isDisabled = ''
-      }
+    //addNewRow adds a new row to the user table
+    function addNewRow(data, index) {
       const tbody = document.getElementById("usersTableBody");
       const rowIndex = tbody.children.length; // Get row index for unique naming
       const newRow = document.createElement("tr");
-
       newRow.innerHTML = `
-      <td style="width: 15%;"><input type="text" class="input-field ${highlight} username" value="${data.username}" placeholder="Enter username" ${isDisabled} required></td>
-      <td style="width: 50%;">
-          <div class="password-container">
-              <input type="password" style="padding-right:70px;" class="input-field ${highlight} password" value="${data.password}" placeholder="••••••••" ${isDisabled} required>
-              <button class="toggle-password" onclick=toggleVisibility(event) type="button">
-                  <i class="${highlight === '' ? '' : 'text-warning'} fa fa-eye"></i>
-              </button>
-              <!-- Copy Button -->
-              <button class="copy-password" onclick="copyPassword(event)" type="button" title="Copy Password">
-                <i class="fa fa-copy"></i>
-              </button>
-          </div>
-      </td>
-      <td style="width: 15%;">
-          <div class="toggle-wrapper" style="margin-top:-3px">
-              <input type="radio" id="admin_${rowIndex}" name="role_${rowIndex}" value="admin" ${data.role === "admin" ? "checked" : ""} ${isDisabled}>
-              <label for="admin_${rowIndex}">Admin</label>
-              <input type="radio" id="operator_${rowIndex}" name="role_${rowIndex}" value="operator" ${data.role === "admin" ? "" : "checked"} ${isDisabled}>
-              <label for="operator_${rowIndex}">Operator</label>
-          </div>
-      </td>
-      <td style="width: 20%;">
-          <button class="btn btn-dark btn-xs" onclick="enableRowEditing(event)">Edit</button>
-          <button class="btn btn-primary btn-xs" onclick="saveChanges(event, '${path}')">Save</button>
-          <button class="btn btn-danger btn-xs" onclick="deleteRegistry(event)">Delete</button>
-          
-      </td>
-  `;
-
+        <td>${data.name}</td>
+        <td>${data.mobile}</td>
+        <td>${data.email}</td>
+        <td>${data.username}</td>
+        <td>${toTitleCase(data.role)}</td>
+        <td>${data.status ? '<span class="label label-primary">Active</span>' : '<span class="label label-warning">Inactive</span>'}</td>
+        <td>
+          <button id="edit-btn-${index}" class="btn btn-primary btn-xs" onclick="updateUser(${index})"><i class='fa fa-edit'></i></button>
+          <button  id="delete-btn-${index}" class="btn btn-danger btn-xs" onclick="deleteUser('${index}')"><i class='fa fa-trash'></i></button>
+        </td>`;
       tbody.appendChild(newRow);
-      // Auto-scroll to new row
-      newRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   </script>
 
   <!-- data management -->
-  <script>
+  <!-- <script>
     window.addEventListener("DOMContentLoaded", event => {
       const importSQLButtons = document.querySelectorAll('.import-sql-btn');
       const exportSQLButtons = document.querySelectorAll('.export-sql-btn');
@@ -1706,12 +1277,13 @@
           const requestOptions = {
             method: 'POST',
             headers: {
+              'Accept': 'application/json',
               'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
             }
           };
           try {
-            const response = await fetch(api+'/api/v2/db/restore?filetype=' + fileType, requestOptions);
+            const response = await fetch(api + '/api/v2/db/restore?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);
@@ -1749,11 +1321,12 @@
             const requestOptions = {
               method: 'POST',
               headers: {
+                'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
               }
             };
-            const response = await fetch(api+'/api/v2/db/backup?filetype=' + fileType, requestOptions);
+            const response = await fetch(api + '/api/v2/db/backup?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);
@@ -1775,7 +1348,7 @@
       });
     });
 
-  </script>
+  </script> -->
 
 </body>
 

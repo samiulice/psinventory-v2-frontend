@@ -99,7 +99,7 @@ function addNewBrand(page, brands) {
         body: JSON.stringify(brand),
       }
 
-      fetch(api+'/api/v2/inventory/brand/new', requestOptions)
+      fetch(api + '/api/v2/inventory/brand/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -116,6 +116,7 @@ function addNewBrand(page, brands) {
     }
   });
 }
+
 //updateBrand show a popup form and then make an api call to update brand data to the database table
 function updateBrand(brand) {
   Swal.fire({
@@ -230,9 +231,9 @@ function updateBrand(brand) {
         body: JSON.stringify(brand),
       }
       let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
-      fetch(api+'/api/v2/inventory/brand/edit', requestOptions)
+      fetch(api + '/api/v2/inventory/brand/edit', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -443,7 +444,7 @@ function addNewProduct(page, brands, categories, products) {
       }
       console.log(product)
 
-      fetch(api+'/api/v2/inventory/product/new', requestOptions)
+      fetch(api + '/api/v2/inventory/product/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -466,6 +467,7 @@ function addNewProduct(page, brands, categories, products) {
   });
 
 }
+
 //updateProduct show a popup form and then make an api call to update item info to the database table
 function updateProduct(brands, categories, product) {
   let brandList = '', categoryList = '';
@@ -674,7 +676,7 @@ function updateProduct(brands, categories, product) {
       }
       console.log(UpdatedInfo)
 
-      fetch(api+'/api/v2/inventory/product/update', requestOptions)
+      fetch(api + '/api/v2/inventory/product/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -689,6 +691,7 @@ function updateProduct(brands, categories, product) {
   });
 
 }
+
 //addNewCategory show a popup form and then make an api call to insert category data to the database table
 function addNewCategory(page, categories) {
   Swal.fire({
@@ -790,7 +793,7 @@ function addNewCategory(page, categories) {
         body: JSON.stringify(category),
       }
 
-      fetch(api+'/api/v2/inventory/category/new', requestOptions)
+      fetch(api + '/api/v2/inventory/category/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -810,6 +813,7 @@ function addNewCategory(page, categories) {
     }
   });
 }
+
 //updateCategory show a popup form and then make an api call to update category data to the database table
 function updateCategory(category, btnIndex) {
   Swal.fire({
@@ -925,9 +929,9 @@ function updateCategory(category, btnIndex) {
       }
 
       let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
-      fetch(api+'/api/v2/inventory/category/update', requestOptions)
+      fetch(api + '/api/v2/inventory/category/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -942,6 +946,7 @@ function updateCategory(category, btnIndex) {
     }
   });
 }
+
 //AddNewService show a popup form and then make an api call to insert service data to the database table
 function addNewService(src, services) {
   Swal.fire({
@@ -1062,7 +1067,7 @@ function addNewService(src, services) {
         body: JSON.stringify(service),
       }
 
-      fetch(api+'/api/v2/inventory/service/new', requestOptions)
+      fetch(api + '/api/v2/inventory/service/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1084,6 +1089,8 @@ function addNewService(src, services) {
     }
   });
 }
+
+//updateService show a popup form and then make an api call to update service info to the database table
 function updateService(serviceInfo, btnIndex) {
   Swal.fire({
     title: 'Update Service Account',
@@ -1215,10 +1222,10 @@ function updateService(serviceInfo, btnIndex) {
         body: JSON.stringify(service),
       }
       let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/api/v2/inventory/service/update', requestOptions)
+      fetch(api + '/api/v2/inventory/service/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1234,6 +1241,149 @@ function updateService(serviceInfo, btnIndex) {
         });
     }
   });
+}
+
+//cancelService show a popup Cancel service for and make an api call to update database table for cancel service process
+function cancelService(id) {
+  let htmlContent = `
+        <div class="x_panel">
+            <div class="x_content">
+                <form autocomplete="off" id="cancel-service" class="needs-validation" novalidate>
+                    <!-- Delivery Date -->
+                    <div class="col-6 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left"  id="delivery_date" name="delivery_date"
+                            placeholder="Enter date(mm-dd-yyyy)" autofocus autocomplete="off" required>
+                        <div class="invalid-feedback d-none text-danger">Please correct date.</div>
+                        <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                    </div>
+                    <!-- Comment -->
+                    <div class="col-6 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left" id="note" name="note"
+                            placeholder="Reason for cancellation" autocomplete="off">
+                        <div class="invalid-feedback d-none text-danger">Please refer to the reason"</div>
+                        <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-barcode" aria-hidden="true"></span>
+                    </div>
+                    <div class="col-6 form-group has-feedback">
+                        <input type="text" class="form-control has-feedback-left" id="delivered_by" name="delivered_by"
+                            placeholder="Delivered by" autocomplete="off">
+                        <div class="invalid-feedback d-none text-danger">Please enter the employee name.</div>
+                        <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left fa fa-user" aria-hidden="true"></span>
+                    </div>
+                    <div class="form-group">
+                      <div id="btns" class="col-4">
+                          <br>
+                          <button type="submit" class="btn btn-sm btn-danger">Submit</button>
+                      </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+          `;
+  Swal.fire({
+    title: 'Cancel Service',
+    width: 450,
+    html: htmlContent,
+    showCloseButton: true,
+    showConfirmButton: false,
+    showCancelButton: false,
+    allowOutsideClick: false,
+    preConfirm: () => {
+
+      return new Promise((resolve) => {
+        const form = document.getElementById('cancel-service');
+        const formFields = form.querySelectorAll('.form-control, .form-select');
+        let isValid = true;
+
+        // Reset all feedback messages
+        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+
+        // Check each field
+        formFields.forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+
+        if (isValid) {
+          resolve({
+            delivery_date: form.delivery_date.value,
+            note: form.note.value,
+            delivered_by: form.delivered_by.value,
+          });
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    },
+    willOpen: () => {
+      const form = document.getElementById('cancel-service');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+        let isValid = true;
+        form.querySelectorAll('.form-control, .form-select').forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+        if (isValid) {
+          Swal.getConfirmButton().click();
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    }
+
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const data = result.value;
+      const reqBody = {
+        id: parseInt(id),
+        delivery_date: data.delivery_date,
+        note: data.note,
+        delivered_by: data.delivered_by,
+      }
+      const requestOptions = {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody),
+      }
+      fetch(api + '/api/v2/inventory/services/purchase/cancel', requestOptions)
+        .then(response => response.json())
+        .then(function (data) {
+          if (data.error === true) {
+            alertQuestion(data.message)
+          } else {
+            setTimeout(() => {
+              btn.innerHTML = 'Saved'
+            }, 1000);
+          }
+          // setTimeout(() => {
+          //   location.reload();
+          // }, 2000);
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }
+  });
+  initSingleDatePicker("#delivery_date")
 }
 //addNewCustomer show a popup form and then make an api call to insert customer data to the database table
 function addNewCustomer(page, customers) {
@@ -1376,7 +1526,7 @@ function addNewCustomer(page, customers) {
         body: JSON.stringify(customer),
       }
 
-      fetch(api+'/api/v2/mis/customer/new', requestOptions)
+      fetch(api + '/api/v2/mis/customer/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1397,6 +1547,8 @@ function addNewCustomer(page, customers) {
     }
   });
 }
+
+//updateCustomer show a popup form and then make an api call to update customer info to the database table
 function updateCustomer(cusInfo, btnIndex) {
   Swal.fire({
     title: 'Update Customer Account',
@@ -1548,10 +1700,10 @@ function updateCustomer(cusInfo, btnIndex) {
         body: JSON.stringify(customer),
       }
       let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/api/v2/mis/customer/update', requestOptions)
+      fetch(api + '/api/v2/mis/customer/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1569,6 +1721,7 @@ function updateCustomer(cusInfo, btnIndex) {
   });
 }
 
+// addNewEmployee show a popup form and then make an api call to insert employee data to the database table
 function addNewEmployee(page, employees) {
   Swal.fire({
     title: 'Add Employee',
@@ -1720,7 +1873,7 @@ function addNewEmployee(page, employees) {
         body: JSON.stringify(employee),
       }
 
-      fetch(api+'/api/v2/hr/employee/new', requestOptions)
+      fetch(api + '/api/v2/hr/employee/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (page === "") {
@@ -1738,6 +1891,8 @@ function addNewEmployee(page, employees) {
     }
   });
 }
+
+//updateEmployee show a popup form and then make an api call to update employee info to the database table
 function updateEmployee(empInfo, btnIndex) {
   Swal.fire({
     title: 'Update Employee Account',
@@ -1901,10 +2056,10 @@ function updateEmployee(empInfo, btnIndex) {
         body: JSON.stringify(employee),
       }
       let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/api/v2/hr/employee/update', requestOptions)
+      fetch(api + '/api/v2/hr/employee/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1921,6 +2076,460 @@ function updateEmployee(empInfo, btnIndex) {
     }
   });
 }
+
+// addNewUser show a popup form and then make an api call to insert user data to the database table
+function addNewUser() {
+  Swal.fire({
+    title: 'Add New User',
+    width: 450,
+    html: `
+    <form autocomplete="off" id="add-user" class="needs-validation" novalidate>
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Personal Info</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <!-- Full Name -->
+          <div class="col-4 form-group has-feedback">
+              <input type="text" class="form-control has-feedback-left" id="name" name="name" 
+                  placeholder="Full Name" autocomplete="off" autofocus required>
+              <div class="invalid-feedback d-none text-danger">Please enter user's full name.</div>
+              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
+          </div>
+
+          <!-- Mobile Number -->
+          <div class="col-4 form-group has-feedback">
+              <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
+                placeholder="Mobile Number" autocomplete="off">
+              <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
+              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="col-4 form-group has-feedback">
+              <input type="email" class="form-control has-feedback-left" id="email" name="email"
+                placeholder="Email" autocomplete="off">
+              <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
+              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Login Info</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <!-- Username -->
+          <div class="col-4 form-group has-feedback">
+            <input type="text" class="form-control has-feedback-left" id="username" name="username"
+              placeholder="Username" autocomplete="off" required>
+            <div class="invalid-feedback d-none text-danger">Please enter the username.</div>
+            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
+          </div>
+          <!-- Password -->
+          <div class="col-4 form-group has-feedback">
+            <input type="password" class="form-control has-feedback-left" id="password" name="password"
+              placeholder="Password" autocomplete="off" required>
+            <div class="invalid-feedback d-none text-danger">Please enter a strong password.</div>
+            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-lock" aria-hidden="true"></span>
+          </div>
+          <div class="col-4">
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <label for="" style="color:#5F5454;background:white">User Role:</label>
+                  </td>
+                  <td>
+                    <div class="toggle-wrapper">
+                      <input type="radio" id="role_admin" name="role" checked autocomplete="off" >
+                      <label for="role_admin">Admin</label>
+                      <input type="radio" id="role_operator" name="role" autocomplete="off" >
+                      <label for="role_operator">Operator</label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group">
+            <div id="btns" class="col-4">
+                <br>
+                <button type="submit" class="btn btn-sm btn-dark admin-access-show">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+          `,
+    showCloseButton: true,
+    showConfirmButton: false,
+    showCancelButton: false,
+    allowOutsideClick: false,
+    preConfirm: () => {
+      return new Promise((resolve) => {
+        const form = document.getElementById('add-user');
+        const formFields = form.querySelectorAll('.form-control, .form-select');
+        let isValid = true;
+
+        // Reset all feedback messages
+        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+
+        // Check each field
+        formFields.forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+
+        if (isValid) {
+          resolve({
+            name: form.name.value,
+            mobile: form.mobile.value,
+            email: form.email.value,
+            username: form.username.value,
+            password: form.password.value,
+            role: form.role_admin.checked ? 'admin' : 'operator',
+          });
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    },
+    willOpen: () => {
+      const form = document.getElementById('add-user');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+        let isValid = true;
+        form.querySelectorAll('.form-control, .form-select').forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+        if (isValid) {
+          Swal.getConfirmButton().click();
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const data = result.value;
+      let user = {
+        name: data.name,
+        mobile: data.mobile,
+        email: data.email,
+        username: data.username,
+        password: data.password,
+        status: true,
+        role: data.role,
+      }
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+        },
+        body: JSON.stringify(user),
+      }
+      let btn = document.getElementById('add-new-user');
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      btn.disabled = true;
+
+      fetch(api + '/api/v2/user/add', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error === true) {
+            alertQuestion(data.message)
+          } else {
+            alertSuccess(data.message, () => {
+              btn.innerHTML = '<i class="fa fa-plus"></i>&nbsp;Add New User';
+              btn.disabled = false
+            })
+            //modify the table row with the added user info
+            userList.push(user);
+            addNewRow(user, userList.length - 1)
+          }
+        });
+    }
+  });
+}
+
+//deleteUser make an api call to delete the user
+function deleteUser(index) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+    },
+    body: JSON.stringify({
+      username:userList[index].username
+    }),
+  }
+  fetch(api + '/api/v2/user/delete', requestOptions)
+    .then(response => response.json())
+    .then(data => {
+      if (data.error === true) {
+        alertQuestion(data.message)
+      } else {
+        alertSuccess(data.message)
+        //modify the table row with the added user info
+        userList = userList.filter((_, i) => i !== index);
+        document.getElementById('delete-btn-'+index).closest('tr').remove()
+      }
+    });
+}
+
+
+//updateUser show a popup form and then make an api call to update user info to the database table
+function updateUser(btnIndex) {
+  let editableUser = userList[btnIndex]
+  Swal.fire({
+    title: 'Update User Account',
+    width: 450,
+    html: `
+    <form autocomplete="off" id="update-user" class="needs-validation" novalidate>
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Personal Info</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <!-- Full Name -->
+          <div class="col-4 form-group has-feedback">
+              <input type="text" class="form-control has-feedback-left" id="name" name="name" value="${editableUser.name || ""}"
+                  placeholder="Full Name" autocomplete="off" autofocus required>
+              <div class="invalid-feedback d-none text-danger">Please enter user's full name.</div>
+              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
+          </div>
+
+          <!-- Mobile Number -->
+          <div class="col-4 form-group has-feedback">
+              <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
+                value="${editableUser.mobile || ""}"  placeholder="Mobile Number" autocomplete="off" required>
+              <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
+              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
+          </div>
+
+          <!-- Email -->
+          <div class="col-4 form-group has-feedback">
+              <input type="email" class="form-control has-feedback-left" id="email" name="email"
+                value="${editableUser.email || ""}"  placeholder="Email" autocomplete="off">
+              <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
+              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="x_panel">
+        <div class="x_title">
+          <h2>Login Info</h2>
+          <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+          <!-- Username -->
+          <div class="col-4 form-group has-feedback">
+            <input type="text" class="form-control has-feedback-left" id="username" name="username"
+              value="${editableUser.username || ""}"  placeholder="Username" autocomplete="off" disabled>
+            <div class="invalid-feedback d-none text-danger">Please enter the username.</div>
+            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
+          </div>
+          <!-- Password -->
+          <div class="col-4 form-group has-feedback">
+            <input type="password" class="form-control has-feedback-left" id="password" name="password"
+              value="${editableUser.password || ""}"  placeholder="Password" autocomplete="off">
+            <div class="invalid-feedback d-none text-danger">Please enter a valid password.</div>
+            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-lock" aria-hidden="true"></span>
+          </div>
+          <div class="col-4">
+            <table>
+              <tbody>
+                <tr>
+                  <td>
+                    <label for="" style="color:#5F5454;background:white">Account Status:</label>
+                  </td>
+                  <td>
+                    <div class="toggle-wrapper">
+                      <input type="radio" id="status_active" name="status" ${editableUser.status ? 'checked' : ''} autocomplete="off" >
+                      <label for="status_active">Active</label>
+                      <input type="radio" id="status_inactive" name="status" ${editableUser.status ? '' : 'checked'} autocomplete="off" >
+                      <label for="status_inactive">Inactive</label>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <label for="" style="color:#5F5454;background:white">User Role:</label>
+                  </td>
+                  <td>
+                    <div class="toggle-wrapper">
+                      <input type="radio" id="role_admin" name="role" ${editableUser.role == "admin" ? 'checked' : ''} autocomplete="off" >
+                      <label for="role_admin">Admin</label>
+                      <input type="radio" id="role_operator" name="role" ${editableUser.role == "admin" ? '' : 'checked'} autocomplete="off" >
+                      <label for="role_operator">Operator</label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="form-group">
+            <div id="btns" class="col-4">
+                <br>
+                <button type="submit" class="btn btn-sm btn-dark admin-access-show">Save Changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+          `,
+    showCloseButton: true,
+    showConfirmButton: false,
+    showCancelButton: false,
+    allowOutsideClick: false,
+    preConfirm: () => {
+      return new Promise((resolve) => {
+        const form = document.getElementById('update-user');
+        const formFields = form.querySelectorAll('.form-control, .form-select');
+        let isValid = true;
+
+        // Reset all feedback messages
+        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+
+        // Check each field
+        formFields.forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+
+        if (isValid) {
+          resolve({
+            name: form.name.value,
+            mobile: form.mobile.value,
+            email: form.email.value,
+            username: form.username.value,
+            password: form.password.value,
+            status: form.status_active.checked,
+            role: form.role_admin.checked ? 'admin' : 'operator',
+          });
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    },
+    willOpen: () => {
+      const form = document.getElementById('update-user');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+        let isValid = true;
+        form.querySelectorAll('.form-control, .form-select').forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+        if (isValid) {
+          Swal.getConfirmButton().click();
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const data = result.value;
+      let user = {
+        id: editableUser.id,
+        name: data.name,
+        mobile: data.mobile,
+        email: data.email,
+        username: data.username,
+        password: data.password,
+        status: data.status,
+        role: data.role,
+      }
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+        },
+        body: JSON.stringify(user),
+      }
+      console.log(requestOptions);
+      let btn = document.getElementById('edit-btn-' + btnIndex);
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      btn.disabled = true;
+
+      fetch(api + '/api/v2/user/update', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error === true) {
+            alertQuestion(data.message)
+          } else {
+            setTimeout(() => {
+              btn.innerHTML = 'Saved'
+            }, 1500);
+
+            //modify the table row with the updated user info
+            //get the tr
+            userList[btnIndex] = user;
+            let row = btn.closest('tr')
+            //then update each td
+            row.innerHTML = `
+              <td>${user.name}</td>
+              <td>${user.mobile}</td>
+              <td>${user.email}</td>
+              <td>${user.username}</td>
+              <td>${toTitleCase(user.role)}</td>
+              <td>${user.status ? '<span class="label label-primary">Active</span>' : '<span class="label label-warning">Inactive</span>'}</td>
+              <td>
+                <button id="edit-btn-${btnIndex}" class="btn btn-primary btn-xs" onclick="updateUser(userList[${btnIndex}], ${btnIndex})">Edit</button>
+                <button  id="delete-btn-${btnIndex}" class="btn btn-danger btn-xs admin-access-show" onclick="deleteUser('${user.username}')">Delete</button>
+              </td>`;
+
+          }
+        });
+    }
+  });
+}
+
 //addNewSupplier show a popup form and then make an api call to insert supplier data to the database table
 function addNewSupplier(page, suppliers) {
   Swal.fire({
@@ -2062,7 +2671,7 @@ function addNewSupplier(page, suppliers) {
         body: JSON.stringify(supplier),
       }
 
-      fetch(api+'/api/v2/mis/supplier/new', requestOptions)
+      fetch(api + '/api/v2/mis/supplier/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2083,6 +2692,8 @@ function addNewSupplier(page, suppliers) {
     }
   });
 }
+
+//updateSupplier show a popup form and then make an api call to update supplier info to the database table
 function updateSupplier(supInfo, btnIndex) {
   Swal.fire({
     title: 'Update Supplier Account',
@@ -2234,10 +2845,10 @@ function updateSupplier(supInfo, btnIndex) {
         body: JSON.stringify(supplier),
       }
       let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api+'/api/v2/mis/supplier/update', requestOptions)
+      fetch(api + '/api/v2/mis/supplier/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2410,7 +3021,7 @@ function addNewStakeHolder() {
         body: JSON.stringify(proprietor),
       }
 
-      fetch(api+'/api/v2/add-stake-holder', requestOptions)
+      fetch(api + '/api/v2/add-stake-holder', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -2426,6 +3037,7 @@ function addNewStakeHolder() {
     }
   });
 }
+
 //checkoutWarrantyProducts show a popup checkout warranty for and make an api call to update database table for checkout process
 function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSerialID) {
 
@@ -2550,7 +3162,7 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
       }
       console.log(wpData)
 
-      fetch(api+'/api/v2/inventory/products/warranty/checkout', requestOptions)
+      fetch(api + '/api/v2/inventory/products/warranty/checkout', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -2564,6 +3176,7 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
   });
   initSingleDatePicker("#arrival_date")
 }
+
 //Function to show SweetAlert2 prompt and handle the delivery process for a warranty product
 function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
   // Display a SweetAlert2 confirmation prompt to proceed with delivery
@@ -2596,7 +3209,7 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
       console.log(wpData);
 
       // Send a POST request to the API endpoint for warranty delivery
-      fetch(api+'/api/v2/inventory/products/warranty/delivery', requestOptions)
+      fetch(api + '/api/v2/inventory/products/warranty/delivery', requestOptions)
         .then(response => response.json())  // Parse the response as JSON
         .then(data => {
           // Check if the API returned an error
@@ -2617,6 +3230,7 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
     }
   });
 }
+
 //viewWarrantyHistory shows warranty history
 function viewWarrantyHistory(warrantyHistory) {
   let mm = warrantyHistory.memo_no.split("-").pop() //get the last part of the memo
@@ -2705,6 +3319,7 @@ function viewWarrantyHistory(warrantyHistory) {
   }).then((result) => {
   });
 }
+
 // Function to initialize the SweetAlert2 form with date range picker
 function showDateRangePickerPopup() {
   Swal.fire({
@@ -2731,156 +3346,6 @@ function showDateRangePickerPopup() {
   // Initialize the date range picker in the SweetAlert popup
   DateRangePicker_Cal('daterange-container');
 }
-// function cancelService(id) {
-//   let btn = document.getElementById(`cancel-btn-${id}`);
-//   btn.innerHTML = `Processing <i class="fa fa-spinner fa-spin"></i>`;
-//   btn.disabled = true;
-
-// }
-
-//cancelService show a popup Cancel service for and make an api call to update database table for cancel service process
-function cancelService(id) {
-  let htmlContent = `
-        <div class="x_panel">
-            <div class="x_content">
-                <form autocomplete="off" id="cancel-service" class="needs-validation" novalidate>
-                    <!-- Delivery Date -->
-                    <div class="col-6 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left"  id="delivery_date" name="delivery_date"
-                            placeholder="Enter date(mm-dd-yyyy)" autofocus autocomplete="off" required>
-                        <div class="invalid-feedback d-none text-danger">Please correct date.</div>
-                        <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-calendar" aria-hidden="true"></span>
-                    </div>
-                    <!-- Comment -->
-                    <div class="col-6 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" id="note" name="note"
-                            placeholder="Reason for cancellation" autocomplete="off">
-                        <div class="invalid-feedback d-none text-danger">Please refer to the reason"</div>
-                        <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-barcode" aria-hidden="true"></span>
-                    </div>
-                    <div class="col-6 form-group has-feedback">
-                        <input type="text" class="form-control has-feedback-left" id="delivered_by" name="delivered_by"
-                            placeholder="Delivered by" autocomplete="off">
-                        <div class="invalid-feedback d-none text-danger">Please enter the employee name.</div>
-                        <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left fa fa-user" aria-hidden="true"></span>
-                    </div>
-                    <div class="form-group">
-                      <div id="btns" class="col-4">
-                          <br>
-                          <button type="submit" class="btn btn-sm btn-danger">Submit</button>
-                      </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-          `;
-  Swal.fire({
-    title: 'Cancel Service',
-    width: 450,
-    html: htmlContent,
-    showCloseButton: true,
-    showConfirmButton: false,
-    showCancelButton: false,
-    allowOutsideClick: false,
-    preConfirm: () => {
-
-      return new Promise((resolve) => {
-        const form = document.getElementById('cancel-service');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
-        let isValid = true;
-
-        // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
-        });
-
-        // Check each field
-        formFields.forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
-            }
-          }
-        });
-
-        if (isValid) {
-          resolve({
-            delivery_date: form.delivery_date.value,
-            note: form.note.value,
-            delivered_by: form.delivered_by.value,
-          });
-        } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
-        }
-      });
-    },
-    willOpen: () => {
-      const form = document.getElementById('cancel-service');
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
-        });
-        let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
-            }
-          }
-        });
-        if (isValid) {
-          Swal.getConfirmButton().click();
-        } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
-        }
-      });
-    }
-
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const data = result.value;
-      const reqBody = {
-        id: parseInt(id),
-        delivery_date: data.delivery_date,
-        note: data.note,
-        delivered_by: data.delivered_by,
-      }
-      const requestOptions = {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reqBody),
-      }
-      fetch(api+'/api/v2/inventory/services/purchase/cancel', requestOptions)
-        .then(response => response.json())
-        .then(function (data) {
-          if (data.error === true) {
-            alertQuestion(data.message)
-          } else {
-            setTimeout(() => {
-              btn.innerHTML = 'Saved'
-            }, 1000);
-          }
-          // setTimeout(() => {
-          //   location.reload();
-          // }, 2000);
-        })
-        .catch(function (error) {
-          console.error('Error fetching data:', error);
-        });
-    }
-  });
-  initSingleDatePicker("#delivery_date")
-}
-
 
 //addNewExpenseType show a popup form and then make an api call to insert expense data to the database table
 function addNewExpenseType(page, expenses) {
@@ -2983,7 +3448,7 @@ function addNewExpenseType(page, expenses) {
         body: JSON.stringify(expense_type),
       }
 
-      fetch(api+'/api/v2/inventory/expenses/type/new', requestOptions)
+      fetch(api + '/api/v2/inventory/expenses/type/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data);
@@ -3099,7 +3564,7 @@ function updateExpense(expenseType, btnIndex) {
         new_name: data.new_name,
       }
       let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = 'processing <i class="fa fa-spinner fa-spin"></i>'
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       const requestOptions = {
         method: 'post',
         headers: {
@@ -3109,7 +3574,7 @@ function updateExpense(expenseType, btnIndex) {
         body: JSON.stringify(payload),
       }
       console.log("Payload:", payload)
-      fetch(api+'/api/v2/inventory/expenses/type/update', requestOptions)
+      fetch(api + '/api/v2/inventory/expenses/type/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("Response:", data)

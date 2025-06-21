@@ -740,4 +740,11 @@ function reloadUI() {
   location.reload()
 }
 
+// Built-in way to convert a sentence to title case in JavaScript (using Intl for locale-aware casing)
+function toTitleCase(sentence) {
+  return sentence
+    .toLocaleLowerCase()
+    .replace(/\b\w/g, char => char.toLocaleUpperCase());
+}
+
 

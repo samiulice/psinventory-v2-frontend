@@ -337,7 +337,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
         }
         fetch(api+'/api/v2/accounts/receive-collection/get-page-details', requestOptions)
@@ -491,7 +491,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
           },
           body: JSON.stringify(reception_summary),
         }

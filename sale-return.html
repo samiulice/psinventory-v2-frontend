@@ -158,7 +158,7 @@
             <!-- page content -->
             <div id="page-content" class="right_col" role="main">
                 <!-- Content Title -->
-                <h2 class="text-center text-warning fa-2x"><label>SALE RETURN</label></h2>
+                <h2 class="text-center tale fa-2x">SALE Return</h2>
                 <!-- Page content here -->
                 <form action="#" id="salesReturnForm">
                     <!-- Sale Details Secetion  -->
@@ -333,7 +333,7 @@
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 },
             }
             fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
@@ -380,7 +380,7 @@
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 },
                 body: JSON.stringify(customerID)
             }
@@ -419,7 +419,7 @@
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                        'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                     },
                     body: JSON.stringify(memoBody)
                 }
@@ -536,7 +536,7 @@
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 },
                 body: JSON.stringify(sales_return_details),
             }

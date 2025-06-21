@@ -446,7 +446,7 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
       }
       const fetchCustomers = fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
@@ -740,7 +740,7 @@
       }
       let btn = document.getElementById("submitBtn");
       btn.disabled = true;
-      btn.innerHTML = 'Processing <i class="fa fa-spinner fa-spin"></i>';
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
 
       const tableData = getTableData();
       
@@ -765,7 +765,7 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(reqBody),
       }
