@@ -480,7 +480,7 @@ function printPurchaseInvoice() {
                           </div>
                           <div class="detail-row">
                               <div class="detail-label">Prepared By</div>
-                              <div class="detail-value">: ${appUser.username}</div>
+                              <div class="detail-value">: ${window.appUser.username}</div>
                           </div>
                       </div>
                   </div>
@@ -1047,7 +1047,7 @@ function printPurchaseChallan() {
                       </div>
                       <div class="detail-row">
                           <div class="detail-label">Prepared By</div>
-                          <div class="detail-value">: ${appUser.username}</div>
+                          <div class="detail-value">: ${window.appUser.username}</div>
                       </div>
                   </div>
               </div>
@@ -1604,7 +1604,7 @@ function printPurchaseReturnInvoice() {
                           </div>
                           <div class="detail-row">
                               <div class="detail-label">Prepared By</div>
-                              <div class="detail-value">: ${appUser.username}</div>
+                              <div class="detail-value">: ${window.appUser.username}</div>
                           </div>
                       </div>
                   </div>
@@ -2167,7 +2167,7 @@ function printSaleInvoice() {
                           </div>
                           <div class="detail-row">
                               <div class="detail-label">Prepared By</div>
-                              <div class="detail-value">: ${appUser.username}</div>
+                              <div class="detail-value">: ${window.appUser.username}</div>
                           </div>
                       </div>
                   </div>
@@ -2756,7 +2756,7 @@ function printSaleReturnInvoice() {
                           </div>
                           <div class="detail-row">
                               <div class="detail-label">Prepared By</div>
-                              <div class="detail-value">: ${appUser.username}</div>
+                              <div class="detail-value">: ${window.appUser.username}</div>
                           </div>
                       </div>
                   </div>

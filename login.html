@@ -314,7 +314,7 @@
                         document.getElementById('login-error-msg').style.display = 'block';
                         document.getElementById('login-error-msg').innerText = data.message;
                     } else {
-                        localStorage.setItem("psitoken", data.token);
+                        localStorage.setItem('psitoken', data.token);
                         localStorage.setItem("psiuser", data.user.username);
                         localStorage.setItem("psiuserrole", data.user.role);
                         window.location.href = 'index.html';

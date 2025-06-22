@@ -548,7 +548,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+localStorage.getItem("token")
+              'Authorization': 'Bearer '+localStorage.getItem('psitoken')
             }
           };
           const fetchCustomers = fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
@@ -1599,7 +1599,7 @@
         //                     </div>
         //                     <div class="detail-row">
         //                         <div class="detail-label">Prepared By</div>
-        //                         <div class="detail-value">: ${appUser.username}</div>
+        //                         <div class="detail-value">: ${window.appUser.username}</div>
         //                     </div>
         //                 </div>
         //             </div>
@@ -2155,7 +2155,7 @@
                             </div>
                             <div class="detail-row">
                                 <div class="detail-label">Prepared By</div>
-                                <div class="detail-value">: ${appUser.username || "-"}</div>
+                                <div class="detail-value">: ${window.appUser.username || "-"}</div>
                             </div>
                         </div>
                     </div>

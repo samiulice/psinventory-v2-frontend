@@ -332,7 +332,12 @@
         })
         // fetch-1: On load window Get accounts for destination and suppliers who have due amount
         const requestOptions = {
-          method: 'post'
+          method: 'post',
+          headers:{
+            'Accept':'application/json',
+            'Content-Type':'application/json',
+            'Authorization':'Bearer ' + localStorage.getItem('psitoken')
+          }
         }
         fetch(api+'/api/v2/accounts/fund-acquisition/get-page-details', requestOptions)
           .then(response => response.json())

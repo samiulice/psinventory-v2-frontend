@@ -558,7 +558,7 @@
             </tr>`;
         div.innerHTML += row;
         document.getElementById("inputFields").classList.remove('d-none')
-        document.getElementById("delivered_by").value = appUser.username
+        document.getElementById("delivered_by").value = window.appUser.username
         document.getElementById("received_amount").max = selectedCustomer.due_amount
       }
     }

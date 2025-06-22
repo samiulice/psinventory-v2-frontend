@@ -1,6 +1,6 @@
 // terminateSession terminates the current session
 function terminateSession() {
-  localStorage.removeItem("psitoken");
+  localStorage.removeItem('psitoken');
   localStorage.removeItem("psiuser");
   localStorage.removeItem("psiuserrole");
 
@@ -12,7 +12,7 @@ function terminateSession() {
 const api = 'http://localhost:8080'
 function checkAuth() {
   console.log('Checking access level...');
-  const token = localStorage.getItem("psitoken");
+  const token = localStorage.getItem('psitoken');
   const username = localStorage.getItem("psiuser");
   const role = localStorage.getItem("psiuserrole");
 
@@ -32,7 +32,7 @@ function checkAuth() {
 checkAuth();
 
 function buildUserPage() {
-  document.getElementById("profile-name").innerHTML = window.appUser.username;
+  document.getElementById("profile-name").innerHTML = appUser.username;
   if (window.appUser.role == "operator") {
     const options = new Set([
       "supplier-list.html", "employee-list.html", "memo-list.html",
