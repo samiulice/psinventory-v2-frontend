@@ -208,7 +208,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -548,10 +548,10 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
             }
           };
-          const fetchCustomers = fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
+          const fetchCustomers = fetch(api + '/api/v2/mis/customer/view/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               customers = responseData.customers || [];
@@ -561,7 +561,7 @@
               console.error('Error fetching customers data:', error);
             });
 
-          const fetchHeadAccounts = fetch(api+'/api/v2/accounts/get-cash-bank-accounts', requestOptions)
+          const fetchHeadAccounts = fetch(api + '/api/v2/accounts/get-cash-bank-accounts', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               headAccounts = responseData.head_accounts || [];
@@ -570,7 +570,7 @@
               console.error('Error fetching head_accounts data:', error);
             });
 
-          const fetchCategories = fetch(api+'/api/v2/inventory/category/list/active', requestOptions)
+          const fetchCategories = fetch(api + '/api/v2/inventory/category/list/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               categories = responseData.categories || [];
@@ -579,7 +579,7 @@
               console.error('Error fetching categories data:', error);
             });
 
-          const fetchProducts = fetch(api+'/api/v2/inventory/products/available', requestOptions)
+          const fetchProducts = fetch(api + '/api/v2/inventory/products/available', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               products = responseData.products || [];
@@ -589,7 +589,7 @@
               console.error('Error fetching products data:', error);
             });
 
-          const fetchBrands = fetch(api+'/api/v2/inventory/brand/list/active', requestOptions)
+          const fetchBrands = fetch(api + '/api/v2/inventory/brand/list/active', requestOptions)
             .then(response => response.json())
             .then(function (responseData) {
               brands = responseData.brands || [];
@@ -675,7 +675,7 @@
             }
           });
         }
-        
+
         //updateAccountsDiv updates account selection options with the fetched data 
         function updateAccountsDiv() {
           const account = document.getElementById("head_account")
@@ -1050,7 +1050,7 @@
           const form = document.getElementById("itemForm")
           // Prevent actual form submission
           if (!form.checkValidity()) {
-            alertQuestion("Please fill out the required fields.");
+            form.reportValidity(); // Show default browser validation messages
             return;
           }
           //disable submit btn
@@ -1095,7 +1095,7 @@
             },
             body: JSON.stringify(reqBody),
           }
-          fetch(api+'/api/v2/inventory/products/sale', requestOptions)
+          fetch(api + '/api/v2/inventory/products/sale', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log("Response: ", data)
@@ -1536,7 +1536,7 @@
         //   </head>
 
         //   <body>
-            
+
         //     ${company.watermark === "" ? "" :
         //       `<div class="watermark-container">
         //         <img src="${company.watermark}" alt="Watermark" class="watermark">
@@ -1636,7 +1636,7 @@
         //                             <div class="detail-label">Cheque No.</div>
         //                             <div class="detail-value">: ${InvoiceData.challan_no} </div>
         //                         </div>`  : ""}
-                                
+
         //                         <div class="detail-row">
         //                             <div class="detail-label">Paid Amount</div>
         //                             <div class="detail-value">: ${InvoiceData.paid_amount} <b>(In Words: ${company.currency === "Taka" ? numberToWordsBDT(InvoiceData.paid_amount) : numberToWords(InvoiceData.paid_amount) + " " + company.currency} Only)</b></div>
@@ -2104,7 +2104,7 @@
                         <div>
                             <div class="logo-section">
                                  ${company.logo_link === "" ? "" :
-                                  `<div class="logo">
+              `<div class="logo">
                                       <img src="${company.logo_link}" alt="">
                                   </div>`}
                                 <div>

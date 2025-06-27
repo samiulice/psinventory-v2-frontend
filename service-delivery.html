@@ -89,7 +89,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -331,7 +331,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
         },
       };
-      const fetchCustomers = fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
+      const fetchCustomers = fetch(api + '/api/v2/mis/customer/view/active', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           customers = responseData.customers || [];
@@ -340,7 +340,7 @@
           console.error('Error fetching customers data:', error);
         });
 
-      const fetchHeadAccounts = fetch(api+'/api/v2/accounts/get-cash-bank-accounts', requestOptions)
+      const fetchHeadAccounts = fetch(api + '/api/v2/accounts/get-cash-bank-accounts', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           headAccounts = responseData.head_accounts || [];
@@ -350,7 +350,7 @@
         });
 
 
-      const fetchServicesHistory = fetch(api+'/api/v2/inventory/services/purchase/history?status=2', requestOptions)
+      const fetchServicesHistory = fetch(api + '/api/v2/inventory/services/purchase/history?status=2', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           serviceHistory = responseData.result || [];
@@ -373,7 +373,7 @@
           console.error("Error completing all fetch requests:", error);
         });
     });
-    
+
     //updateCustomerDiv updates customer selection options with the fetched data
     function updateCustomerDiv() {
       const container = document.getElementById('customer-autocomplete-container');
@@ -568,7 +568,7 @@
       const form = document.getElementById("itemForm")
       // Prevent actual form submission
       if (!form.checkValidity()) {
-        form.preventDefault
+        form.reportValidity(); // Show default browser validation messages
         return;
       }
       let btn = document.getElementById("submitBtn");
@@ -584,7 +584,7 @@
         delivered_by: document.getElementById("delivered_by").value,
         received_amount: parseInt(document.getElementById("received_amount").value),
       }
-      console.log("Request body:",reqBody); // Log table data to console
+      console.log("Request body:", reqBody); // Log table data to console
       const requestOptions = {
         method: 'post',
         headers: {
@@ -594,7 +594,7 @@
         },
         body: JSON.stringify(reqBody),
       }
-      fetch(api+'/api/v2/inventory/services/purchase/delivered', requestOptions)
+      fetch(api + '/api/v2/inventory/services/purchase/delivered', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("purchase response:", data)

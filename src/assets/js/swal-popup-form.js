@@ -95,7 +95,7 @@ function addNewBrand(page, brands) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(brand),
       }
@@ -227,8 +227,8 @@ function updateBrand(brand) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(brand),
       }
@@ -441,7 +441,7 @@ function addNewProduct(page, brands, categories, products) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(product),
       }
@@ -674,7 +674,7 @@ function updateProduct(brands, categories, product) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(UpdatedInfo),
       }
@@ -792,8 +792,8 @@ function addNewCategory(page, categories) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(category),
       }
@@ -928,8 +928,8 @@ function updateCategory(category, btnIndex) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(category),
       }
@@ -1068,8 +1068,8 @@ function addNewService(src, services) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(service),
       }
@@ -1224,8 +1224,8 @@ function updateService(serviceInfo, btnIndex) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(service),
       }
@@ -1368,8 +1368,8 @@ function cancelService(id) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(reqBody),
       }
@@ -1530,8 +1530,8 @@ function addNewCustomer(page, customers) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(customer),
       }
@@ -1705,8 +1705,8 @@ function updateCustomer(cusInfo, btnIndex) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(customer),
       }
@@ -1879,8 +1879,8 @@ function addNewEmployee(page, employees) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(employee),
       }
@@ -2063,8 +2063,8 @@ function updateEmployee(empInfo, btnIndex) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(employee),
       }
@@ -2297,7 +2297,7 @@ function deleteUser(index) {
       'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
     },
     body: JSON.stringify({
-      username:userList[index].username
+      username: userList[index].username
     }),
   }
   fetch(api + '/api/v2/user/delete', requestOptions)
@@ -2309,11 +2309,10 @@ function deleteUser(index) {
         alertSuccess(data.message)
         //modify the table row with the added user info
         userList = userList.filter((_, i) => i !== index);
-        document.getElementById('delete-btn-'+index).closest('tr').remove()
+        document.getElementById('delete-btn-' + index).closest('tr').remove()
       }
     });
 }
-
 
 //updateUser show a popup form and then make an api call to update user info to the database table
 function updateUser(btnIndex) {
@@ -2679,8 +2678,8 @@ function addNewSupplier(page, suppliers) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(supplier),
       }
@@ -2854,8 +2853,8 @@ function updateSupplier(supInfo, btnIndex) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(supplier),
       }
@@ -3031,8 +3030,8 @@ function addNewStakeHolder() {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(proprietor),
       }
@@ -3172,8 +3171,8 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(wpData),
       }
@@ -3217,8 +3216,8 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(wpData),  // Convert data object to a JSON string
       };
@@ -3461,8 +3460,8 @@ function addNewExpenseType(page, expenses) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(expense_type),
       }
@@ -3588,8 +3587,8 @@ function updateExpense(expenseType, btnIndex) {
         method: 'post',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',          
-          'Authorization': 'Bearer '+localStorage.getItem('psitoken')
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
         },
         body: JSON.stringify(payload),
       }
@@ -3608,6 +3607,145 @@ function updateExpense(expenseType, btnIndex) {
             setInterval(() => {
               location.reload()
             }, 1000);
+          }
+        });
+    }
+  });
+}
+
+
+// CreateWarehouse show a popup form and then make an api call to insert warehouse data to the database table
+function CreateWarehouse() {
+  Swal.fire({
+    title: 'Add New Warehouse',
+    width: 450,
+    html: `
+      <div class="x_panel">
+          <div class="x_content">
+              <form autocomplete="off" id="add-warehouse" class="needs-validation" novalidate>
+                  <!-- Warehouse Name -->
+                  <div class="col-4 form-group has-feedback">
+                      <input type="text" class="form-control has-feedback-left" id="name" name="name"
+                          placeholder="Warehouse Name" autocomplete="off" autofocus required>
+                      <div class="invalid-feedback d-none text-danger">Please enter the warehouse name.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
+                  </div>
+
+                  <!-- Address -->
+                  <div class="col-4 form-group has-feedback">
+                      <input type="text" class="form-control has-feedback-left" id="address" name="address"
+                          placeholder="Road/House No." autocomplete="off">
+                      <div class="invalid-feedback d-none text-danger">Please enter the address.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-home" aria-hidden="true"></span>
+                  </div>
+
+                  <!-- description -->
+                  <div class="col-4 form-group has-feedback">
+                      <input type="text" class="form-control has-feedback-left" id="description" name="description"
+                          placeholder="Description" autocomplete="off">
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                  </div>
+                  <div class="form-group">
+                    <div id="btns" class="col-4">
+                        <br>
+                        <button type="submit" class="btn btn-sm btn-dark" id="submit-btn">Submit</button>
+                    </div>
+                  </div>
+              </form>
+          </div>
+      </div>
+          `,
+
+    showCloseButton: true,
+    showConfirmButton: false,
+    showCancelButton: false,
+    allowOutsideClick: false,
+    preConfirm: () => {
+      return new Promise((resolve) => {
+        const form = document.getElementById('add-warehouse');
+        const formFields = form.querySelectorAll('.form-control, .form-select');
+        let isValid = true;
+
+        // Reset all feedback messages
+        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+
+        // Check each field
+        formFields.forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+
+        if (isValid) {
+          resolve({
+            name: form.name.value,
+            address: form.address.value,
+            description: form.description.value,
+          });
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    },
+    willOpen: () => {
+      const form = document.getElementById('add-warehouse');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
+          feedback.classList.add('d-none');
+        });
+        let isValid = true;
+        form.querySelectorAll('.form-control, .form-select').forEach(field => {
+          if (!field.checkValidity()) {
+            isValid = false;
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+              feedback.classList.remove('d-none');
+            }
+          }
+        });
+        if (isValid) {
+          Swal.getConfirmButton().click();
+        } else {
+          Swal.showValidationMessage('Please correct the errors in the form.');
+        }
+      });
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      const data = result.value;
+      let warehouse = {
+        name: data.name,
+        address: data.address,
+        description: data.description,
+      }
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+        },
+        body: JSON.stringify(warehouse),
+      }
+      let btn = document.getElementById('submit-btn');
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      btn.disabled = true;
+
+      fetch(api + '/api/v2/warehouse', requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          if (data.error === true) {
+            alertQuestion(data.message)
+          } else {
+            alertSuccess(data.message, location.reload())
           }
         });
     }

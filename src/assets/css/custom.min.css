@@ -5291,7 +5291,6 @@ input {
     overflow: hidden;
     width: 100%;
     margin-right: 10px;
-    margin-top: 5px;
 }
 
 .toggle-wrapper input {
@@ -5301,7 +5300,7 @@ input {
 .toggle-wrapper label.label-xl {
     height: 30px;
     margin: 1px 1px;
-    padding: 6px 10px;
+    padding: 5px 10px;
     border-radius: 3px;
     cursor: pointer;
     background: #adadad;
@@ -5310,10 +5309,10 @@ input {
 }
 
 .toggle-wrapper label {
-    height: 25px;
+    height: 28px;
     font-size: 12px;
-    margin: 1px 1px;
-    padding: 5px 10px;
+    margin: 1px 2px;
+    padding: 6px 10px;
     border-radius: 3px;
     cursor: pointer;
     background: #adadad;

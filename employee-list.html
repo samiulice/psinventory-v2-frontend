@@ -93,7 +93,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="..." class="img-circle profile_img">
+              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -314,7 +314,6 @@
               },
             ],
             buttons: [
-              { extend: "copy", className: "btn-sm" },
               {
                 extend: "csv",
                 text: "Excel",
@@ -356,7 +355,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
                 }
               };
-              fetch(`${api}/api/v2/hr/employee/view/all`, requestOptions)
+              fetch(api + '/api/v2/hr/employee/view/all', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.employees || [];
@@ -589,7 +588,7 @@
 
         <body>
           <div class="header">
-            <img src="https://psinventory-v2.onrender.com/images/logo.png" alt="logo">
+            <img src="src\assets\images\logo.png" alt="logo">
             <div class="info">
               <h1>${company.name}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
