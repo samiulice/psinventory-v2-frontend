@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSINVENTORY</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+  <!-- sweetalert2 style -->
+  <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
+
+  <style>
+    /* Autocomplete container - NEW */
+    .autocomplete-container {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+      /* Match parent width */
+    }
+
+    /* Suggestion list styling */
+    .autocomplete-items {
+      position: absolute;
+      border: 1px solid #d4d4d4;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-height: 300px;
+      overflow-y: auto;
+      z-index: 1000;
+      background: #fff;
+      top: 100%;
+      left: 0;
+      margin-top: 2px;
+      display: none;
+    }
+
+    .autocomplete-item {
+      padding: 5px 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #eee;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .autocomplete-item:hover {
+      background: #D0F1E6;
+    }
+
+    /* table */
+    .table-container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+
+      margin: 0 auto;
+    }
+
+    .bulk-actions {
+      background: #056565;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+    }
+
+    .bulk-actions select {
+      background: transparent;
+      color: white;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      padding-right: 25px;
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 16px;
+    }
+
+    .bulk-actions select:focus {
+      outline: 2px solid rgba(255, 255, 255, 0.3);
+      outline-offset: 2px;
+    }
+
+    .bulk-actions select option {
+      background: #4a5568;
+      color: white;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 14px;
+    }
+
+    th {
+      background: #f8fafc;
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    tr:nth-child(even) {
+      background: #f8fafc;
+    }
+
+    tr:hover {
+      background: #edf2f7;
+    }
+
+    .checkbox-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 24px;
+      height: 24px;
+    }
+
+    .checkbox-wrapper svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .checkbox-wrapper .background {
+      fill: #ccc;
+      transition: ease all 0.6s;
+    }
+
+    .checkbox-wrapper .stroke {
+      fill: none;
+      stroke: #fff;
+      stroke-miterlimit: 10;
+      stroke-width: 1.6px;
+      stroke-dashoffset: 100;
+      stroke-dasharray: 100;
+      transition: ease all 0.6s;
+    }
+
+    .checkbox-wrapper .check {
+      fill: none;
+      stroke: #fff;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2.4px;
+      stroke-dashoffset: 22;
+      stroke-dasharray: 22;
+      transition: ease all 0.6s;
+    }
+
+    .checkbox-wrapper input[type=checkbox] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      margin: 0;
+      opacity: 0;
+      appearance: none;
+    }
+
+    .checkbox-wrapper input[type=checkbox]:hover {
+      cursor: pointer;
+    }
+
+    .checkbox-wrapper input[type=checkbox]:checked+svg .background {
+      fill: #056565;
+    }
+
+    .checkbox-wrapper input[type=checkbox]:checked+svg .stroke,
+    .checkbox-wrapper input[type=checkbox]:checked+svg .check {
+      stroke-dashoffset: 0;
+    }
+
+    .selected-row {
+      background-color: #DCF4EF !important;
+      color: #056565;
+      transition: background-color 0.3s ease;
+    }
+
+    .view-btn {
+      background: transparent;
+      color: #4299e1;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      text-decoration: underline;
+    }
+
+    .view-btn:hover {
+      color: #2b6cb0;
+    }
+
+    .amount {
+      font-weight: 600;
+      color: #2d3748;
+    }
+
+    .status-active {
+      color: #38a169;
+      font-weight: 500;
+    }
+
+    .status-inactive {
+      color: #a13838;
+      font-weight: 500;
+    }
+
+    .selected-count {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <div class="menu_section">
+              <ul class="nav side-menu">
+                <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="index.html">Dashboard</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-cogs"></i> MIS <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="customer-list.html">Customer List</a></li>
+                    <li><a href="supplier-list.html">Supplier List</a></li>
+                    <li><a href="employee-list.html">Employee List</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-table"></i> Inventory <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="sale.html">Sale</a></li>
+                    <li><a href="sale-return.html">Sale Return</a></li>
+                    <li><a href="purchase.html">Purchase</a></li>
+                    <li><a href="purchase-return.html">Purchase Return</a></li>
+                    <li><a href="warranty.html">Warranty</a></li>
+                    <li><a href="service.html">Service</a></li>
+                    <li><a href="memo-list.html">Memo List</a></li>
+                    <li><a href="transaction-posting.html">Transaction Posting</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-bar-chart-o"></i> Accounts <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li><a href="receive-collection.html">Receive & Collection</a></li>
+                    <li><a href="payment.html">Payment</a></li>
+                    <li><a href="expenses.html">Expenses</a></li>
+                    <li><a href="investment.html">Investment</a></li>
+                  </ul>
+                </li>
+                <li><a><i class="fa fa-file-text"></i>Inventory Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
+                    <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a></li>
+                    <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
+                    <li class="sub_menu"><a href="sales-history.html">Sales History</a></li>
+                    <li class="sub_menu"><a href="product-list.html">Product List</a></li>
+                    <li class="sub_menu"><a href="brand-list.html">Brand List</a></li>
+                    <li class="sub_menu"><a href="category-list.html">Category List</a></li>
+                    <li class="sub_menu"><a href="service-list.html">Service List</a></li>
+                  </ul>
+                </li>
+
+                <li><a><i class="fa fa-file-text"></i>Accounts Reports <span class="fa fa-chevron-down"></span></a>
+                  <ul class="nav child_menu">
+                    <li class="sub_menu"><a href="transaction-history.html">Transaction History</a></li>
+                    <li class="sub_menu"><a href="customer-due-report.html">Customer Due Report</a></li>
+                    <li class="sub_menu"><a href="supplier-due-report.html">Supplier Due Report</a></li>
+                    <li class="sub_menu"><a href="ledger-book-summary.html">Ledger Book(SUMMARY)</a></li>
+                    <li class="sub_menu"><a href="ledger-book-details.html">Ledger Book(DETAILS)</a></li>
+                    <li class="sub_menu"><a href="expense-categories.html">Expenses Category</a></li>
+                    <li class="sub_menu"><a href="expense-history.html">Expenses History</a></li>
+                    <li class="sub_menu"><a href="income-statement.html">Income Statement</a></li>
+                    <li class="sub_menu"><a href="top-sheet.html">TOP Sheet</a></li>
+                    <li class="sub_menu"><a href="trial-balance.html">Trial Balance</a></li>
+                    <li class="sub_menu"><a href="balance-sheet.html">Balance Sheet</a></li>
+                  </ul>
+                </li>
+
+              </ul>
+            </div>
+          </div>
+          <!-- /sidebar menu -->
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <!-- Content Title -->
+        <h2 class="text-center tale fa-2x">Assign Products To Warehouse/Container</h2>
+        <form id="assign-item-form" name="assign-item-form" novalidate>
+          <div class="x_panel">
+            <div class="x_content">
+              <div class="col-md-5 col-sm-5 col-xs-4">
+                <div class="form-group has-feedback">
+                  <label for="warehouse_name">Warehouse:</label>
+                  <div id="warehouse_name-autocomplete-container" class="autocomplete-container">
+                    <input type="text" id="warehouse_name" name="warehouse_name"
+                      class="form-control form-select has-feedback-left input-sm" placeholder="Enter warehouse Name"
+                      autocomplete="off" required>
+                    <i style="color: rgba(0, 0, 0, 1);"
+                      class="fa fa-database form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
+                    <div id="warehouse_name-suggestions" class="autocomplete-items"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-5 col-sm-5 col-xs-4">
+                <div class="form-group has-feedback">
+                  <label for="container_name">Container :</label>
+                  <div id="container_name-autocomplete-container" class="autocomplete-container">
+                    <input type="text" id="container_name" name="container_name"
+                      class="form-control form-select has-feedback-left input-sm" placeholder="Enter Container Name"
+                      autocomplete="off" required>
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-cube form-control-feedback left input-sm-feedback"
+                      aria-hidden="true"></i>
+                    <div id="container_name-suggestions" class="autocomplete-items"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2 col-sm-2 col-xs-4" style="margin-top: 24px;"><button type="button"
+                  class="btn btn-sm btn-dark" id="bulkActionBtn"> Assign</button></div>
+            </div>
+          </div>
+        </form>
+
+        <div class="table-container">
+          <div class="bulk-actions">Bulk Actions (<span class="selected-count" id="selected-row-count">0</span> Records
+            Selected)</div>
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th style="text-align: left;">
+                    <div class="checkbox-wrapper">
+                      <input type="checkbox" id="selectAll" />
+                      <svg viewBox="0 0 35.6 35.6">
+                        <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                        <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                        <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                      </svg>
+                    </div>
+                  </th>
+                  <th style="text-align: left;">Serial Number</th>
+                  <th style="text-align: left;">Product Name</th>
+                  <th style="text-align: left;">Purchase Date</th>
+                  <th style="text-align: left;">Status</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr>
+                  <td colspan="6" style="text-align: center; font-size: 20px;">
+                    <span>Loading <i class="fa fa-spinner fa-spin"></i></span>
+                  </td>
+                </tr>
+                <!-- Data will be populated by JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- /page content -->
+      </div>
+      <!-- /page content -->
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+
+  <!-- DateJS -->
+  <script src="src/assets/vendors/DateJS/build/date.js"></script>
+  <!-- Validator JS  -->
+  <script src="src/assets/vendors/validator/validator.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+  <script src="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
+  <script>
+    let products = [], warehouses = [], selectedWarehouse = null, selectedContainer = null;
+
+    const selectAllCheckbox = document.getElementById('selectAll');
+    const bulkActionBtn = document.getElementById('bulkActionBtn');
+    const selectedRowCount = document.getElementById('selected-row-count');
+    const tableBody = document.getElementById('tableBody');
+
+    async function populateTable() {
+      tableBody.innerHTML = '';
+      if (products.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="6" style="text-align:center; font-weight:bold">No Product Available</td></tr>'
+        return
+      }
+      products.forEach((row, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+        <td>
+          <div class="checkbox-wrapper">
+            <input type="checkbox" id="row-selector-${index}" class="row-checkbox" data-index="${index}">
+            <svg viewBox="0 0 35.6 35.6">
+              <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+              <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+              <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+            </svg>
+          </div>
+        </td>
+        <td style="display:none">${row.product_metadata[0].id}</td>
+        <td>${row.product_metadata[0].serial_number}</td>
+        <td>${row.product_name}</td>
+        <td>${moment(row.product_metadata[0].created_at).format("DD-MMM-YYYY")}</td>
+        <td><span class="status-${row.product_metadata[0].status == "in stock" ? "active" : "inactive"} ">${row.product_metadata[0].status}</span></td>
+      `;
+        tableBody.appendChild(tr);
+      });
+    }
+
+    async function updateWarehouseList(callback) {
+      fetch(`${api}/api/v2/warehouses?containers=true`, requestOptions)
+        .then(response => response.json())
+        .then(function (responseData) {
+          warehouses = responseData.warehouses || [];
+          console.log(responseData)
+          callback();
+        })
+        .catch(function (error) {
+          console.error('Error fetching data:', error);
+        });
+    }
+
+    async function updateSelectorDiv(divId) {
+      const container = document.getElementById(divId + '_name-autocomplete-container');
+      const input = document.getElementById(divId + "_name");
+      const suggestions = document.getElementById(divId + "_name-suggestions");
+      if (!container || !input || !suggestions) {
+        console.warn(`Autocomplete elements for ${divId} not found in the DOM.`);
+        return;
+      }
+      // Function to populate suggestions
+      function populateSuggestions(filteredItems) {
+        suggestions.innerHTML = '';
+        if (filteredItems.length === 0) {
+          suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
+          return;
+        }
+        filteredItems.forEach(item => {
+          const div = document.createElement("div");
+          div.className = "autocomplete-item";
+          div.innerHTML = `
+                <div class="d-flex justify-content-between">
+                  <span>${item.name}</span>
+                  <small class="text-muted">${item.address || ""}</small>
+                </div>
+              `;
+          div.onclick = () => {
+            input.value = item.name;
+            suggestions.style.display = 'none';
+            if (divId === "warehouse") {
+              selectedWarehouse = item;
+              updateSelectorDiv("container")
+            } else {
+              selectedContainer = item
+            }
+
+          };
+          suggestions.appendChild(div);
+        });
+
+      }
+
+      const items = divId === "warehouse" ? warehouses || [] : selectedWarehouse.containers || []
+      input.addEventListener("input", function (e) {
+        const searchTerm = e.target.value.toLowerCase();
+        suggestions.style.display = 'block';
+
+        if (!searchTerm) {
+          suggestions.style.display = 'none';
+          return;
+        }
+
+        const filtered = items
+          .filter(s =>
+            s.name.toLowerCase().includes(searchTerm) ||
+            s.code.includes(searchTerm)
+          )
+          .slice(0, 15);
+        populateSuggestions(filtered);
+      });
+
+      // Show all suggestions on first click
+      input.addEventListener("focus", function () {
+        const filtered = items.slice(0, 15);
+        suggestions.style.display = 'block';
+        populateSuggestions(filtered);
+      });
+
+      // Hide suggestions when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!container.contains(e.target)) {
+          suggestions.style.display = 'none';
+        }
+      });
+    }
+
+    function updateBulkActions() {
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      const checkedBoxes = Array.from(checkboxes).filter(cb => cb.checked);
+      const count = checkedBoxes.length;
+
+      checkboxes.forEach(cb => {
+        const row = cb.closest('tr');
+        if (cb.checked) {
+          row.classList.add('selected-row');
+        } else {
+          row.classList.remove('selected-row');
+        }
+      });
+
+      // Update Select All checkbox
+      if (count === 0) {
+        selectAllCheckbox.indeterminate = false;
+        selectAllCheckbox.checked = false;
+      } else if (count === checkboxes.length) {
+        selectAllCheckbox.indeterminate = false;
+        selectAllCheckbox.checked = true;
+      } else {
+        selectAllCheckbox.indeterminate = true;
+      }
+
+      // Update bulk action label
+      selectedRowCount.innerText = count;
+    }
+
+    // Select all rows
+    selectAllCheckbox.addEventListener('change', function () {
+      const checkboxes = document.querySelectorAll('.row-checkbox');
+      checkboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+      });
+      updateBulkActions();
+    });
+
+    // Watch individual checkboxes
+    document.addEventListener('change', function (e) {
+      if (e.target.classList.contains('row-checkbox')) {
+        updateBulkActions();
+      }
+    });
+
+    document.getElementById('bulkActionBtn').addEventListener('click', function () {
+
+      const form = document.getElementById('assign-item-form');
+
+      if (!form.checkValidity()) {
+        form.reportValidity(); // Show default browser validation messages
+        return;
+      }
+
+      const selectedCheckboxes = document.querySelectorAll('.row-checkbox:checked');
+
+      if (selectedCheckboxes.length === 0) {
+        Swal.fire('No items selected', 'Please select at least one item.', 'warning');
+        return;
+      }
+
+      const selectedItems = [];
+
+      let html = `
+        <table style="width:100%; border-collapse: collapse; font-size: 12px;">
+          <thead>
+            <tr style="background-color: #f2f2f2;">
+              <th style="border: 1px solid #ccc; padding: 8px;">Serial Number</th>
+              <th style="border: 1px solid #ccc; padding: 8px;">Product Name</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      let payload = []
+      selectedCheckboxes.forEach(checkbox => {
+        const row = checkbox.closest('tr');
+        const cells = row.querySelectorAll('td');
+        const id = cells[1]?.textContent.trim();
+        const serial_number = cells[2]?.textContent.trim();
+        const product_name = cells[3]?.textContent.trim();
+
+        selectedItems.push({ id, serial_number, product_name });
+        if (!isNaN(parseInt(id))) {
+          payload.push(parseInt(id));
+        }
+        html += `
+        
+          <tr>
+            <td style="font-size: 12px;border: 1px solid #ccc; padding: 5px;">${serial_number}</td>
+            <td style="font-size: 12px;border: 1px solid #ccc; padding: 5px;">${product_name}</td>
+          </tr>
+        `;
+      });
+
+      html += '</tbody></table>';
+
+      Swal.fire({
+        title: `Assigning Products to: <b>${selectedWarehouse.name} → ${selectedContainer.name}</b>`,
+        html: html,
+        icon: 'info',
+        confirmButtonText: 'OK',
+        showCancelButton: true,
+        allowOutsideClick: false,
+        width: '600px',
+        preConfirm: () => {
+          // Return a Promise so Swal waits for the request
+          return fetch(api + `/api/v2/warehouse/${selectedContainer.id}/assign/items`, {
+            method: 'PUT',
+            headers: {
+              'Accept': "application/json",
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            body: JSON.stringify({ id: payload })
+          })
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Failed to submit selected data');
+              }
+              return response.json();
+            })
+            .then(data => {
+              if (data.error) {
+                alertQuestion(data.message)
+              } else {
+                showSuccessMessage(data.message)
+                setTimeout(() => {
+                  location.reload()
+                }, 2000);
+              }
+            })
+            .catch(error => {
+              Swal.fire('Error', error.message, 'error');
+            });
+        }
+      });
+    });
+
+
+    // Initialize table
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
+      }
+    };
+
+    async function initializeData() {
+      try {
+        const [warehouseRes, productsRes] = await Promise.all([
+          fetch(`${api}/api/v2/warehouses?containers=true`, requestOptions),
+          fetch(`${api}/api/v2/warehouse/products/unassigned`, requestOptions)
+        ]);
+
+        const [warehouseData, productData] = await Promise.all([
+          warehouseRes.json(),
+          productsRes.json()
+        ]);
+
+        if (warehouseData.error) {
+          alertQuestion(warehouseData.message);
+          return;
+        }
+
+        if (productData.error) {
+          alertQuestion(productData.message);
+          return;
+        }
+
+        warehouses = warehouseData.warehouses || [];
+        products = productData.products || [];
+        updateSelectorDiv("warehouse");
+        populateTable();
+        updateBulkActions();
+
+      } catch (error) {
+        console.error("Initialization failed:", error);
+        Swal.fire('Error', 'Failed to load initial data.', 'error');
+      }
+    }
+
+    // Call on page load
+    initializeData();
+
+
+  </script>
+
+
+</body>
+
+</html>

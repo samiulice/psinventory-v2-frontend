@@ -563,7 +563,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
           }
 
@@ -1069,7 +1069,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(payload)
           };
@@ -1125,7 +1125,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(reqBody),
           }

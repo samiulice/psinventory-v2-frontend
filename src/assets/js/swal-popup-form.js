@@ -95,7 +95,7 @@ function addNewBrand(page, brands) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(brand),
       }
@@ -228,7 +228,7 @@ function updateBrand(brand) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(brand),
       }
@@ -441,7 +441,7 @@ function addNewProduct(page, brands, categories, products) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(product),
       }
@@ -674,7 +674,7 @@ function updateProduct(brands, categories, product) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(UpdatedInfo),
       }
@@ -793,7 +793,7 @@ function addNewCategory(page, categories) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(category),
       }
@@ -929,7 +929,7 @@ function updateCategory(category, btnIndex) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(category),
       }
@@ -1069,7 +1069,7 @@ function addNewService(src, services) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(service),
       }
@@ -1225,7 +1225,7 @@ function updateService(serviceInfo, btnIndex) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(service),
       }
@@ -1369,7 +1369,7 @@ function cancelService(id) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(reqBody),
       }
@@ -1531,7 +1531,7 @@ function addNewCustomer(page, customers) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(customer),
       }
@@ -1706,7 +1706,7 @@ function updateCustomer(cusInfo, btnIndex) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(customer),
       }
@@ -1880,7 +1880,7 @@ function addNewEmployee(page, employees) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(employee),
       }
@@ -2064,7 +2064,7 @@ function updateEmployee(empInfo, btnIndex) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(employee),
       }
@@ -2260,7 +2260,7 @@ function addNewUser() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify(user),
       }
@@ -2294,7 +2294,7 @@ function deleteUser(index) {
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+      'Authorization': 'Bearer ' + localStorage.getItem('token'),
     },
     body: JSON.stringify({
       username: userList[index].username
@@ -2500,7 +2500,7 @@ function updateUser(btnIndex) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify(user),
       }
@@ -2679,7 +2679,7 @@ function addNewSupplier(page, suppliers) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(supplier),
       }
@@ -2854,7 +2854,7 @@ function updateSupplier(supInfo, btnIndex) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(supplier),
       }
@@ -3031,7 +3031,7 @@ function addNewStakeHolder() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(proprietor),
       }
@@ -3172,7 +3172,7 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(wpData),
       }
@@ -3217,7 +3217,7 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(wpData),  // Convert data object to a JSON string
       };
@@ -3461,7 +3461,7 @@ function addNewExpenseType(page, expenses) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(expense_type),
       }
@@ -3588,7 +3588,7 @@ function updateExpense(expenseType, btnIndex) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify(payload),
       }
@@ -3731,7 +3731,7 @@ function CreateWarehouse() {
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+          'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
         body: JSON.stringify(warehouse),
       }

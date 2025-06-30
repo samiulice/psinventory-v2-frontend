@@ -200,7 +200,7 @@
                     <input type="text" class="form-control has-feedback-left input-sm" id="name" name="name"
                       placeholder="Enter container Name">
                     <i style="color: rgba(0, 0, 0, 1);"
-                      class="fa fa-database form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
+                      class="fa fa-cube form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -222,7 +222,7 @@
                         class="form-control form-select has-feedback-left input-sm" placeholder="Enter warehouse Name"
                         autocomplete="off" required>
                       <i style="color: rgba(0, 0, 0, 1);"
-                        class="form-control-feedback left fa fa-user input-sm-feedback" aria-hidden="true">
+                        class="form-control-feedback left fa fa-database input-sm-feedback" aria-hidden="true">
                       </i>
                       <div id="warehouse_name-suggestions" class="autocomplete-items"></div>
                     </div>
@@ -301,7 +301,7 @@
     const requestOptions = {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     };
     fetch(api + '/api/v2/warehouses', requestOptions)
@@ -444,7 +444,7 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
           body: JSON.stringify({
             name, description, status, warehouse_id: warehouseId, warehouse_name: warehouseName

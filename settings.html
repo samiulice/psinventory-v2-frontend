@@ -898,7 +898,7 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
       };
       fetch(api + '/api/v2/company-profile', requestOptions)
@@ -1013,7 +1013,7 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: formData
       }
@@ -1044,7 +1044,7 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: JSON.stringify({ file_name: filename })
       }
@@ -1152,7 +1152,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
           body: JSON.stringify(body),
         }
@@ -1190,7 +1190,7 @@
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
       };
       fetch(api + '/api/v2/user/get/all', requestOptions)
@@ -1279,7 +1279,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
           };
           try {
@@ -1323,7 +1323,7 @@
               headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
               }
             };
             const response = await fetch(api + '/api/v2/db/backup?filetype=' + fileType, requestOptions);

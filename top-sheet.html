@@ -366,7 +366,7 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             };
               fetch(api+'/api/v2/reports/accounts/top-sheet-report', requestOptions)

@@ -358,14 +358,14 @@
                 headers: {
                   'Accept': "application/json",
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                  'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
               };
-              fetch(`${api}/api/v2/warehouses`, requestOptions)
+              fetch(`${api}/api/v2/warehouses?containers=true`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.warehouses || [];
-                  company = responseData.company;
+                  console.log(reportData)
                   callback({ data: reportData });
                 })
                 .catch(function (error) {

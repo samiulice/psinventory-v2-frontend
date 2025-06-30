@@ -324,7 +324,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         };
         fetch(api + '/api/v2/mis/supplier/view/active', requestOptions)
@@ -356,7 +356,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(sup),
           }
@@ -391,7 +391,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(payload),
           }
@@ -528,7 +528,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             },
             body: JSON.stringify(returned_products_details),
           }

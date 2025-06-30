@@ -548,7 +548,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+              'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
           };
           const fetchCustomers = fetch(api + '/api/v2/mis/customer/view/active', requestOptions)
@@ -1091,7 +1091,7 @@
             headers: {
               'Accept': 'application/json',
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+              'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
             body: JSON.stringify(reqBody),
           }

@@ -1,6 +1,6 @@
 // terminateSession terminates the current session
 function terminateSession() {
-  localStorage.removeItem('psitoken');
+  localStorage.removeItem('token');
   localStorage.removeItem("psiuser");
   localStorage.removeItem("psiuserrole");
 
@@ -12,7 +12,7 @@ function terminateSession() {
 let api = 'http://localhost:8080'
 function checkAuth() {
   console.log('Checking access level...');
-  const token = localStorage.getItem('psitoken');
+  const token = localStorage.getItem('token');
   const username = localStorage.getItem("psiuser");
   const role = localStorage.getItem("psiuserrole");
 

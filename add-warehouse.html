@@ -302,7 +302,7 @@
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     };
     fetch(api + '/api/v2/hr/employee/view/all', requestOptions)
@@ -450,7 +450,7 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
           body: JSON.stringify({
             name,

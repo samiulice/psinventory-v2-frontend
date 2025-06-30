@@ -370,7 +370,7 @@
                 method: 'post',
                 headers: {
                   'Content-Type': 'application/json',
-                  'Authorization': 'Bearer ' + localStorage.getItem('psitoken'),
+                  'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 },
               }
               fetch(api+'/api/v2/inventory/services/list', requestOptions)

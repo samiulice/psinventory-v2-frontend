@@ -333,7 +333,7 @@
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
             }
             fetch(api+'/api/v2/mis/customer/view/active', requestOptions)
@@ -380,7 +380,7 @@
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(customerID)
             }
@@ -419,7 +419,7 @@
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
                     },
                     body: JSON.stringify(memoBody)
                 }
@@ -536,7 +536,7 @@
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + localStorage.getItem('psitoken')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 },
                 body: JSON.stringify(sales_return_details),
             }
