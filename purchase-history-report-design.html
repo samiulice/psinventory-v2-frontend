@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Report</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 20px;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+    h1, h3 {
+      color: #265166;
+      text-align: center;
+      font-size: 18px;
+    }
+    p {
+      text-align: center;
+      font-size: 12px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .header img {
+      width: 100px;
+      height: auto;
+    }
+    .header-info {
+      text-align: center;
+      flex-grow: 1;
+    }
+    .header-info h1 {
+      font-size: 24px;
+      margin: 0;
+    }
+    .header-info h3 {
+      font-size: 14px;
+      margin: 0;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      font-size: 12px; /* Reduced font size */
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 6px 8px; /* Reduced padding */
+      text-align: center;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #265166;
+      color: #fff;
+      font-weight: bold;
+    }
+    .group-header {
+      background-color: #e0f2f1;
+      color: #265166;
+      font-weight: bold;
+      text-align: left;
+      padding-left: 8px;
+    }
+    .total-row {
+      background-color: #f4f4f4;
+      font-weight: bold;
+    }
+    tbody tr:nth-child(odd):not(.group-header):not(.total-row) {
+      background-color: #f9f9f9;
+    }
+    tbody tr:hover {
+      background-color: #f1f1f1;
+    }
+
+    /* Print-specific styles */
+    @media print {
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #fff;
+      }
+      table {
+        box-shadow: none;
+      }
+      th, td {
+        padding: 5px 6px;
+        font-size: 12px;
+        border: 1px solid #000;
+      }
+      th {
+        background-color: #ddd;
+        color: #000;
+      }
+      .group-header {
+        background-color: #ddd;
+        color: #000;
+        font-weight: bold;
+      }
+      .highlight {
+        background-color: #fce4d6;
+      }
+      tbody tr:nth-child(odd):not(.group-header):not(.total-row) {
+        background-color: #fff;
+      }
+      tbody tr:hover {
+        background-color: transparent;
+      }
+      h1, h3, p {
+        color: #000;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Section -->
+  <div class="header">
+    <img src="logo.png" alt="Company Logo">
+    <div class="header-info">
+      <h1>Stock Report</h1>
+      <h3>ELIAS COMPUTER SALES & SERVICE</h3>
+      <p>
+        Tari Bazar Mor, Netrakona Sadar, Netrakona-2400<br>
+        Purchase Report From <strong>01-Jan-25</strong> to <strong>08-Jan-25</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Item</th>
+        <th>Bill No</th>
+        <th>Description</th>
+        <th>Quantity</th>
+        <th>Rate</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="group-header">
+        <td colspan="7">A CASH SALES</td>
+      </tr>
+      <tr>
+        <td>1/6/2025</td>
+        <td>Bashundhara 70gm A4 Paper</td>
+        <td>P250100801</td>
+        <td>WMC173954</td>
+        <td>1</td>
+        <td>480.00</td>
+        <td>480.00</td>
+      </tr>
+      <tr>
+        <td>1/8/2025</td>
+        <td>Hard Disk 2tb One Year</td>
+        <td>P250100801</td>
+        <td>WMCT13954</td>
+        <td>1</td>
+        <td>1,000.00</td>
+        <td>1,000.00</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="4">Total</td>
+        <td>2</td>
+        <td></td>
+        <td>1,480.00</td>
+      </tr>
+      <tr class="group-header">
+        <td colspan="7">R K COMPUTER</td>
+      </tr>
+      <tr>
+        <td>1/1/2025</td>
+        <td>Hikvision 2MP 40M Outdoor HD Camera</td>
+        <td>P250101001</td>
+        <td>GS1098922</td>
+        <td>1</td>
+        <td>1,600.00</td>
+        <td>1,600.00</td>
+      </tr>
+      <tr>
+        <td>1/1/2025</td>
+        <td>Hikvision 2MP 40M Outdoor HD Camera</td>
+        <td>P250101001</td>
+        <td>GS1097314</td>
+        <td>1</td>
+        <td>1,600.00</td>
+        <td>1,600.00</td>
+      </tr>
+      <tr class="total-row">
+        <td colspan="4">Total</td>
+        <td>2</td>
+        <td></td>
+        <td>3,200.00</td>
+      </tr>
+    </tbody>
+  </table>
+
+</body>
+</html>

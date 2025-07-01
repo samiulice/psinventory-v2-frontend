@@ -32,106 +32,6 @@
   <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
 
   <style>
-    /* Autocomplete container - NEW */
-    .autocomplete-container {
-      position: relative;
-      display: inline-block;
-      width: 100%;
-      /* Match parent width */
-    }
-
-    /* Suggestion list styling */
-    .autocomplete-items {
-      position: absolute;
-      border: 1px solid #d4d4d4;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      width: 100%;
-      max-height: 300px;
-      overflow-y: auto;
-      z-index: 1000;
-      background: #fff;
-      top: 100%;
-      left: 0;
-      margin-top: 2px;
-      display: none;
-    }
-
-    .autocomplete-item {
-      padding: 5px 5px;
-      cursor: pointer;
-      border-bottom: 1px solid #eee;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .autocomplete-item:hover {
-      background: #D0F1E6;
-    }
-
-    /* checkbox wrapper */
-    /* Custom Checkbox */
-    .checkbox-wrapper {
-      width: 18px;
-      height: 18px;
-      position: relative;
-      display: inline-block;
-      vertical-align: middle;
-    }
-
-    .checkbox-wrapper svg {
-      width: 100%;
-      height: 100%;
-    }
-
-    .checkbox-wrapper .background {
-      fill: #b6b3b3;
-      transition: ease all 0.4s;
-    }
-
-    .checkbox-wrapper .stroke {
-      fill: none;
-      stroke: #265166;
-      stroke-miterlimit: 10;
-      stroke-width: 2px;
-      stroke-dashoffset: 100;
-      stroke-dasharray: 100;
-      transition: ease all 0.4s;
-    }
-
-    .checkbox-wrapper .check {
-      fill: none;
-      stroke: #265166;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 3px;
-      stroke-dashoffset: 22;
-      stroke-dasharray: 22;
-      transition: ease all 0.4s;
-    }
-
-    .checkbox-wrapper input[type=checkbox] {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      margin: 0;
-      opacity: 0;
-      appearance: none;
-      cursor: pointer;
-    }
-
-    .checkbox-wrapper input[type=checkbox]:checked+svg .background {
-      fill: #daffed;
-      /* Matches your table header color */
-    }
-
-    .checkbox-wrapper input[type=checkbox]:checked+svg .stroke,
-    .checkbox-wrapper input[type=checkbox]:checked+svg .check {
-      stroke-dashoffset: 0;
-    }
-
     h1,
     h3 {
       color: #265166;
@@ -218,6 +118,7 @@
       background-color: #265166;
       color: #fff;
       font-weight: bold;
+
     }
 
     .group-header {
@@ -234,29 +135,11 @@
     }
 
     tbody tr:nth-child(odd):not(.group-header):not(.total-row) {
-      background-color: #f9f9f9;
+      background-color: #e3f2fd;
     }
 
     tbody tr:hover {
       background-color: #f1f1f1;
-    }
-
-    .selected {
-      background-color: #e3f2fd !important;
-      transition: background-color 0.3s ease;
-    }
-
-    .checkbox-cell {
-      width: 30px;
-    }
-
-    .global-select {
-      margin: 10px 0;
-      padding: 5px 10px;
-      background-color: #e0f7fa;
-      border-radius: 4px;
-      display: inline-flex;
-      align-items: center;
     }
 
     .status-in-stock {
@@ -277,12 +160,7 @@
         background-color: #fff;
       }
 
-      .controls,
-      .global-select {
-        display: none;
-      }
-
-      form {
+      .controls {
         display: none;
       }
 
@@ -456,66 +334,22 @@
       <!-- page content -->
       <div id="page-content" class="right_col" role="main">
         <!-- Content Title -->
-        <h2 class="text-center tale fa-2x">Change Product Container</h2>
-        <form id="container-reassignment-form" name="container-reassignment-form" novalidate>
-          <div class="x_panel">
-            <div class="x_content">
-              <div class="col-md-5 col-sm-5 col-xs-4">
-                <div class="form-group has-feedback">
-                  <label for="src_container">Current Container:</label>
-                  <div id="src_container-autocomplete-container" class="autocomplete-container">
-                    <input type="text" id="src_container" name="src_container"
-                      class="form-control form-select has-feedback-left input-sm" placeholder="Enter Current Location"
-                      autocomplete="off" required>
-                    <i style="color: rgba(0, 0, 0, 1);"
-                      class="fa fa-database form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
-                    <div id="src_container-suggestions" class="autocomplete-items"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-5 col-sm-5 col-xs-4">
-                <div class="form-group has-feedback">
-                  <label for="dest_container">Destination Container :</label>
-                  <div id="dest_container-autocomplete-container" class="autocomplete-container">
-                    <input type="text" id="dest_container" name="dest_container"
-                      class="form-control form-select has-feedback-left input-sm" placeholder="Enter Container Name"
-                      autocomplete="off" required>
-                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-cube form-control-feedback left input-sm-feedback"
-                      aria-hidden="true"></i>
-                    <div id="dest_container-suggestions" class="autocomplete-items"></div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2 col-sm-2 col-xs-4" style="margin-top: 24px;"><button type="button"
-                  class="btn btn-sm btn-dark" id="bulkActionBtn"> Submit</button></div>
-            </div>
-          </div>
-        </form>
+        <h2 class="text-center tale fa-2x">Item Stock History</h2>
+
 
         <div class="controls">
-
-          <div class="checkbox-wrapper">
-            <input type="checkbox" id="global-select-all" />
-            <svg viewBox="0 0 35.6 35.6">
-              <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-              <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-              <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-            </svg>
-          </div>
-          <label for="global-select-all"></label>
-
           <div>
             <button id="print-btn">Print Report</button>
-            <button id="export-btn">Export Data</button>
+            <!-- <button id="export-btn">Export Data</button> -->
           </div>
         </div>
 
         <!-- Tables Container -->
         <div id="tables-container">
           <!-- preloader -->
-           <div class="text-center">
-             <h1>Loading <i class="fa fa-spin fa-spinner"></i></h1>
-           </div>
+          <div class="text-center">
+            <h1>Loading <i class="fa fa-spin fa-spinner"></i></h1>
+          </div>
         </div>
         <!-- /page content -->
       </div>
@@ -553,7 +387,18 @@
     function formatNumber(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
+    // Function to set up event listeners
+    function setupEventListeners() {
+      // Print button
+      document.getElementById('print-btn').addEventListener('click', function () {
+        window.print();
+      });
 
+      // // Export button
+      // document.getElementById('export-btn').addEventListener('click', function () {
+      //   alert('Export functionality would be implemented here. Selected items would be exported.');
+      // });
+    }
     // Function to render product tables
     function renderProductTables() {
       const container = document.getElementById('tables-container');
@@ -584,18 +429,9 @@
 
         // Create column headers
         const headerRow = document.createElement('tr');
-        headerRow.innerHTML = `
-          <th class="checkbox-cell">
-            <div class="checkbox-wrapper">
-              <input type="checkbox" class="group-select-all" id="global-select-all" data-product="${productName}"/>
-              <svg viewBox="0 0 35.6 35.6">
-                <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-                <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-                <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-              </svg>
-            </div>
-          </th>            
+        headerRow.innerHTML = `         
           <th>Serial Number</th>
+          <th>Purchase Date</th>
           <th>Status</th>
           <th>Warranty Status</th>
           <th>Max Retail Price</th>
@@ -611,29 +447,30 @@
 
         const tbody = document.createElement('tbody');
         let totalCost = 0;
+        let totalShipmentCost = 0;
+        let totalPurchaseDiscount = 0;
         let itemCount = 0;
+        let stockCount = 0;
 
         // Create rows for each product metadata
         metadatas.forEach(meta => {
           const netCost = meta.purchase_rate - meta.purchase_discount + meta.shipment_cost_per_unit;
           totalCost += netCost;
+          totalShipmentCost += meta.shipment_cost_per_unit;
+          totalPurchaseDiscount += meta.purchase_discount;
           itemCount++;
+
+          let productStatus = `<td class="status-out-of-stock">${meta.status}</td>`;
+          if (meta.status == 'in stock') {
+            stockCount++;
+            productStatus = `<td class="status-in-stock">In Stock</td>`;
+          }
 
           const row = document.createElement('tr');
           row.innerHTML = `
-            <td class="checkbox-cell">
-              <div class="checkbox-wrapper">
-              <input type="checkbox" id="global-select-all" class="row-select" data-serial="${meta.serial_number}"/>
-              <svg viewBox="0 0 35.6 35.6">
-                <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-                <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-                <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-              </svg>
-            </div>
-              
-            </td>
             <td>${meta.serial_number}</td>
-            <td class="status-in-stock">${meta.status}</td>
+            <td>${moment(meta.created_at).format('DD-MMM-YYYY')}</td>
+            ${productStatus}
             <td>${meta.warranty_status}</td>
             <td>${formatNumber(meta.max_retail_price)}</td>
             <td>${formatNumber(meta.purchase_rate)}</td>
@@ -648,9 +485,14 @@
         const totalRow = document.createElement('tr');
         totalRow.className = 'total-row';
         totalRow.innerHTML = `
-          <td colspan="4">Total for ${productName}</td>
-          <td colspan="3">${itemCount} items</td>
+          <td>Total Items: ${itemCount} items</td>
           <td></td>
+          <td>In-Stock: ${stockCount}</td>
+          <td></td>
+          <td></td>
+          <td>${formatNumber(totalCost + totalPurchaseDiscount - totalShipmentCost)}</td>
+          <td>${formatNumber(totalPurchaseDiscount)}</td>
+          <td>${formatNumber(totalShipmentCost)}</td>
           <td>${formatNumber(totalCost)}</td>
         `;
         tbody.appendChild(totalRow);
@@ -664,192 +506,6 @@
       setupEventListeners();
     }
 
-    // Function to set up event listeners
-    function setupEventListeners() {
-      // Global select all
-      document.getElementById('global-select-all').addEventListener('change', function () {
-        const isChecked = this.checked;
-        document.querySelectorAll('.row-select, .group-select-all, .select-all-group').forEach(checkbox => {
-          checkbox.checked = isChecked;
-        });
-        document.querySelectorAll('tbody tr').forEach(row => {
-          row.classList.toggle('selected', isChecked);
-        });
-      });
-
-      // Group select all
-      document.querySelectorAll('.group-select-all, .select-all-group').forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-          const productName = this.getAttribute('data-product');
-          const isChecked = this.checked;
-
-          // Find all rows in this group
-          const groupTables = document.querySelectorAll('table');
-          groupTables.forEach(table => {
-            const groupHeader = table.querySelector('.group-header');
-            if (groupHeader && groupHeader.textContent.includes(productName)) {
-              table.querySelectorAll('.row-select').forEach(rowCheckbox => {
-                rowCheckbox.checked = isChecked;
-              });
-              table.querySelectorAll('tbody tr').forEach(row => {
-                if (!row.classList.contains('total-row')) {
-                  row.classList.toggle('selected', isChecked);
-                }
-              });
-            }
-          });
-
-          // Update global checkbox state
-          updateGlobalCheckboxState();
-        });
-      });
-
-      // Individual row selection
-      document.querySelectorAll('.row-select').forEach(checkbox => {
-        checkbox.addEventListener('change', function () {
-          const row = this.closest('tr');
-          row.classList.toggle('selected', this.checked);
-
-          // Update group checkbox state
-          const table = this.closest('table');
-          const groupCheckbox = table.querySelector('.group-select-all');
-          const allChecked = table.querySelectorAll('.row-select:not(:checked)').length === 0;
-          groupCheckbox.checked = allChecked;
-
-          // Update global checkbox state
-          updateGlobalCheckboxState();
-        });
-      });
-
-      // Row click selection
-      document.querySelectorAll('tbody tr').forEach(row => {
-        if (!row.classList.contains('total-row')) {
-          row.addEventListener('click', function (e) {
-            if (e.target.tagName !== 'INPUT') {
-              const checkbox = this.querySelector('.row-select');
-              checkbox.checked = !checkbox.checked;
-              checkbox.dispatchEvent(new Event('change'));
-            }
-          });
-        }
-      });
-
-      // Print button
-      document.getElementById('print-btn').addEventListener('click', function () {
-        window.print();
-      });
-
-      // Export button
-      document.getElementById('export-btn').addEventListener('click', function () {
-        alert('Export functionality would be implemented here. Selected items would be exported.');
-      });
-    }
-
-    // Update global checkbox state
-    function updateGlobalCheckboxState() {
-      const globalCheckbox = document.getElementById('global-select-all');
-      const allCheckboxes = document.querySelectorAll('.row-select');
-      const checkedCount = document.querySelectorAll('.row-select:checked').length;
-
-      if (checkedCount === 0) {
-        globalCheckbox.checked = false;
-        globalCheckbox.indeterminate = false;
-      } else if (checkedCount === allCheckboxes.length) {
-        globalCheckbox.checked = true;
-        globalCheckbox.indeterminate = false;
-      } else {
-        globalCheckbox.checked = false;
-        globalCheckbox.indeterminate = true;
-      }
-    }
-
-    function updateContainerList(callback, requestOptions) {
-      fetch(`${api}/api/v2/warehouses/containers`, requestOptions)
-        .then(response => response.json())
-        .then(function (responseData) {
-          containers = responseData.containers || [];
-          console.log(responseData)
-          callback();
-        })
-        .catch(function (error) {
-          console.error('Error fetching data:', error);
-        });
-    }
-
-    function updateSelectorDiv(divId, src_idx) {
-      const container = document.getElementById(divId + '-autocomplete-container');
-      const input = document.getElementById(divId);
-      const suggestions = document.getElementById(divId + "-suggestions");
-      
-      // Function to populate suggestions
-      function populateSuggestions(filteredItems) {
-        suggestions.innerHTML = '';
-        if (filteredItems.length === 0) {
-          suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
-          return;
-        }
-        filteredItems.forEach((item, index) => {
-          if (index != src_idx) {
-            const div = document.createElement("div");
-            div.className = "autocomplete-item";
-            div.innerHTML = `
-                <div class="d-flex justify-content-between">
-                  <span>${item.name}</span>
-                  <small class="text-muted">${item.warehouse_details || ""}</small>
-                </div>
-              `;
-            div.onclick = () => {
-              input.value = item.name + `  <${item.warehouse_details.split("(")[0] || ""}>` ;
-              suggestions.style.display = 'none';
-              if (divId === "src_container") {
-                src_container = item;
-                updateSelectorDiv("dest_container", index)
-              } else {
-                dest_container = item
-              }
-
-            };
-            suggestions.appendChild(div);
-          }
-
-        });
-
-      }
-
-      const items = divId === "src_container" ? containers || [] : containers || []
-      input.addEventListener("input", function (e) {
-        const searchTerm = e.target.value.toLowerCase();
-        suggestions.style.display = 'block';
-
-        if (!searchTerm) {
-          suggestions.style.display = 'none';
-          return;
-        }
-
-        const filtered = items
-          .filter(s =>
-            s.name.toLowerCase().includes(searchTerm) ||
-            s.containers.map(c => c.name).includes(searchTerm)
-          )
-          .slice(0, 15);
-        populateSuggestions(filtered);
-      });
-
-      // Show all suggestions on first click
-      input.addEventListener("focus", function () {
-        const filtered = items.slice(0, 15);
-        suggestions.style.display = 'block';
-        populateSuggestions(filtered);
-      });
-
-      // Hide suggestions when clicking outside
-      document.addEventListener("click", (e) => {
-        if (!container.contains(e.target)) {
-          suggestions.style.display = 'none';
-        }
-      });
-    }
-
     // Initialize the page
     window.addEventListener('DOMContentLoaded', function () {
       // Initialize table
@@ -861,8 +517,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
       };
-      updateContainerList(() => updateSelectorDiv("src_container"), requestOptions)
-      fetch(api + '/api/v2/warehouse/products/assigned', requestOptions)
+      fetch(api + '/api/v2/inventory/products/items', requestOptions)
         .then(response => response.json())
         .then(resp => {
           console.log(resp);
