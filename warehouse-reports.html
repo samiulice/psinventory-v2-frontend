@@ -241,35 +241,32 @@
     <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
-        //global variable
+        // Global variable
         let warehouses = []
-        document.addEventListener("DOMContentLoaded", () => {
 
-            
-            
+        document.addEventListener("DOMContentLoaded", () => {
             getWarehouseList().then(() => {
-                warehouses.forEach((warehouse, index) => {
+                warehouses.forEach((warehouse) => {
                     const tabId = `warehouse-${warehouse.id}`;
 
-                    // 1. Create tab button immediately
+                    // 1. Create tab button
                     createTabButton(tabId, warehouse.name);
 
-                    // 2. Create empty tab content immediately
+                    // 2. Create empty tab container
                     createTabContainer(tabId, warehouse.name);
 
-                    // 3. Start fetching containers and products asynchronously (don't await here)
+                    // 3. Fetch and populate data
                     fetchContainerAndProducts(warehouse.id).then(data => {
-                        console.log(data)
                         populateTabContent(tabId, data.containers, data.products);
                     });
                 });
 
-            })
-
-            //set first tab as active
-            switchTab(warehouses[0]?.name + 0)
+                // Set first tab as active correctly
+                if (warehouses.length > 0) {
+                    switchTab(`warehouse-${warehouses[0].id}`);
+                }
+            });
         });
-
 
         async function getWarehouseList() {
             const requestOptions = {
@@ -281,70 +278,66 @@
                 }
             }
             try {
-                const res = await fetch(api+'/api/v2/warehouses', requestOptions);  // Wait for fetch to complete
-                const data = await res.json();         // Wait for JSON conversion
-                if(data.error){
+                const res = await fetch(api + '/api/v2/warehouses', requestOptions);
+                const data = await res.json();
+                if (data.error) {
                     throw new Error(data.message);
                 } else {
-                    warehouses = data.warehouses
+                    warehouses = data.warehouses;
                 }
             } catch (err) {
-                console.error(err);                    // Catch any error
+                console.error(err);
             }
         }
 
         function createTabButton(tabId, tabName) {
             const tabsId = document.getElementById("tabs-btn");
-            // Button
+
             const newButton = document.createElement('button');
             newButton.className = 'tab-btn';
-            newButton.id = tabName + tabId + '-btn';
-            newButton.setAttribute('data-tab', tabName + tabId);
+            newButton.id = `${tabId}-btn`;
+            newButton.setAttribute('data-tab', tabId);
             newButton.textContent = tabName;
 
-            // Attach click event
-            newButton.onclick = () => {
-                // Get the target tab name from the data-tab attribute
-                const tabName = button.getAttribute('data-tab');
-                // Call switchTab to handle the visual update
+            newButton.onclick = function () {
+                const tabName = this.getAttribute('data-tab');
                 switchTab(tabName);
             };
+
             tabsId.appendChild(newButton);
         }
 
         function createTabContainer(tabId, tabName) {
             const tabsContainer = document.getElementById("tabs-container");
-            // Tab container
+
             const tabDiv = document.createElement('div');
-            tabDiv.id = tabName + tabId + '-tab';
+            tabDiv.id = `${tabId}-tab`;
             tabDiv.className = 'tab-content admin-access-tab';
 
             const settingsSection = document.createElement('div');
             settingsSection.className = 'settings-section';
-
-            settingsSection.innerHTML = `<p>${tabName}</p>`
+            settingsSection.innerHTML = `<p>${tabName}</p>`;
 
             tabDiv.appendChild(settingsSection);
             tabsContainer.appendChild(tabDiv);
         }
 
-        // Function to switch visible tab content based on tab name
         function switchTab(tabName) {
-            // Hide all tab contents
+            // Hide all tabs
             document.querySelectorAll('.tab-content').forEach(tab => {
-                tab.classList.remove('active'); // Remove active class to hide
+                tab.classList.remove('active');
             });
 
-            // Deactivate all tab buttons
+            // Unhighlight all buttons
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active'); // Remove highlight/active style
+                btn.classList.remove('active');
             });
 
-            // Show the selected tab content by adding 'active' class
+            // Show current tab
             const tabContent = document.getElementById(`${tabName}-tab`);
             if (tabContent) tabContent.classList.add('active');
 
-            // Highlight the clicked tab button
+            // Highlight current button
             const activeBtn = document.querySelector(`.tab-btn[data-tab="${tabName}"]`);
             if (activeBtn) activeBtn.classList.add('active');
         }
@@ -358,25 +351,77 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             }
-            const containers = await fetch(`${api}/api/v2/warehouse/containers?wid=${warehouseId}&list_products=true`, requestOptions).then(res => res.json())
-            return containers;
+            const response = await fetch(`${api}/api/v2/warehouse/containers?wid=${warehouseId}&list_products=true`, requestOptions);
+            return await response.json();
         }
+
         function populateTabContent(tabId, containers, products) {
+            console.log("Containers: ", containers);
             const tab = document.getElementById(`${tabId}-tab`);
             if (!tab) return;
 
-            let html = `
-                <div class="settings-section">
-                <h3>${tabId} Data</h3>
-                <p><strong>Containers:</strong> ${containers.map(c => c.name).join(', ')}</p>
-                <p><strong>Products:</strong> ${products.map(p => p.name).join(', ')}</p>
-                </div>
-            `;
+            let html = '';
+
+            if (!containers || containers.length === 0) {
+                html = `
+                    <div class="container-section mb-4">
+                        <p class="text-muted">No container in this warehouse.</p>
+                    </div>
+                `;
+            } else {
+                containers.forEach(container => {
+                    const containerStatus = container.status ? 'Active' : 'Inactive';
+
+                    if (container.products && container.products.length > 0) {
+                        const productRows = container.products.map((product, idx) => `
+                            <tr>
+                                <td>${idx + 1}</td>
+                                <td>${product.product_name || 'N/A'}</td>
+                                <td>${product.sku || 'N/A'}</td>
+                                <td>${product.quantity || 0}</td>
+                            </tr>
+                        `).join('');
+
+                        html += `
+                            <div class="container-section mb-4">
+                                <h4>${container.name} 
+                                    <span class="badge ${container.status ? 'badge-success' : 'badge-secondary'}">${containerStatus}</span>
+                                </h4>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead class="thead-dark">
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Product Name</th>
+                                                <th>SKU</th>
+                                                <th>Quantity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            ${productRows}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="container-section mb-4">
+                                <h4>${container.name} 
+                                    <span class="badge ${container.status ? 'badge-success' : 'badge-secondary'}">${containerStatus}</span>
+                                </h4>
+                                <p class="text-muted">No products assigned to this container.</p>
+                            </div>
+                        `;
+                    }
+                });
+            }
 
             tab.innerHTML = html;
         }
 
     </script>
+
 
 
 </body>
