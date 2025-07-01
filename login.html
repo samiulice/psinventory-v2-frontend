@@ -303,8 +303,8 @@
                 },
                 body: JSON.stringify(user),
             }
-            // const api = 'https://psinventory-v2.onrender.com'
-            const api = 'http://localhost:8080'
+            const api = 'https://psinventory-v2.onrender.com'
+            // const api = 'http://localhost:8080'
 
             fetch(api + '/api/v2/user/signin', requestOptions)
                 .then(response => response.json())
