@@ -69,6 +69,93 @@
         .autocomplete-item:hover {
             background: #D0F1E6;
         }
+
+        .loading-message {
+            padding: 12px 20px;
+            border-radius: 6px;
+            background-color: #f0f4f8;
+            color: #2d3748;
+            font-size: 16px;
+            font-family: Arial, sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .loading-message i {
+            margin-left: 6px;
+            color: #3182ce;
+            /* Optional: blue spinner */
+        }
+
+        .tab-name {
+            font-weight: bold;
+            color: #1a202c;
+        }
+
+        /* checkbox wrapper */
+        .checkbox-wrapper {
+            width: 18px;
+            height: 18px;
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .checkbox-wrapper svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .checkbox-wrapper .background {
+            fill: #b6b3b3;
+            transition: ease all 0.4s;
+        }
+
+        .checkbox-wrapper .stroke {
+            fill: none;
+            stroke: #fff;
+            stroke-miterlimit: 10;
+            stroke-width: 2px;
+            stroke-dashoffset: 100;
+            stroke-dasharray: 100;
+            transition: ease all 0.4s;
+        }
+
+        .checkbox-wrapper .check {
+            fill: none;
+            stroke: #fff;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 3px;
+            stroke-dashoffset: 22;
+            stroke-dasharray: 22;
+            transition: ease all 0.4s;
+        }
+
+        .checkbox-wrapper input[type=checkbox] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            margin: 0;
+            opacity: 0;
+            appearance: none;
+            cursor:not-allowed;
+            pointer-events: none;
+        }
+
+        .checkbox-wrapper input[type=checkbox]:checked+svg .background {
+            fill: #007c40;
+            /* Matches your table header color */
+        }
+
+        .checkbox-wrapper input[type=checkbox]:checked+svg .stroke,
+        .checkbox-wrapper input[type=checkbox]:checked+svg .check {
+            stroke-dashoffset: 0;
+        }
     </style>
 </head>
 
@@ -150,7 +237,8 @@
                                             class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu">
                                         <li class="sub_menu"><a href="stock-report.html">Stock Report</a></li>
-                    <li class="sub_menu"><a href="items-history-report.html">Items History Report</a></li>
+                                        <li class="sub_menu"><a href="items-history-report.html">Items History
+                                                Report</a></li>
                                         <li class="sub_menu"><a href="stock-alert-report.html">Stock Alert Report</a>
                                         </li>
                                         <li class="sub_menu"><a href="purchase-history.html">Purchase History</a></li>
@@ -191,7 +279,7 @@
 
                     <!-- /menu footer buttons -->
                     <div class="sidebar-footer hidden-small">
-                        <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+                        <a data-toggle="tooltip" data-placement="top" title="Warehouses" href="warehouses.html">
                             <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                         </a>
                         <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
@@ -212,8 +300,8 @@
 
             <!-- page content -->
             <div id="page-content" class="right_col" role="main">
-                <!-- Settings Content -->
-                <div class="settings-page">
+                <!-- Warehouses Content -->
+                <div class="warehouse-page">
                     <div class="tabs-container" id="tabs-container">
                         <!-- tabs -->
                         <div class="tabs" id="tabs-btn">
@@ -325,11 +413,16 @@
             tabDiv.id = `${tabId}-tab`;
             tabDiv.className = 'tab-content admin-access-tab';
 
-            const settingsSection = document.createElement('div');
-            settingsSection.className = 'settings-section';
-            settingsSection.innerHTML = `<p>${tabName}</p>`;
+            const warehousesSection = document.createElement('div');
+            warehousesSection.className = 'warehouses-section';
+            warehousesSection.innerHTML = `<div class="loading-message">
+                                                <p>Loading <span class="tab-name">${tabName}</span> data 
+                                                    <i class="fa fa-spinner fa-spin"></i>
+                                                </p>
+                                            </div>
+                                            `;
 
-            tabDiv.appendChild(settingsSection);
+            tabDiv.appendChild(warehousesSection);
             tabsContainer.appendChild(tabDiv);
         }
 
@@ -381,10 +474,11 @@
                 `;
             } else {
                 containers.forEach(container => {
-                    const containerStatus = container.status ? 'Active' : 'Inactive';
+                    const containerStatus = container.status == true ? 'Active' : 'Inactive';
 
+                    let productRows = ''
                     if (container.products && container.products.length > 0) {
-                        const productRows = container.products.map((product, idx) => `
+                        productRows = container.products.map((product, idx) => `
                             <tr>
                                 <td>${idx + 1}</td>
                                 <td>${product.product_name || 'N/A'}</td>
@@ -392,12 +486,24 @@
                                 <td>${product.quantity || 0}</td>
                             </tr>
                         `).join('');
-
-                        html += `
+                    } else {
+                        productRows = `<tr>
+                                            <td colspan="4" style="text-align:center"><p class="text-muted">No products assigned to this container.</p></td>
+                                        </tr>`
+                    }
+                    html += `
                             <div class="container-section mb-4">
-                                <h4>${container.name} 
-                                    <span class="badge ${container.status ? 'badge-success' : 'badge-secondary'}">${containerStatus}</span>
-                                </h4>
+                                <strong style="font-size:15px; margin-bottom:5px; padding-bottom:10px">
+                                   Container: ${container.name}
+                                    <div class="checkbox-wrapper" style="margin-left:5px;margin-bottom:2px">
+                                        <input type="checkbox" id="row-selector" class="row-checkbox" ${container.status == true ? 'checked' : ''}>
+                                        <svg viewBox="0 0 35.6 35.6">
+                                        <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                        <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                        <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                        </svg>
+                                    </div>
+                                </strong>
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped">
                                         <thead class="thead-dark">
@@ -415,16 +521,6 @@
                                 </div>
                             </div>
                         `;
-                    } else {
-                        html += `
-                            <div class="container-section mb-4">
-                                <h4>${container.name} 
-                                    <span class="badge ${container.status ? 'badge-success' : 'badge-secondary'}">${containerStatus}</span>
-                                </h4>
-                                <p class="text-muted">No products assigned to this container.</p>
-                            </div>
-                        `;
-                    }
                 });
             }
 

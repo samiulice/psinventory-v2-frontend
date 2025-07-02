@@ -70,7 +70,6 @@
     }
 
     /* checkbox wrapper */
-    /* Custom Checkbox */
     .checkbox-wrapper {
       width: 18px;
       height: 18px;
@@ -513,9 +512,9 @@
         <!-- Tables Container -->
         <div id="tables-container">
           <!-- preloader -->
-           <div class="text-center">
-             <h1>Loading <i class="fa fa-spin fa-spinner"></i></h1>
-           </div>
+          <div class="text-center">
+            <h1>Loading <i class="fa fa-spin fa-spinner"></i></h1>
+          </div>
         </div>
         <!-- /page content -->
       </div>
@@ -599,10 +598,7 @@
           <th>Status</th>
           <th>Warranty Status</th>
           <th>Max Retail Price</th>
-          <th>Purchase Rate</th>
-          <th>Purchase Discount</th>
-          <th>Shipment Cost</th>
-          <th>Total Cost</th>
+          <th>Storage Location</th>
         `;
 
         const thead = document.createElement('thead');
@@ -620,6 +616,7 @@
           itemCount++;
 
           const row = document.createElement('tr');
+          row.classList.add("row-" + meta.container_id)
           row.innerHTML = `
             <td class="checkbox-cell">
               <div class="checkbox-wrapper">
@@ -636,10 +633,7 @@
             <td class="status-in-stock">${meta.status}</td>
             <td>${meta.warranty_status}</td>
             <td>${formatNumber(meta.max_retail_price)}</td>
-            <td>${formatNumber(meta.purchase_rate)}</td>
-            <td>${formatNumber(meta.purchase_discount)}</td>
-            <td>${formatNumber(meta.shipment_cost_per_unit)}</td>
-            <td>${formatNumber(netCost)}</td>
+            <td colspan="2" style="font-weight:bold">${meta.storage_location}</td>
           `;
           tbody.appendChild(row);
         });
@@ -648,10 +642,11 @@
         const totalRow = document.createElement('tr');
         totalRow.className = 'total-row';
         totalRow.innerHTML = `
-          <td colspan="4">Total for ${productName}</td>
-          <td colspan="3">${itemCount} items</td>
+          <td colspan="2" class="item-count">Total: ${itemCount}</td>
+          <td></td>
           <td></td>
           <td>${formatNumber(totalCost)}</td>
+          <td></td>
         `;
         tbody.appendChild(totalRow);
 
@@ -768,19 +763,40 @@
         .then(response => response.json())
         .then(function (responseData) {
           containers = responseData.containers || [];
-          console.log(responseData)
+
+          // Add the "All" option at index 0 with modified content
+          containers.unshift({
+            id: 0,
+            warehouse_id: 0,
+            warehouse_details: "All Warehouses (All Locations)",
+            name: "All Containers",
+            status: true,
+            description: "Displays items from all warehouses and containers.",
+            dimension: "N/A",
+            is_default: true
+          });
+
+          console.log(containers);
           callback();
+
+          // Set initial values here before calling callback
+          const srcInput = document.getElementById("src_container");
+          if (srcInput && containers.length > 0) {
+            srcInput.value = containers[0].name + `  <${containers[0].warehouse_details.split("(")[0] || ""}>`;
+            src_container = containers[0];
+          }
+          updateSelectorDiv("dest_container")
         })
         .catch(function (error) {
           console.error('Error fetching data:', error);
         });
     }
 
-    function updateSelectorDiv(divId, src_idx) {
+    function updateSelectorDiv(divId, src_idx = -1) {
       const container = document.getElementById(divId + '-autocomplete-container');
       const input = document.getElementById(divId);
       const suggestions = document.getElementById(divId + "-suggestions");
-      
+
       // Function to populate suggestions
       function populateSuggestions(filteredItems) {
         suggestions.innerHTML = '';
@@ -789,7 +805,9 @@
           return;
         }
         filteredItems.forEach((item, index) => {
-          if (index != src_idx) {
+          // Skip rendering this item if we're in the destination container selector 
+          // and the item is either the first ("All") option or the same as the selected source container.
+          if (!(divId === "dest_container" && (index === 0 || containers[index].id === src_container.id))) {
             const div = document.createElement("div");
             div.className = "autocomplete-item";
             div.innerHTML = `
@@ -799,11 +817,32 @@
                 </div>
               `;
             div.onclick = () => {
-              input.value = item.name + `  <${item.warehouse_details.split("(")[0] || ""}>` ;
+              input.value = item.name + `  <${item.warehouse_details.split("(")[0] || ""}>`;
               suggestions.style.display = 'none';
               if (divId === "src_container") {
+                //set current item as src_container
                 src_container = item;
-                updateSelectorDiv("dest_container", index)
+                //reset dest_container field
+                document.getElementById("dest_container").value = "";
+                dest_container = null;
+                updateSelectorDiv("dest_container");
+                //filtering items based on src container
+                console.log("Filtering rows...");
+                if (src_container.id == 0) {
+                  document.querySelectorAll('tbody tr').forEach(row => {
+                    row.classList.remove('d-none');
+                  });
+                } else {
+                  document.querySelectorAll('tbody tr').forEach(row => {
+                    row.classList.add('d-none');
+                  });
+                  document.querySelectorAll(`.row-${src_container.id}`).forEach(row => {
+                    row.classList.remove('d-none');
+                  });
+                  document.querySelectorAll(`.total-row`).forEach(row => {
+                    row.classList.remove('d-none');
+                  });
+                }
               } else {
                 dest_container = item
               }
@@ -813,6 +852,11 @@
           }
 
         });
+        //set initial input
+        if (divId === "src_container") {
+          input.value = containers[0].name + `  <${containers[0].warehouse_details.split("(")[0] || ""}>`;
+          src_container = containers[0];
+        }
 
       }
 
@@ -865,12 +909,10 @@
       fetch(api + '/api/v2/warehouse/products/assigned', requestOptions)
         .then(response => response.json())
         .then(resp => {
-          console.log(resp);
           if (resp.error) {
             alertQuestion(resp.message);
           } else {
             products = resp.products || [];
-
             renderProductTables();
             return;
           }
