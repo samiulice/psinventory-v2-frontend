@@ -456,7 +456,7 @@
       <div id="page-content" class="right_col" role="main">
         <!-- Content Title -->
         <h2 class="text-center tale fa-2x">Change Product Container</h2>
-        <form id="container-reassignment-form" name="container-reassignment-form" novalidate>
+        <form id="items-transfer-form" name="items-transfer-form" novalidate>
           <div class="x_panel">
             <div class="x_content">
               <div class="col-md-5 col-sm-5 col-xs-4">
@@ -466,8 +466,8 @@
                     <input type="text" id="src_container" name="src_container"
                       class="form-control form-select has-feedback-left input-sm" placeholder="Enter Current Location"
                       autocomplete="off" required>
-                    <i style="color: rgba(0, 0, 0, 1);"
-                      class="fa fa-database form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-cube form-control-feedback left input-sm-feedback"
+                      aria-hidden="true"></i>
                     <div id="src_container-suggestions" class="autocomplete-items"></div>
                   </div>
                 </div>
@@ -486,26 +486,22 @@
                 </div>
               </div>
               <div class="col-md-2 col-sm-2 col-xs-4" style="margin-top: 24px;"><button type="button"
-                  class="btn btn-sm btn-dark" id="bulkActionBtn"> Submit</button></div>
+                  class="btn btn-sm btn-dark" id="submitBtn"> Submit</button></div>
             </div>
           </div>
         </form>
 
         <div class="controls">
-
-          <div class="checkbox-wrapper">
-            <input type="checkbox" id="global-select-all" />
-            <svg viewBox="0 0 35.6 35.6">
-              <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-              <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-              <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-            </svg>
-          </div>
-          <label for="global-select-all"></label>
-
-          <div>
-            <button id="print-btn">Print Report</button>
-            <button id="export-btn">Export Data</button>
+          <div class="d-flex">
+            <div class="checkbox-wrapper">
+              <input type="checkbox" id="global-select-all" />
+              <svg viewBox="0 0 35.6 35.6">
+                <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+              </svg>
+            </div>
+            <label for="global-select-all"> &nbsp;Select All</label>
           </div>
         </div>
 
@@ -560,7 +556,7 @@
 
       // Group products by name
       const productsMap = new Map();
-
+      console.log(products)
       products.forEach(product => {
         if (!productsMap.has(product.product_name)) {
           productsMap.set(product.product_name, []);
@@ -577,9 +573,7 @@
         // Create group header
         const groupHeader = document.createElement('tr');
         groupHeader.className = 'group-header';
-        groupHeader.innerHTML = `
-          <td colspan="9">${productName}</td>
-        `;
+        groupHeader.innerHTML = `<td colspan="9">${productName}</td>`;
 
         // Create column headers
         const headerRow = document.createElement('tr');
@@ -620,7 +614,7 @@
           row.innerHTML = `
             <td class="checkbox-cell">
               <div class="checkbox-wrapper">
-              <input type="checkbox" id="global-select-all" class="row-select" data-serial="${meta.serial_number}"/>
+              <input type="checkbox" id="global-select-all" value="${meta.id}" class="row-select" data-serial="${meta.serial_number}"/>
               <svg viewBox="0 0 35.6 35.6">
                 <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
                 <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
@@ -727,16 +721,6 @@
             }
           });
         }
-      });
-
-      // Print button
-      document.getElementById('print-btn').addEventListener('click', function () {
-        window.print();
-      });
-
-      // Export button
-      document.getElementById('export-btn').addEventListener('click', function () {
-        alert('Export functionality would be implemented here. Selected items would be exported.');
       });
     }
 
@@ -894,6 +878,47 @@
       });
     }
 
+    // function getSelectedRows() {
+    //   // Get all checkboxes with class 'row-select' that are checked
+    //   const selectedCheckboxes = document.querySelectorAll('.row-select:checked');
+
+    //   // Create an array of all row data for the selected checkboxes in the desired structure
+    //   const selectedRowsData = Array.from(selectedCheckboxes).map(checkbox => {
+    //     // Find the parent row (tr) of the current checkbox
+    //     const row = checkbox.closest('tr');
+
+    //     // Extract data from the corresponding <td> elements in the row
+    //     const serialNumber = row.querySelector('td:nth-child(2)')?.textContent.trim() || '';
+    //     const status = row.querySelector('td:nth-child(3)')?.textContent.trim() || '';
+    //     const warrantyStatus = row.querySelector('td:nth-child(4)')?.textContent.trim() || '';
+    //     const maxRetailPrice = row.querySelector('td:nth-child(5)')?.textContent.trim() || '';
+    //     const storageLocation = row.querySelector('td:nth-child(6)')?.textContent.trim() || '';
+
+    //     // Only include existing values from the table
+    //     const rowData = {
+    //       id: checkbox.value,  // Using checkbox value as "id"
+    //       serial_number: serialNumber || null,
+    //       status: status || null,
+    //       warranty_status: warrantyStatus || null,
+    //       max_retail_price: maxRetailPrice || null,
+    //       storage_location: storageLocation || null,
+    //       // Add other dynamic properties as needed, setting defaults if missing
+    //       purchase_history_id: row.querySelector('td:nth-child(7)') ? 1 : null,
+    //       sales_history_id: row.querySelector('td:nth-child(8)') ? 0 : null,
+    //       warranty: row.querySelector('td:nth-child(9)') ? 720 : null,
+    //       created_at: "2025-06-27T14:41:12.162377Z",  // You can replace this with dynamic timestamp if necessary
+    //       updated_at: "2025-06-28T13:26:30.334906Z"  // You can replace this with dynamic timestamp if necessary
+    //     };
+
+    //     // Return the object only if it contains any valid data
+    //     return Object.fromEntries(Object.entries(rowData).filter(([key, value]) => value !== null && value !== ''));
+    //   });
+
+    //   // Log the selected rows data in the required format
+    //   console.log(selectedRowsData);
+
+    // }
+
     // Initialize the page
     window.addEventListener('DOMContentLoaded', function () {
       // Initialize table
@@ -917,7 +942,169 @@
             return;
           }
         });
+      document.getElementById("submitBtn").addEventListener("click", function () {
+
+        const form = document.getElementById("items-transfer-form");
+
+        if (!form.checkValidity()) {
+          form.reportValidity(); // Show default browser validation messages
+          return;
+        }
+
+        confirmBeforeFormSubmission()
+      });
+
+
     });
+
+    // Function to handle form submission and display selected rows in table format
+    function confirmBeforeFormSubmission() {
+      // Get all checkboxes with class 'row-select' that are checked
+      const selectedCheckboxes = document.querySelectorAll('.row-select:checked');
+
+      if (selectedCheckboxes.length === 0) {
+        // If no checkboxes are selected, show a message to the user
+        Swal.fire({
+          icon: 'warning',
+          title: 'No items selected',
+          text: 'Please select at least one product.',
+        });
+        return;
+      }
+
+      // Object to store selected row data grouped by product name
+      const selectedRows = {};
+
+      selectedCheckboxes.forEach(checkbox => {
+        // Find the parent row (tr) of the current checkbox
+        const row = checkbox.closest('tr');
+
+        // Extract data from the corresponding <td> elements in the row
+        const productName = row.closest('table').querySelector('.group-header td').textContent.trim(); // Get the product name from the table header
+        const serialNumber = row.querySelector('td:nth-child(2)').textContent.trim();
+        const status = row.querySelector('td:nth-child(3)').textContent.trim();
+        const warrantyStatus = row.querySelector('td:nth-child(4)').textContent.trim();
+        const maxRetailPrice = row.querySelector('td:nth-child(5)').textContent.trim();
+        const storageLocation = row.querySelector('td:nth-child(6)').textContent.trim();
+
+        // Create a row object
+        const rowData = {
+          id: checkbox.value,
+          serial_number: serialNumber,
+          status: status,
+          warranty_status: warrantyStatus,
+          max_retail_price: maxRetailPrice,
+          storage_location: storageLocation,
+        };
+
+        // If the product name is not in the object, initialize it with an empty array
+        if (!selectedRows[productName]) {
+          selectedRows[productName] = [];
+        }
+
+        // Add the row data to the appropriate product
+        selectedRows[productName].push(rowData);
+      });
+
+      // Display the selected rows using Swal.fire with a table format
+
+      Swal.fire({
+        title: 'Product Summary',
+        html: generateProductTablesHtml(selectedRows),
+        width: 720,
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+        showCloseButton: true,
+        allowOutsideClick: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          submitFormValues(selectedRows)
+        }
+      });
+    }
+
+    // Helper function to generate HTML for displaying selected rows in table format
+    function generateProductTablesHtml(selectedRows) {
+      let htmlContent = `<p>${"The following products will be moved to <b>[" + dest_container.name + "-" + dest_container.warehouse_details}]</b></p>`;
+
+      // Loop through each product group and create a table
+      for (const productName in selectedRows) {
+        const rows = selectedRows[productName];
+
+        // Start a new table for each product
+        htmlContent += `
+          
+          <table style="width:100%; border-collapse: collapse;">
+            <caption><label>${productName}</label></caption>
+            <thead>
+              <tr>
+                <th>Serial Number</th>
+                <th>Status</th>
+                <th>Warranty Status</th>
+                <th>Max Retail Price</th>
+                <th>Storage Location</th>
+              </tr>
+            </thead>
+            <tbody>
+        `;
+
+        // Loop through each row of the selected product and add it to the table
+        rows.forEach(row => {
+          htmlContent += `
+        <tr>
+          <td>${row.serial_number}</td>
+          <td>${row.status}</td>
+          <td>${row.warranty_status}</td>
+          <td>${row.max_retail_price}</td>
+          <td>${row.storage_location}</td>
+        </tr>
+      `;
+        });
+
+        htmlContent += '</tbody></table><br>';
+      }
+
+      return htmlContent;
+    }
+
+    async function submitFormValues(selectedRows) {
+      let ids = []
+      Object.values(selectedRows).forEach(productArray => {
+        productArray.forEach(item => {
+          ids.push(parseInt(item.id));
+        });
+      });
+      try {
+        const response = await fetch(api + '/api/v2/warehouse/transfers', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          },
+          body: JSON.stringify({
+            dest_container, ids
+          })
+        });
+
+        console.log(name,
+          dest_container, ids)
+        const data = await response.json();
+        console.log(data)
+        if (data.error == true) throw new Error(data.message);
+
+        // Optionally reset form or do other UI updates here
+        document.getElementById('items-transfer-form').reset();
+        showSuccessMessage(data.message)
+
+      } catch (err) {
+        console.error(err);
+        alertQuestion(err);
+      }
+    };
+
+
   </script>
 
 
