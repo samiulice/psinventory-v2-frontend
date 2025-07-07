@@ -474,14 +474,14 @@
               </div>
               <div class="col-md-5 col-sm-5 col-xs-4">
                 <div class="form-group has-feedback">
-                  <label for="dest_container">Destination Container :</label>
-                  <div id="dest_container-autocomplete-container" class="autocomplete-container">
-                    <input type="text" id="dest_container" name="dest_container"
+                  <label for="dst_container">Destination Container :</label>
+                  <div id="dst_container-autocomplete-container" class="autocomplete-container">
+                    <input type="text" id="dst_container" name="dst_container"
                       class="form-control form-select has-feedback-left input-sm" placeholder="Enter Container Name"
                       autocomplete="off" required>
                     <i style="color: rgba(0, 0, 0, 1);" class="fa fa-cube form-control-feedback left input-sm-feedback"
                       aria-hidden="true"></i>
-                    <div id="dest_container-suggestions" class="autocomplete-items"></div>
+                    <div id="dst_container-suggestions" class="autocomplete-items"></div>
                   </div>
                 </div>
               </div>
@@ -541,7 +541,7 @@
   <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
   <script>
-    let products = [], containers = [], src_container = null, dest_container = null;
+    let products = [], containers = [], src_container = null, dst_container = null;
 
 
     // Function to format numbers with commas
@@ -632,18 +632,6 @@
           tbody.appendChild(row);
         });
 
-        // Create total row
-        const totalRow = document.createElement('tr');
-        totalRow.className = 'total-row';
-        totalRow.innerHTML = `
-          <td colspan="2" class="item-count">Total: ${itemCount}</td>
-          <td></td>
-          <td></td>
-          <td>${formatNumber(totalCost)}</td>
-          <td></td>
-        `;
-        tbody.appendChild(totalRow);
-
         table.appendChild(thead);
         table.appendChild(tbody);
         container.appendChild(table);
@@ -681,9 +669,8 @@
                 rowCheckbox.checked = isChecked;
               });
               table.querySelectorAll('tbody tr').forEach(row => {
-                if (!row.classList.contains('total-row')) {
-                  row.classList.toggle('selected', isChecked);
-                }
+                row.classList.toggle('selected', isChecked);
+                
               });
             }
           });
@@ -712,7 +699,6 @@
 
       // Row click selection
       document.querySelectorAll('tbody tr').forEach(row => {
-        if (!row.classList.contains('total-row')) {
           row.addEventListener('click', function (e) {
             if (e.target.tagName !== 'INPUT') {
               const checkbox = this.querySelector('.row-select');
@@ -720,7 +706,6 @@
               checkbox.dispatchEvent(new Event('change'));
             }
           });
-        }
       });
     }
 
@@ -769,7 +754,7 @@
             srcInput.value = containers[0].name + `  <${containers[0].warehouse_details.split("(")[0] || ""}>`;
             src_container = containers[0];
           }
-          updateSelectorDiv("dest_container")
+          updateSelectorDiv("dst_container")
         })
         .catch(function (error) {
           console.error('Error fetching data:', error);
@@ -791,7 +776,7 @@
         filteredItems.forEach((item, index) => {
           // Skip rendering this item if we're in the destination container selector 
           // and the item is either the first ("All") option or the same as the selected source container.
-          if (!(divId === "dest_container" && (index === 0 || containers[index].id === src_container.id))) {
+          if (!(divId === "dst_container" && (index === 0 || containers[index].id === src_container.id))) {
             const div = document.createElement("div");
             div.className = "autocomplete-item";
             div.innerHTML = `
@@ -806,10 +791,10 @@
               if (divId === "src_container") {
                 //set current item as src_container
                 src_container = item;
-                //reset dest_container field
-                document.getElementById("dest_container").value = "";
-                dest_container = null;
-                updateSelectorDiv("dest_container");
+                //reset dst_container field
+                document.getElementById("dst_container").value = "";
+                dst_container = null;
+                updateSelectorDiv("dst_container");
                 //filtering items based on src container
                 console.log("Filtering rows...");
                 if (src_container.id == 0) {
@@ -823,12 +808,9 @@
                   document.querySelectorAll(`.row-${src_container.id}`).forEach(row => {
                     row.classList.remove('d-none');
                   });
-                  document.querySelectorAll(`.total-row`).forEach(row => {
-                    row.classList.remove('d-none');
-                  });
                 }
               } else {
-                dest_container = item
+                dst_container = item
               }
 
             };
@@ -977,33 +959,36 @@
 
       selectedCheckboxes.forEach(checkbox => {
         // Find the parent row (tr) of the current checkbox
-        const row = checkbox.closest('tr');
+          const row = checkbox.closest('tr');
+        // if it contains d-none then ignore it
+        if (!row.classList.contains('d-none')) {
+          // Extract data from the corresponding <td> elements in the row
+          const productName = row.closest('table').querySelector('.group-header td').textContent.trim(); // Get the product name from the table header
+          const serialNumber = row.querySelector('td:nth-child(2)').textContent.trim();
+          const status = row.querySelector('td:nth-child(3)').textContent.trim();
+          const warrantyStatus = row.querySelector('td:nth-child(4)').textContent.trim();
+          const maxRetailPrice = row.querySelector('td:nth-child(5)').textContent.trim();
+          const storageLocation = row.querySelector('td:nth-child(6)').textContent.trim();
 
-        // Extract data from the corresponding <td> elements in the row
-        const productName = row.closest('table').querySelector('.group-header td').textContent.trim(); // Get the product name from the table header
-        const serialNumber = row.querySelector('td:nth-child(2)').textContent.trim();
-        const status = row.querySelector('td:nth-child(3)').textContent.trim();
-        const warrantyStatus = row.querySelector('td:nth-child(4)').textContent.trim();
-        const maxRetailPrice = row.querySelector('td:nth-child(5)').textContent.trim();
-        const storageLocation = row.querySelector('td:nth-child(6)').textContent.trim();
+          // Create a row object
+          const rowData = {
+            id: checkbox.value,
+            serial_number: serialNumber,
+            status: status,
+            warranty_status: warrantyStatus,
+            max_retail_price: maxRetailPrice,
+            storage_location: storageLocation,
+          };
 
-        // Create a row object
-        const rowData = {
-          id: checkbox.value,
-          serial_number: serialNumber,
-          status: status,
-          warranty_status: warrantyStatus,
-          max_retail_price: maxRetailPrice,
-          storage_location: storageLocation,
-        };
+          // If the product name is not in the object, initialize it with an empty array
+          if (!selectedRows[productName]) {
+            selectedRows[productName] = [];
+          }
 
-        // If the product name is not in the object, initialize it with an empty array
-        if (!selectedRows[productName]) {
-          selectedRows[productName] = [];
+          // Add the row data to the appropriate product
+          selectedRows[productName].push(rowData);
         }
 
-        // Add the row data to the appropriate product
-        selectedRows[productName].push(rowData);
       });
 
       // Display the selected rows using Swal.fire with a table format
@@ -1027,7 +1012,7 @@
 
     // Helper function to generate HTML for displaying selected rows in table format
     function generateProductTablesHtml(selectedRows) {
-      let htmlContent = `<p>${"The following products will be moved to <b>[" + dest_container.name + "-" + dest_container.warehouse_details}]</b></p>`;
+      let htmlContent = `<p>${"The following products will be moved to <b>[" + dst_container.name + "-" + dst_container.warehouse_details}]</b></p>`;
 
       // Loop through each product group and create a table
       for (const productName in selectedRows) {
@@ -1084,12 +1069,12 @@
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
           body: JSON.stringify({
-            dest_container, ids
+            dst_container_id: parseInt(dst_container.id), ids
           })
         });
 
         console.log(name,
-          dest_container, ids)
+          dst_container, ids)
         const data = await response.json();
         console.log(data)
         if (data.error == true) throw new Error(data.message);

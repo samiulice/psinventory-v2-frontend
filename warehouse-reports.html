@@ -486,38 +486,39 @@
                             </tr>
                         `).join('');
                     } else {
-                        productRows = `<tr>
-                                            <td colspan="4" style="text-align:center"><p class="text-muted">No products assigned to this container.</p></td>
-                                        </tr>`
+                        productRows = `
+                            <tr>
+                                <td colspan="4" style="text-align:center"><p class="text-muted">No products assigned to this container.</p></td>
+                            </tr>`
                     }
                     html += `
-                            <div class="container-section mb-4">
-                                <strong style="font-size:15px; margin-bottom:5px; padding-bottom:10px">
-                                    <div class="checkbox-wrapper" style="margin-left:5px;margin-bottom:2px">
-                                        <input type="checkbox" id="row-selector" class="row-checkbox" ${container.status == true ? 'checked' : ''}>
-                                        <svg viewBox="0 0 35.6 35.6">
-                                        <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-                                        <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-                                        <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-                                        </svg>
-                                    </div>
-                                   Container: ${container.name}</strong>
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Product Name</th>
-                                                <th>Quantity</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            ${productRows}
-                                        </tbody>
-                                    </table>
+                        <div class="container-section mb-4">
+                            <strong style="font-size:15px; margin-bottom:5px; padding-bottom:10px">
+                                <div class="checkbox-wrapper" style="margin-left:5px;margin-bottom:2px">
+                                    <input type="checkbox" id="row-selector" class="row-checkbox" ${container.status == true ? 'checked' : ''}>
+                                    <svg viewBox="0 0 35.6 35.6">
+                                    <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                    <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                    <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                    </svg>
                                 </div>
+                                Container: ${container.name}</strong>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Product Name</th>
+                                            <th>Quantity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        ${productRows}
+                                    </tbody>
+                                </table>
                             </div>
-                        `;
+                        </div>
+                    `;
                 });
             }
 
