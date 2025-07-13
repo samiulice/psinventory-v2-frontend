@@ -913,7 +913,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
       };
-      fetch(api + '/api/v2/company-profile', requestOptions)
+      fetch(api + '/company-profile', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -1029,7 +1029,7 @@
         },
         body: formData
       }
-      fetch(api + '/api/v2/images/upload', requestOptions)
+      fetch(api + '/images/upload', requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1060,7 +1060,7 @@
         },
         body: JSON.stringify({ file_name: filename })
       }
-      fetch(api + '/api/v2/images/remove', requestOptions)
+      fetch(api + '/images/remove', requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -1169,7 +1169,7 @@
           body: JSON.stringify(body),
         }
         console.log(body)
-        fetch(api + '/api/v2/update-company-info', requestOptions)
+        fetch(api + '/update-company-info', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)
@@ -1205,7 +1205,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
       };
-      fetch(api + '/api/v2/user/get/all', requestOptions)
+      fetch(api + '/user/get/all', requestOptions)
         .then(Response => Response.json())
         .then(data => {
           console.log('data fetched successfully: ', data)
@@ -1295,7 +1295,7 @@
             }
           };
           try {
-            const response = await fetch(api + '/api/v2/db/restore?filetype=' + fileType, requestOptions);
+            const response = await fetch(api + '/db/restore?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);
@@ -1338,7 +1338,7 @@
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
               }
             };
-            const response = await fetch(api + '/api/v2/db/backup?filetype=' + fileType, requestOptions);
+            const response = await fetch(api + '/db/backup?filetype=' + fileType, requestOptions);
 
             const resp = await response.json();
             console.log(resp);

@@ -404,7 +404,7 @@
         };
 
         try {
-          const response = await fetch(api + '/api/v2/inventory/transaction/get-list', requestOptions);
+          const response = await fetch(api + '/inventory/transaction/get-list', requestOptions);
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
@@ -553,7 +553,7 @@
           },
           body: JSON.stringify(reqBody),
         }
-        fetch(api + '/api/v2/inventory/transaction/post', requestOptions)
+        fetch(api + '/inventory/transaction/post', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("purchase response:", data)

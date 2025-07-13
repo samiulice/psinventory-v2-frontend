@@ -377,7 +377,7 @@
                 }
             }
             try {
-                const res = await fetch(api + '/api/v2/warehouses', requestOptions);
+                const res = await fetch(api + '/warehouses', requestOptions);
                 const data = await res.json();
                 if (data.error) {
                     throw new Error(data.message);
@@ -455,7 +455,7 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             }
-            const response = await fetch(`${api}/api/v2/warehouse/containers?wid=${warehouseId}&list_products=true`, requestOptions);
+            const response = await fetch(`${api}/warehouse/containers?wid=${warehouseId}&list_products=true`, requestOptions);
             return await response.json();
         }
 

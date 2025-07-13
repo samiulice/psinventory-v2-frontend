@@ -514,7 +514,7 @@
     }
 
     async function updateWarehouseList(callback) {
-      fetch(`${api}/api/v2/warehouses?containers=true`, requestOptions)
+      fetch(`${api}/warehouses?containers=true`, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           warehouses = responseData.warehouses || [];
@@ -707,7 +707,7 @@
         width: '600px',
         preConfirm: () => {
           // Return a Promise so Swal waits for the request
-          return fetch(api + `/api/v2/warehouse/${selectedContainer.id}/assign/items`, {
+          return fetch(api + `/warehouse/${selectedContainer.id}/assign/items`, {
             method: 'PUT',
             headers: {
               'Accept': "application/json",
@@ -753,8 +753,8 @@
     async function initializeData() {
       try {
         const [warehouseRes, productsRes] = await Promise.all([
-          fetch(`${api}/api/v2/warehouses?containers=true`, requestOptions),
-          fetch(`${api}/api/v2/warehouse/products/unassigned`, requestOptions)
+          fetch(`${api}/warehouses?containers=true`, requestOptions),
+          fetch(`${api}/warehouse/products/unassigned`, requestOptions)
         ]);
 
         const [warehouseData, productData] = await Promise.all([

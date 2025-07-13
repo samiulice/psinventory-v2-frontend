@@ -517,7 +517,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
       };
-      fetch(api + '/api/v2/inventory/products/items', requestOptions)
+      fetch(api + '/inventory/products/items', requestOptions)
         .then(response => response.json())
         .then(resp => {
           console.log(resp);

@@ -1,25 +1,24 @@
 // terminateSession terminates the current session
 function terminateSession() {
-  localStorage.removeItem('token');
-  localStorage.removeItem("psiuser");
-  localStorage.removeItem("psiuserrole");
+  localStorage.clear()
 
   window.appUser = null; // Clear the global appUser object
   // Redirect to login page
   window.location.href = "login.html";
 }
 // const api = 'https://psinventory-v2.onrender.com'
-let api = 'http://localhost:8080'
+let api = 'http://localhost:8080/api/v2'
 function checkAuth() {
   console.log('Checking access level...');
   const token = localStorage.getItem('token');
-  const username = localStorage.getItem("psiuser");
-  const role = localStorage.getItem("psiuserrole");
+  const username = localStorage.getItem("name");
+  const email = localStorage.getItem("email");
+  const role = localStorage.getItem("role");
 
-  if (token && username && role) {
+  if (token && username && email && role) {
     console.log("User is authenticated.");
     // Set the appUser object globally for use in other functions
-    window.appUser = { username, token, role }; // Make appUser globally accessible 
+    window.appUser = { username, token, role, email }; // Make appUser globally accessible 
   } else{
     console.log("User is not authenticated.");
     // Redirect to login page if no user data found

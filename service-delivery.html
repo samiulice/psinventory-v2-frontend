@@ -343,7 +343,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
       };
-      const fetchCustomers = fetch(api + '/api/v2/mis/customer/view/active', requestOptions)
+      const fetchCustomers = fetch(api + '/mis/customer/view/active', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           customers = responseData.customers || [];
@@ -352,7 +352,7 @@
           console.error('Error fetching customers data:', error);
         });
 
-      const fetchHeadAccounts = fetch(api + '/api/v2/accounts/get-cash-bank-accounts', requestOptions)
+      const fetchHeadAccounts = fetch(api + '/accounts/get-cash-bank-accounts', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           headAccounts = responseData.head_accounts || [];
@@ -362,7 +362,7 @@
         });
 
 
-      const fetchServicesHistory = fetch(api + '/api/v2/inventory/services/purchase/history?status=2', requestOptions)
+      const fetchServicesHistory = fetch(api + '/inventory/services/purchase/history?status=2', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           serviceHistory = responseData.result || [];
@@ -606,7 +606,7 @@
         },
         body: JSON.stringify(reqBody),
       }
-      fetch(api + '/api/v2/inventory/services/purchase/delivered', requestOptions)
+      fetch(api + '/inventory/services/purchase/delivered', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("purchase response:", data)

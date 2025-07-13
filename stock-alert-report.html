@@ -375,7 +375,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
               };
-              fetch(api+'/api/v2/reports/inventory/stock-alert-report', requestOptions)
+              fetch(api+'/reports/inventory/stock-alert-report', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)

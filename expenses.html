@@ -362,7 +362,7 @@
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
           }
         }
-        fetch(api + '/api/v2/accounts/expenses/get-page-details', requestOptions)
+        fetch(api + '/accounts/expenses/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log(data);
@@ -499,7 +499,7 @@
         }
 
         console.log(payment_summary)
-        fetch(`${api}/api/v2/accounts/expenses/complete-submission`, requestOptions)
+        fetch(`${api}/accounts/expenses/complete-submission`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

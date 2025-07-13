@@ -317,7 +317,7 @@
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     };
-    fetch(api + '/api/v2/hr/employee/view/all', requestOptions)
+    fetch(api + '/hr/employee/view/all', requestOptions)
       .then(response => response.json())
       .then(function (data) {
         employees = data.employees || [];
@@ -458,7 +458,7 @@
       const managerId = manager ? manager.id : null;  // assuming you keep manager variable updated
 
       try {
-        const response = await fetch(api + '/api/v2/warehouse', {
+        const response = await fetch(api + '/warehouse', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

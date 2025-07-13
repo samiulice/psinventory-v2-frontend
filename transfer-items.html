@@ -728,7 +728,7 @@
     }
 
     function updateContainerList(callback, requestOptions) {
-      fetch(`${api}/api/v2/warehouses/containers`, requestOptions)
+      fetch(`${api}/warehouses/containers`, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           containers = responseData.containers || [];
@@ -913,7 +913,7 @@
         }
       };
       updateContainerList(() => updateSelectorDiv("src_container"), requestOptions)
-      fetch(api + '/api/v2/warehouse/products/assigned', requestOptions)
+      fetch(api + '/warehouse/products/assigned', requestOptions)
         .then(response => response.json())
         .then(resp => {
           if (resp.error) {
@@ -1062,7 +1062,7 @@
         });
       });
       try {
-        const response = await fetch(api + '/api/v2/warehouse/transfers', {
+        const response = await fetch(api + '/warehouse/transfers', {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',

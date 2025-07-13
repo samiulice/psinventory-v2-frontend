@@ -316,7 +316,7 @@
         'Authorization': 'Bearer ' + localStorage.getItem('token')
       }
     };
-    fetch(api + '/api/v2/warehouses', requestOptions)
+    fetch(api + '/warehouses', requestOptions)
       .then(response => response.json())
       .then(function (data) {
         warehouses = data.warehouses || [];
@@ -452,7 +452,7 @@
       const form = document.getElementById("container-form");
 
       try {
-        const response = await fetch(api + '/api/v2/warehouse/container', {
+        const response = await fetch(api + '/warehouse/container', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

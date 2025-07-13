@@ -341,7 +341,7 @@
                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
             };
-            fetch(api + '/api/v2/reports/accounts/trial-balance', requestOptions)
+            fetch(api + '/reports/accounts/trial-balance', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data)

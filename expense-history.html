@@ -421,7 +421,7 @@
                                     'Authorization': 'Bearer ' + localStorage.getItem('token')
                                 }
                             };
-                            fetch(`${api}/api/v2/reports/accounts/expenses-report`, requestOptions)
+                            fetch(`${api}/reports/accounts/expenses-report`, requestOptions)
                                 .then(response => response.json())
                                 .then(responseData => {
                                     reportData = responseData.report || [];

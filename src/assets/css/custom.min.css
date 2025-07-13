@@ -3024,7 +3024,7 @@ a.btn-warning {
 .btn-dark {
     color: #E9EDEF;
     background-color: #014d4d;
-    border-color: #001414
+    border-color: #075e5e;
 }
 
 .btn-dark.active,
@@ -3033,8 +3033,8 @@ a.btn-warning {
 .btn-dark:hover,
 .open .dropdown-toggle.btn-dark {
     color: #FFF;
-    background-color: #394D5F;
-    border-color: #394D5F
+    background-color: #013131;
+    border-color: #014d4d
 }
 
 .btn-round {

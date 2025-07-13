@@ -373,7 +373,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
               };
-              fetch(`${api}/api/v2/warehouse/containers`, requestOptions)
+              fetch(`${api}/warehouse/containers`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.containers || [];

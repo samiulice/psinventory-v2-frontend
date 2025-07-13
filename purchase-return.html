@@ -338,7 +338,7 @@
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         };
-        fetch(api + '/api/v2/mis/supplier/view/active', requestOptions)
+        fetch(api + '/mis/supplier/view/active', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.error === true) {
@@ -371,7 +371,7 @@
             },
             body: JSON.stringify(sup),
           }
-          fetch(api + '/api/v2/inventory/supplier/memos', requestOptions)
+          fetch(api + '/inventory/supplier/memos', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log(data)
@@ -407,7 +407,7 @@
             body: JSON.stringify(payload),
           }
           console.log(payload)
-          fetch(api + '/api/v2/inventory/supplier/memo/products', requestOptions)
+          fetch(api + '/inventory/supplier/memo/products', requestOptions)
             .then(response => response.json())
             .then(data => {
               if (data.error === true) {
@@ -544,7 +544,7 @@
             body: JSON.stringify(returned_products_details),
           }
 
-          fetch(api + '/api/v2/inventory/products/purchase/return', requestOptions)
+          fetch(api + '/inventory/products/purchase/return', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log(data);

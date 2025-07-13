@@ -280,7 +280,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
       }
-      fetch(api+'/api/v2/inventory/services/purchase/history?status=1', requestOptions)
+      fetch(api+'/inventory/services/purchase/history?status=1', requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           purchaseHistory = responseData.result || [];
@@ -333,7 +333,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
       }
-      fetch(api+'/api/v2/inventory/services/purchase/checkout?id=' + id, requestOptions)
+      fetch(api+'/inventory/services/purchase/checkout?id=' + id, requestOptions)
         .then(response => response.json())
         .then(function (data) {
           if (data.error === true) {

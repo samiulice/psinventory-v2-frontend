@@ -299,7 +299,7 @@
           }),
         }
         console.log(text)
-        fetch(`${api}/api/v2/hr/employee/search`, requestOptions)
+        fetch(`${api}/hr/employee/search`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)
@@ -345,7 +345,7 @@
           body: JSON.stringify(requestBody),
         }
         console.log(requestBody)
-        fetch(`${api}/api/v2/hr/employee/update`, requestOptions)
+        fetch(`${api}/hr/employee/update`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

@@ -350,7 +350,7 @@
             'Authorization':'Bearer ' + localStorage.getItem('token')
           }
         }
-        fetch(api+'/api/v2/accounts/fund-acquisition/get-page-details', requestOptions)
+        fetch(api+'/accounts/fund-acquisition/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -494,7 +494,7 @@
           body: JSON.stringify(transaction_summary),
         }
         console.log(transaction_summary)
-        fetch(`${api}/api/v2/accounts/fund-acquisition/complete-submission`, requestOptions)
+        fetch(`${api}/accounts/fund-acquisition/complete-submission`, requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)

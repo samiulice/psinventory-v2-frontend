@@ -365,7 +365,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
       }
-      fetch(api+'/api/v2/inventory/memos/list?type=' + tabId, requestOptions)
+      fetch(api+'/inventory/memos/list?type=' + tabId, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           memos = responseData.memos || [];
@@ -425,7 +425,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
       }
-      fetch(api+`/api/v2/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
+      fetch(api+`/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           InvoiceData = responseData.invoice_data;

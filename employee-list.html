@@ -280,7 +280,7 @@
 
   <!-- fetching data from backend and populate frontend table -->
   <script>
-    let reportData, company;
+    let employees, company;
     function init_DataTables() {
 
       console.log('run_datatables');
@@ -300,6 +300,7 @@
               { data: "account_code", title: "Account Code", className: "account-code" },
               { data: "account_name", title: "Account Name", className: "account-name" },
               { data: "mobile", title: "Mobile", className: "contact-number" },
+              { data: "email", title: "Mobile", className: "contact-number" },
               {
                 title: "Status",
                 className: "status",
@@ -308,20 +309,21 @@
                 }
               },
               {
-                title: "Joining Date",
-                className: "joining_date",
-                visible: true,
-                render: function (data, type, row) {
-                  return moment(row.joining_date).format("DD-MMM-YYYY")
-                }
-              },
-              {
                 title: "Actions",
                 className: "actions",
                 visible: true,
                 render: function (data, type, row, meta) {
-                  const rowObj = encodeURIComponent(JSON.stringify(row));
-                  return `<button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="editEmployeeInfo('${rowObj}', ${meta.row})"><i class="fa fa-edit"></i>&nbsp;Edit</button>`
+                  let setupRole = ""
+                  if (row.role == "none"){
+                    setupRole = `<button id="access-btn-${meta.row}" class="btn btn-danger btn-xs" onclick="grantUserAccess(${meta.row})"><i class="fa fa-check"></i>&nbsp;Grant Access</button>`
+                  } else{
+                    setupRole = `
+                      <button id="remove-access-btn-${meta.row}" class="btn btn-dark btn-xs" onclick="RemoveUserAccess(${meta.row}, ${row.id})"><i class="fa fa-trash"></i>&nbsp;Remove Access</button>`
+                  } 
+                  return `
+                    <button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="updateEmployeeDetails(${meta.row})"><i class="fa fa-edit"></i>&nbsp;View/Edit Details</button>
+                    ${setupRole}
+                  `
                 }
               },
             ],
@@ -332,7 +334,7 @@
                 className: "btn-sm btn-primary",
                 filename: function () {
                   // Generate a custom file name dynamically
-                  return 'product_List_' + moment().format("YYYY-MM-DD_HH-mm-ss-SSS");
+                  return 'employees_List_' + moment().format("YYYY-MM-DD_HH-mm-ss-SSS");
                 },
               },
               {
@@ -340,7 +342,7 @@
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
                 action: function (e, dt, node, config) {
-                  customPrintFunction(reportData); // Call custom function with returnedData
+                  customPrintFunction(employees); // Call custom function with returnedData
                 }
               }
             ],
@@ -367,12 +369,13 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
               };
-              fetch(api + '/api/v2/hr/employee/view/all', requestOptions)
+              fetch(api + '/hr/employee/view/all', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
-                  reportData = responseData.employees || [];
+                  console.log(responseData)
+                  employees = responseData.employees || [];
                   company = responseData.company;
-                  callback({ data: reportData });
+                  callback({ data: employees });
                 })
                 .catch(function (error) {
                   console.error('Error fetching data:', error);
@@ -395,17 +398,14 @@
 
     };
 
-    function editEmployeeInfo(empInfo, btnIndex) {
-      const rowData = JSON.parse(decodeURIComponent(empInfo));
-      updateEmployee(rowData, btnIndex)
-    }
+
     function customPrintFunction() {
-      let n = reportData.length;
+      let n = employees.length;
       let tBody = '';
 
       if (n > 0) {
         for (let i = 0; i < n; i++) {
-          const e = reportData[i];
+          const e = employees[i];
           tBody += `
             <tr>
               <td>${e.account_code}</td>

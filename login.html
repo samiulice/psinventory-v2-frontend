@@ -233,8 +233,8 @@
                 <h2 class="form-title">Login</h2>
                 <form class="login-form" id="login-form">
                     <div class="input-group">
-                        <input type="text" id="username" autocomplete="off" required>
-                        <label>User Name</label>
+                        <input type="email" id="email" autocomplete="off" required>
+                        <label>Email</label>
                     </div>
                     <div class="input-group">
                         <input type="password" id="password" autocomplete="off" required>
@@ -248,7 +248,7 @@
                     </div>
                     <p id="login-error-msg"
                         style="color: red; font-size: 0.85rem; display: none; margin-bottom: 0.5rem; text-align:center;">
-                        Invalid username or password.
+                        Invalid email or password.
                     </p>
 
                     <button type="submit" class="submit-btn" id="submit-btn">Log In</button>
@@ -272,8 +272,8 @@
             }
         }
 
-        // Move focus from username to password on Enter
-        document.getElementById('username').addEventListener('keydown', function (e) {
+        // Move focus from email to password on Enter
+        document.getElementById('email').addEventListener('keydown', function (e) {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 document.getElementById('password').focus();
@@ -299,7 +299,7 @@
         // Validate user and redirect
         function validateUser() {
             let user = {
-                username: document.getElementById('username').value.trim(),
+                email: document.getElementById('email').value.trim(),
                 password: document.getElementById('password').value
             }
             const requestOptions = {
@@ -314,7 +314,7 @@
             // const api = 'https://psinventory-v2.onrender.com'
             const api = 'http://localhost:8080';
 
-            fetch(api + '/api/v2/user/signin', requestOptions)
+            fetch(api + '/user/signin', requestOptions)
                 .then(response => response.json())
                 .then(data => {
                     console.log("resp : ", data);
@@ -327,9 +327,11 @@
                         document.getElementById("submit-btn").disabled = false;
                         document.getElementById("submit-btn").innerHTML = 'Log In';
                     } else {
+                        console.log("user: ", data)
                         localStorage.setItem('token', data.token);
-                        localStorage.setItem("psiuser", data.user.username);
-                        localStorage.setItem("psiuserrole", data.user.role);
+                        localStorage.setItem("name", data.user.name);
+                        localStorage.setItem("email", data.user.email);
+                        localStorage.setItem("role", data.user.role);
                         window.location.href = 'index.html';
                     }
                 });

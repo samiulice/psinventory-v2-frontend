@@ -100,7 +100,7 @@ function addNewBrand(page, brands) {
         body: JSON.stringify(brand),
       }
 
-      fetch(api + '/api/v2/inventory/brand/new', requestOptions)
+      fetch(api + '/inventory/brand/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -235,7 +235,7 @@ function updateBrand(brand) {
       let btn = document.getElementById('edit-btn-' + btnIndex);
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
-      fetch(api + '/api/v2/inventory/brand/edit', requestOptions)
+      fetch(api + '/inventory/brand/edit', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -447,7 +447,7 @@ function addNewProduct(page, brands, categories, products) {
       }
       console.log(product)
 
-      fetch(api + '/api/v2/inventory/product/new', requestOptions)
+      fetch(api + '/inventory/product/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -680,7 +680,7 @@ function updateProduct(brands, categories, product) {
       }
       console.log(UpdatedInfo)
 
-      fetch(api + '/api/v2/inventory/product/update', requestOptions)
+      fetch(api + '/inventory/product/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -798,7 +798,7 @@ function addNewCategory(page, categories) {
         body: JSON.stringify(category),
       }
 
-      fetch(api + '/api/v2/inventory/category/new', requestOptions)
+      fetch(api + '/inventory/category/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -937,7 +937,7 @@ function updateCategory(category, btnIndex) {
       let btn = document.getElementById('edit-btn-' + btnIndex);
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
-      fetch(api + '/api/v2/inventory/category/update', requestOptions)
+      fetch(api + '/inventory/category/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1074,7 +1074,7 @@ function addNewService(src, services) {
         body: JSON.stringify(service),
       }
 
-      fetch(api + '/api/v2/inventory/service/new', requestOptions)
+      fetch(api + '/inventory/service/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1233,7 +1233,7 @@ function updateService(serviceInfo, btnIndex) {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api + '/api/v2/inventory/service/update', requestOptions)
+      fetch(api + '/inventory/service/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1373,7 +1373,7 @@ function cancelService(id) {
         },
         body: JSON.stringify(reqBody),
       }
-      fetch(api + '/api/v2/inventory/services/purchase/cancel', requestOptions)
+      fetch(api + '/inventory/services/purchase/cancel', requestOptions)
         .then(response => response.json())
         .then(function (data) {
           if (data.error === true) {
@@ -1536,7 +1536,7 @@ function addNewCustomer(page, customers) {
         body: JSON.stringify(customer),
       }
 
-      fetch(api + '/api/v2/mis/customer/new', requestOptions)
+      fetch(api + '/mis/customer/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1714,7 +1714,7 @@ function updateCustomer(cusInfo, btnIndex) {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api + '/api/v2/mis/customer/update', requestOptions)
+      fetch(api + '/mis/customer/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -1733,7 +1733,7 @@ function updateCustomer(cusInfo, btnIndex) {
 }
 
 // addNewEmployee show a popup form and then make an api call to insert employee data to the database table
-function addNewEmployee(page, employees) {
+function addNewEmployee() {
   Swal.fire({
     title: 'Add Employee',
     width: 450,
@@ -1746,31 +1746,31 @@ function addNewEmployee(page, employees) {
                       <input type="text" class="form-control has-feedback-left" id="account_name" name="account_name"
                           placeholder="Account Name" autocomplete="off" autofocus required>
                       <div class="invalid-feedback d-none text-danger">Please enter the account name.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-user"></span>
                   </div>
 
-                  <!-- Contact Person Name -->
+                  <!-- Designation -->
                   <div class="col-4 form-group has-feedback">
-                      <input type="text" class="form-control has-feedback-left" id="contact_person" name="contact_person"
-                          placeholder="Contact Person Name" autocomplete="off">
-                      <div class="invalid-feedback d-none text-danger">Please enter the contact person name.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
-                  </div>
-
-                  <!-- Mobile Number -->
-                  <div class="col-4 form-group has-feedback">
-                      <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
-                          placeholder="Mobile Number" autocomplete="off" required>
-                      <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
+                      <input type="text" class="form-control has-feedback-left" id="designation" name="designation"
+                          placeholder="Designation (e.g. HR, MD)" autocomplete="off" required>
+                      <div class="invalid-feedback d-none text-danger">Please enter the designation.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-briefcase"></span>
                   </div>
 
                   <!-- Email -->
                   <div class="col-4 form-group has-feedback">
                       <input type="email" class="form-control has-feedback-left" id="email" name="email"
-                          placeholder="Email" autocomplete="off">
+                          placeholder="Email" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-envelope"></span>
+                  </div>
+
+                  <!-- Mobile -->
+                  <div class="col-4 form-group has-feedback">
+                      <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
+                          placeholder="Mobile Number" autocomplete="off" required>
+                      <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-phone"></span>
                   </div>
 
                   <!-- Monthly Salary -->
@@ -1778,15 +1778,17 @@ function addNewEmployee(page, employees) {
                       <input type="number" class="form-control has-feedback-left" id="monthly_salary" name="monthly_salary"
                           placeholder="Monthly Salary" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter the monthly salary.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-gift" aria-hidden="true"></span>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-usd"></span>
                   </div>
 
                   <!-- Area -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="area" name="area"
-                          placeholder="Road/House No." autocomplete="off">
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-home" aria-hidden="true"></span>
+                          placeholder="Area (Road/House)" autocomplete="off">
+                      <div class="invalid-feedback d-none text-danger">Please enter the area.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-map-marker"></span>
                   </div>
+
                   <div class="form-group">
                     <div id="btns" class="col-4">
                         <br>
@@ -1796,7 +1798,7 @@ function addNewEmployee(page, employees) {
               </form>
           </div>
       </div>
-          `,
+    `,
     showCloseButton: true,
     showConfirmButton: false,
     showCancelButton: false,
@@ -1826,9 +1828,9 @@ function addNewEmployee(page, employees) {
         if (isValid) {
           resolve({
             account_name: form.account_name.value,
-            contact_person: form.contact_person.value,
-            mobile: form.mobile.value,
+            designation: form.designation.value,
             email: form.email.value,
+            mobile: form.mobile.value,
             monthly_salary: form.monthly_salary.value,
             area: form.area.value
           });
@@ -1865,14 +1867,13 @@ function addNewEmployee(page, employees) {
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
-      salary = parseInt(data.monthly_salary, 10);
-      opBalance = parseInt(data.opening_balance, 10);
       let employee = {
         account_name: data.account_name,
-        contact_person: data.contact_person,
-        mobile: data.mobile,
+        designation: data.designation,
+        status: true,
         email: data.email,
-        monthly_salary: salary,
+        mobile: data.mobile,
+        monthly_salary: parseInt(data.monthly_salary),
         area: data.area
       }
       const requestOptions = {
@@ -1885,14 +1886,11 @@ function addNewEmployee(page, employees) {
         body: JSON.stringify(employee),
       }
 
-      fetch(api + '/api/v2/hr/employee/new', requestOptions)
+      fetch(api + '/hr/employee', requestOptions)
         .then(response => response.json())
         .then(data => {
-          if (page === "") {
-            setTimeout(function () {
-              location.reload();
-            }, 3000); // Adjust the delay as needed 
-          }
+          console.log(data)
+          console.log(employee)
           if (data.error === true) {
             showErrorMessage(data.message)
           } else {
@@ -1904,8 +1902,12 @@ function addNewEmployee(page, employees) {
   });
 }
 
+
+
 //updateEmployee show a popup form and then make an api call to update employee info to the database table
-function updateEmployee(empInfo, btnIndex) {
+function updateEmployeeDetails(btnIndex) {
+  let emp = employees[parseInt(btnIndex)]
+  console.log(emp)
   Swal.fire({
     title: 'Update Employee Account',
     width: 450,
@@ -1915,59 +1917,63 @@ function updateEmployee(empInfo, btnIndex) {
               <form autocomplete="off" id="update-employee" class="needs-validation" novalidate>
                   <!-- Account Name -->
                   <div class="col-4 form-group has-feedback">
-                      <input type="text" class="form-control has-feedback-left" id="account_name" name="account_name" value="${empInfo.account_name || ""}"
-                          placeholder="Account Name" autocomplete="off" autofocus required>
+                      <input type="text" class="form-control has-feedback-left" id="account_name" name="account_name"
+                          placeholder="Account Name" value="${emp.account_name}" autocomplete="off" autofocus required>
                       <div class="invalid-feedback d-none text-danger">Please enter the account name.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-user"></span>
                   </div>
 
-                  <!-- Contact Person Name -->
+                  <!-- Designation -->
                   <div class="col-4 form-group has-feedback">
-                      <input type="text" class="form-control has-feedback-left" id="contact_person" name="contact_person"
-                        value="${empInfo.contact_person || ""}"  placeholder="Contact Person Name" autocomplete="off">
-                      <div class="invalid-feedback d-none text-danger">Please enter the contact person name.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
-                  </div>
-
-                  <!-- Mobile Number -->
-                  <div class="col-4 form-group has-feedback">
-                      <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
-                        value="${empInfo.mobile || ""}"  placeholder="Mobile Number" autocomplete="off" required>
-                      <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
+                      <input type="text" class="form-control has-feedback-left" id="designation" name="designation"
+                          placeholder="Designation (e.g. HR, MD)" value=${emp.designation}" autocomplete="off" required>
+                      <div class="invalid-feedback d-none text-danger">Please enter the designation.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-briefcase"></span>
                   </div>
 
                   <!-- Email -->
                   <div class="col-4 form-group has-feedback">
                       <input type="email" class="form-control has-feedback-left" id="email" name="email"
-                        value="${empInfo.email || ""}"  placeholder="Email" autocomplete="off">
+                          placeholder="Email" value="${emp.email}" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-envelope"></span>
+                  </div>
+
+                  <!-- Mobile -->
+                  <div class="col-4 form-group has-feedback">
+                      <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
+                          placeholder="Mobile Number" value="${emp.mobile}" autocomplete="off" required>
+                      <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-phone"></span>
                   </div>
 
                   <!-- Monthly Salary -->
                   <div class="col-4 form-group has-feedback">
                       <input type="number" class="form-control has-feedback-left" id="monthly_salary" name="monthly_salary"
-                        value="${empInfo.monthly_salary || ""}"  placeholder="Monthly Salary" autocomplete="off" required>
+                          placeholder="Monthly Salary" value="${emp.monthly_salary}" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter the monthly salary.</div>
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-gift" aria-hidden="true"></span>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-usd"></span>
                   </div>
 
                   <!-- Area -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="area" name="area"
-                        value="${empInfo.area || ""}"  placeholder="Road/House No." autocomplete="off">
-                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-home" aria-hidden="true"></span>
+                          placeholder="Area (Road/House)" value="${emp.area}" autocomplete="off">
+                      <div class="invalid-feedback d-none text-danger">Please enter the area.</div>
+                      <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-map-marker"></span>
                   </div>
-                  <div class="col-4">
-                    <div class="toggle-wrapper">
-                      <label for="account_status" style="color:#5F5454;background:white">Account Status:</label>
-                      <input type="radio" id="status_active" name="account_status" ${empInfo.account_status ? 'checked' : ''} autocomplete="off" >
+
+                  <!-- Status -->
+                  <div class="col-4 form-group has-feedback">
+                      <div class="toggle-wrapper">
+                      <label for="status" style="color:#5F5454;background:white">Account Status: </label>
+                      <input type="radio" id="status_active" name="account_status" ${emp.account_status == true ? "checked" : ""} autocomplete="off" >
                       <label for="status_active">Active</label>
-                      <input type="radio" id="status_inactive" name="account_status" ${empInfo.account_status ? '' : 'checked'} autocomplete="off" >
+                      <input type="radio" id="status_inactive" name="account_status" ${emp.account_status == true ? "" : "checked"} autocomplete="off" >
                       <label for="status_inactive">Inactive</label>
                     </div>
                   </div>
+
                   <div class="form-group">
                     <div id="btns" class="col-4">
                         <br>
@@ -1977,7 +1983,7 @@ function updateEmployee(empInfo, btnIndex) {
               </form>
           </div>
       </div>
-          `,
+    `,
     showCloseButton: true,
     showConfirmButton: false,
     showCancelButton: false,
@@ -2007,9 +2013,9 @@ function updateEmployee(empInfo, btnIndex) {
         if (isValid) {
           resolve({
             account_name: form.account_name.value,
-            contact_person: form.contact_person.value,
-            mobile: form.mobile.value,
+            designation: form.designation.value,
             email: form.email.value,
+            mobile: form.mobile.value,
             monthly_salary: form.monthly_salary.value,
             area: form.area.value,
             status: form.status_active.checked,
@@ -2047,20 +2053,20 @@ function updateEmployee(empInfo, btnIndex) {
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
+
       salary = parseInt(data.monthly_salary, 10);
-      opBalance = parseInt(data.opening_balance, 10);
+
       let employee = {
-        id: empInfo.id,
         account_name: data.account_name,
-        contact_person: data.contact_person,
-        mobile: data.mobile,
+        designation: data.designation,
         email: data.email,
+        mobile: data.mobile,
         monthly_salary: salary,
         area: data.area,
         account_status: data.status,
       }
       const requestOptions = {
-        method: 'post',
+        method: 'PUT',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
@@ -2072,9 +2078,10 @@ function updateEmployee(empInfo, btnIndex) {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api + '/api/v2/hr/employee/update', requestOptions)
+      fetch(api + '/hr/employee', requestOptions)
         .then(response => response.json())
         .then(data => {
+          console.log(data)
           if (data.error === true) {
             alertQuestion(data.message)
           } else {
@@ -2086,6 +2093,47 @@ function updateEmployee(empInfo, btnIndex) {
             }, 1500);
           }
         });
+    }
+  });
+}
+
+function RemoveUserAccess(btnIndex, id) {
+  Swal.fire({
+    title: `Are you sure to remove user access`,
+    text:"The user cannot get access to the application anymore",
+    icon: 'info',
+    confirmButtonText: 'OK',
+    showCancelButton: true,
+    allowOutsideClick: false,
+    width: '480px',
+    preConfirm: async () => {
+      // Return a Promise so Swal waits for the request
+      try {
+        const response = await fetch(api + `/hr/employee/access?role=none&user=`+id, {
+          method: 'PUT',
+          headers: {
+            'Accept': "application/json",
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          },
+        });
+        if (!response.ok) {
+          throw new Error('Failed to submit selected data');
+        }
+        const data = await response.json();
+        if (data.error) {
+          alertQuestion(data.message);
+        } else {
+          let btn = document.getElementById('revoke-access-btn-' + btnIndex);
+          btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
+          btn.disabled = true;
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        }
+      } catch (error) {
+        Swal.fire('Error', error.message, 'error');
+      }
     }
   });
 }
@@ -2268,7 +2316,7 @@ function addNewUser() {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api + '/api/v2/user/add', requestOptions)
+      fetch(api + '/user/add', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2300,7 +2348,7 @@ function deleteUser(index) {
       username: userList[index].username
     }),
   }
-  fetch(api + '/api/v2/user/delete', requestOptions)
+  fetch(api + '/user/delete', requestOptions)
     .then(response => response.json())
     .then(data => {
       if (data.error === true) {
@@ -2509,7 +2557,7 @@ function updateUser(btnIndex) {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api + '/api/v2/user/update', requestOptions)
+      fetch(api + '/user/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2684,7 +2732,7 @@ function addNewSupplier(page, suppliers) {
         body: JSON.stringify(supplier),
       }
 
-      fetch(api + '/api/v2/mis/supplier/new', requestOptions)
+      fetch(api + '/mis/supplier/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -2862,7 +2910,7 @@ function updateSupplier(supInfo, btnIndex) {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api + '/api/v2/mis/supplier/update', requestOptions)
+      fetch(api + '/mis/supplier/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
@@ -3036,7 +3084,7 @@ function addNewStakeHolder() {
         body: JSON.stringify(proprietor),
       }
 
-      fetch(api + '/api/v2/add-stake-holder', requestOptions)
+      fetch(api + '/add-stake-holder', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -3178,7 +3226,7 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
       }
       console.log(wpData)
 
-      fetch(api + '/api/v2/inventory/products/warranty/checkout', requestOptions)
+      fetch(api + '/inventory/products/warranty/checkout', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data)
@@ -3226,7 +3274,7 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
       console.log(wpData);
 
       // Send a POST request to the API endpoint for warranty delivery
-      fetch(api + '/api/v2/inventory/products/warranty/delivery', requestOptions)
+      fetch(api + '/inventory/products/warranty/delivery', requestOptions)
         .then(response => response.json())  // Parse the response as JSON
         .then(data => {
           // Check if the API returned an error
@@ -3466,7 +3514,7 @@ function addNewExpenseType(page, expenses) {
         body: JSON.stringify(expense_type),
       }
 
-      fetch(api + '/api/v2/inventory/expenses/type/new', requestOptions)
+      fetch(api + '/inventory/expenses/type/new', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data);
@@ -3593,7 +3641,7 @@ function updateExpense(expenseType, btnIndex) {
         body: JSON.stringify(payload),
       }
       console.log("Payload:", payload)
-      fetch(api + '/api/v2/inventory/expenses/type/update', requestOptions)
+      fetch(api + '/inventory/expenses/type/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log("Response:", data)
@@ -3739,7 +3787,7 @@ function CreateWarehouse() {
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
 
-      fetch(api + '/api/v2/warehouse', requestOptions)
+      fetch(api + '/warehouse', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {

@@ -424,7 +424,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
               };
-              fetch(`${api}/api/v2/reports/inventory/brand-list`, requestOptions)
+              fetch(`${api}/reports/inventory/brand-list`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)

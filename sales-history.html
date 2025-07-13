@@ -375,7 +375,7 @@
                   'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
               };
-              fetch(api + '/api/v2/reports/inventory/sales-history', requestOptions)
+              fetch(api + '/reports/inventory/sales-history', requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
                   console.log(responseData)
