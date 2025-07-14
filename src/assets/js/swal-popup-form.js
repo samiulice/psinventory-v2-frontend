@@ -2097,10 +2097,137 @@ function updateEmployeeDetails(btnIndex) {
   });
 }
 
-function RemoveUserAccess(btnIndex, id) {
+function grantUserAccess(btnIndex, id, emp = {}) {
+  Swal.fire({
+    title: 'Grant Employee Access',
+    width: 450,
+     html: `
+  <div class="x_panel">
+    <div class="x_content">
+      <form autocomplete="off" id="update-employee" class="needs-validation" novalidate>
+        
+        <!-- Password -->
+        <div class="col-4 form-group has-feedback d-flex align-items-center">
+          <input type="password" class="form-control has-feedback-left" id="password" name="password"
+            placeholder="Enter Password" autocomplete="off" required style="flex-grow: 1;">
+          <span style="color: rgba(0, 0, 0, 1); transform: translate(-40%, -10%);" 
+                class="form-control-feedback left glyphicon glyphicon-lock"></span>
+          <div class="invalid-feedback d-none text-danger ms-2">Password mismatched</div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="col-4 form-group has-feedback mt-3">
+          <input type="password" class="form-control has-feedback-left" id="confirmPassword" name="confirmPassword"
+            placeholder="Confirm Password" autocomplete="off" required>
+          <span style="color: rgba(0, 0, 0, 1); transform: translate(-40%, -10%);" 
+                class="form-control-feedback left glyphicon glyphicon-lock"></span>
+          <div class="invalid-feedback d-none text-danger">Passwords do not match</div>
+        </div>
+
+        <!-- Role -->
+        <div class="col-4 form-group has-feedback">
+            <div class="toggle-wrapper">
+            <label for="role" style="color:#5F5454;background:white">Access Level: </label>
+            <input type="radio" id="role_admin" name="role" autocomplete="off" >
+            <label for="role_admin">Admin</label>
+            <input type="radio" id="role_operator" name="role" checked autocomplete="off" >
+            <label for="role_operator">Operator</label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group mt-4">
+          <div id="btns" class="col-4">
+            <button type="submit" class="btn btn-sm btn-dark">Save Changes</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+`,
+    showCloseButton: true,
+    showConfirmButton: false,
+    allowOutsideClick: false,
+    willOpen: () => {
+      const form = document.getElementById('update-employee');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        Swal.resetValidationMessage();
+
+        // Form validation
+        if (!form.checkValidity()) {
+          Swal.showValidationMessage('Please fill out all required fields.');
+          return;
+        }
+
+        const password = form.password.value.trim();
+        const confirmPassword = form.confirmPassword.value.trim();
+
+        // Password match check
+        if (password !== confirmPassword) {
+          Swal.showValidationMessage('Passwords do not match.');
+          return;
+        }
+
+        // Fixed role detection
+        const role = form.querySelector('input[name="role"]:checked').id === 'role_admin' 
+          ? 'admin' 
+          : 'operator';
+
+        // Disable button during processing
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
+
+        // API request
+        fetch(api + '/hr/employee/access', {
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          },
+          body: JSON.stringify({ id, password, role }),
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.error) {
+            throw new Error(data.message || 'Failed to update access');
+          }
+          Swal.fire('Success', 'Employee access granted successfully.', 'success')
+            .then(() => location.reload());
+        })
+        .catch(error => {
+          Swal.showValidationMessage(error.message);
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = 'Save Changes';
+        });
+      });
+    }
+  });
+}
+function togglePassword() {
+            const passwordField = document.getElementById('password');
+            const confirmPasswordField = document.getElementById('confirmPassword');
+            const toggleIcon = document.querySelector('.password-toggle svg');
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                confirmPasswordField.type = 'text';
+                toggleIcon.innerHTML = '<path d="M12 6a9.77 9.77 0 0 1 8.82 5.5 9.77 9.77 0 0 1-8.82 5.5A9.77 9.77 0 0 1 3.18 11.5 9.77 9.77 0 0 1 12 6zm0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5a2.5 2.5 0 0 1 0 5 2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>';
+            } else {
+                passwordField.type = 'password';
+                confirmPasswordField.type = 'password'
+                toggleIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+            }
+        }
+
+
+function removeUserAccess(btnIndex, id) {
   Swal.fire({
     title: `Are you sure to remove user access`,
-    text:"The user cannot get access to the application anymore",
+    text: "The user cannot get access to the application anymore",
     icon: 'info',
     confirmButtonText: 'OK',
     showCancelButton: true,
@@ -2109,7 +2236,7 @@ function RemoveUserAccess(btnIndex, id) {
     preConfirm: async () => {
       // Return a Promise so Swal waits for the request
       try {
-        const response = await fetch(api + `/hr/employee/access?role=none&user=`+id, {
+        const response = await fetch(api + `/hr/employee/access?role=none&user=` + id, {
           method: 'PUT',
           headers: {
             'Accept': "application/json",
@@ -2117,9 +2244,6 @@ function RemoveUserAccess(btnIndex, id) {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
         });
-        if (!response.ok) {
-          throw new Error('Failed to submit selected data');
-        }
         const data = await response.json();
         if (data.error) {
           alertQuestion(data.message);
@@ -2138,457 +2262,6 @@ function RemoveUserAccess(btnIndex, id) {
   });
 }
 
-// addNewUser show a popup form and then make an api call to insert user data to the database table
-function addNewUser() {
-  Swal.fire({
-    title: 'Add New User',
-    width: 450,
-    html: `
-    <form autocomplete="off" id="add-user" class="needs-validation" novalidate>
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Personal Info</h2>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <!-- Full Name -->
-          <div class="col-4 form-group has-feedback">
-              <input type="text" class="form-control has-feedback-left" id="name" name="name" 
-                  placeholder="Full Name" autocomplete="off" autofocus required>
-              <div class="invalid-feedback d-none text-danger">Please enter user's full name.</div>
-              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
-          </div>
-
-          <!-- Mobile Number -->
-          <div class="col-4 form-group has-feedback">
-              <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
-                placeholder="Mobile Number" autocomplete="off">
-              <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
-              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
-          </div>
-
-          <!-- Email -->
-          <div class="col-4 form-group has-feedback">
-              <input type="email" class="form-control has-feedback-left" id="email" name="email"
-                placeholder="Email" autocomplete="off">
-              <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
-              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Login Info</h2>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <!-- Username -->
-          <div class="col-4 form-group has-feedback">
-            <input type="text" class="form-control has-feedback-left" id="username" name="username"
-              placeholder="Username" autocomplete="off" required>
-            <div class="invalid-feedback d-none text-danger">Please enter the username.</div>
-            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
-          </div>
-          <!-- Password -->
-          <div class="col-4 form-group has-feedback">
-            <input type="password" class="form-control has-feedback-left" id="password" name="password"
-              placeholder="Password" autocomplete="off" required>
-            <div class="invalid-feedback d-none text-danger">Please enter a strong password.</div>
-            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-lock" aria-hidden="true"></span>
-          </div>
-          <div class="col-4">
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <label for="" style="color:#5F5454;background:white">User Role:</label>
-                  </td>
-                  <td>
-                    <div class="toggle-wrapper">
-                      <input type="radio" id="role_admin" name="role" checked autocomplete="off" >
-                      <label for="role_admin">Admin</label>
-                      <input type="radio" id="role_operator" name="role" autocomplete="off" >
-                      <label for="role_operator">Operator</label>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="form-group">
-            <div id="btns" class="col-4">
-                <br>
-                <button type="submit" class="btn btn-sm btn-dark admin-access-show">Save Changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-          `,
-    showCloseButton: true,
-    showConfirmButton: false,
-    showCancelButton: false,
-    allowOutsideClick: false,
-    preConfirm: () => {
-      return new Promise((resolve) => {
-        const form = document.getElementById('add-user');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
-        let isValid = true;
-
-        // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
-        });
-
-        // Check each field
-        formFields.forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
-            }
-          }
-        });
-
-        if (isValid) {
-          resolve({
-            name: form.name.value,
-            mobile: form.mobile.value,
-            email: form.email.value,
-            username: form.username.value,
-            password: form.password.value,
-            role: form.role_admin.checked ? 'admin' : 'operator',
-          });
-        } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
-        }
-      });
-    },
-    willOpen: () => {
-      const form = document.getElementById('add-user');
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
-        });
-        let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
-            }
-          }
-        });
-        if (isValid) {
-          Swal.getConfirmButton().click();
-        } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
-        }
-      });
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const data = result.value;
-      let user = {
-        name: data.name,
-        mobile: data.mobile,
-        email: data.email,
-        username: data.username,
-        password: data.password,
-        status: true,
-        role: data.role,
-      }
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        },
-        body: JSON.stringify(user),
-      }
-      let btn = document.getElementById('add-new-user');
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
-      btn.disabled = true;
-
-      fetch(api + '/user/add', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.error === true) {
-            alertQuestion(data.message)
-          } else {
-            alertSuccess(data.message, () => {
-              btn.innerHTML = '<i class="fa fa-plus"></i>&nbsp;Add New User';
-              btn.disabled = false
-            })
-            //modify the table row with the added user info
-            userList.push(user);
-            addNewRow(user, userList.length - 1)
-          }
-        });
-    }
-  });
-}
-
-//deleteUser make an api call to delete the user
-function deleteUser(index) {
-  const requestOptions = {
-    method: 'POST',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-    },
-    body: JSON.stringify({
-      username: userList[index].username
-    }),
-  }
-  fetch(api + '/user/delete', requestOptions)
-    .then(response => response.json())
-    .then(data => {
-      if (data.error === true) {
-        alertQuestion(data.message)
-      } else {
-        alertSuccess(data.message)
-        //modify the table row with the added user info
-        userList = userList.filter((_, i) => i !== index);
-        document.getElementById('delete-btn-' + index).closest('tr').remove()
-      }
-    });
-}
-
-//updateUser show a popup form and then make an api call to update user info to the database table
-function updateUser(btnIndex) {
-  let editableUser = userList[btnIndex]
-  Swal.fire({
-    title: 'Update User Account',
-    width: 450,
-    html: `
-    <form autocomplete="off" id="update-user" class="needs-validation" novalidate>
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Personal Info</h2>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <!-- Full Name -->
-          <div class="col-4 form-group has-feedback">
-              <input type="text" class="form-control has-feedback-left" id="name" name="name" value="${editableUser.name || ""}"
-                  placeholder="Full Name" autocomplete="off" autofocus required>
-              <div class="invalid-feedback d-none text-danger">Please enter user's full name.</div>
-              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
-          </div>
-
-          <!-- Mobile Number -->
-          <div class="col-4 form-group has-feedback">
-              <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
-                value="${editableUser.mobile || ""}"  placeholder="Mobile Number" autocomplete="off" required>
-              <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
-              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
-          </div>
-
-          <!-- Email -->
-          <div class="col-4 form-group has-feedback">
-              <input type="email" class="form-control has-feedback-left" id="email" name="email"
-                value="${editableUser.email || ""}"  placeholder="Email" autocomplete="off">
-              <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
-              <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
-          </div>
-        </div>
-      </div>
-
-      <div class="x_panel">
-        <div class="x_title">
-          <h2>Login Info</h2>
-          <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
-          <!-- Username -->
-          <div class="col-4 form-group has-feedback">
-            <input type="text" class="form-control has-feedback-left" id="username" name="username"
-              value="${editableUser.username || ""}"  placeholder="Username" autocomplete="off" disabled>
-            <div class="invalid-feedback d-none text-danger">Please enter the username.</div>
-            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
-          </div>
-          <!-- Password -->
-          <div class="col-4 form-group has-feedback">
-            <input type="password" class="form-control has-feedback-left" id="password" name="password"
-              value="${editableUser.password || ""}"  placeholder="Password" autocomplete="off">
-            <div class="invalid-feedback d-none text-danger">Please enter a valid password.</div>
-            <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-lock" aria-hidden="true"></span>
-          </div>
-          <div class="col-4">
-            <table>
-              <tbody>
-                <tr>
-                  <td>
-                    <label for="" style="color:#5F5454;background:white">Account Status:</label>
-                  </td>
-                  <td>
-                    <div class="toggle-wrapper">
-                      <input type="radio" id="status_active" name="status" ${editableUser.status ? 'checked' : ''} autocomplete="off" >
-                      <label for="status_active">Active</label>
-                      <input type="radio" id="status_inactive" name="status" ${editableUser.status ? '' : 'checked'} autocomplete="off" >
-                      <label for="status_inactive">Inactive</label>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <label for="" style="color:#5F5454;background:white">User Role:</label>
-                  </td>
-                  <td>
-                    <div class="toggle-wrapper">
-                      <input type="radio" id="role_admin" name="role" ${editableUser.role == "admin" ? 'checked' : ''} autocomplete="off" >
-                      <label for="role_admin">Admin</label>
-                      <input type="radio" id="role_operator" name="role" ${editableUser.role == "admin" ? '' : 'checked'} autocomplete="off" >
-                      <label for="role_operator">Operator</label>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="form-group">
-            <div id="btns" class="col-4">
-                <br>
-                <button type="submit" class="btn btn-sm btn-dark admin-access-show">Save Changes</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </form>
-          `,
-    showCloseButton: true,
-    showConfirmButton: false,
-    showCancelButton: false,
-    allowOutsideClick: false,
-    preConfirm: () => {
-      return new Promise((resolve) => {
-        const form = document.getElementById('update-user');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
-        let isValid = true;
-
-        // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
-        });
-
-        // Check each field
-        formFields.forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
-            }
-          }
-        });
-
-        if (isValid) {
-          resolve({
-            name: form.name.value,
-            mobile: form.mobile.value,
-            email: form.email.value,
-            username: form.username.value,
-            password: form.password.value,
-            status: form.status_active.checked,
-            role: form.role_admin.checked ? 'admin' : 'operator',
-          });
-        } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
-        }
-      });
-    },
-    willOpen: () => {
-      const form = document.getElementById('update-user');
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
-        });
-        let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
-            }
-          }
-        });
-        if (isValid) {
-          Swal.getConfirmButton().click();
-        } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
-        }
-      });
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      const data = result.value;
-      let user = {
-        id: editableUser.id,
-        name: data.name,
-        mobile: data.mobile,
-        email: data.email,
-        username: data.username,
-        password: data.password,
-        status: data.status,
-        role: data.role,
-      }
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
-        },
-        body: JSON.stringify(user),
-      }
-      console.log(requestOptions);
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
-      btn.disabled = true;
-
-      fetch(api + '/user/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.error === true) {
-            alertQuestion(data.message)
-          } else {
-            setTimeout(() => {
-              btn.innerHTML = 'Saved'
-            }, 1500);
-
-            //modify the table row with the updated user info
-            //get the tr
-            userList[btnIndex] = user;
-            let row = btn.closest('tr')
-            //then update each td
-            row.innerHTML = `
-              <td>${user.name}</td>
-              <td>${user.mobile}</td>
-              <td>${user.email}</td>
-              <td>${user.username}</td>
-              <td>${toTitleCase(user.role)}</td>
-              <td>${user.status ? '<span class="label label-primary">Active</span>' : '<span class="label label-warning">Inactive</span>'}</td>
-              <td>
-                <button id="edit-btn-${btnIndex}" class="btn btn-primary btn-xs" onclick="updateUser(userList[${btnIndex}], ${btnIndex})">Edit</button>
-                <button  id="delete-btn-${btnIndex}" class="btn btn-danger btn-xs admin-access-show" onclick="deleteUser('${user.username}')">Delete</button>
-              </td>`;
-
-          }
-        });
-    }
-  });
-}
 
 //addNewSupplier show a popup form and then make an api call to insert supplier data to the database table
 function addNewSupplier(page, suppliers) {

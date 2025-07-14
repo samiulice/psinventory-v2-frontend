@@ -208,7 +208,6 @@
             <div class="tabs">
               <button class="tab-btn active" data-tab="general">General</button>
               <button class="tab-btn" data-tab="additional-settings">Additional Settings</button>
-              <button class="tab-btn admin-access-show" data-tab="users">Users & Permissions</button>
               <button class="tab-btn admin-access-show" data-tab="data">Data Management</button>
               <!-- <button class="tab-btn" data-tab="system">System</button> -->
             </div>
@@ -372,30 +371,6 @@
             </div>
           </div>
 
-          <!-- Users & Permissions Tab -->
-          <div id="users-tab" class="tab-content admin-access-show">
-            <div class="settings-section">
-              <h2 class="text-center tale fa-2x">User Management</h2>
-              <button type="button" id="add-new-user" onclick="addNewUser()" class="pull-right btn btn-primary"><i
-                  class="fa fa-plus"></i>&nbsp;Add New
-                User</button>
-              <div class="clearfix"></div>
-              <table class="users-table">
-                <thead>
-                  <th style="text-align: left;">Full Name</th>
-                  <th style="text-align: left;">Mobile</th>
-                  <th style="text-align: left;">Email</th>
-                  <th style="text-align: left;">Username</th>
-                  <th style="text-align: left;">Role</th>
-                  <th style="text-align: left;">Status</th>
-                  <th style="text-align: left;">Actions</th>
-                </thead>
-                <tbody id="usersTableBody">
-                  <!-- update table body dynamically by using JS DOM -->
-                </tbody>
-              </table>
-            </div>
-          </div>
 
           <!-- Data Management Tab -->
           <div id="data-tab" class="tab-content admin-access-show">
@@ -1189,60 +1164,6 @@
           })
       })
     })
-  </script>
-
-  <!-- User management -->
-  <script>
-    let userList = [];
-    let editableUser = null;
-    //Fetch user list if user is an admin
-    if (window.appUser.role === "admin") {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        },
-      };
-      fetch(api + '/user/get/all', requestOptions)
-        .then(Response => Response.json())
-        .then(data => {
-          console.log('data fetched successfully: ', data)
-          if (!data.error) {
-            userList = data.users || []
-            if (userList.length === 0) {
-              const tbody = document.getElementById("usersTableBody");
-              tbody.innerHTML = `<tr><td colspan=4 class="text-danger" style="text-align:center">Empty User List</td></tr>`
-            } else {
-              userList.forEach((u, i) => addNewRow(u, i))
-            }
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching user list:', error);
-          alertError("Failed to fetch user list.");
-        });
-    }
-
-    //addNewRow adds a new row to the user table
-    function addNewRow(data, index) {
-      const tbody = document.getElementById("usersTableBody");
-      const rowIndex = tbody.children.length; // Get row index for unique naming
-      const newRow = document.createElement("tr");
-      newRow.innerHTML = `
-        <td>${data.name}</td>
-        <td>${data.mobile}</td>
-        <td>${data.email}</td>
-        <td>${data.username}</td>
-        <td>${toTitleCase(data.role)}</td>
-        <td>${data.status ? '<span class="label label-primary">Active</span>' : '<span class="label label-warning">Inactive</span>'}</td>
-        <td>
-          <button id="edit-btn-${index}" class="btn btn-primary btn-xs" onclick="updateUser(${index})"><i class='fa fa-edit'></i></button>
-          <button  id="delete-btn-${index}" class="btn btn-danger btn-xs" onclick="deleteUser('${index}')"><i class='fa fa-trash'></i></button>
-        </td>`;
-      tbody.appendChild(newRow);
-    }
   </script>
 
   <!-- data management -->

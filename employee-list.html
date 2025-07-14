@@ -318,7 +318,7 @@
                     setupRole = `<button id="access-btn-${meta.row}" class="btn btn-danger btn-xs" onclick="grantUserAccess(${meta.row})"><i class="fa fa-check"></i>&nbsp;Grant Access</button>`
                   } else{
                     setupRole = `
-                      <button id="remove-access-btn-${meta.row}" class="btn btn-dark btn-xs" onclick="RemoveUserAccess(${meta.row}, ${row.id})"><i class="fa fa-trash"></i>&nbsp;Remove Access</button>`
+                      <button id="remove-access-btn-${meta.row}" class="btn btn-dark btn-xs" onclick="removeUserAccess(${meta.row}, ${row.id})"><i class="fa fa-trash"></i>&nbsp;Remove Access</button>`
                   } 
                   return `
                     <button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="updateEmployeeDetails(${meta.row})"><i class="fa fa-edit"></i>&nbsp;View/Edit Details</button>
