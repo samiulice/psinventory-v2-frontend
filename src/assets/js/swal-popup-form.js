@@ -2097,7 +2097,7 @@ function updateEmployeeDetails(btnIndex) {
   });
 }
 
-function grantUserAccess(btnIndex, id, emp = {}) {
+function grantUserAccess(btnIndex, id) {
   Swal.fire({
     title: 'Grant Employee Access',
     width: 450,
@@ -2236,21 +2236,20 @@ function removeUserAccess(btnIndex, id) {
     preConfirm: async () => {
       // Return a Promise so Swal waits for the request
       try {
-        const response = await fetch(api + `/hr/employee/access?role=none&user=` + id, {
+        const response = await fetch(api + `/hr/employee/access?`, {
           method: 'PUT',
           headers: {
             'Accept': "application/json",
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
+          body: JSON.stringify({id, password:"", role:""})
         });
         const data = await response.json();
         if (data.error) {
           alertQuestion(data.message);
         } else {
-          let btn = document.getElementById('revoke-access-btn-' + btnIndex);
-          btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
-          btn.disabled = true;
+          alertSuccess(data.message)
           setTimeout(() => {
             location.reload();
           }, 2000);
