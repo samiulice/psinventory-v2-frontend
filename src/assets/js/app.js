@@ -30,52 +30,7 @@ function checkAuth() {
 // Initialize appUser with the authenticated user data
 checkAuth();
 
-function buildUserPage() {
-  document.getElementById("profile-name").innerHTML = appUser.username;
-  if (window.appUser.role == "operator") {
-    const options = new Set([
-      "supplier-list.html", "employee-list.html", "memo-list.html",
-      "transaction-posting.html", "investment.html",
-      "stock-report.html", "purchase-history.html", "sales-history.html",
-      "income-statement.html", "top-sheet.html",
-      "trial-balance.html", "balance-sheet.html"
-    ]);
 
-    const links = document.querySelectorAll("#sidebar-menu a[href]");
-
-    // Removing <li> elements based on options set
-    links.forEach(link => {
-      const href = link.getAttribute("href");
-
-      if (options.has(href)) {
-        link.parentElement.remove(); // Remove <li> that contains the link
-      }
-    });
-
-    // Check if the current page is "settings.html" and apply the overlay to tab-content inside page-content div
-    // if (window.location.href.includes("settings.html")) {
-    // Find the div with id="page-content"
-    const pageContent = document.getElementById("page-content");
-
-    if (pageContent) {
-      // Find all elements with the class "tab-content"
-      const adminAccess = pageContent.querySelectorAll(".admin-access");
-      adminAccess.forEach(elem => {
-        // Disable interaction with this div
-        elem.style.pointerEvents = "none";
-        elem.style.opacity = "0.9"; // Optional visual feedback (dim the page-content)
-      });
-      const adminAccessShow = pageContent.querySelectorAll(".admin-access-show");
-      adminAccessShow.forEach(elem => {
-        elem.remove();
-      });
-    }
-    // }
-  }
-
-
-}
-buildUserPage()
 /**
  * Converts a given string to title case format.
  * Title case format means the first letter of each word is capitalized.

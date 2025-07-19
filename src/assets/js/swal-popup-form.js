@@ -2236,12 +2236,12 @@ function removeUserAccess(btnIndex, id) {
     preConfirm: async () => {
       // Return a Promise so Swal waits for the request
       try {
-        const response = await fetch(api + `/hr/employee/access?`, {
+        const response = await fetch(api + '/hr/employee/access', {
           method: 'PUT',
           headers: {
-            'Accept': "application/json",
+            'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
           },
           body: JSON.stringify({id, password:"", role:""})
         });
