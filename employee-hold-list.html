@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- Meta, title, CSS, favicons, etc. -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>PSINVENTORY</title>
+
+  <!-- Bootstrap -->
+  <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="src/assets/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/fontawesome-free-6.6.0-web/css/all.min.css" rel="stylesheet">
+  <!-- NProgress -->
+  <link href="src/assets/vendors/nprogress/nprogress.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+  <!-- bootstrap-progressbar -->
+  <link href="src/assets/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+  <!-- JQVMap -->
+  <link href="src/assets/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet" />
+  <!-- bootstrap-daterangepicker -->
+  <link href="src/assets/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+  <!-- iCheck -->
+  <link href="src/assets/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+  <!-- Datatables -->
+  <link href="src/assets/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+  <link href="src/assets/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
+  <!-- Custom Theme Style -->
+  <link href="src/assets/css/custom.min.css" rel="stylesheet">
+  <!-- sweetalert2 style -->
+  <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
+
+  <style>
+    h2 {
+      overflow: hidden;
+    }
+
+    /* Force the table to fit within its container */
+    .datatable-buttons {
+      width: 100% !important;
+      table-layout: auto;
+      /* Fix column width to prevent overflow */
+    }
+
+    .datatable-buttons tbody tr:nth-child(even) {
+      background-color: #e1ebeb;
+      /* Light teal for even rows */
+    }
+
+    .datatable-buttons tbody tr:nth-child(odd) {
+      background-color: #ffffff;
+      /* White for odd rows */
+    }
+
+    .datatable-buttons th {
+      background-color: #056565;
+      /* Teal header */
+      color: white;
+      font-weight: 500;
+    }
+
+    .datatable-buttons th,
+    .datatable-buttons td {
+      white-space: nowrap;
+      /* Prevent text from wrapping */
+      /* overflow: hidden; */
+      text-overflow: ellipsis;
+      /* Ellipsis for overflowed text */
+    }
+
+    .checkbox-wrapper {
+      position: relative;
+      display: inline-block;
+      width: 18px;
+      height: 18px;
+    }
+
+    .checkbox-wrapper svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .checkbox-wrapper .background {
+      fill: #ccc;
+      transition: ease all 0.6s;
+    }
+
+    .checkbox-wrapper .stroke {
+      fill: none;
+      stroke: #fff;
+      stroke-miterlimit: 10;
+      stroke-width: 1.6px;
+      stroke-dashoffset: 100;
+      stroke-dasharray: 100;
+      transition: ease all 0.6s;
+    }
+
+    .checkbox-wrapper .check {
+      fill: none;
+      stroke: #fff;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 3px;
+      stroke-dashoffset: 22;
+      stroke-dasharray: 22;
+      transition: ease all 0.6s;
+    }
+
+    .checkbox-wrapper input[type=checkbox] {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      top: 0;
+      margin: 0;
+      opacity: 0;
+      appearance: none;
+    }
+
+    .checkbox-wrapper input[type=checkbox]:hover {
+      cursor: pointer;
+    }
+
+    .checkbox-wrapper input[type=checkbox]:checked+svg .background {
+      fill: #056565;
+    }
+
+    .checkbox-wrapper input[type=checkbox]:checked+svg .stroke,
+    .checkbox-wrapper input[type=checkbox]:checked+svg .check {
+      stroke-dashoffset: 0;
+    }
+
+    .vertical-middle-left {
+      vertical-align: middle !important;
+      text-align: left !important;
+    }
+
+    .status-badge {
+      padding: 3px 6px;
+      border-radius: 3px;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      color: white;
+    }
+
+    .Hold {
+      background-color: #1c484e;
+      /* info */
+    }
+
+    .Sold {
+      background-color: #0acc0a;
+      /* success */
+    }
+
+    .Unsold {
+      background-color: #f01c31;
+      /* danger */
+    }
+  </style>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="main_container">
+      <div class="col-md-3 left_col menu_fixed">
+        <div class="left_col scroll-view">
+          <div class="navbar nav_title" style="border: 0;">
+            <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
+          </div>
+
+          <div class="clearfix"></div>
+
+          <!-- menu profile quick info -->
+          <div class="profile clearfix">
+            <div class="profile_pic">
+              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+            </div>
+            <div class="profile_info">
+              <span>Welcome,</span>
+              <h2 id="profile-name"></h2>
+            </div>
+          </div>
+          <!-- /menu profile quick info -->
+
+          <br />
+          <!-- sidebar menu -->
+          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+            <!-- build by JS DOM -->
+          </div>
+          <!-- /sidebar menu -->
+
+          <!-- /menu footer buttons -->
+          <div class="sidebar-footer hidden-small">
+            <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
+              <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Relaunch" href="index.html">
+              <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Company Info" href="company-info.html">
+              <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+            </a>
+            <a data-toggle="tooltip" data-placement="top" title="Logout" onclick="terminateSession()">
+              <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+            </a>
+          </div>
+          <!-- /menu footer buttons -->
+        </div>
+      </div>
+
+
+
+      <!-- page content -->
+      <div id="page-content" class="right_col" role="main">
+        <!-- Content Title -->
+        <h2 class="text-center tale fa-2x">Product On Hold History</h2>
+        <table id="quotation-table" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th style="text-align: center;">Quotation No</th>
+              <th style="text-align: center;">Customer Name</th>
+              <th>Product Name</th>
+              <th>Serial Number</th>
+              <th>Warranty (Days)</th>
+              <th>Quantity</th>
+              <th>Rate</th>
+              <th>Discount</th>
+              <th>Status</th>
+              <th>Created At</th>
+              <th>Last Update</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="10" style="text-align: center;"><span>Loading <i class="fa fa-spin fa-spinner"></i></span>
+              </td>
+            </tr>
+            <!-- Dynamically generated -->
+          </tbody>
+        </table>
+
+      </div>
+      <!-- /page content -->
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap -->
+  <script src="src/assets/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- FastClick -->
+  <script src="src/assets/vendors/fastclick/lib/fastclick.js"></script>
+  <!-- NProgress -->
+  <script src="src/assets/vendors/nprogress/nprogress.js"></script>
+  <!-- Chart.js -->
+  <script src="src/assets/vendors/Chart.js/dist/Chart.min.js"></script>
+  <!-- gauge.js -->
+  <script src="src/assets/vendors/gauge.js/dist/gauge.min.js"></script>
+  <!-- bootstrap-progressbar -->
+  <script src="src/assets/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+  <!-- iCheck -->
+  <script src="src/assets/vendors/iCheck/icheck.min.js"></script>
+  <!-- Skycons -->
+  <script src="src/assets/vendors/skycons/skycons.js"></script>
+  <!-- DateJS -->
+  <script src="src/assets/vendors/DateJS/build/date.js"></script>
+  <!-- Validator JS  -->
+  <script src="src/assets/vendors/validator/validator.js"></script>
+  <!-- bootstrap-daterangepicker -->
+  <script src="src/assets/vendors/moment/min/moment.min.js"></script>
+
+  <!-- Custom Theme Scripts -->
+  <script src="src/assets/js/custom.js"></script>
+  <script src="src/assets/js/app.js"></script>
+  <script src="src/assets/js/build.js"></script>
+  <script src="src/assets/js/invoice.js"></script>
+  <script src="src/assets/js/swal-popup-form.js"></script>
+
+  <!-- sweetalert2 script -->
+  <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
+  <!-- fetching data from backend and populate frontend table -->
+  <script>
+    let reportData, company;
+
+    window.addEventListener("DOMContentLoaded", () => {
+      fetch(`${api}/inventory/products/hold`, {
+        method: 'GET',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          reportData = data.quotations || []
+          renderQuotationTable(data.quotations || []);
+        })
+        .catch(err => console.error('Error loading quotations:', err));
+
+    })
+    function renderQuotationTable(quotations) {
+      const tbody = document.querySelector('#quotation-table tbody');
+      tbody.innerHTML = ''; // clear previous rows
+
+      quotations.forEach(quotation => {
+        const { memo_no, status, associated_name, created_at, updated_at, details } = quotation;
+        const rowspan = details.length;
+
+        details.forEach((detail, index) => {
+          const row = document.createElement('tr');
+
+          // Only insert memo_no and associated_name on the first row with rowspan
+          if (index === 0) {
+            const memoCell = document.createElement('td');
+            memoCell.setAttribute('rowspan', rowspan);
+            memoCell.innerHTML = `<button class="btn btn-xs btn-primary" onclick="viewQuotationByMemo('${memo_no}', '${status}')">${memo_no}</button>`;
+            row.appendChild(memoCell);
+
+
+            const customerCell = document.createElement('td');
+            customerCell.setAttribute('rowspan', rowspan);
+            customerCell.textContent = associated_name;
+            row.appendChild(customerCell);
+          }
+
+          // Product detail cells
+          row.innerHTML += `
+            <td class="text-primary">${detail.product_name}</td>
+            <td>${detail.serial_number}</td>
+            <td>${detail.product_warranty}</td>
+            <td>${detail.quantity}</td>
+            <td>${detail.rate}</td>
+            <td>${detail.item_discount}</td>
+            <td><span class="status-badge ${detail.status}">${detail.status}</span></td>
+            <td>${moment(detail.created_at).format('DD-MMM-YYYY')}</td>
+            <td>${moment(detail.updated_at).format('DD-MMM-YYYY')}</td>
+          `;
+
+          tbody.appendChild(row);
+        });
+      });
+    }
+
+    function viewQuotationByMemo(memoNo, status) {
+      const quotation = reportData.find(q => q.memo_no === memoNo);
+
+      if (!quotation) {
+        Swal.fire("Not Found", "Quotation not found in loaded data.", "error");
+        return;
+      }
+
+      if (!quotation.details || quotation.details.length === 0) {
+        Swal.fire("Empty", "This quotation has no product items.", "info");
+        return;
+      }
+
+      let html = `
+        <div style="text-align: left;">
+          <p><strong>Quotation No:</strong> ${quotation.memo_no}</p>
+          <p><strong>Customer:</strong> ${quotation.associated_name}</p>
+          <div style="max-height: 300px; overflow-y: auto;">
+            <table class="table table-bordered table-sm" style="width:100%; font-size: 13px;">
+              <thead class="thead-dark">
+                <tr>
+                  <th>Product Name</th>
+                  <th>Quantity</th>
+                  <th>Rate</th>
+                  <th>Discount</th>
+                </tr>
+              </thead>
+              <tbody>`;
+
+      quotation.details.forEach(item => {
+        html += `
+          <tr>
+            <td>${item.product_name}</td>
+            <td>${item.quantity}</td>
+            <td>${item.rate}</td>
+            <td>${item.item_discount}</td>
+          </tr>`;
+      });
+
+      html += `
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+
+      Swal.fire({
+        title: 'Select Quotation Items',
+        html: html,
+        width: '700px',
+        showCancelButton: true,
+        showConfirmButton: status == 'Hold',
+        confirmButtonText: 'Confirm',
+        cancelButtonText: 'Cancel',
+      }).then(result => {
+        if (result.isConfirmed) {
+          localStorage.setItem(quotation.memo_no,JSON.stringify(quotation));
+          const data = { associated_id: quotation.associated_id, memo: quotation.memo_no };
+          const queryString = new URLSearchParams(data).toString();
+          window.location.href = "sale.html?" + queryString;
+        }
+      });
+    }
+  </script>
+
+
+</body>
+
+</html>

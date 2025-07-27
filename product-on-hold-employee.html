@@ -194,6 +194,19 @@
 </head>
 
 <body class="nav-md">
+  <!-- Fullscreen Preloader Overlay -->
+  <div id="preloader-overlay">
+    <div class="preloader">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -252,27 +265,16 @@
           <div class="x_panel">
             <div class="x_content">
               <div class="row">
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                  <div class="row">
-                    <!-- Date -->
-                    <div class="form-group has-feedback">
-                      <label for="sale_date">Date * :</label>
-                      <input type="text" class="form-control has-feedback-left input-sm" id="sale_date"
-                        placeholder="Select date" required>
-                      <i style="color: rgba(0, 0, 0, 1);"
-                        class="fa fa-calendar form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
-                    </div>
-                    <!-- Note -->
-                    <div class="form-group has-feedback">
-                      <label for="note">Note :</label>
-                      <input type="text" class="form-control has-feedback-left input-sm" id="note" placeholder="Note">
-                      <i style="color: rgba(0, 0, 0, 1);"
-                        class="fa fa-comment form-control-feedback left input-sm-feedback" aria-hidden="true">
-                      </i>
-                    </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+
+                  <!-- Date -->
+                  <div class="form-group has-feedback">
+                    <label for="sale_date">Date * :</label>
+                    <input type="text" class="form-control has-feedback-left input-sm" id="sale_date"
+                      placeholder="Select date" required>
+                    <i style="color: rgba(0, 0, 0, 1);"
+                      class="fa fa-calendar form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
                   </div>
-                </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
                   <!-- Employee Account -->
                   <div class="form-group has-feedback">
                     <div class="row">
@@ -294,17 +296,8 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="form-group has-feedback">
-                    <label for="due_amount">Due Amount * :</label>
-                    <input type="number" min="0" class="form-control has-feedback-left input-sm" id="due_amount"
-                      placeholder="Due Amount" readonly>
-                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-money form-control-feedback left input-sm-feedback"
-                      aria-hidden="true">
-                    </i>
-                  </div>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                   <div class="form-group has-feedback">
                     <!-- Bill Amount -->
                     <label for="bill_amount">Bill Amount * :</label>
@@ -314,6 +307,8 @@
                       aria-hidden="true">
                     </i>
                   </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
                   <!-- Discount -->
                   <div class="form-group has-feedback">
                     <label for="discount">Discount :</label>
@@ -328,21 +323,12 @@
                     </span>
                   </div>
                 </div>
-                <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-4 col-sm-6 col-xs-12">
                   <!-- Total amount -->
                   <div class="form-group has-feedback">
                     <label for="total_amount">Total Amount * :</label>
                     <input type="number" min="0" class="form-control has-feedback-left input-sm" id="total_amount"
                       placeholder="Total Amount">
-                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-money form-control-feedback left input-sm-feedback"
-                      aria-hidden="true">
-                    </i>
-                  </div>
-                  <!-- Paid amount -->
-                  <div class="form-group has-feedback">
-                    <label for="advance_payment">Advance Payment * :</label>
-                    <input type="number" min="0" max="0" class="form-control has-feedback-left input-sm"
-                      id="advance_payment" placeholder="Paid Amount" required>
                     <i style="color: rgba(0, 0, 0, 1);" class="fa fa-money form-control-feedback left input-sm-feedback"
                       aria-hidden="true">
                     </i>
@@ -375,11 +361,10 @@
             </div>
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="pull-right" style="margin-right: 20px;">
-                <button type="button" id="submitBtn" onclick="submitForm()" class="btn btn-danger btn-sm">Confirm</button>
+                <button type="button" id="submitBtn" onclick="submitForm()" class="btn btn-danger btn-sm">Save
+                  Quotation</button>
                 <button type="button" id="printInvoiceBtn" class="d-none btn btn-dark btn-sm"
-                  onclick="printSaleInvoice()"><i class="fa-solid fa-print"></i>&nbsp;&nbsp;Invoice</button>
-                <button type="button" id="printChallanBtn" class="d-none btn btn-dark btn-sm"
-                  onclick="printSaleChallan()"><i class="fa-solid fa-print"></i>&nbsp;&nbsp;Challan</button>
+                  onclick="printEmployeeQuotation()"><i class="fa-solid fa-print"></i>&nbsp;&nbsp;Print Quotation</button>
               </div>
             </div>
           </div>
@@ -429,12 +414,9 @@
       <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
       <script>
-        let selectedEmployee = null, selectedProductItem = null, selectedProductIndex = null, products = [], SerialNumbers = [], employees = [], categories = [], brands = [], sold_product = [], sale_details = [], note = "", InvoiceData, company;
+        let selectedEmployee = null, selectedProductItem = null, selectedProductIndex = null, products = [], SerialNumbers = [], employees = [], sold_product = [], sale_details = [], note = "", InvoiceData, company;
         window.addEventListener("DOMContentLoaded", event => {
           initSingleDatePicker("#sale_date");
-
-          // DEBUG 
-          // document.getElementById("printInvoiceBtn").classList.remove('d-none')
 
           document.getElementById("createEmployeeBtn").addEventListener("click", e => {
             addNewEmployee("sale", employees);
@@ -453,19 +435,10 @@
             .then(response => response.json())
             .then(function (responseData) {
               employees = responseData.employees || [];
-              company = responseData.company;
+              company = window.company;
             })
             .catch(function (error) {
               console.error('Error fetching employees data:', error);
-            });
-
-          const fetchCategories = fetch(api + '/inventory/category/list/active', requestOptions)
-            .then(response => response.json())
-            .then(function (responseData) {
-              categories = responseData.categories || [];
-            })
-            .catch(function (error) {
-              console.error('Error fetching categories data:', error);
             });
 
           const fetchProducts = fetch(api + '/inventory/products/available', requestOptions)
@@ -478,17 +451,8 @@
               console.error('Error fetching products data:', error);
             });
 
-          const fetchBrands = fetch(api + '/inventory/brand/list/active', requestOptions)
-            .then(response => response.json())
-            .then(function (responseData) {
-              brands = responseData.brands || [];
-            })
-            .catch(function (error) {
-              console.error('Error fetching brands data:', error);
-            });
-
           // Wait for all fetch calls to complete
-          Promise.all([fetchEmployees, fetchCategories, fetchProducts, fetchBrands])
+          Promise.all([fetchEmployees, fetchProducts])
             .then(() => {
               console.log("All fetch requests completed.");
               updateEmployeeDiv()
@@ -496,6 +460,8 @@
             })
             .catch(error => {
               console.error("Error completing all fetch requests:", error);
+            }).finally(e => {
+              hidePreloader()
             });
         });
 
@@ -564,20 +530,6 @@
           });
         }
 
-        //updateAccountsDiv updates account selection options with the fetched data 
-        function updateAccountsDiv() {
-          const account = document.getElementById("head_account")
-          account.innerHTML = '';
-
-          if (headAccounts) {
-            headAccounts.forEach((ac, i) => {
-              account.innerHTML += `<option value=${i}>${ac.account_name}</option>`;
-            });
-            account.selectedIndex = 0
-          } else {
-            account.innerHTML = `<option value="" selected disabled>No Account Available</option>`;
-          }
-        }
 
         function updateProductsDiv() {
           const container = document.getElementById('product-autocomplete-container');
@@ -755,19 +707,6 @@
                 }
               });
 
-              // // Auto-jump when reaching barcode length (adjust 13 to your barcode length)
-              // serialInput.addEventListener('input', function (e) {
-              //   if (this.value.length === 13) { // Change 13 to your barcode length
-              //     const allSerials = serialNumbersContainer.querySelectorAll('input[type="text"]');
-              //     const currentIndex = Array.from(allSerials).indexOf(this);
-
-              //     if (currentIndex < allSerials.length - 1) {
-              //       allSerials[currentIndex + 1].focus();
-              //     } else {
-              //       row.querySelector('input[name="rate[]"]').focus();
-              //     }
-              //   }
-              // });
               // ========== Focus Management End ==========
 
               // Remove button setup
@@ -840,8 +779,6 @@
           discountAmount = parseFloat(document.getElementById("discount").value) || 0;
           totalAmount = Math.round(billAmount - billAmount * discountAmount / 100);
           document.getElementById("total_amount").value = totalAmount;
-          document.getElementById("advance_payment").max = totalAmount;
-          document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("advance_payment").value) || 0;
         }
 
         //updating total amount on change discount input
@@ -851,17 +788,9 @@
         //updating discount on change total_amount input
         document.getElementById("total_amount").addEventListener("change", e => {
           let totalAmount = parseInt(document.getElementById("total_amount").value) || 0;
-          document.getElementById("advance_payment").max = totalAmount
-          document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("advance_payment").value) || 0;
           let billAmount = parseInt(document.getElementById("bill_amount").value) || 0;
           document.getElementById("discount").value = parseFloat((billAmount - totalAmount) * 100 / billAmount).toFixed(2);
 
-        })
-        //updating due amount on change advance_payment input
-        document.getElementById("advance_payment").addEventListener("change", e => {
-          let totalAmount = parseInt(document.getElementById("total_amount").value) || 0
-          let paidAmount = parseInt(document.getElementById("advance_payment").value) || 0
-          document.getElementById("due_amount").value = totalAmount - paidAmount;
         })
 
         // Function to remove a row
@@ -939,30 +868,30 @@
           document.getElementById("submitBtn").disabled = true;
           const tableData = getTableData();
 
+          if (!tableData || tableData.length == 0) {
+            document.getElementById("submitBtn").innerHTML = 'Save Quotation';
+            document.getElementById("submitBtn").disabled = false;
+            alertQuestion("Please select at least one item");
+            return;
+          }
           //calculate total purchase cost of the selected product
-          let totalPurchaseCost = 0
-          let description = ''
+          let totalPurchaseCost = 0;
+          let description = '';
           tableData.forEach((productItem, i) => {
             totalPurchaseCost += productItem.quantity * (productItem.item.purchase_cost - productItem.item.purchase_discount) / productItem.item.quantity_purchased;
             if (i > 0) {
-              description += "|||"
+              description += "|||";
             }
-            description += 'SALE: ' + productItem.item.product_name + ' - ' + productItem.quantity + ' @ ' + (productItem.rate * (1 - parseFloat(document.getElementById("discount").value) / 100.0)).toFixed(0)
+            description += 'ON-HOLD: ' + productItem.item.product_name + ' - ' + productItem.quantity + ' @ ' + (productItem.rate * (1 - parseFloat(document.getElementById("discount").value) / 100.0)).toFixed(0)
           })
-
           const reqBody = {
             sale_date: document.getElementById("sale_date").value,
-            employee: selectedEmployee,
-            head_account: headAccounts[parseInt(document.getElementById("head_account").value)],
-            memo_no: document.getElementById("memo_no").value,
-            challan_no: document.getElementById("challan_no").value,
+            customer: selectedEmployee,
             note: description,
             bill_amount: parseInt(document.getElementById("bill_amount").value),
             discount: parseFloat(document.getElementById("discount").value),
             total_amount: parseInt(document.getElementById("total_amount").value),
-            advance_payment: parseInt(document.getElementById("advance_payment").value),
             gross_profit: parseInt(document.getElementById("total_amount").value - totalPurchaseCost),
-            due_amount: parseInt(document.getElementById("due_amount").value),
             sold_products: tableData
           }
           console.log("Request Body: ", reqBody); // Log table data to console
@@ -975,23 +904,21 @@
             },
             body: JSON.stringify(reqBody),
           }
-          fetch(api + '/inventory/products/sale', requestOptions)
+          fetch(api + '/inventory/products/hold', requestOptions)
             .then(response => response.json())
             .then(data => {
               console.log("Response: ", data)
               if (data.error === true) {
                 showErrorMessage(data.message)
                 //disable submit btn
-                document.getElementById("submitBtn").innerHTML = 'Complete Sale"';
+                document.getElementById("submitBtn").innerHTML = 'Save Quotation"';
                 document.getElementById("submitBtn").disabled = false;
               } else {
                 showSuccessMessage(data.message);
-                InvoiceData = data.sales_invoice_data
-                company = data.company_profile
+                InvoiceData = data.invoice_data
                 setTimeout(() => {
                   document.getElementById("submitBtn").classList.add('d-none')
                   document.getElementById("printInvoiceBtn").classList.remove('d-none')
-                  document.getElementById("printChallanBtn").classList.remove('d-none')
                 }, 1000);
 
               }

@@ -190,6 +190,19 @@
 </head>
 
 <body class="nav-md">
+  <!-- Fullscreen Preloader Overlay -->
+  <div id="preloader-overlay">
+    <div class="preloader">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -470,7 +483,7 @@
       <!-- Custom Theme Scripts -->
       <script src="src/assets/js/custom.js"></script>
       <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/build.js"></script>
+      <script src="src/assets/js/build.js"></script>
       <script src="src/assets/js/swal-popup-form.js"></script>
       <script src="src/assets/js/invoice.js"></script>
 
@@ -558,7 +571,10 @@
             })
             .catch(error => {
               console.error("Error completing all fetch requests:", error);
-            });
+            })
+            .finally(event=>{
+              hidePreloader()
+            })
         });
         //show popup form for adding new product category
         document.getElementById("createCategoryBtn").addEventListener("click", e => {

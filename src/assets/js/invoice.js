@@ -2213,6 +2213,10 @@ function printSaleInvoice() {
                                   <div class="detail-label">Note</div>
                                   <div class="detail-value">: ${!InvoiceData.Note || InvoiceData.Note === "" ? "" : `<b> (${InvoiceData.Note})</b>`}</div>
                               </div>
+                              <div class="detail-row">
+                                  <div class="detail-label">Ref:</div>
+                                  <div class="detail-value">: <b>${refNo}</b></div>
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -2800,6 +2804,1052 @@ function printSaleReturnInvoice() {
                     <div class="member-logos">
                       ${members_of === "" ? "" : `<span>Member of:</span>${members_of}`}
                     </div>
+                      <div class="print-info">
+                          <div class="print-date">
+                              Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </body>
+        </html>
+        `
+
+    // Write content to the new window
+    newWindow.document.write(content);
+    newWindow.document.close();
+    // Add a slight delay before printing to ensure content is fully loaded
+    setTimeout(() => {
+        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
+        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
+        if (!invoiceContentDiv || !invoiceFooterDiv) return;
+
+        const rect1 = invoiceContentDiv.getBoundingClientRect();
+        const rect2 = invoiceFooterDiv.getBoundingClientRect();
+
+        // Check if elements overlap
+        const noOverlap =
+            rect1.right < rect2.left ||
+            rect1.left > rect2.right ||
+            rect1.bottom < rect2.top ||
+            rect1.top > rect2.bottom;
+
+        if (!noOverlap) {
+            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
+            invoiceFooterDiv.classList.add('invoice-footer-scroll');
+        }
+        newWindow.print();
+    }, 500);
+
+}
+
+
+function printQuotation() {
+    const newWindow = window.open("", "_blank");
+    // //product list table
+    let tBody = ""
+    let company_info = ""
+    let name = company.name.split(":::").filter(p => p.trim() !== "")
+    const companyFName = name[0]
+    const companyLName = name[1] || ""
+    let pLn = InvoiceData.sold_products.length
+    for (let i = 0; i < pLn; i++) {
+        const items = InvoiceData.sold_products[i]
+        tBody += `
+            <tr class="item-row">
+              <td>${i + 1}</td>
+              <td class="item-name">
+                ${items.item.product_name} <br>
+              </td>
+              <td class="item-warranty text-center">${items.warranty}</td>
+              <td class="item-quantity text-center">${items.quantity}</td>
+              <td class="item-price text-right">${items.rate}</td>
+              <td class="item-total text-right">${items.quantity * items.rate}</td>
+            </tr>
+          `
+    }
+
+    tBody += `
+          <tr class="item-row">
+            <td rowspan="4" colspan="4" style="border: none; text-align:left; font-weight:bold">
+              Amount Chargeable (In Words): 
+              <span style="padding:5px; font-weight:normal; text-transform: capitalize;" id="total-amount-in-words">
+                ${company.currency === "Taka" ? numberToWordsBDT(InvoiceData.total_amount) : numberToWords(InvoiceData.total_amount) + " " + company.currency} Only.
+              </span>
+            </td>
+            <td class="text-right item-total">Subtotal</td>
+            <td id="subtotal" class="text-right item-total">${InvoiceData.bill_amount}</td>
+          </tr>
+          <!-- <tr class="item-row">
+              <td id="tax-percentage" class="text-right item-total">Tax(%)</td>
+              <td id="tax-total" class="text-right item-total">10</td>
+          </tr> -->
+          <tr class="item-row">
+              <td id="discount-percentage" class="text-right item-total">Discount(${InvoiceData.discount}%)</td>
+              <td id="discount-total" class="text-right item-total">${InvoiceData.total_amount - InvoiceData.bill_amount}</td>
+          </tr>
+          <tr class="item-row">
+              <td class="text-right total">Total</td>
+              <td id="total" class="text-right total">${InvoiceData.total_amount}</td>
+          </tr>
+        `
+    const content = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Invoice</title>
+            <style>
+                :root {
+                    --primary-color: #6ab023;
+                    --black-color: #000000;
+                    --dark-color: #282b30;
+                    --light-gray: #f2f2f2;
+                    --border-color: #bfbebe;
+                    --white-color: #ffffff;
+                }
+
+                body {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: normal;
+                    margin: 0;
+                    padding: 10px;
+                    color: var(--black-color);
+                    font-size: 11px;
+                    line-height: 1.3;
+                }
+
+                .container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 5px;
+                }
+
+                .logo-section {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .logo {
+                    width: 48px;
+                    height: 42px;
+                    margin-right: 0px;
+                }
+
+                .logo img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                    background-color: var(--white-color);
+                }
+
+                .company-name {
+                    color: var(--primary-color);
+                    font-weight: bold;
+                    font-size: 26px;
+                    line-height: 0.8;
+                    padding-left: 2px;
+                    text-transform: uppercase;
+                }
+
+                .enterprise {
+                    color: var(--black-color);
+                    font-size: 20px;
+                    letter-spacing: 1.5px;
+                }
+
+                .company-address {
+                    font-size: 9px;
+                    max-width: 400px;
+                    margin-top: 4px;
+                    line-height: 1.2;
+                    font-weight: bold;
+                }
+
+                .contact-info {
+                    text-align: right;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-weight: 500;
+                }
+
+                .contact-info a {
+                    color: var(--primary-color);
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+
+                .invoice-title {
+                    background-color: white;
+                    color: var(--dark-color);
+                    text-align: center;
+                    padding: 3px;
+                    margin: 5px auto;
+                    width: 90px;
+                    font-size: 12px;
+                    font-weight: bold;
+                    border: 1px solid var(--black-color);
+                    border-radius: 2px;
+                    box-shadow: 1px 1px 0px 1px var(--black-color);
+                }
+
+                .dotted-line {
+                    border-top: 1px dotted #999;
+                    margin: 5px 0;
+                }
+
+                .details {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                }
+
+                .left-details {
+                    width: 60%;
+                }
+
+                .right-details {
+                    width: 35%;
+                }
+
+                .detail-row {
+                    display: flex;
+                    margin-bottom: 2px;
+                }
+
+                .detail-label {
+                    width: 80px;
+                    font-weight: bold;
+                    font-size: 11px;
+                }
+
+                .detail-value {
+                    flex: 1;
+                    font-size: 11px;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th {
+                    background-color: var(--light-gray);
+                    color: var(--black-color);
+                    text-transform: capitalize;
+                    font-weight: bolder;
+                    text-align: center;
+                    padding: 5px 5px;
+                    font-size: 10px;
+                    border: 1px solid var(--dark-color);
+                }
+
+                td {
+                    padding: 1px 5px;
+                    font-size: 10px;
+                    color: var(--black-color);
+                    font-weight: 500;
+                    border: 1px solid var(--dark-color);
+                    border-top: none;
+                }
+
+                .item-row .item-name {
+                    font-size: 10px;
+                    font-weight: 600;
+                    color: var(--black-color);
+                    max-width: 45% !important;
+                }
+
+                .item-row .item-name small {
+                  font-size: 9px;
+                  font-weight: 400;
+                  color: var(--black-color);
+                  white-space: normal;
+                  word-break: break-word;
+                  overflow-wrap: anywhere;
+              }
+
+                .empty-row td {
+                    padding: 4px 8px;
+                    border-bottom: 1px solid var(--border-color);
+                }
+
+                .item-total {
+                    padding: 3px 5px;
+                }
+
+                .total {
+                    background-color: var(--light-gray);
+                    font-weight: bold;
+                    padding: 3px 5px;
+                }
+
+                .text-right {
+                    text-align: right;
+                }
+
+                .text-center {
+                    text-align: center;
+                }
+
+                /* Payment info section */
+                .payment-section {
+                    font-size: 9px;
+                    margin: 10px 0;
+                }
+
+                .payment-section h4 {
+                    margin-bottom: 3px;
+                    margin-top: 0;
+                    font-size: 10px;
+                    text-decoration: underline;
+                }
+
+                .payment-section .detail-label,
+                .payment-section .detail-value {
+                    font-size: 9px;
+                }
+
+                .terms {
+                    font-size: 9px;
+                    margin: 10px 0;
+                }
+
+                .terms h4 {
+                    margin-bottom: 3px;
+                    margin-top: 0;
+                    font-size: 10px;
+                    text-decoration: underline;
+                }
+
+                .terms ul {
+                    margin: 0;
+                    padding-left: 15px;
+                    line-height: 1.2;
+                }
+
+                .terms ul ul {
+                    padding-left: 10px;
+                }
+
+                .terms li {
+                    margin-bottom: 1px;
+                }
+
+
+                .invoice-footer-fixed {
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translate(-50%);
+                    width: 100%;
+                    max-width: 800px;
+                    padding: 10px;
+                    box-sizing: border-box;
+                    background: #fff;
+                    break-inside: avoid;
+                }
+
+                .invoice-footer-scroll {
+                    width: 100%;
+                    max-width: 800px;
+                    padding: 40px;
+                    box-sizing: border-box;
+                    background: #fff;
+                    break-inside: avoid;
+                }
+
+                .signature-section {
+                    display: flex;
+                    justify-content: space-around;
+                    padding-bottom: 8px;
+                    margin-bottom: 8px;
+                }
+
+                .signature-box {
+                    width: 180px;
+                    text-align: center;
+                    border-top: 1px solid #000;
+                    padding-top: 3px;
+                    font-size: 10px;
+                }
+
+                .remark {
+                    font-size: 8px;
+                    margin-top: 2px;
+                }
+
+                .invoice-footer-info {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 9px;
+                }
+
+                .member-logos {
+                    display: flex;
+                    align-items: center;
+                    font-weight:bold;
+                    gap: 6px;
+                }
+
+                .member-logos img {
+                    height: 40px;
+                }
+
+                .print-info {
+                    text-align: right;
+                    font-weight: 500;
+                }
+
+                .footer-remark{
+                    font-size: 8px;
+                    text-align:center;
+                    color: rgb(0, 94, 255);
+                }
+
+                .watermark-container {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 0;
+                    pointer-events: none;
+                    /* Allow clicks through the watermark */
+                }
+
+                .watermark {
+                    opacity: 0.1;
+                    width: 400px;
+                    /* adjust as needed */
+                    height: auto;
+                }
+            </style>
+        </head>
+
+        <body>
+          
+          ${company.watermark === "" ? "" :
+            `<div class="watermark-container">
+              <img src="${company.watermark}" alt="Watermark" class="watermark">
+            </div>`
+        }
+            <div class="container">
+              <div id="invoice-content">
+                  <div class="header">
+                      <div>
+                          <div class="logo-section">
+                            ${company.logo_link === "" ? "" :
+            `<div class="logo">
+                                  <img src="${company.logo_link}" alt="">
+                              </div>`}
+                              <div>
+                                  <div class="company-name">
+                                    ${companyFName}
+                                    ${companyLName === "" ? "" : `<br>
+                                    <span class="enterprise">${companyLName}</span>`}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="company-address">
+                              ${company.area} <br>
+                             ${company.mobile === "" ? "" : ' Hotline: ' + company.mobile}
+                          </div>
+                      </div>
+                      <div class="contact-info">
+                          ${company.website === "" ? "" : `<a href="${company.website}">${company.website}</a>`} <br>
+                          ${company.email === "" ? "" : `<a href="mailto:${company.email}">${company.email}</a>`}
+                      </div>
+                  </div>
+
+                  <div class="dotted-line"></div>
+                  <div class="invoice-title">Quotation</div>
+
+                  <div class="details">
+                      <div class="left-details">
+                          <div class="detail-row">
+                              <div class="detail-label">Quotation To</div>
+                              <div class="detail-value">: ${InvoiceData.customer.account_name.toUpperCase()}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Address</div>
+                              <div class="detail-value">: ${InvoiceData.customer.area === "" ? "-" : InvoiceData.customer.area}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Mobile</div>
+                              <div class="detail-value">: ${InvoiceData.customer.mobile}</div>
+                          </div>
+                      </div>
+                      <div class="right-details">
+                          <div class="detail-row">
+                              <div class="detail-label">Quotation No.</div>
+                              <div class="detail-value">: ${InvoiceData.memo_no}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Date & Time</div>
+                              <div class="detail-value">: ${moment(InvoiceData.sale_date).format("DD-MMMM-YYYY")}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Prepared By</div>
+                              <div class="detail-value">: ${window.appUser.username}</div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <table id="invoice-items">
+                      <thead>
+                          <tr>
+                              <th style="width: 5%;">No</th>
+                              <th style="width: 45%;max-width: 45%;">Item Description</th>
+                              <th style="width: 12%;">Warranty</th>
+                              <th style="width: 10%;">Qty</th>
+                              <th style="width: 13%;">Price</th>
+                              <th style="width: 15%;">Total</th>
+                          </tr>
+                      </thead>
+                      <tbody id="product-items">
+                          <!-- will be updated by JS -->
+                          ${tBody}
+                      </tbody>
+                  </table>
+              </div>
+
+              <div class="invoice-footer-fixed" id="invoice-footer">
+                  <div class="dotted-line"></div>
+                  <div class="invoice-footer-info">
+                      <div class="print-info">
+                          <div class="print-date">
+                              Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+            </div>
+        </body>
+        </html>
+        `
+
+    // Write content to the new window
+    newWindow.document.write(content);
+    newWindow.document.close();
+    // Add a slight delay before printing to ensure content is fully loaded
+    setTimeout(() => {
+        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
+        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
+        if (!invoiceContentDiv || !invoiceFooterDiv) return;
+
+        const rect1 = invoiceContentDiv.getBoundingClientRect();
+        const rect2 = invoiceFooterDiv.getBoundingClientRect();
+
+        // Check if elements overlap
+        const noOverlap =
+            rect1.right < rect2.left ||
+            rect1.left > rect2.right ||
+            rect1.bottom < rect2.top ||
+            rect1.top > rect2.bottom;
+
+        if (!noOverlap) {
+            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
+            invoiceFooterDiv.classList.add('invoice-footer-scroll');
+        }
+        newWindow.print();
+    }, 500);
+
+}
+
+function printEmployeeQuotation() {
+    const newWindow = window.open("", "_blank");
+    // //product list table
+    let tBody = ""
+    let name = window.company.name.split(":::").filter(p => p.trim() !== "")
+    const companyFName = name[0]
+    const companyLName = name[1] || ""
+    let pLn = InvoiceData.sold_products.length
+    for (let i = 0; i < pLn; i++) {
+        const items = InvoiceData.sold_products[i]
+        let serialNumbers = ""
+
+        items.serial_numbers.forEach((sn) => {
+            if (sn !== 'unmarked') {
+                serialNumbers += `S/N:&nbsp;&nbsp;${sn}    `
+            }
+        })
+        tBody += `
+            <tr class="item-row">
+              <td>${i + 1}</td>
+              <td class="item-name">
+                ${items.item.product_name} <br>
+                <small> ${serialNumbers} </small>
+              </td>
+              <td class="item-warranty text-center">${items.warranty}</td>
+              <td class="item-quantity text-center">${items.quantity}</td>
+              <td class="item-price text-right">${items.rate}</td>
+              <td class="item-total text-right">${items.quantity * items.rate}</td>
+            </tr>
+          `
+    }
+
+    tBody += `
+          <tr class="item-row">
+            <td rowspan="4" colspan="4" style="border: none; text-align:left; font-weight:bold">
+              Amount Chargeable (In Words): 
+              <span style="padding:5px; font-weight:normal; text-transform: capitalize;" id="total-amount-in-words">
+                ${company.currency === "Taka" ? numberToWordsBDT(InvoiceData.total_amount) : numberToWords(InvoiceData.total_amount) + " " + company.currency} Only.
+              </span>
+            </td>
+            <td class="text-right item-total">Subtotal</td>
+            <td id="subtotal" class="text-right item-total">${InvoiceData.bill_amount}</td>
+          </tr>
+          <!-- <tr class="item-row">
+              <td id="tax-percentage" class="text-right item-total">Tax(%)</td>
+              <td id="tax-total" class="text-right item-total">10</td>
+          </tr> -->
+          <tr class="item-row">
+              <td id="discount-percentage" class="text-right item-total">Discount(${InvoiceData.discount}%)</td>
+              <td id="discount-total" class="text-right item-total">${InvoiceData.total_amount - InvoiceData.bill_amount}</td>
+          </tr>
+          <tr class="item-row">
+              <td class="text-right total">Total</td>
+              <td id="total" class="text-right total">${InvoiceData.total_amount}</td>
+          </tr>
+        `
+    const content = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Invoice</title>
+            <style>
+                :root {
+                    --primary-color: #6ab023;
+                    --black-color: #000000;
+                    --dark-color: #282b30;
+                    --light-gray: #f2f2f2;
+                    --border-color: #bfbebe;
+                    --white-color: #ffffff;
+                }
+
+                body {
+                    font-family: Arial, Helvetica, sans-serif;
+                    font-weight: normal;
+                    margin: 0;
+                    padding: 10px;
+                    color: var(--black-color);
+                    font-size: 11px;
+                    line-height: 1.3;
+                }
+
+                .container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                }
+
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 5px;
+                }
+
+                .logo-section {
+                    display: flex;
+                    align-items: center;
+                }
+
+                .logo {
+                    width: 48px;
+                    height: 42px;
+                    margin-right: 0px;
+                }
+
+                .logo img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                    background-color: var(--white-color);
+                }
+
+                .company-name {
+                    color: var(--primary-color);
+                    font-weight: bold;
+                    font-size: 26px;
+                    line-height: 0.8;
+                    padding-left: 2px;
+                    text-transform: uppercase;
+                }
+
+                .enterprise {
+                    color: var(--black-color);
+                    font-size: 20px;
+                    letter-spacing: 1.5px;
+                }
+
+                .company-address {
+                    font-size: 9px;
+                    max-width: 400px;
+                    margin-top: 4px;
+                    line-height: 1.2;
+                    font-weight: bold;
+                }
+
+                .contact-info {
+                    text-align: right;
+                    font-size: 10px;
+                    font-weight: bold;
+                    font-weight: 500;
+                }
+
+                .contact-info a {
+                    color: var(--primary-color);
+                    text-decoration: none;
+                    font-weight: bold;
+                }
+
+                .invoice-title {
+                    background-color: white;
+                    color: var(--dark-color);
+                    text-align: center;
+                    padding: 3px;
+                    margin: 5px auto;
+                    width: 90px;
+                    font-size: 12px;
+                    font-weight: bold;
+                    border: 1px solid var(--black-color);
+                    border-radius: 2px;
+                    box-shadow: 1px 1px 0px 1px var(--black-color);
+                }
+
+                .dotted-line {
+                    border-top: 1px dotted #999;
+                    margin: 5px 0;
+                }
+
+                .details {
+                    display: flex;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                }
+
+                .left-details {
+                    width: 60%;
+                }
+
+                .right-details {
+                    width: 35%;
+                }
+
+                .detail-row {
+                    display: flex;
+                    margin-bottom: 2px;
+                }
+
+                .detail-label {
+                    width: 80px;
+                    font-weight: bold;
+                    font-size: 11px;
+                }
+
+                .detail-value {
+                    flex: 1;
+                    font-size: 11px;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                th {
+                    background-color: var(--light-gray);
+                    color: var(--black-color);
+                    text-transform: capitalize;
+                    font-weight: bolder;
+                    text-align: center;
+                    padding: 5px 5px;
+                    font-size: 10px;
+                    border: 1px solid var(--dark-color);
+                }
+
+                td {
+                    padding: 1px 5px;
+                    font-size: 10px;
+                    color: var(--black-color);
+                    font-weight: 500;
+                    border: 1px solid var(--dark-color);
+                    border-top: none;
+                }
+
+                .item-row .item-name {
+                    font-size: 10px;
+                    font-weight: 600;
+                    color: var(--black-color);
+                    max-width: 45% !important;
+                }
+
+                .item-row .item-name small {
+                  font-size: 9px;
+                  font-weight: 400;
+                  color: var(--black-color);
+                  white-space: normal;
+                  word-break: break-word;
+                  overflow-wrap: anywhere;
+              }
+
+                .empty-row td {
+                    padding: 4px 8px;
+                    border-bottom: 1px solid var(--border-color);
+                }
+
+                .item-total {
+                    padding: 3px 5px;
+                }
+
+                .total {
+                    background-color: var(--light-gray);
+                    font-weight: bold;
+                    padding: 3px 5px;
+                }
+
+                .text-right {
+                    text-align: right;
+                }
+
+                .text-center {
+                    text-align: center;
+                }
+
+                /* Payment info section */
+                .payment-section {
+                    font-size: 9px;
+                    margin: 10px 0;
+                }
+
+                .payment-section h4 {
+                    margin-bottom: 3px;
+                    margin-top: 0;
+                    font-size: 10px;
+                    text-decoration: underline;
+                }
+
+                .payment-section .detail-label,
+                .payment-section .detail-value {
+                    font-size: 9px;
+                }
+
+                .terms {
+                    font-size: 9px;
+                    margin: 10px 0;
+                }
+
+                .terms h4 {
+                    margin-bottom: 3px;
+                    margin-top: 0;
+                    font-size: 10px;
+                    text-decoration: underline;
+                }
+
+                .terms ul {
+                    margin: 0;
+                    padding-left: 15px;
+                    line-height: 1.2;
+                }
+
+                .terms ul ul {
+                    padding-left: 10px;
+                }
+
+                .terms li {
+                    margin-bottom: 1px;
+                }
+
+
+                .invoice-footer-fixed {
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translate(-50%);
+                    width: 100%;
+                    max-width: 800px;
+                    padding: 10px;
+                    box-sizing: border-box;
+                    background: #fff;
+                    break-inside: avoid;
+                }
+
+                .invoice-footer-scroll {
+                    width: 100%;
+                    max-width: 800px;
+                    padding: 40px;
+                    box-sizing: border-box;
+                    background: #fff;
+                    break-inside: avoid;
+                }
+
+                .signature-section {
+                    display: flex;
+                    justify-content: space-around;
+                    padding-bottom: 8px;
+                    margin-bottom: 8px;
+                }
+
+                .signature-box {
+                    width: 180px;
+                    text-align: center;
+                    border-top: 1px solid #000;
+                    padding-top: 3px;
+                    font-size: 10px;
+                }
+
+                .remark {
+                    font-size: 8px;
+                    margin-top: 2px;
+                }
+
+                .invoice-footer-info {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 9px;
+                }
+
+                .member-logos {
+                    display: flex;
+                    align-items: center;
+                    font-weight:bold;
+                    gap: 6px;
+                }
+
+                .member-logos img {
+                    height: 40px;
+                }
+
+                .print-info {
+                    text-align: right;
+                    font-weight: 500;
+                }
+
+                .footer-remark{
+                    font-size: 8px;
+                    text-align:center;
+                    color: rgb(0, 94, 255);
+                }
+
+                .watermark-container {
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    z-index: 0;
+                    pointer-events: none;
+                    /* Allow clicks through the watermark */
+                }
+
+                .watermark {
+                    opacity: 0.1;
+                    width: 400px;
+                    /* adjust as needed */
+                    height: auto;
+                }
+            </style>
+        </head>
+
+        <body>
+          
+          ${company.watermark === "" ? "" :
+            `<div class="watermark-container">
+              <img src="${company.watermark}" alt="Watermark" class="watermark">
+            </div>`
+        }
+            <div class="container">
+              <div id="invoice-content">
+                  <div class="header">
+                      <div>
+                          <div class="logo-section">
+                            ${company.logo_link === "" ? "" :
+            `<div class="logo">
+                                  <img src="${company.logo_link}" alt="">
+                              </div>`}
+                              <div>
+                                  <div class="company-name">
+                                    ${companyFName}
+                                    ${companyLName === "" ? "" : `<br>
+                                    <span class="enterprise">${companyLName}</span>`}
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="company-address">
+                              ${company.area} <br>
+                             ${company.mobile === "" ? "" : ' Hotline: ' + company.mobile}
+                          </div>
+                      </div>
+                      <div class="contact-info">
+                          ${company.website === "" ? "" : `<a href="${company.website}">${company.website}</a>`} <br>
+                          ${company.email === "" ? "" : `<a href="mailto:${company.email}">${company.email}</a>`}
+                      </div>
+                  </div>
+
+                  <div class="dotted-line"></div>
+                  <div class="invoice-title">Product Reservation for Employee </div>
+
+                  <div class="details">
+                      <div class="left-details">
+                          <div class="detail-row">
+                              <div class="detail-label">Quotation To</div>
+                              <div class="detail-value">: ${InvoiceData.customer.account_name.toUpperCase()}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Address</div>
+                              <div class="detail-value">: ${InvoiceData.customer.area === "" ? "-" : InvoiceData.customer.area}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Mobile</div>
+                              <div class="detail-value">: ${InvoiceData.customer.mobile}</div>
+                          </div>
+                      </div>
+                      <div class="right-details">
+                          <div class="detail-row">
+                              <div class="detail-label">Quotation No.</div>
+                              <div class="detail-value">: ${InvoiceData.memo_no}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Date & Time</div>
+                              <div class="detail-value">: ${moment(InvoiceData.sale_date).format("DD-MMMM-YYYY")}</div>
+                          </div>
+                          <div class="detail-row">
+                              <div class="detail-label">Prepared By</div>
+                              <div class="detail-value">: ${window.appUser.username}</div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <table id="invoice-items">
+                      <thead>
+                          <tr>
+                              <th style="width: 5%;">No</th>
+                              <th style="width: 45%;max-width: 45%;">Item Description</th>
+                              <th style="width: 12%;">Warranty</th>
+                              <th style="width: 10%;">Qty</th>
+                              <th style="width: 13%;">Price</th>
+                              <th style="width: 15%;">Total</th>
+                          </tr>
+                      </thead>
+                      <tbody id="product-items">
+                          <!-- will be updated by JS -->
+                          ${tBody}
+                      </tbody>
+                  </table>
+              </div>
+
+              <div class="invoice-footer-fixed" id="invoice-footer">
+                  <div class="dotted-line"></div>
+                  <div class="invoice-footer-info">
                       <div class="print-info">
                           <div class="print-date">
                               Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>

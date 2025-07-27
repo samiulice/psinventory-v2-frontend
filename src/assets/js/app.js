@@ -18,7 +18,8 @@ function checkAuth() {
   if (token && username && email && role) {
     console.log("User is authenticated.");
     // Set the appUser object globally for use in other functions
-    window.appUser = { username, token, role, email }; // Make appUser globally accessible 
+    window.appUser = { username, token, role, email }; // Make appUser globally accessible
+    window.company = JSON.parse(localStorage.getItem('company'))
   } else{
     console.log("User is not authenticated.");
     // Redirect to login page if no user data found

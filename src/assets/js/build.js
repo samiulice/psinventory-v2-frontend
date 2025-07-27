@@ -43,12 +43,14 @@ function populateSidebarMenu() {
         { name: 'Supplier List', link: 'supplier-list.html' },
         { name: 'Employee List', link: 'employee-list.html' }
       ]
-    },{
+    }, {
       icon: 'fa-bookmark',
       title: 'Pre-Sell',
       children: [
         { name: 'Product On Hold(Employee)', link: 'product-on-hold-employee.html' },
-        { name: 'Quotation', link: 'quotation-for-customer.html' }
+        { name: 'Product Hold History', link: 'employee-hold-list.html' },
+        { name: 'Quotation', link: 'quotation-for-customer.html' },
+        { name: 'Quotation History', link: 'quotation-list.html' }
       ]
     },
     {
@@ -179,3 +181,12 @@ function populateSidebarMenu() {
 }
 
 populateSidebarMenu()
+
+// Manually show it when needed
+function showPreloader() {
+  document.getElementById("preloader-overlay").style.display = "flex";
+}
+
+function hidePreloader() {
+  document.getElementById("preloader-overlay").style.display = "none";
+}
