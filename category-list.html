@@ -377,8 +377,10 @@
     };
 
     function editCategoryInfo(categoryInfo, btnIndex) {
+      
       const rowData = JSON.parse(decodeURIComponent(categoryInfo));
-      updateCategory(rowData, btnIndex)
+      
+      updateCategory(rowData, btnIndex);
     }
     function customPrintFunction() {
       let n = reportData.length;

@@ -136,13 +136,18 @@ function updateBrand(brand) {
                     </div>
                     <div class="col-6 form-group">
                       <div class="toggle-wrapper">
-                        <label for="" style="color:#5F5454;background:white">Brand Status:</label>
-                        <input type="radio" id="status_active" name="role" ${brand.status === 'Active' ? 'checked' : ''} autocomplete="off" >
+                        <label style="color:#5F5454; background:white;">Category Status:</label>
+
+                        <input type="radio" id="status_active" name="status" 
+                              ${brand.status === 'Active' ? 'checked' : ''} autocomplete="off">
                         <label for="status_active">Active</label>
-                        <input type="radio" id="status_inactive" name="role" ${brand.status === 'Inactive' ? '' : 'checked'} autocomplete="off">
+
+                        <input type="radio" id="status_inactive" name="status" 
+                              ${brand.status !== 'Active' ? 'checked' : ''} autocomplete="off">
                         <label for="status_inactive">Inactive</label>
                       </div>
                     </div>
+
                         <div class="form-group">
                       <div id="btns" class="col-4">
                           <br>
@@ -260,7 +265,7 @@ function addNewProduct(page, brands, categories, products) {
     brandList += `<select id="brand" class="form-control form-select has-feedback-left">`
     for (let i = 0; i < bLen; i++) {
       const b = brands[i];
-      if (b.status == "Active"){
+      if (b.status == "Active") {
         brandList += `<option value="${b.id}">${b.name}</option>`;
       }
     }
@@ -277,7 +282,7 @@ function addNewProduct(page, brands, categories, products) {
 
     for (let i = 0; i < cLen; i++) {
       const c = categories[i];
-      if (c.status == "Active"){
+      if (c.status == "Active") {
         categoryList += `<option value="${c.id}">${c.name}</option>`;
       }
     }
@@ -502,7 +507,7 @@ function updateProduct(brands, categories, product) {
       const c = categories[i];
       if (c.id === product.category.id) {
         categoryList += `<option value="${c.id}" selected>${c.name}</option>`;
-      } else if (c.status == "Active"){
+      } else if (c.status == "Active") {
         categoryList += `<option value="${c.id}">${c.name}</option>`;
       }
     }
@@ -824,6 +829,7 @@ function addNewCategory(page, categories) {
 
 //updateCategory show a popup form and then make an api call to update category data to the database table
 function updateCategory(category, btnIndex) {
+  console.log("category: ", category)
   Swal.fire({
     title: 'Update Category',
     width: 450,
@@ -840,13 +846,18 @@ function updateCategory(category, btnIndex) {
                     </div>
                     <div class="col-6 form-group">
                       <div class="toggle-wrapper">
-                        <label for="" style="color:#5F5454;background:white">Category Status:</label>
-                        <input type="radio" id="status_active" name="role" ${category.status === 'Active' ? 'checked' : ''} autocomplete="off" >
+                        <label style="color:#5F5454; background:white;">Category Status:</label>
+
+                        <input type="radio" id="status_active" name="role" 
+                              ${category.status === 'Active' ? 'checked' : ''} autocomplete="off">
                         <label for="status_active">Active</label>
-                        <input type="radio" id="status_inactive" name="role" ${category.status === 'Inactive' ? '' : 'checked'} autocomplete="off" >
+
+                        <input type="radio" id="status_inactive" name="role" 
+                              ${category.status !== 'Active' ? 'checked' : ''} autocomplete="off">
                         <label for="status_inactive">Inactive</label>
                       </div>
                     </div>
+
                         <div class="form-group">
                       <div id="btns" class="col-4">
                           <br>
@@ -2104,7 +2115,7 @@ function grantUserAccess(btnIndex, id) {
   Swal.fire({
     title: 'Grant Employee Access',
     width: 450,
-     html: `
+    html: `
   <div class="x_panel">
     <div class="x_content">
       <form autocomplete="off" id="update-employee" class="needs-validation" novalidate>
@@ -2174,8 +2185,8 @@ function grantUserAccess(btnIndex, id) {
         }
 
         // Fixed role detection
-        const role = form.querySelector('input[name="role"]:checked').id === 'role_admin' 
-          ? 'admin' 
+        const role = form.querySelector('input[name="role"]:checked').id === 'role_admin'
+          ? 'admin'
           : 'operator';
 
         // Disable button during processing
@@ -2193,38 +2204,38 @@ function grantUserAccess(btnIndex, id) {
           },
           body: JSON.stringify({ id, password, role }),
         })
-        .then(response => response.json())
-        .then(data => {
-          if (data.error) {
-            throw new Error(data.message || 'Failed to update access');
-          }
-          Swal.fire('Success', 'Employee access granted successfully.', 'success')
-            .then(() => location.reload());
-        })
-        .catch(error => {
-          Swal.showValidationMessage(error.message);
-          submitBtn.disabled = false;
-          submitBtn.innerHTML = 'Save Changes';
-        });
+          .then(response => response.json())
+          .then(data => {
+            if (data.error) {
+              throw new Error(data.message || 'Failed to update access');
+            }
+            Swal.fire('Success', 'Employee access granted successfully.', 'success')
+              .then(() => location.reload());
+          })
+          .catch(error => {
+            Swal.showValidationMessage(error.message);
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = 'Save Changes';
+          });
       });
     }
   });
 }
 function togglePassword() {
-            const passwordField = document.getElementById('password');
-            const confirmPasswordField = document.getElementById('confirmPassword');
-            const toggleIcon = document.querySelector('.password-toggle svg');
+  const passwordField = document.getElementById('password');
+  const confirmPasswordField = document.getElementById('confirmPassword');
+  const toggleIcon = document.querySelector('.password-toggle svg');
 
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                confirmPasswordField.type = 'text';
-                toggleIcon.innerHTML = '<path d="M12 6a9.77 9.77 0 0 1 8.82 5.5 9.77 9.77 0 0 1-8.82 5.5A9.77 9.77 0 0 1 3.18 11.5 9.77 9.77 0 0 1 12 6zm0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5a2.5 2.5 0 0 1 0 5 2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>';
-            } else {
-                passwordField.type = 'password';
-                confirmPasswordField.type = 'password'
-                toggleIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
-            }
-        }
+  if (passwordField.type === 'password') {
+    passwordField.type = 'text';
+    confirmPasswordField.type = 'text';
+    toggleIcon.innerHTML = '<path d="M12 6a9.77 9.77 0 0 1 8.82 5.5 9.77 9.77 0 0 1-8.82 5.5A9.77 9.77 0 0 1 3.18 11.5 9.77 9.77 0 0 1 12 6zm0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5a2.5 2.5 0 0 1 0 5 2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>';
+  } else {
+    passwordField.type = 'password';
+    confirmPasswordField.type = 'password'
+    toggleIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+  }
+}
 
 
 function removeUserAccess(btnIndex, id) {
@@ -2246,7 +2257,7 @@ function removeUserAccess(btnIndex, id) {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
           },
-          body: JSON.stringify({id, password:"", role:""})
+          body: JSON.stringify({ id, password: "", role: "" })
         });
         const data = await response.json();
         if (data.error) {
