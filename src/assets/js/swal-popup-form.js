@@ -137,9 +137,9 @@ function updateBrand(brand) {
                     <div class="col-6 form-group">
                       <div class="toggle-wrapper">
                         <label for="" style="color:#5F5454;background:white">Brand Status:</label>
-                        <input type="radio" id="status_active" name="role" ${brand.status === 'true' ? 'checked' : ''} autocomplete="off" >
+                        <input type="radio" id="status_active" name="role" ${brand.status === 'Active' ? 'checked' : ''} autocomplete="off" >
                         <label for="status_active">Active</label>
-                        <input type="radio" id="status_inactive" name="role" ${brand.status === 'true' ? '' : 'checked'} autocomplete="off">
+                        <input type="radio" id="status_inactive" name="role" ${brand.status === 'Inactive' ? '' : 'checked'} autocomplete="off">
                         <label for="status_inactive">Inactive</label>
                       </div>
                     </div>
@@ -257,11 +257,12 @@ function addNewProduct(page, brands, categories, products) {
   let categoryList = '';
   bLen = brands.length;
   if (bLen > 0) {
-    brandList += `<select id="brand" class="form-control form-select has-feedback-left">
-                          <option value="${brands[0].id}" selected>${brands[0].name}</option>`
-    for (let i = 1; i < bLen; i++) {
+    brandList += `<select id="brand" class="form-control form-select has-feedback-left">`
+    for (let i = 0; i < bLen; i++) {
       const b = brands[i];
-      brandList += `<option value="${b.id}">${b.name}</option>`;
+      if (b.status == "Active"){
+        brandList += `<option value="${b.id}">${b.name}</option>`;
+      }
     }
     brandList += '</select>';
   } else {
@@ -274,9 +275,11 @@ function addNewProduct(page, brands, categories, products) {
     categoryList += `<select id="category" class="form-control form-select has-feedback-left">
                       <option value="${categories[0].id}" selected>${categories[0].name}</option>`
 
-    for (let i = 1; i < cLen; i++) {
+    for (let i = 0; i < cLen; i++) {
       const c = categories[i];
-      categoryList += `<option value="${c.id}">${c.name}</option>`;
+      if (c.status == "Active"){
+        categoryList += `<option value="${c.id}">${c.name}</option>`;
+      }
     }
     categoryList += '</select>';
   } else {
@@ -499,7 +502,7 @@ function updateProduct(brands, categories, product) {
       const c = categories[i];
       if (c.id === product.category.id) {
         categoryList += `<option value="${c.id}" selected>${c.name}</option>`;
-      } else {
+      } else if (c.status == "Active"){
         categoryList += `<option value="${c.id}">${c.name}</option>`;
       }
     }
@@ -838,9 +841,9 @@ function updateCategory(category, btnIndex) {
                     <div class="col-6 form-group">
                       <div class="toggle-wrapper">
                         <label for="" style="color:#5F5454;background:white">Category Status:</label>
-                        <input type="radio" id="status_active" name="role" ${category.status === 'true' ? 'checked' : ''} autocomplete="off" >
+                        <input type="radio" id="status_active" name="role" ${category.status === 'Active' ? 'checked' : ''} autocomplete="off" >
                         <label for="status_active">Active</label>
-                        <input type="radio" id="status_inactive" name="role" ${category.status === 'true' ? '' : 'checked'} autocomplete="off" >
+                        <input type="radio" id="status_inactive" name="role" ${category.status === 'Inactive' ? '' : 'checked'} autocomplete="off" >
                         <label for="status_inactive">Inactive</label>
                       </div>
                     </div>

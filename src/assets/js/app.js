@@ -6,8 +6,8 @@ function terminateSession() {
   // Redirect to login page
   window.location.href = "login.html";
 }
-const api = 'https://psinventory-v2.onrender.com/api/v2'
-// let api = 'http://localhost:8080/api/v2'
+// const api = 'https://api.dev.pssft.xyz/api/v2'
+const api = 'http://localhost:8000/api/v2';
 function checkAuth() {
   console.log('Checking access level...');
   const token = localStorage.getItem('token');

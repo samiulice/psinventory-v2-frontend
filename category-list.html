@@ -282,7 +282,7 @@
                 title: "status",
                 className: "category-status",
                 render: function (data, type, row, meta) {
-                  return row.status ? `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>` : `<span class="label label-danger" style="font-size:12px; padding:2px 5px">Inactive</span>`
+                  return row.status == "Active" ? `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>` : `<span class="label label-danger" style="font-size:12px; padding:2px 5px">Inactive</span>`
                 }
               },
               {
