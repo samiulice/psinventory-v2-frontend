@@ -21,12 +21,14 @@ function buildUserPage() {
     }
     // }
   }
-
-
 }
 buildUserPage()
 
 function populateSidebarMenu() {
+  const sidebarLogo = document.getElementById("sidebar-logo")
+  if (sidebarLogo){
+    sidebarLogo.src = api + "/images/logo/logo.png"
+  }
   let menuData = [
     {
       icon: 'fa-home',

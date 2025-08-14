@@ -86,7 +86,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -132,7 +132,7 @@
             <div class="tabs">
               <button class="tab-btn active" data-tab="general">General</button>
               <button class="tab-btn" data-tab="additional-settings">Additional Settings</button>
-              <button class="tab-btn admin-access-show" data-tab="data">Data Management</button>
+              <!-- <button class="tab-btn admin-access-show" data-tab="data">Data Management</button> -->
               <!-- <button class="tab-btn" data-tab="system">System</button> -->
             </div>
 
@@ -236,8 +236,8 @@
                         style="padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-logo">
-                      <img id="logo-rounded" src="src\assets\images\logo.png"
-                        alt="Logo Preview" style="border-radius: 50%; padding: 5px; object-fit: cover;">
+                      <img id="logo-rounded" src="src\assets\images\logo.png" alt="Logo Preview"
+                        style="border-radius: 50%; padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-info">
                       <h4>Logo</h4>
@@ -254,12 +254,12 @@
                   <!-- Watermark -->
                   <div class="additional-setting-card">
                     <div class="additional-setting-logo">
-                      <img id="watermark" src="https://psinventory-v2.onrender.com/images/watermark.png"
-                        alt="watermark Preview" style="padding: 5px; object-fit: cover;">
+                      <img id="watermark" src="src\assets\images\logo.png" alt="watermark Preview"
+                        style="padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-logo">
-                      <img id="watermark-rounded" src="https://psinventory-v2.onrender.com/images/watermark.png"
-                        alt="watermark Preview" style="border-radius: 50%; padding: 5px; object-fit: cover;">
+                      <img id="watermark-rounded" src="src\assets\images\logo.png" alt="watermark Preview"
+                        style="border-radius: 50%; padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-info">
                       <h4>Watermark</h4>
@@ -279,7 +279,7 @@
 
                 </div>
               </div>
-              <div class="settings-section">
+              <!-- <div class="settings-section">
                 <div class="row">
                   <div class="col-md-6">
                     <h3>Membership</h3>
@@ -289,15 +289,15 @@
                 </div>
 
                 <div class="additional-settings-list" id="membership-container">
-                  <!-- updated by js -->
+                  
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
 
 
           <!-- Data Management Tab -->
-          <div id="data-tab" class="tab-content admin-access-show">
+          <!-- <div id="data-tab" class="tab-content admin-access-show">
             <div class="settings-section">
               <h3>Data Management</h3>
               <div class="data-management-options">
@@ -306,13 +306,13 @@
                   <p>Save a copy of the current inventory to protect against data loss or errors.</p>
 
                   <b><u>Current Location:</u> <small id="local-backup-dir"
-                      style="width: 100%; font-weight: normal; color: #025e5e; padding: 3px;">C:\Users\samiu\AppData\Roaming\PSInventory\psi-db-backup
+                      style="width: 100%; font-weight: normal; color: #025e5e; padding: 3px;">C:\Users\samiul\AppData\Roaming\PSInventory\psi-db-backup
                     </small></b>
                   <div class="pull-right" style="padding: 5px;">
-                    <!-- <button class="primary-btn" id="cloud-backup-btn">Cloud Backup</button> -->
+                    <button class="primary-btn" id="cloud-backup-btn">Cloud Backup</button>
                     <button class="btn btn-dark btn-xs" id="local-backup-loc-btn" onclick="pickFolder()"><i
-                        class="fa fa-pencil">&nbsp;</i>Change Loaction</button>
-                    <!-- <button class="secondary-btn" id="local-backup-btn">Local Backup</button> -->
+                        class="fa fa-pencil">&nbsp;</i>Change Location</button>
+                    <button class="secondary-btn" id="local-backup-btn">Local Backup</button>
                   </div>
                   <div style="margin-top: 25px;">
                     <div class="checkbox-group">
@@ -354,7 +354,7 @@
                   <h4>Export Data</h4>
                   <p>Export your data in various formats for external use.</p>
                   <div class="export-options">
-                    <!-- <button class="secondary-btn">Excel</button> -->
+                    <button class="secondary-btn">Excel</button>
                     <button type="button" class="secondary-btn export-sql-btn custom-format"><i
                         class="fa fa-database">&nbsp;&nbsp;</i> Custom Format</button>
                     <button type="button" class="secondary-btn export-sql-btn plain-format"><i
@@ -363,7 +363,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <!-- System Tab -->
           <!-- <div id="system-tab" class="tab-content">
@@ -714,6 +714,17 @@
   <!-- company info -->
   <script>
     let company
+    [
+      ["logo", "logo"],
+      ["logo-rounded", "logo"],
+      ["watermark", "watermark"],
+      ["watermark-rounded", "watermark"]
+    ].forEach(([id, file]) => {
+      const el = document.getElementById(id)
+      if (el) el.src = `${api}/images/${file}/${file}.png`
+    })
+
+
     const countries = [
       { country: "Bangladesh", currency: "Taka", code: "BDT", symbol: "৳" },
       { country: "India", currency: "Rupee", code: "INR", symbol: "₹" },
@@ -841,13 +852,13 @@
             }
 
           })
-          associations = company.associations_logo_links.split(":::")
-          associations.forEach(a => {
-            if (a.trim() !== "") {
-              addNewMembership(a)
-            }
+          // associations = company.associations_logo_links.split(":::")
+          // associations.forEach(a => {
+          //   if (a.trim() !== "") {
+          //     addNewMembership(a)
+          //   }
 
-          })
+          // })
 
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -899,55 +910,51 @@
       const uploadBtn = document.getElementById("save-" + source);
       uploadBtn.innerHTML = 'Uploading &nbsp;<i class="fa fa-spinner fa-spin"></i>';
       uploadBtn.disabled = true;
+
       const input = document.getElementById(id);
       const file = input.files[0];
 
       if (!file) {
-        alertQuestion("Please select an image first.");
+        alert("Please select an image first.");
+        uploadBtn.disabled = false;
         return;
       }
 
-      let filename = ""
-      let fileType = ""
-      if (source === "logo" || source === "watermark") {
-        filename = source + ".png"
-        fileType = "logo"
-      } else {
-        const extension = file.name.split('.').pop().toLowerCase(); // "png"
-        filename = id + "." + extension
-        fileType = "membership"
-      }
+      let filename = source + ".png";
+      let fileType = "logo";
+
       const formData = new FormData();
-      formData.append("image", file); // "image" is the field name expected by backend
-      formData.append("filename", filename)
-      formData.append("filetype", fileType)
-      const requestOptions = {
+      formData.append("image", file);
+      formData.append("filename", filename);
+      formData.append("filetype", fileType);
+
+      fetch(api + `/${source}/upload`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         body: formData
-      }
-      fetch(api + '/images/upload', requestOptions)
-        .then(response => response.json())
+      })
+        .then(res => res.json())
         .then(data => {
-          setTimeout(() => {
-            uploadBtn.innerHTML = 'Saved'
-          }, 1000);
-          alertSuccess("Upload successful: " + data.message, reloadUI);
+          uploadBtn.innerHTML = 'Saved';
+          if (data.error == false){
+            alertSuccess("Upload successful: " + data.message);
+          } else {
+            console.log(data.message);
+            alertError("Upload failed");
+          }
         })
         .catch(error => {
           console.error("Upload failed:", error);
           alertError("Upload failed.");
+        })
+        .finally(() => {
+          uploadBtn.disabled = false;
+          uploadBtn.style.display = 'none';
         });
-      setTimeout(() => {
-        uploadBtn.disabled = false;
-        uploadBtn.style.display = 'none'
-      }, 2000);
     }
-
 
     function removeImage(filename, removeBtnID) {
       const rmBtn = document.getElementById(removeBtnID)
@@ -961,7 +968,7 @@
         },
         body: JSON.stringify({ file_name: filename })
       }
-      fetch(api + '/images/remove', requestOptions)
+      fetch(api + '/image/remove', requestOptions)
         .then(response => response.json())
         .then(data => {
           setTimeout(() => {
@@ -978,47 +985,47 @@
       }, 2000);
     }
 
-    function addNewMembership(imgLink) {
-      const isNew = imgLink.trim() === ""
-      let imgID = imgLink
-      if (isNew) {
-        imgID = "psi_membership_image_" + moment().format('YYYY-MM-DD_HH-mm-ss')
-        imgLink = api + '/images/logo.png'
-      } else {
-        imgLink = api + '/images/' + imgID
-      }
+    // function addNewMembership(imgLink) {
+    //   const isNew = imgLink.trim() === ""
+    //   let imgID = imgLink
+    //   if (isNew) {
+    //     imgID = "psi_membership_image_" + moment().format('YYYY-MM-DD_HH-mm-ss')
+    //     imgLink = api + '/images/logo/logo.png'
+    //   } else {
+    //     imgLink = api + '/images/' + imgID
+    //   }
 
-      let div = `
-      <div class="additional-setting-card membership-card">
-          <div class="additional-setting-logo">
-            <img id="${imgID}" src=${imgLink} alt="Logo Preview"
-              style="padding: 5px; object-fit: cover;">
-          </div>
-          <div class="additional-setting-logo">
-            <img id="${imgID}-rounded" src=${imgLink}
-              alt="Logo Preview" style="border-radius: 50%; padding: 5px; object-fit: cover;">
-          </div>
-          <div class="additional-setting-info">
-            <h4>Membership</h4>
-            <p>This image will appear on all invoices, reports, and printed documents. If printing is not
-              required, please remove it.</p>
-          </div>
-          <div class="additional-setting-actions">
-            ${isNew ? `
-              <input style="display: none;" type="file" id="${imgID}-input" accept="image/*"
-                onchange="showPreview(event, 'save-${imgID}', '${imgID}')">
-              <button class="primary-btn" onclick="previewLogo('${imgID}-input')">Upload</button>
-              <button class="primary-btn" style="display: none;" id="save-${imgID}"
-                onclick="uploadImage('${imgID}-input', '${imgID}')">Save Changes</button>`
-          :
-          ""
-        }
-            <button class="secondary-btn" id="remove-${imgID}"
-              onclick="removeImage('${imgID}', 'remove-${imgID}')">Remove</button>
-          </div>
-        </div>`
-      document.getElementById("membership-container").innerHTML += div
-    }
+    //   let div = `
+    //   <div class="additional-setting-card membership-card">
+    //       <div class="additional-setting-logo">
+    //         <img id="${imgID}" src=${imgLink} alt="Logo Preview"
+    //           style="padding: 5px; object-fit: cover;">
+    //       </div>
+    //       <div class="additional-setting-logo">
+    //         <img id="${imgID}-rounded" src=${imgLink}
+    //           alt="Logo Preview" style="border-radius: 50%; padding: 5px; object-fit: cover;">
+    //       </div>
+    //       <div class="additional-setting-info">
+    //         <h4>Membership</h4>
+    //         <p>This image will appear on all invoices, reports, and printed documents. If printing is not
+    //           required, please remove it.</p>
+    //       </div>
+    //       <div class="additional-setting-actions">
+    //         ${isNew ? `
+    //           <input style="display: none;" type="file" id="${imgID}-input" accept="image/*"
+    //             onchange="showPreview(event, 'save-${imgID}', '${imgID}')">
+    //           <button class="primary-btn" onclick="previewLogo('${imgID}-input')">Upload</button>
+    //           <button class="primary-btn" style="display: none;" id="save-${imgID}"
+    //             onclick="uploadImage('${imgID}-input', '${imgID}')">Save Changes</button>`
+    //       :
+    //       ""
+    //     }
+    //         <button class="secondary-btn" id="remove-${imgID}"
+    //           onclick="removeImage('${imgID}', 'remove-${imgID}')">Remove</button>
+    //       </div>
+    //     </div>`
+    //   document.getElementById("membership-container").innerHTML += div
+    // }
 
     // Function to remove the card
     // function removeMembership(button) {
