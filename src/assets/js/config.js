@@ -7,7 +7,7 @@ const cleanDomain = hostname.replace(/^www\./, ''); // remove www.
 if (cleanDomain.includes('test') || cleanDomain.includes('dev')) {
     // Use dev API
     const mainDomain = cleanDomain.split('.').slice(-2).join('.'); // get main domain
-    api = `https://dev.${mainDomain}/api/v2`;
+    api = `https://api.dev.${mainDomain}/api/v2`;
 }
 // For other pssoft.xyz domains
 else if (cleanDomain.endsWith('.pssoft.xyz')) {
