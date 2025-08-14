@@ -6,8 +6,7 @@ function terminateSession() {
   // Redirect to login page
   window.location.href = "login.html";
 }
-// const api = 'https://api.dev.pssft.xyz/api/v2'
-const api = 'http://localhost:8000/api/v2';
+
 function checkAuth() {
   console.log('Checking access level...');
   const token = localStorage.getItem('token');
