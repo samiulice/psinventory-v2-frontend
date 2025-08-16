@@ -1087,6 +1087,7 @@
               showSuccessMessage(data.message);
               setTimeout(() => {
                 document.getElementById("submitBtn").innerHTML = 'Saved';
+                localStorage.setItem("company",JSON.stringify(body));
               }, 1000);
             }
             //reset submit btn
