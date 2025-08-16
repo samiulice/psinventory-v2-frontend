@@ -204,7 +204,7 @@
           <div class="row">
             <div class="col-md-12 com-sm-12 col-xs-12 text-center">
               <button id="submitBtn" class="btn btn-dark" type="submit">Submit</button>
-              <button id="printInvoice" class="btn btn-dark d-none" type="button"
+              <button id="printInvoice" class="btn btn-dark" type="button"
                 onclick="renderPrintWindow()">Print</button>
             </div>
           </div>
@@ -442,12 +442,16 @@
           })
 
       })
-
       //renderPrintWindow renders printing window 
       function renderPrintWindow() {
-        let n = transaction_summary.length;
+        let n = transaction_summary.length || 0;
         let tBody = '';
-
+        let company = JSON.parse(localStorage.getItem("company"));
+        console.log("company", company);
+        let name = company.name.split(":::").filter(p => p.trim() !== "")
+        console.log("company", name);
+        company.name =   name[0] + " " + name[1]
+        
         if (n > 0) {
           for (let i = 0; i < n; i++) {
             const ps = transaction_summary[i];
@@ -475,7 +479,6 @@
         <head>
           <meta charset="UTF-8">
           <title>Company Report</title>
-          <link rel="stylesheet" type="text/css" href="styles.css">
           <style>
               /* Header styling */
             .header {
@@ -564,18 +567,10 @@
         <body>
           <!-- Header Section -->
           <div class="header">
-            ${transaction_summary.company ? `
-              <h1>${transaction_summary.company.name || ""}</h1>
-              <h2>${transaction_summary.company.slogan || ""}</h2>
-              <p>${transaction_summary.company.area || ""}</p>
-              <p>Mobile: ${transaction_summary.company.mobile || ""} | Email: ${summary.company.email || ""}</p>
-            ` : `
-              <h1>ProjuktiSheba Inventory</h1>
-              <h2>Track Smarter, Stock Better</h2>
-              <p>Teri Bazar, Netrakona Shadar, Netrakona, Mymensingh</p>
-              <p>Mobile: +8801742135093 | Email: psi@projuktisheba.com</p>
-            `}
-            
+              <h1>${company.name || ""}</h1>
+              <h2>${company.slogan || ""}</h2>
+              <p>${company.area || ""}</p>
+              <p>Mobile: ${company.mobile || ""} | Email: ${company.email || ""}</p>
             <!-- Line with Caption and Print Date -->
             <div class="caption-section">
               <div class="caption">Investment</div>
