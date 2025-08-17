@@ -305,7 +305,7 @@
                 className: "action",
                 render: function (data, type, row, meta) {
                   // const rowObj = encodeURIComponent(JSON.stringify(row));
-                  return `<button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="updateCategory(${meta.row})"><i class="fa fa-edit"></i>&nbsp;Edit</button>`
+                  return `<button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="updateCategory(${parseInt(meta.row)})"><i class="fa fa-edit"></i>&nbsp;Edit</button>`
                 }
               },
             ],
@@ -324,7 +324,7 @@
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
                 action: function (e, dt, node, config) {
-                  customPrintFunction(categories); // Call custom function with returnedData
+                  customPrintFunction(); // Call custom function with returnedData
                 }
               }
             ],

@@ -304,7 +304,7 @@
                 title: "Actions",
                 className: "action",
                 render: function (data, type, row, meta) {
-                  return `<button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="updateBrand(${meta.row})"><i class="fa fa-edit"></i>&nbsp;Edit</button>`
+                  return `<button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="updateBrand(${parseInt(meta.row)})"><i class="fa fa-edit"></i>&nbsp;Edit</button>`
                 }
               },
             ],
