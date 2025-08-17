@@ -350,7 +350,7 @@
             <tr>
               <td>${c.account_code}</td>
               <td>${c.account_name}</td>
-              <td>${c.account_status}</td>
+              <td>${c.account_status === true ? "Active" : "Inactive"}</td>
               <td>${c.mobile}</td>
               <td>${c.due_amount || "0"}</td>
               <td>${moment(c.joining_date).format("DD-MMM-YYYY")}</td>

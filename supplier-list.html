@@ -259,7 +259,7 @@
                 title: "Status",
                 className: "status",
                 render: function (data, type, row) {
-                  return row.account_status === true ? "Active" : "Inactive"
+                  return row.account_status ? `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>` : `<span class="label label-danger" style="font-size:12px; padding:2px 5px">Inactive</span>`
                 }
               },
               {
@@ -327,12 +327,6 @@
                   reportData = responseData.suppliers || [];
                   company = responseData.company;
                   console.log(responseData)
-                  if (reportData.length > 0) {
-                    //Format date in the received data
-                    reportData.forEach(cst => {
-                      cst.account_status = cst.account_status ? `<b style="text-align:center;">Active</b>` : "Inactive";
-                    });
-                  }
                   callback({ data: reportData });
                 })
                 .catch(function (error) {
@@ -366,15 +360,15 @@
 
       if (n > 0) {
         for (let i = 0; i < n; i++) {
-          const c = reportData[i];
+          const s = reportData[i];
           tBody += `
             <tr>
-              <td>${c.account_code}</td>
-              <td>${c.account_name}</td>
-              <td>${c.account_status}</td>
-              <td>${c.mobile}</td>
-              <td>${c.due_amount || "0"}</td>
-              <td>${moment(c.joining_date).format("DD-MMM-YYYY")}</td>
+              <td>${s.account_code}</td>
+              <td>${s.account_name}</td>
+              <td>${s.account_status === true ? "Active" : "Inactive"}</td>
+              <td>${s.mobile}</td>
+              <td>${s.due_amount || "0"}</td>
+              <td>${moment(s.joining_date).format("DD-MMM-YYYY")}</td>
             </tr>`;
         }
       } else {
