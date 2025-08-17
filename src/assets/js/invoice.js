@@ -71,7 +71,7 @@ function printPurchaseInvoice() {
     let members_of = "";
     const associations = company.associations_logo_links.split(":::").filter(association => association.trim() !== "")
     associations.forEach(association => {
-        members_of += `<img src="https://psinventory-v2.onrender.com/images/${association}" alt="${association}">`
+        members_of += `<img src=${api}/images/${association} alt="${association}">`
     });
 
     const content = `
@@ -1196,7 +1196,7 @@ function printPurchaseReturnInvoice() {
     let members_of = "";
     const associations = company.associations_logo_links.split(":::").filter(association => association.trim() !== "")
     associations.forEach(association => {
-        members_of += `<img src="https://psinventory-v2.onrender.com/images/${association}" alt="${association}">`
+        members_of += `<img src=${api}/images/${association}" alt="${association}">`
     });
 
 
@@ -1760,7 +1760,7 @@ function printSaleInvoice() {
     let members_of = "";
     const associations = company.associations_logo_links.split(":::").filter(association => association.trim() !== "")
     associations.forEach(association => {
-        members_of += `<img src="https://psinventory-v2.onrender.com/images/${association}" alt="${association}">`
+        members_of += `<img src="${api}/images/${association}" alt="${association}">`
     });
 
     const content = `
@@ -2354,7 +2354,7 @@ function printSaleReturnInvoice() {
     let members_of = "";
     const associations = company.associations_logo_links.split(":::").filter(association => association.trim() !== "")
     associations.forEach(association => {
-        members_of += `<img src="https://psinventory-v2.onrender.com/images/${association}" alt="${association}">`
+        members_of += `<img src="${api}/images/${association}" alt="${association}">`
     });
     const content = `
         <!DOCTYPE html>
