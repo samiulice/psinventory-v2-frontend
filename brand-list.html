@@ -623,13 +623,11 @@
       doc.open();
       doc.write(content);
       doc.close();
-
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        document.title = 'brand_list' + moment().format('D_MMM_YYYY_hh_mm_ss')
+      setTimeout(() => {
+        iframe.contentWindow.focus();
         iframe.contentWindow.print();
         document.body.removeChild(iframe);
-      };
+      }, 200);
     }
 
   </script>
