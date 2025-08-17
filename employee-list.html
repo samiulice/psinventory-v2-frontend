@@ -267,7 +267,7 @@
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
                 action: function (e, dt, node, config) {
-                  customPrintFunction(employees); // Call custom function with returnedData
+                  customPrintFunction(); // Call custom function with returnedData
                 }
               }
             ],
@@ -325,6 +325,7 @@
 
 
     function customPrintFunction() {
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
       let n = employees.length;
       let tBody = '';
 
@@ -525,9 +526,9 @@
 
         <body>
           <div class="header">
-            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="logo">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
@@ -570,12 +571,12 @@
       doc.write(content);
       doc.close();
 
-      // Wait for content to load and then print
-      iframe.onload = () => {
+      setTimeout(() => {
         document.title = 'employee_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
+        iframe.contentWindow.focus();
         iframe.contentWindow.print();
         document.body.removeChild(iframe);
-      };
+      }, 200);
     }
 
   </script>

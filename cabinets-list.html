@@ -273,15 +273,11 @@
                 extend: "print",
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
-                
+                action: function (e, dt, node, config) {
+                  customPrintFunction(); // Call custom function with returnedData
+                }
               }
             ],
-            // initComplete: function () {
-            //   // Add custom content to the custom section
-            //   $(".add-container-btn").html(`
-            //     <button class="btn btn-danger btn-sm" onclick="CreateContainer()"><i class="fa-solid fa-plus"></i> Add Container</button>
-            //   `);
-            // },
             responsive: true,
             language: {
               "emptyTable": "No data available" // Custom message when there is no data
@@ -325,11 +321,6 @@
       TableManageButtons.init();
 
     };
-
-    function editCustomerInfo(cusInfo, btnIndex) {
-      const rowData = JSON.parse(decodeURIComponent(cusInfo));
-      updateCustomer(rowData, btnIndex)
-    }
 
     function customPrintFunction() {
       let n = reportData.length;
@@ -532,7 +523,7 @@
 
         <body>
           <div class="header">
-            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="logo">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
               <h1>${company.name}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
@@ -576,12 +567,13 @@
       doc.write(content);
       doc.close();
 
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        document.title = 'customer_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
+      setTimeout(() => {
+        document.title = 'cabinet_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
+        iframe.contentWindow.focus();
         iframe.contentWindow.print();
+        document.title = 'PSINVENTORY';
         document.body.removeChild(iframe);
-      };
+      }, 200);
     }
 
   </script>
