@@ -694,11 +694,15 @@ function reloadUI() {
   location.reload()
 }
 
-// Built-in way to convert a sentence to title case in JavaScript (using Intl for locale-aware casing)
-function toTitleCase(sentence) {
-  return sentence
-    .toLocaleLowerCase()
-    .replace(/\b\w/g, char => char.toLocaleUpperCase());
+// Built-in way to convert a sentence to title case in JavaScript
+function toTitleCase(str) {
+    if (!str) return '';  // handle undefined/null
+    return str
+      .toLocaleLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
 }
+
 
 
