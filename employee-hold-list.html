@@ -406,7 +406,7 @@
         html: html,
         width: '700px',
         showCancelButton: true,
-        showConfirmButton: status == 'Hold',
+        showConfirmButton: status.toLowerCase() == 'hold',
         confirmButtonText: 'Confirm',
         cancelButtonText: 'Cancel',
       }).then(result => {
