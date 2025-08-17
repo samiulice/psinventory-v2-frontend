@@ -218,7 +218,7 @@
 
   <!-- fetching data from backend and populate frontend table -->
   <script>
-    let reportData, company;
+    let reportData, company = JSON.parse(localStorage.getItem("company"));
     function init_DataTables() {
 
       console.log('run_datatables');
@@ -299,6 +299,7 @@
                 .then(response => response.json())
                 .then(function (responseData) {
                   reportData = responseData.containers || [];
+                  console.log(reportData)
                   callback({ data: reportData });
                 })
                 .catch(function (error) {
@@ -323,20 +324,21 @@
     };
 
     function customPrintFunction() {
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
       let n = reportData.length;
       let tBody = '';
 
       if (n > 0) {
         for (let i = 0; i < n; i++) {
-          const c = reportData[i];
+          const s = reportData[i];
           tBody += `
             <tr>
-              <td>${c.account_code}</td>
-              <td>${c.account_name}</td>
-              <td>${c.account_status}</td>
-              <td>${c.mobile}</td>
-              <td>${c.due_amount || "0"}</td>
-              <td>${moment(c.joining_date).format("DD-MMM-YYYY")}</td>
+              <td>${s.name}</td>
+              <td>${s.warehouse_details}</td>
+              <td>${s.status === true ? "Active" : "Inactive"}</td>
+              <td>${s.dimension || "-"}</td>
+              <td>${s.description || "-"}</td>
+              <td>${moment(s.created_at).format("DD-MMM-YYYY")}</td>
             </tr>`;
         }
       } else {
@@ -525,7 +527,7 @@
           <div class="header">
             <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
@@ -535,7 +537,7 @@
           </div>
           <!-- Line with Caption and Print Date -->
           <div class="caption-section">
-            <div class="caption">List of Customers</div>
+            <div class="caption">List of Suppliers</div>
             <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
           </div>
           <div class="separator"></div>
@@ -543,12 +545,12 @@
           <table>
             <thead>
               <tr>
-                <th>Code</th>
-                <th>Name</th>
+                <th>Container Name</th>
+                <th>Location</th>
                 <th>Status</th>
-                <th>Mobile</th>
-                <th>Due Amount</th>
-                <th>Joining Date</th>
+                <th>Dimension</th>
+                <th>Description</th>
+                <th>Starting Date</th>
               </tr>
             </thead>
             <tbody>
@@ -558,7 +560,8 @@
         </body>
         </html>
       `
-      title = 'container_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      // Create an iframe to load the content
+      title = 'supplier_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
       printWindow(content, title);
     }
 

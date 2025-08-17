@@ -143,7 +143,7 @@
             margin: 0;
             opacity: 0;
             appearance: none;
-            cursor:not-allowed;
+            cursor: not-allowed;
             pointer-events: none;
         }
 
@@ -155,6 +155,37 @@
         .checkbox-wrapper input[type=checkbox]:checked+svg .stroke,
         .checkbox-wrapper input[type=checkbox]:checked+svg .check {
             stroke-dashoffset: 0;
+        }
+
+        .tabs-container {
+            width: 100%;
+            overflow: hidden;
+            /* no horizontal scroll */
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            /* allow tabs to wrap to next line */
+            gap: 5px;
+            /* optional spacing between tabs */
+        }
+
+        .tabs button {
+            flex: 0 0 auto;
+            /* keep natural width */
+            padding: 8px 16px;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            white-space: normal;
+            /* allow text wrap if needed */
+            margin-bottom: 5px;
+        }
+
+        .tabs button.active {
+            border-bottom: 2px solid #008080;
+            color: #008080;
         }
     </style>
 </head>
@@ -173,7 +204,8 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+                            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..."
+                                class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -247,8 +279,8 @@
     <!-- Custom Theme Scripts -->
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
     <script src="src/assets/js/swal-popup-form.js"></script>
 
     <!-- sweetalert2 script -->

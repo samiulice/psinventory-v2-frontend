@@ -263,7 +263,7 @@
 
         <div class="controls">
           <div>
-            <button id="print-btn">Print Report</button>
+            <button type="button" onclick="customPrintFunction()" id="print-btn">Print Report</button>
             <!-- <button id="export-btn">Export Data</button> -->
           </div>
         </div>
@@ -312,18 +312,6 @@
     // Function to format numbers with commas
     function formatNumber(num) {
       return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
-    // Function to set up event listeners
-    function setupEventListeners() {
-      // Print button
-      document.getElementById('print-btn').addEventListener('click', function () {
-        window.print();
-      });
-
-      // // Export button
-      // document.getElementById('export-btn').addEventListener('click', function () {
-      //   alert('Export functionality would be implemented here. Selected items would be exported.');
-      // });
     }
     // Function to render product tables
     function renderProductTables() {
@@ -427,9 +415,6 @@
         table.appendChild(tbody);
         container.appendChild(table);
       });
-
-      // Add event listeners after tables are rendered
-      setupEventListeners();
     }
 
     // Initialize the page
@@ -457,10 +442,148 @@
           }
         });
     });
+
+    function customPrintFunction() {
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
+
+      // Build table body for products
+      let tablesHtml = '';
+      const productsMap = new Map();
+
+      products.forEach(product => {
+        if (!productsMap.has(product.product_name)) {
+          productsMap.set(product.product_name, []);
+        }
+        product.product_metadata.forEach(meta => {
+          productsMap.get(product.product_name).push(meta);
+        });
+      });
+
+      productsMap.forEach((metadatas, productName) => {
+        let totalCost = 0;
+        let totalShipmentCost = 0;
+        let totalPurchaseDiscount = 0;
+        let itemCount = 0;
+        let stockCount = 0;
+        let rows = '';
+
+        metadatas.forEach(meta => {
+          const netCost = meta.purchase_rate - meta.purchase_discount + meta.shipment_cost_per_unit;
+          totalCost += netCost;
+          totalShipmentCost += meta.shipment_cost_per_unit;
+          totalPurchaseDiscount += meta.purchase_discount;
+          itemCount++;
+
+          let productStatus = `<td class="status-out-of-stock">${meta.status}</td>`;
+          if (meta.status === 'in stock') {
+            stockCount++;
+            productStatus = `<td class="status-in-stock">In Stock</td>`;
+          }
+
+          rows += `
+            <tr>
+              <td>${meta.serial_number}</td>
+              <td>${moment(meta.created_at).format('DD-MMM-YYYY')}</td>
+              ${productStatus}
+              <td>${meta.warranty_status}</td>
+              <td>${formatNumber(meta.max_retail_price)}</td>
+              <td>${formatNumber(meta.purchase_rate)}</td>
+              <td>${formatNumber(meta.purchase_discount)}</td>
+              <td>${formatNumber(meta.shipment_cost_per_unit)}</td>
+              <td>${formatNumber(netCost)}</td>
+            </tr>`;
+          });
+
+        const totalRow = `
+          <tr class="total-row">
+            <td>Total Items: ${itemCount} items</td>
+            <td></td>
+            <td>In-Stock: ${stockCount}</td>
+            <td></td>
+            <td></td>
+            <td>${formatNumber(totalCost + totalPurchaseDiscount - totalShipmentCost)}</td>
+            <td>${formatNumber(totalPurchaseDiscount)}</td>
+            <td>${formatNumber(totalShipmentCost)}</td>
+            <td>${formatNumber(totalCost)}</td>
+          </tr>`; 
+
+        tablesHtml += `
+          <table>
+            <thead>
+              <tr class="group-header">
+                <td colspan="9">${productName}</td>
+              </tr>
+              <tr>
+                <th>Serial Number</th>
+                <th>Purchase Date</th>
+                <th>Status</th>
+                <th>Warranty Status</th>
+                <th>Max Retail Price</th>
+                <th>Purchase Rate</th>
+                <th>Purchase Discount</th>
+                <th>Shipment Cost</th>
+                <th>Total Cost</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rows}
+              ${totalRow}
+            </tbody>
+          </table><br/>`;
+        });
+
+      // Final print content
+      const content = `
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <title>Product Report</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 10mm; }
+            .header { display: flex; align-items: center; }
+            .header img { width: 100px; height: 100px; margin-right: 10px; }
+            .info { text-align: left; }
+            .info h1 { font-size: 22px; margin: 0; color: #265166; }
+            .info h2 { font-size: 14px; color: #008080; margin: 5px 0; }
+            .caption-section { display: flex; justify-content: space-between; margin: 10px 0; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+            th, td { border: 1px solid #ccc; padding: 6px; font-size: 12px; }
+            th { background: #008080; color: white; text-align: center; }
+            tr:nth-child(even) { background: rgba(0,128,128,0.05); }
+            .group-header td { background: #265166; color: white; font-weight: bold; text-align: center; }
+            .total-row { font-weight: bold; background: #f1f1f1; }
+            .status-in-stock { color: green; font-weight: bold; }
+            .status-out-of-stock { color: red; font-weight: bold; }
+          </style>
+        </head>
+        <body>
+          <div class="header">
+            <img src="${api}/images/logo/logo.png" alt="logo">
+            <div class="info">
+              <h1>${companyFName} ${companyLName}</h1>
+              ${company.slogan ? `<h2>${company.slogan}</h2>` : ""}
+              ${company.area ? `<p>${company.area}</p>` : ""}
+              <p>Mobile: ${company.mobile}</p>
+              <p>${company.email ? `Email: ${company.email}` : ""}${company.website ? ` || Website: ${company.website}` : ""}</p>
+            </div>
+          </div>
+
+          <div class="caption-section">
+            <div class="caption">Product Stock Report</div>
+            <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
+          </div>
+
+          ${tablesHtml}
+        </body>
+        </html>
+      `;
+
+      const title = 'product_report_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
+    }
+
   </script>
-
-
-
 </body>
 
 </html>

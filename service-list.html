@@ -285,7 +285,7 @@
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
                 action: function (e, dt, node, config) {
-                  customPrintFunction(reportData); // Call custom function with returnedData
+                  customPrintFunction(); // Call custom function with returnedData
                 }
               }
             ],
@@ -365,7 +365,7 @@
         }
       } else {
         tBody = `
-          <tr><td colspan=6 style="text-align:center;">No data available</td></tr>`;
+          <tr><td colspan=8 style="text-align:center;">No data available</td></tr>`;
       }
 
       const content = `
@@ -583,21 +583,8 @@
         </body>
         </html>
       `
-      // Create an iframe to load the content
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        document.title = 'service_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      };
+      title = 'service_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
 
   </script>
