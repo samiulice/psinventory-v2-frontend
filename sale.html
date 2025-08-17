@@ -744,14 +744,14 @@
               billAmount += (element.rate * element.quantity);
               totalDiscount += (element.item_discount * element.quantity);
 
+              
+              addRow();
               if (element.serial_number) {
                 let sn = element.serial_number.split(" ")
                 sn.forEach(s => {
                   OldSerialNumbers.push(s)
                 });
-              }
-              addRow();
-              if (element.serial_number) {
+              
                 document.querySelectorAll(`input[name="serialNumber[${element.quantity - 1}][]"]`).forEach((el, i) => {
                   console.log(el, sn[i])
                   el.value = sn[i] || '';
