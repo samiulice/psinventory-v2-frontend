@@ -706,3 +706,64 @@ function toTitleCase(str) {
 
 
 
+function printWindow(contentHtml, docTitle = 'Print Document') {
+  console.log(docTitle);
+
+  // Create a hidden iframe
+  const iframe = document.createElement('iframe');
+  iframe.style.position = 'absolute';
+  iframe.style.width = '0';
+  iframe.style.height = '0';
+  iframe.style.border = '0';
+  document.body.appendChild(iframe);
+
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+
+  // Open and write content (reliable)
+  doc.open();
+  doc.write(contentHtml);
+  doc.close();
+
+  // Set the title
+  doc.title = docTitle;
+
+  // Function to wait for images to load
+  const waitImagesAndPrint = () => {
+    const images = Array.from(doc.images);
+    let loadedCount = 0;
+
+    if (images.length === 0) {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+      document.body.removeChild(iframe);
+      return;
+    }
+
+    images.forEach(img => {
+      if (img.complete) {
+        loadedCount++;
+      } else {
+        img.onload = img.onerror = () => {
+          loadedCount++;
+          if (loadedCount === images.length) {
+            iframe.contentWindow.focus();
+            iframe.contentWindow.print();
+            document.body.removeChild(iframe);
+          }
+        };
+      }
+    });
+
+    if (loadedCount === images.length) {
+      iframe.contentWindow.focus();
+      iframe.contentWindow.print();
+      document.body.removeChild(iframe);
+    }
+  };
+
+  // Use a small timeout to ensure all resources are ready
+  setTimeout(waitImagesAndPrint, 50);
+}
+
+
+

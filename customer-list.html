@@ -575,21 +575,8 @@
         </body>
         </html>
       `
-      // Create an iframe to load the content
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      setTimeout(() => {
-        document.title = 'customer_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-        iframe.contentWindow.focus();
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      }, 200);
+      title = 'customer_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
 
   </script>
