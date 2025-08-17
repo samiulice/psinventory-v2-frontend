@@ -332,6 +332,7 @@
 
     };
     function showFilteredReport(startDateStr, endDateStr) {
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
       let n = reportData.length;
       let total_amount = 0, total_discount = 0, total_paid_amount = 0;
       let tBody = '';
@@ -557,7 +558,7 @@
           <div class="header">
             <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
