@@ -86,7 +86,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -232,11 +232,11 @@
                 <div class="additional-settings-list">
                   <div class="additional-setting-card">
                     <div class="additional-setting-logo">
-                      <img id="logo" src="src\assets\images\logo.png" alt="Logo Preview"
+                      <img id="logo" src="src/assets/images/logo.png" alt="Logo Preview"
                         style="padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-logo">
-                      <img id="logo-rounded" src="src\assets\images\logo.png" alt="Logo Preview"
+                      <img id="logo-rounded" src="src/assets/images/logo.png" alt="Logo Preview"
                         style="border-radius: 50%; padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-info">
@@ -254,11 +254,11 @@
                   <!-- Watermark -->
                   <div class="additional-setting-card">
                     <div class="additional-setting-logo">
-                      <img id="watermark" src="src\assets\images\logo.png" alt="watermark Preview"
+                      <img id="watermark" src="src/assets/images/logo.png" alt="watermark Preview"
                         style="padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-logo">
-                      <img id="watermark-rounded" src="src\assets\images\logo.png" alt="watermark Preview"
+                      <img id="watermark-rounded" src="src/assets/images/logo.png" alt="watermark Preview"
                         style="border-radius: 50%; padding: 5px; object-fit: cover;">
                     </div>
                     <div class="additional-setting-info">
@@ -1087,6 +1087,7 @@
               showSuccessMessage(data.message);
               setTimeout(() => {
                 document.getElementById("submitBtn").innerHTML = 'Saved';
+                localStorage.setItem("company",JSON.stringify(body));
               }, 1000);
             }
             //reset submit btn

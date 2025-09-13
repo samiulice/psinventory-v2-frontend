@@ -96,7 +96,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -269,7 +269,7 @@
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
                 action: function (e, dt, node, config) {
-                  customPrintFunction(reportData); // Call custom function with returnedData
+                  customPrintFunction(); // Call custom function with returnedData
                 }
               }
             ],
@@ -592,7 +592,7 @@
     </head>
     <body>
       <div class="header">
-        <img id="sidebar-logo" src="src\assets\images\logo.png" alt="logo">
+        <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
         <div class="info">
           <h1>${company.name}</h1>
           ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
@@ -630,19 +630,8 @@
     </html>
   `;
 
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      iframe.onload = () => {
-        document.title = 'stock_report_' + moment().format('D_MMM_YYYY_hh_mm_ss');
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      };
+      title = 'stock_report_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
 
   </script>

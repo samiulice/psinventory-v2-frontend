@@ -126,7 +126,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -260,7 +260,7 @@
 
   <!-- fetching data from backend and populate frontend table -->
   <script>
-    let reportData, company;
+    let company, categories = [];
     function init_DataTables() {
 
       console.log('run_datatables');
@@ -304,8 +304,8 @@
                 title: "Actions",
                 className: "action",
                 render: function (data, type, row, meta) {
-                  const rowObj = encodeURIComponent(JSON.stringify(row));
-                  return `<button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="editCategoryInfo('${rowObj}', ${meta.row})"><i class="fa fa-edit"></i>&nbsp;Edit</button>`
+                  // const rowObj = encodeURIComponent(JSON.stringify(row));
+                  return `<button id="edit-btn-${meta.row}" class="btn btn-primary btn-xs" onclick="updateCategory(${parseInt(meta.row)})"><i class="fa fa-edit"></i>&nbsp;Edit</button>`
                 }
               },
             ],
@@ -324,7 +324,7 @@
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
                 action: function (e, dt, node, config) {
-                  customPrintFunction(reportData); // Call custom function with returnedData
+                  customPrintFunction(); // Call custom function with returnedData
                 }
               }
             ],
@@ -352,9 +352,9 @@
               fetch(`${api}/reports/inventory/category-list`, requestOptions)
                 .then(response => response.json())
                 .then(function (responseData) {
-                  reportData = responseData.categories || [];
+                  categories = responseData.categories || [];
                   company = responseData.company;
-                  callback({ data: reportData })
+                  callback({ data: categories })
                 })
                 .catch(function (error) {
                   console.error('Error fetching data:', error);
@@ -377,19 +377,15 @@
 
     };
 
-    function editCategoryInfo(categoryInfo, btnIndex) {
-      
-      const rowData = JSON.parse(decodeURIComponent(categoryInfo));
-      
-      updateCategory(rowData, btnIndex);
-    }
     function customPrintFunction() {
-      let n = reportData.length;
+
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
+      let n = categories.length;
       let tBody = '';
 
       if (n > 0) {
         for (let i = 0; i < n; i++) {
-          const c = reportData[i];
+          const c = categories[i];
           tBody += `
             <tr>
               <td>${c.id}</td>
@@ -584,9 +580,9 @@
 
         <body>
           <div class="header">
-            <img id="sidebar-logo" src="src\assets\images\logo.png" alt="logo">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
@@ -617,21 +613,8 @@
         </body>
         </html>
       `
-      // Create an iframe to load the content
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        document.title = 'category_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      };
+      title = 'category_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
 
   </script>

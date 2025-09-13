@@ -93,7 +93,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -218,7 +218,7 @@
 
   <!-- fetching data from backend and populate frontend table -->
   <script>
-    let reportData, company;
+    let reportData, company = JSON.parse(localStorage.getItem("company"));
     function init_DataTables() {
 
       console.log('run_datatables');
@@ -273,15 +273,11 @@
                 extend: "print",
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
-                
+                action: function (e, dt, node, config) {
+                  customPrintFunction(); // Call custom function with returnedData
+                }
               }
             ],
-            // initComplete: function () {
-            //   // Add custom content to the custom section
-            //   $(".add-warehouse-btn").html(`
-            //     <button class="btn btn-danger btn-sm" onclick="CreateWarehouse()"><i class="fa-solid fa-plus"></i> Add Warehouse</button>
-            //   `);
-            // },
             responsive: true,
             language: {
               "emptyTable": "No data available" // Custom message when there is no data
@@ -327,26 +323,23 @@
 
     };
 
-    function editCustomerInfo(cusInfo, btnIndex) {
-      const rowData = JSON.parse(decodeURIComponent(cusInfo));
-      updateCustomer(rowData, btnIndex)
-    }
 
     function customPrintFunction() {
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
       let n = reportData.length;
       let tBody = '';
 
       if (n > 0) {
         for (let i = 0; i < n; i++) {
-          const c = reportData[i];
+          const s = reportData[i];
           tBody += `
             <tr>
-              <td>${c.account_code}</td>
-              <td>${c.account_name}</td>
-              <td>${c.account_status}</td>
-              <td>${c.mobile}</td>
-              <td>${c.due_amount || "0"}</td>
-              <td>${moment(c.joining_date).format("DD-MMM-YYYY")}</td>
+              <td>${s.name}</td>
+              <td>${s.manager_name}</td>
+              <td>${s.status === true ? "Active" : "Inactive"}</td>
+              <td>${s.address || "-"}</td>
+              <td>${s.description || "-"}</td>
+              <td>${moment(s.created_at).format("DD-MMM-YYYY")}</td>
             </tr>`;
         }
       } else {
@@ -533,9 +526,9 @@
 
         <body>
           <div class="header">
-            <img id="sidebar-logo" src="src\assets\images\logo.png" alt="logo">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
@@ -545,7 +538,7 @@
           </div>
           <!-- Line with Caption and Print Date -->
           <div class="caption-section">
-            <div class="caption">List of Customers</div>
+            <div class="caption">List of Suppliers</div>
             <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
           </div>
           <div class="separator"></div>
@@ -553,12 +546,12 @@
           <table>
             <thead>
               <tr>
-                <th>Code</th>
-                <th>Name</th>
+                <th>Warehouse Name</th>
+                <th>Manager</th>
                 <th>Status</th>
-                <th>Mobile</th>
-                <th>Due Amount</th>
-                <th>Joining Date</th>
+                <th>Address</th>
+                <th>Description</th>
+                <th>Starting Date</th>
               </tr>
             </thead>
             <tbody>
@@ -569,20 +562,8 @@
         </html>
       `
       // Create an iframe to load the content
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        document.title = 'customer_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      };
+      title = 'supplier_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
 
   </script>

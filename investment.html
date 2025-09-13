@@ -42,7 +42,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -442,11 +442,13 @@
           })
 
       })
-
       //renderPrintWindow renders printing window 
       function renderPrintWindow() {
-        let n = transaction_summary.length;
+        let n = transaction_summary.length || 0;
         let tBody = '';
+        let company = JSON.parse(localStorage.getItem("company"));
+        let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
+        company.name = `${companyFName} ${companyLName}`;
 
         if (n > 0) {
           for (let i = 0; i < n; i++) {
@@ -475,7 +477,6 @@
         <head>
           <meta charset="UTF-8">
           <title>Company Report</title>
-          <link rel="stylesheet" type="text/css" href="styles.css">
           <style>
               /* Header styling */
             .header {
@@ -564,18 +565,10 @@
         <body>
           <!-- Header Section -->
           <div class="header">
-            ${transaction_summary.company ? `
-              <h1>${transaction_summary.company.name || ""}</h1>
-              <h2>${transaction_summary.company.slogan || ""}</h2>
-              <p>${transaction_summary.company.area || ""}</p>
-              <p>Mobile: ${transaction_summary.company.mobile || ""} | Email: ${summary.company.email || ""}</p>
-            ` : `
-              <h1>ProjuktiSheba Inventory</h1>
-              <h2>Track Smarter, Stock Better</h2>
-              <p>Teri Bazar, Netrakona Shadar, Netrakona, Mymensingh</p>
-              <p>Mobile: +8801742135093 | Email: psi@projuktisheba.com</p>
-            `}
-            
+              <h1>${company.name || ""}</h1>
+              <h2>${company.slogan || ""}</h2>
+              <p>${company.area || ""}</p>
+              <p>Mobile: ${company.mobile || ""} | Email: ${company.email || ""}</p>
             <!-- Line with Caption and Print Date -->
             <div class="caption-section">
               <div class="caption">Investment</div>
@@ -605,20 +598,8 @@
         </html>
       `;
 
-        // Create an iframe to load the content
-        const iframe = document.createElement('iframe');
-        document.body.appendChild(iframe);
-        iframe.style.display = 'none';
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        doc.open();
-        doc.write(content);
-        doc.close();
-
-        // Wait for content to load and then print
-        iframe.onload = () => {
-          iframe.contentWindow.print();
-          document.body.removeChild(iframe);
-        };
+        title = 'investment_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+        printWindow(content, title);
       }
 
     </script>
