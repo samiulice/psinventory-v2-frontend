@@ -92,7 +92,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -264,11 +264,11 @@
       //update account_holder table
       let link = "";
       if (ac === "customers") {
-        link = "https://psinventory-v2.onrender.com/mis/customer/view/all"
+        link = `${api}/mis/customer/view/all`
       } else if (ac === "suppliers") {
-        link = "https://psinventory-v2.onrender.com/mis/supplier/view/all";
+        link = `${api}/mis/supplier/view/all`;
       } else if (ac === "employees") {
-        link = "https://psinventory-v2.onrender.com/hr/employee/view/all";
+        link = `${api}/hr/employee/view/all`;
       }
       // fetch-1: On changes account type fetch head_accounts details list 
       const requestOptions = {
@@ -661,7 +661,7 @@
 
         <body>
           <div class="header">
-              <img src="src\assets\images\logo.png" alt="logo">
+              <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
               <div class="info">
               <h1>${company.name}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}

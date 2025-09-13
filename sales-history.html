@@ -96,7 +96,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -332,6 +332,7 @@
 
     };
     function showFilteredReport(startDateStr, endDateStr) {
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
       let n = reportData.length;
       let total_amount = 0, total_discount = 0, total_paid_amount = 0;
       let tBody = '';
@@ -555,9 +556,9 @@
 
         <body>
           <div class="header">
-            <img src="src\assets\images\logo.png" alt="logo">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
@@ -589,21 +590,8 @@
         </body>
         </html>
       `
-      // Create an iframe to load the content
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        document.title = 'sales_history_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      };
+      title = 'sales_history_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
 
   </script>

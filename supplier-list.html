@@ -93,7 +93,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -259,7 +259,7 @@
                 title: "Status",
                 className: "status",
                 render: function (data, type, row) {
-                  return row.account_status === true ? "Active" : "Inactive"
+                  return row.account_status ? `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>` : `<span class="label label-danger" style="font-size:12px; padding:2px 5px">Inactive</span>`
                 }
               },
               {
@@ -295,7 +295,7 @@
                 className: "btn-sm btn-dark",
                 text: "Print", // Change button text
                 action: function (e, dt, node, config) {
-                  customPrintFunction(reportData); // Call custom function with returnedData
+                  customPrintFunction(); // Call custom function with returnedData
                 }
               }
             ],
@@ -327,12 +327,6 @@
                   reportData = responseData.suppliers || [];
                   company = responseData.company;
                   console.log(responseData)
-                  if (reportData.length > 0) {
-                    //Format date in the received data
-                    reportData.forEach(cst => {
-                      cst.account_status = cst.account_status ? `<b style="text-align:center;">Active</b>` : "Inactive";
-                    });
-                  }
                   callback({ data: reportData });
                 })
                 .catch(function (error) {
@@ -360,20 +354,21 @@
       updateSupplier(rowData, btnIndex)
     }
     function customPrintFunction() {
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
       let n = reportData.length;
       let tBody = '';
 
       if (n > 0) {
         for (let i = 0; i < n; i++) {
-          const c = reportData[i];
+          const s = reportData[i];
           tBody += `
             <tr>
-              <td>${c.account_code}</td>
-              <td>${c.account_name}</td>
-              <td>${c.account_status}</td>
-              <td>${c.mobile}</td>
-              <td>${c.due_amount || "0"}</td>
-              <td>${moment(c.joining_date).format("DD-MMM-YYYY")}</td>
+              <td>${s.account_code}</td>
+              <td>${s.account_name}</td>
+              <td>${s.account_status === true ? "Active" : "Inactive"}</td>
+              <td>${s.mobile}</td>
+              <td>${s.due_amount || "0"}</td>
+              <td>${moment(s.joining_date).format("DD-MMM-YYYY")}</td>
             </tr>`;
         }
       } else {
@@ -560,9 +555,9 @@
 
         <body>
           <div class="header">
-            <img src="src\assets\images\logo.png" alt="logo">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
@@ -596,20 +591,8 @@
         </html>
       `
       // Create an iframe to load the content
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        document.title = 'supplier_list_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      };
+      title = 'supplier_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
 
   </script>

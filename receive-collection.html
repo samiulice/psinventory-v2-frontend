@@ -44,7 +44,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -489,7 +489,6 @@
         <head>
           <meta charset="UTF-8">
           <title>Company Report</title>
-          <link rel="stylesheet" type="text/css" href="styles.css">
           <style>
               /* Header styling */
             .header {
@@ -621,19 +620,8 @@
       `;
 
         // Create an iframe to load the content
-        const iframe = document.createElement('iframe');
-        document.body.appendChild(iframe);
-        iframe.style.display = 'none';
-        const doc = iframe.contentDocument || iframe.contentWindow.document;
-        doc.open();
-        doc.write(content);
-        doc.close();
-
-        // Wait for content to load and then print
-        iframe.onload = () => {
-          iframe.contentWindow.print();
-          document.body.removeChild(iframe);
-        };
+        title = 'receive_collection_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+        printWindow(content, title);
       }
 
     </script>

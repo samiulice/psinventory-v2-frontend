@@ -1,27 +1,21 @@
-// Full URL of the current page
-const currentUrl = window.location.href;
-console.log("Full URL:", currentUrl);
-
-// Just the domain (hostname) of the current page
-const currentDomain = window.location.hostname;
-console.log("Domain:", currentDomain);
-
-// Build API base dynamically
+const { hostname, port } = window.location;
 let api;
 
-if (currentDomain.includes('.pssoft.xyz')) {
-    // Remove 'www.' if present
-    const cleanDomain = currentDomain.replace(/^www\./, '');
-    api = `https://api.${cleanDomain}/api/v2`;
-} 
-else if (currentDomain === 'localhost') {
-    // Keep the same port if present, or default to 8000
-    const port = window.location.port || '8000';
-    api = `http://localhost:${port}/api/v2`;
-} 
-else {
-    // Fallback for unknown environments
-    api = 'http://localhost:8000/api/v2';
+const cleanDomain = hostname.replace(/^www\./, ''); // remove www.
+const mainDomain = cleanDomain.split('.').slice(-2).join('.'); // get main domain
+
+if (cleanDomain.includes('test') || cleanDomain.includes('dev')) {
+  // Test or dev subdomains
+  api = `https://api.dev.${mainDomain}/api/v2`;
+} else if (cleanDomain.includes('demo')) {
+  // Demo subdomain
+  api = `https://api.demo.${mainDomain}/api/v2`;
+} else if (cleanDomain.endsWith('.pssoft.xyz')) {
+  // Other pssoft.xyz domains
+  api = `https://api.${mainDomain}/api/v2`;
+} else {
+  // Fallback to localhost
+  api = `http://localhost:${port || 8000}/api/v2`;
 }
 
 console.log("API Base:", api);

@@ -119,7 +119,8 @@ function addNewBrand(page, brands) {
 }
 
 //updateBrand show a popup form and then make an api call to update brand data to the database table
-function updateBrand(brand) {
+function updateBrand(btnIndex) {
+  let brand = brands[btnIndex]
   Swal.fire({
     title: 'Update Brand',
     width: 450,
@@ -187,7 +188,7 @@ function updateBrand(brand) {
         if (isValid) {
           resolve({
             name: form.name.value,
-            status: form.status_active.checked,
+            status: form.status_active.checked ? "Active" : "Inactive"
           });
         } else {
           Swal.showValidationMessage('Please correct the errors in the form.');
@@ -223,10 +224,9 @@ function updateBrand(brand) {
     if (result.isConfirmed) {
       const data = result.value;
 
-      brand.name = data.name
-      if (data.status) {
-        brand.status = "Active"
-      }
+      brand.name = data.name;
+      brand.status = data.status;
+
       console.log("Updated:", brand)
       const requestOptions = {
         method: 'post',
@@ -238,18 +238,48 @@ function updateBrand(brand) {
         body: JSON.stringify(brand),
       }
       let btn = document.getElementById('edit-btn-' + btnIndex);
+      let originalHTML = btn.innerHTML;   // save current button content
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
-      fetch(api + '/inventory/brand/edit', requestOptions)
+      fetch(api + '/inventory/brand/update', requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.error === true) {
             alertQuestion(data.message)
-            btn.innerHTML = 'Error!'
-            btn.classList.remove('btn-primary')
-            btn.classList.add('btn-danger')
+            btn.innerHTML = originalHTML;   // reset to original
+            btn.disabled = false;
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-danger');
           } else {
-            location.reload()
+            const row = document.getElementById('edit-btn-' + btnIndex).closest('tr');
+
+            // update name
+            row.querySelector('.brand-name').textContent = brand.name;
+
+            // update status with span badge
+            const statusCell = row.querySelector('.brand-status');
+            if (brand.status === "Active") {
+              statusCell.innerHTML = `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>`;
+            } else {
+              statusCell.innerHTML = `<span class="label label-danger" style="font-size:12px; padding:2px 5px">Inactive</span>`;
+            }
+
+            //update timestamp
+            const now = new Date();
+            row.querySelector('.updated-at').textContent = moment(now.toISOString()).format("DD-MMM-YYYY");
+
+            //update brand list
+            brands[btnIndex].name = brands.name;
+            brands[btnIndex].status = brands.status;
+            
+            brands[btnIndex].updated_at= now.toISOString();
+
+            btn.innerHTML = originalHTML;   // reset back to "Edit"
+            btn.disabled = false;
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-primary');
+
+            showSuccessMessage('Brand updated successfully');
           }
         });
     }
@@ -828,7 +858,8 @@ function addNewCategory(page, categories) {
 }
 
 //updateCategory show a popup form and then make an api call to update category data to the database table
-function updateCategory(category, btnIndex) {
+function updateCategory(btnIndex) {
+  let category = categories[parseInt(btnIndex)]
   console.log("category: ", category)
   Swal.fire({
     title: 'Update Category',
@@ -897,7 +928,7 @@ function updateCategory(category, btnIndex) {
         if (isValid) {
           resolve({
             name: form.name.value,
-            status: form.status_active.checked,
+            status: form.status_active.checked ? "Active" : "Inactive"
           });
         } else {
           Swal.showValidationMessage('Please correct the errors in the form.');
@@ -933,10 +964,9 @@ function updateCategory(category, btnIndex) {
     if (result.isConfirmed) {
       const data = result.value;
 
-      category.name = data.name
-      if (data.status) {
-        category.status = "Active"
-      }
+      category.name = data.name;
+      category.status = data.status;
+
       console.log("Updated:", category)
       const requestOptions = {
         method: 'post',
@@ -949,6 +979,7 @@ function updateCategory(category, btnIndex) {
       }
 
       let btn = document.getElementById('edit-btn-' + btnIndex);
+      let originalHTML = btn.innerHTML;   // save current button content
       btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
       btn.disabled = true;
       fetch(api + '/inventory/category/update', requestOptions)
@@ -956,11 +987,40 @@ function updateCategory(category, btnIndex) {
         .then(data => {
           if (data.error === true) {
             alertQuestion(data.message)
-            btn.innerHTML = 'Error!'
-            btn.classList.remove('btn-primary')
-            btn.classList.add('btn-danger')
+            btn.innerHTML = originalHTML;   // reset if error
+            btn.disabled = false;
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-danger');
           } else {
-            location.reload()
+            const row = document.getElementById('edit-btn-' + btnIndex).closest('tr');
+
+            // update name
+            row.querySelector('.category-name').textContent = category.name;
+            
+            // update status with span badge
+            const statusCell = row.querySelector('.category-status');
+            if (category.status === "Active") {
+              statusCell.innerHTML = `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>`;
+            } else {
+              statusCell.innerHTML = `<span class="label label-danger" style="font-size:12px; padding:2px 5px">Inactive</span>`;
+            }
+
+            //update timestamp
+            const now = new Date();
+            row.querySelector('.updated-at').textContent = moment(now.toISOString()).format("DD-MMM-YYYY");
+
+            //update category list
+            categories[btnIndex].name = category.name;
+            categories[btnIndex].status = category.status;
+            
+            categories[btnIndex].updated_at= now.toISOString();
+
+            btn.innerHTML = originalHTML;   // reset back to "Edit"
+            btn.disabled = false;
+            btn.classList.remove('btn-danger');
+            btn.classList.add('btn-primary');
+
+            showSuccessMessage('Brand updated successfully');
           }
         });
     }

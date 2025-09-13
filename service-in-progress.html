@@ -96,7 +96,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img src="src\assets\images\logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -280,162 +280,160 @@
 
     
     function showDetails(id) {
-      const invoiceData = purchaseHistory.find(ph => ph.id = id)
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
+      const invoiceData = purchaseHistory.find(ph => ph.id = id);
       let content = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Service Invoice</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                margin: 0;
-                padding: 0;
-                background-color: #fff;
-                color: black;
-            }
-            .page-container {
-                background: #fff;
-                padding: 20px;
-                border-radius: 6px;
-                font-size: 13px;
-                box-sizing: border-box;
-            }
-            h1, h3 {
-                color: #265166;
-            }
-            h1 {
-                font-size: 18px;
-                text-align: center;
-            }
-            .header, .footer {
-                text-align: center;
-                font-size: 12px;
-                color: #555;
-            }
-            .section {
-                margin-bottom: 20px;
-                padding: 10px;
-            }
-            .section-title {
-                font-size: 15px;
-                margin: 5px 0px;
-                padding-top: 5px;
-                font-weight: bold;
-                color: #265166;
-            }
-            .voucher-details table {
-                width: 100%;
-                border-collapse: collapse;
-            }
-            .voucher-details th, .voucher-details td {
-                padding: 5px;
-                border: 1px solid #ddd;
-                text-align: left;
-            }
-            .voucher-details th {
-                width: 200px;
-                background-color: #f1f4f5;
-                color: #265166;
-            }
-            .signature {
-                margin-top: 10px;
-                display: flex;
-                justify-content: space-between;
-            }
-        </style>
-    </head>
-    <body>
-      <div class="page-container">
-        <div class="section">
-          <div class="header">
-            <h3>${company.name}</h3>
-            <p>Mobile: ${company.mobile} || Email: ${company.email}</p>
-            <p>Address: ${company.area}</p>
-            <h1>
-              <span style="border-bottom: 1px dashed #161616;">Service Invoice</span>
-            </h1>
-          </div>
-          <div style="border: 1px solid #265166;"></div>
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Service Invoice</title>
+          <style>
+              body {
+                  font-family: Arial, sans-serif;
+                  margin: 0;
+                  padding: 0;
+                  background-color: #fff;
+                  color: black;
+              }
+              .page-container {
+                  background: #fff;
+                  padding: 20px;
+                  border-radius: 6px;
+                  font-size: 13px;
+                  box-sizing: border-box;
+              }
+              h1, h3 {
+                  color: #265166;
+              }
+              h1 {
+                  font-size: 18px;
+                  text-align: center;
+              }
+              .header, .footer {
+                  text-align: center;
+                  font-size: 12px;
+                  color: #555;
+              }
+              .section {
+                  margin-bottom: 20px;
+                  padding: 10px;
+              }
+              .section-title {
+                  font-size: 15px;
+                  margin: 5px 0px;
+                  padding-top: 5px;
+                  font-weight: bold;
+                  color: #265166;
+              }
+              .voucher-details table {
+                  width: 100%;
+                  border-collapse: collapse;
+              }
+              .voucher-details th, .voucher-details td {
+                  padding: 5px;
+                  border: 1px solid #ddd;
+                  text-align: left;
+              }
+              .voucher-details th {
+                  width: 200px;
+                  background-color: #f1f4f5;
+                  color: #265166;
+              }
+              .signature {
+                  margin-top: 10px;
+                  display: flex;
+                  justify-content: space-between;
+              }
+          </style>
+      </head>
+      <body>
+        <div class="page-container">
+          <div class="section">
+            <div class="header">
+              <h3>${companyFName} ${companyLName}</h3>
+              <p>Mobile: ${company.mobile} || Email: ${company.email}</p>
+              <p>Address: ${company.area}</p>
+              <h1>
+                <span style="border-bottom: 1px dashed #161616;">Service Invoice</span>
+              </h1>
+            </div>
+            <div style="border: 1px solid #265166;"></div>
 
-          <div class="voucher-details">
-            <div class="section-title">Customer Details</div>
-            <table>
-              <tr>
-                    <th>Account Code</th>
-                    <td>${invoiceData.customer.account_code}</td>
-                </tr>
-                <tr>
-                    <th>Customer Name</th>
-                    <td>${invoiceData.customer.account_name}</td>
-                </tr>
-                <tr>
-                    <th>Mobile</th>
-                    <td>${invoiceData.customer.mobile}</td>
-                </tr>
-                <tr>
-                    <th>Address</th>
-                    <td>${invoiceData.customer.area}</td>
-                </tr>
-            </table>
-          </div>
-
-          <div class="voucher-details">
-              <div class="section-title">Service Details</div>
+            <div class="voucher-details">
+              <div class="section-title">Customer Details</div>
               <table>
-                  <tr>
-                      <th>Service Name</th>
-                      <td>${invoiceData.service.name}</td>
+                <tr>
+                      <th>Account Code</th>
+                      <td>${invoiceData.customer.account_code}</td>
                   </tr>
                   <tr>
-                      <th>Service Code</th>
-                      <td>${invoiceData.service.code}</td>
+                      <th>Customer Name</th>
+                      <td>${invoiceData.customer.account_name}</td>
                   </tr>
                   <tr>
-                      <th>Problem Description</th>
-                      <td><strong>${invoiceData.problem_description}</strong></td>
+                      <th>Mobile</th>
+                      <td>${invoiceData.customer.mobile}</td>
                   </tr>
                   <tr>
-                      <th>Product Serial Number</th>
-                      <td>${invoiceData.product_serial_number}</td>
-                  </tr>
-                  <tr>
-                      <th>Invoice Date</th>
-                      <td>${invoiceData.date}</td>
-                  </tr>
-                  <tr>
-                      <th>Bill Amount</th>
-                      <td>${invoiceData.amount} BDT</td>
-                  </tr>
-                  <tr>
-                      <th>Discount</th>
-                      <td>${invoiceData.amount * invoiceData.discount / 100} BDT</td>
-                  </tr>
-                  <tr>
-                      <th>Total Amount</th>
-                      <td>${invoiceData.amount - invoiceData.amount * invoiceData.discount / 100} BDT</td>
-                  </tr>
-                  <tr>
-                      <th>Received By</th>
-                      <td>${invoiceData.received_by}</td>
+                      <th>Address</th>
+                      <td>${invoiceData.customer.area}</td>
                   </tr>
               </table>
+            </div>
+
+            <div class="voucher-details">
+                <div class="section-title">Service Details</div>
+                <table>
+                    <tr>
+                        <th>Service Name</th>
+                        <td>${invoiceData.service.name}</td>
+                    </tr>
+                    <tr>
+                        <th>Service Code</th>
+                        <td>${invoiceData.service.code}</td>
+                    </tr>
+                    <tr>
+                        <th>Problem Description</th>
+                        <td><strong>${invoiceData.problem_description}</strong></td>
+                    </tr>
+                    <tr>
+                        <th>Product Serial Number</th>
+                        <td>${invoiceData.product_serial_number}</td>
+                    </tr>
+                    <tr>
+                        <th>Invoice Date</th>
+                        <td>${invoiceData.date}</td>
+                    </tr>
+                    <tr>
+                        <th>Bill Amount</th>
+                        <td>${invoiceData.amount} BDT</td>
+                    </tr>
+                    <tr>
+                        <th>Discount</th>
+                        <td>${invoiceData.amount * invoiceData.discount / 100} BDT</td>
+                    </tr>
+                    <tr>
+                        <th>Total Amount</th>
+                        <td>${invoiceData.amount - invoiceData.amount * invoiceData.discount / 100} BDT</td>
+                    </tr>
+                    <tr>
+                        <th>Received By</th>
+                        <td>${invoiceData.received_by}</td>
+                    </tr>
+                </table>
+            </div>
           </div>
         </div>
-      </div>
-    </body>
-    </html>
-    `;
-
-      Swal.fire({
-        html: content,
-        draggable: true,
-        width: 720,
-        heigh: 400
-      });
+      </body>
+      </html>
+      `;
+    
+    title = invoiceData.memo_no + "_" + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
+
 
 
   </script>
