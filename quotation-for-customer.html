@@ -207,6 +207,15 @@
       <div class="bar"></div>
     </div>
   </div>
+  <!-- Added mobile navigation toggle button -->
+  <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+  <!-- Added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -220,7 +229,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -266,35 +275,35 @@
             <div class="x_content">
               <div class="row">
                 <div class="col-md-3 col-sm-6 col-xs-12">
-                    <!-- Date -->
-                    <div class="form-group has-feedback">
-                      <label for="sale_date">Sale Date * :</label>
-                      <input type="text" class="form-control has-feedback-left input-sm" id="sale_date"
-                        placeholder="Select date" required>
-                      <i style="color: rgba(0, 0, 0, 1);"
-                        class="fa fa-calendar form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
-                    </div>
-                    <!-- Customer Account -->
-                    <div class="form-group has-feedback">
-                      <div class="row">
-                        <div class="col-md-10 col-sm-8 col-xs-8">
-                          <label for="customer">Customer * :</label>
-                          <div id="customer-autocomplete-container" class="autocomplete-container">
-                            <input type="text" id="customer" class="form-control form-select has-feedback-left input-sm"
-                              placeholder="Enter Name/Mobile/Code" autocomplete="off" required>
-                            <i style="color: rgba(0, 0, 0, 1);"
-                              class="form-control-feedback left fa fa-user input-sm-feedback" aria-hidden="true">
-                            </i>
-                            <div id="customer-suggestions" class="autocomplete-items"></div>
-                          </div>
-                        </div>
-                        <div style="margin-top: 24px;">
-                          <button type="button" class="btn btn-sm btn-danger pull-left" id="createCustomerBtn">
-                            <i class="fa fa-plus"></i>&nbsp;
-                          </button>
+                  <!-- Date -->
+                  <div class="form-group has-feedback">
+                    <label for="sale_date">Sale Date * :</label>
+                    <input type="text" class="form-control has-feedback-left input-sm" id="sale_date"
+                      placeholder="Select date" required>
+                    <i style="color: rgba(0, 0, 0, 1);"
+                      class="fa fa-calendar form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
+                  </div>
+                  <!-- Customer Account -->
+                  <div class="form-group has-feedback">
+                    <div class="row">
+                      <div class="col-md-10 col-sm-8 col-xs-8">
+                        <label for="customer">Customer * :</label>
+                        <div id="customer-autocomplete-container" class="autocomplete-container">
+                          <input type="text" id="customer" class="form-control form-select has-feedback-left input-sm"
+                            placeholder="Enter Name/Mobile/Code" autocomplete="off" required>
+                          <i style="color: rgba(0, 0, 0, 1);"
+                            class="form-control-feedback left fa fa-user input-sm-feedback" aria-hidden="true">
+                          </i>
+                          <div id="customer-suggestions" class="autocomplete-items"></div>
                         </div>
                       </div>
+                      <div style="margin-top: 24px;">
+                        <button type="button" class="btn btn-sm btn-danger pull-left" id="createCustomerBtn">
+                          <i class="fa fa-plus"></i>&nbsp;
+                        </button>
+                      </div>
                     </div>
+                  </div>
                 </div>
                 <div class="col-md-3 col-sm-6 col-xs-12">
                   <div class="form-group has-feedback">
@@ -403,7 +412,7 @@
       <!-- Custom Theme Scripts -->
       <script src="src/assets/js/custom.js"></script>
       <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
+      <script src="src/assets/js/config.js"></script>
       <script src="src/assets/js/build.js"></script>
       <script src="src/assets/js/swal-popup-form.js"></script>
       <script src="src/assets/js/invoice.js"></script>
@@ -480,7 +489,7 @@
             .catch(error => {
               console.error("Error completing all fetch requests:", error);
             })
-            .finally(e=>{
+            .finally(e => {
               hidePreloader()
             });
         });

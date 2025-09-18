@@ -78,7 +78,17 @@
 </head>
 
 <body class="nav-md">
-    <div class="container body">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
+  <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
                 <div class="left_col scroll-view">
@@ -91,7 +101,8 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+                            <img id="sidebar-logo" src="" alt="..."
+                                class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -228,8 +239,8 @@
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/swal-popup-form.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
     <script src="src/assets/js/invoice.js"></script>
     <!-- sweetalert2 script -->
     <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
@@ -241,12 +252,10 @@
             init_DataTables_custom();
         })
         function init_DataTables_custom() {
-            console.log('run_datatables');
 
             if (typeof ($.fn.DataTable) === 'undefined') {
                 return;
             }
-            console.log('init_DataTables');
 
             var handleDataTableButtons = function () {
                 if ($("#expense-history-table").length) {
@@ -355,7 +364,6 @@
 
         function showFilteredReport(startDateStr, endDateStr) {
             let n = reportData.length;
-            console.log(reportData)
             let tBody = '';
             let counter = 0;
             total_exp = 0;
@@ -392,202 +400,205 @@
             if (counter === 0) {
                 tBody = `<tr><td colspan=7 style="text-align:center;">No data available</td></tr>`;
             }
+            // Split company name
+      let nameParts = company.name.split(":::").filter(p => p.trim() !== "");
+      const companyFName = nameParts[0] || "";
+      const companyLName = nameParts[1] || "";
+      const content = `
+        <!DOCTYPE html>
+        <html lang="en">
 
-            const content = `
-            <!DOCTYPE html>
-            <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>PSInventory</title>
+          <style>
+            body {
+              font-family: Arial, sans-serif;
+              margin: 0 5mm;
+              padding: 0;
+              background-color: white;
+            }
 
-            <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>PSInventory</title>
-            <style>
-                body {
-                font-family: Arial, sans-serif;
-                margin: 0 5mm;
-                padding: 0;
-                background-color: white;
-                }
+            .separator {
+              width: 100%;
+              border-bottom: 2px solid #265166;
+              margin: 5px 0;
+            }
 
-                .separator {
-                width: 100%;
-                border-bottom: 2px solid #265166;
-                margin: 5px 0;
-                }
+            .header {
+              justify-self: center;
+              display: flex;
+              align-items: center;
+              color: white;
+            }
 
-                .header {
-                justify-self: center;
-                display: flex;
-                align-items: center;
-                color: white;
-                }
+            .header img {
+              width: 120px;
+              height: 120px;
+              padding-right: 10px;
+            }
 
-                .header img {
-                width: 120px;
-                height: 120px;
-                padding-right: 10px;
-                }
+            .header .name {
+              font-size: 28px;
+              font-weight: bold;
+            }
 
-                .header .name {
-                font-size: 28px;
-                font-weight: bold;
-                }
+            /* Info Section Styling for Print */
+          .info {
+            text-align: center;
+            margin-bottom: 10px;
+            padding-left:10px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #061f1f;
+          }
 
-                /* Info Section Styling for Print */
+          .info h1 {
+            font-size: 26px;
+            color: #265166;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          }
+
+          .info h2 {
+            font-size: 14px;
+            color: #008080;
+            font-style: italic;
+            margin-bottom: 15px;
+          }
+
+          .info p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #333;
+          }
+
+          .info p:first-child {
+            margin-top: 0;
+          }
+
+          /* Print Specific Adjustments */
+          @media print {
+            body {
+              margin: 10px;
+              padding: 0;
+            }
+
             .info {
-                text-align: left;
-                margin-bottom: 10px;
-                padding-left:10px;
-                border-radius: 8px;
-                font-size: 16px;
-                color: #061f1f;
+              font-size: 14px;
             }
 
             .info h1 {
-                font-size: 26px;
-                color: #265166;
-                font-weight: bold;
-                margin-bottom: 12px;
-                text-transform: uppercase;
-                letter-spacing: 1px;
+              font-size: 24px;
+              margin-bottom: 10px;
             }
 
             .info h2 {
-                font-size: 14px;
-                color: #008080;
-                font-style: italic;
-                margin-bottom: 15px;
+              font-size: 12px;
+              margin-bottom: 10px;
             }
 
             .info p {
-                margin: 8px 0;
-                font-size: 14px;
-                color: #333;
+              font-size: 12px;
+              margin: 5px 0;
             }
 
-            .info p:first-child {
-                margin-top: 0;
+            .info .contact-info p {
+              font-size: 12px;
+              margin-bottom: 8px;
+            }
+            th {
+              background-color: #fff;
+              color: #000000;
+            }
+          }
+
+            /* table caption and printing date section */
+            .caption-section {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              color: #1d1c1c;
             }
 
-            /* Print Specific Adjustments */
-            @media print {
-                body {
-                margin: 0;
-                padding: 0;
-                }
-
-                .info {
-                font-size: 14px;
-                }
-
-                .info h1 {
-                font-size: 24px;
-                margin-bottom: 10px;
-                }
-
-                .info h2 {
-                font-size: 12px;
-                margin-bottom: 10px;
-                }
-
-                .info p {
-                font-size: 12px;
-                margin: 5px 0;
-                }
-
-                .info .contact-info p {
-                font-size: 12px;
-                margin-bottom: 8px;
-                }
-                th {
-                background-color: #fff;
-                color: #000000;
-                }
+            .caption-section .caption {
+              font-size: 18px;
+              font-weight: bold;
+              color: #265166;
+            }
+            .caption-section .print-date {
+              font-size: 12px;
+              font-weight: bold;
+              font-style:italic;
             }
 
-                /* table caption and printing date section */
-                .caption-section {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                color: #1d1c1c;
-                }
+            /* Table styling */
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              font-family: Arial, sans-serif;
+            }
 
-                .caption-section .caption {
-                font-size: 18px;
-                font-weight: bold;
-                color: #265166;
-                }
-                .caption-section .print-date {
-                font-size: 12px;
-                font-weight: bold;
-                font-style:italic;
-                }
+            th,
+            td {
+              padding: 5px;
+              font-size: 12px;
+              text-align: left;
+              border: 0.1em solid rgba(0, 0, 0, 0.25);
+            }
 
-                /* Table styling */
-                table {
-                width: 100%;
-                border-collapse: collapse;
-                font-family: Arial, sans-serif;
-                }
+            th {
+              background-color: #008080;
+              color: white;
+              text-align: center;
+            }
 
-                th,
-                td {
-                padding: 5px;
-                font-size: 12px;
-                text-align: right;
-                border: 0.1em solid rgba(0, 0, 0, 0.25);
-                }
+            tr:nth-child(even) {
+              background-color: rgba(0, 128, 128, 0.1);
+            }
 
-                th {
-                background-color: #008080;
-                color: white;
-                text-align: center;
-                }
+            tr:nth-child(odd) {
+              background-color: #ffffff;
+            }
 
-                tr:nth-child(even) {
-                background-color: rgba(0, 128, 128, 0.1);
-                }
+            /* Footer styling */
+            .footer {
+              position: fixed;
+              bottom: 0;
+              width: 100%;
+              text-align: center;
+              font-size: 12px;
+              color: #666;
+              padding: 10px 0;
+            }
 
-                tr:nth-child(odd) {
-                background-color: #ffffff;
-                }
+            .footer .page-number:after {
+              content: counter(page);
+            }
+          </style>
+        </head>
 
-                /* Footer styling */
-                .footer {
-                position: fixed;
-                bottom: 0;
-                width: 100%;
-                text-align: center;
-                font-size: 12px;
-                color: #666;
-                padding: 10px 0;
-                }
-
-                .footer .page-number:after {
-                content: counter(page);
-                }
-            </style>
-            </head>
-
-            <body>
-            <div class="header">
-                <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
-                <div class="info">
-                <h1>${company.name}</h1>
-                ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
-                ${company.area == "" ? '' : `<p>${company.area}</p>`}
-                <p>Mobile: ${company.mobile}</p>
-                <p>${company.email == '' ? '' : `Email: ${company.email}`}${company.website == '' ? '' : ` || Website: ${company.website}`}</p>
-                </div>
-
+        <body>
+          <div class="header">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
+            <div class="info">
+              <h1>${companyFName} ${companyLName}</h1>
+              ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
+              ${company.area == "" ? '' : `<p>${company.area}</p>`}
+              <p>Mobile: ${company.mobile}</p>
+              <p>${company.email == '' ? '' : `Email: ${company.email}`}${company.website == '' ? '' : ` || Website: ${company.website}`}</p>
             </div>
-            <!-- Line with Caption and Print Date -->
-            <div class="caption-section">
-                <div class="caption">Expense History Report</div>
-                <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
-            </div>
-            <div class="separator"></div>
+
+          </div>
+          <!-- Line with Caption and Print Date -->
+          <div class="caption-section">
+            <div class="caption">List of Expense Categories</div>
+            <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
+          </div>
+          <div class="separator"></div>
             <!-- Table Section -->
             <table>
                 <div class="caption-section" style="font-size:12px; padding:5px 0">
@@ -614,21 +625,10 @@
         `
 
 
-            // Create an iframe to load the content
-            const iframe = document.createElement('iframe');
-            document.body.appendChild(iframe);
-            iframe.style.display = 'none';
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            doc.open();
-            doc.write(content);
-            doc.close();
 
-            // Wait for content to load and then print
-            iframe.onload = () => {
-                document.title = 'expense_history_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-                iframe.contentWindow.print();
-                document.body.removeChild(iframe);
-            };
+            title = 'expense_history_' + moment().format('D_MMM_YYYY_hh_mm_ss')
+            printWindow(content, title);
+
         }
 
     </script>

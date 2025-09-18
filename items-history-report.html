@@ -205,6 +205,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -218,7 +228,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -320,14 +330,20 @@
 
       // Group products by name
       const productsMap = new Map();
+      console.log(products)
+      // Safely iterate over the products array.
+      products?.forEach((product, index) => { // Added '?'
+        // Ensure product is not null and has a name before proceeding.
+        if (product && product.product_name) {
+          if (!productsMap.has(product.product_name)) {
+            productsMap.set(product.product_name, []);
+          }
 
-      products.forEach(product => {
-        if (!productsMap.has(product.product_name)) {
-          productsMap.set(product.product_name, []);
+          // Safely iterate over product_metadata.
+          product.product_metadata?.forEach(meta => { // Added '?'
+            productsMap.get(product.product_name).push(meta);
+          });
         }
-        product.product_metadata.forEach(meta => {
-          productsMap.get(product.product_name).push(meta);
-        });
       });
 
       // Create tables for each product group
@@ -450,13 +466,19 @@
       let tablesHtml = '';
       const productsMap = new Map();
 
-      products.forEach(product => {
-        if (!productsMap.has(product.product_name)) {
-          productsMap.set(product.product_name, []);
+      // Safely iterate over the products array.
+      products?.forEach((product, index) => { // Added '?'
+        // Ensure product is not null and has a name before proceeding.
+        if (product && product.product_name) {
+          if (!productsMap.has(product.product_name)) {
+            productsMap.set(product.product_name, []);
+          }
+
+          // Safely iterate over product_metadata.
+          product.product_metadata?.forEach(meta => { // Added '?'
+            productsMap.get(product.product_name).push(meta);
+          });
         }
-        product.product_metadata.forEach(meta => {
-          productsMap.get(product.product_name).push(meta);
-        });
       });
 
       productsMap.forEach((metadatas, productName) => {
@@ -492,7 +514,7 @@
               <td>${formatNumber(meta.shipment_cost_per_unit)}</td>
               <td>${formatNumber(netCost)}</td>
             </tr>`;
-          });
+        });
 
         const totalRow = `
           <tr class="total-row">
@@ -505,7 +527,7 @@
             <td>${formatNumber(totalPurchaseDiscount)}</td>
             <td>${formatNumber(totalShipmentCost)}</td>
             <td>${formatNumber(totalCost)}</td>
-          </tr>`; 
+          </tr>`;
 
         tablesHtml += `
           <table>
@@ -530,7 +552,7 @@
               ${totalRow}
             </tbody>
           </table><br/>`;
-        });
+      });
 
       // Final print content
       const content = `
@@ -541,12 +563,113 @@
           <title>Product Report</title>
           <style>
             body { font-family: Arial, sans-serif; margin: 10mm; }
-            .header { display: flex; align-items: center; }
-            .header img { width: 100px; height: 100px; margin-right: 10px; }
-            .info { text-align: left; }
-            .info h1 { font-size: 22px; margin: 0; color: #265166; }
-            .info h2 { font-size: 14px; color: #008080; margin: 5px 0; }
-            .caption-section { display: flex; justify-content: space-between; margin: 10px 0; }
+            .header {
+              justify-self: center;
+              display: flex;
+              align-items: center;
+              color: white;
+            }
+
+            .header img {
+              width: 120px;
+              height: 120px;
+              padding-right: 10px;
+            }
+
+            .header .name {
+              font-size: 28px;
+              font-weight: bold;
+            }
+
+            /* Info Section Styling for Print */
+            .info {
+              text-align: center;
+              margin-bottom: 10px;
+              padding-left:10px;
+              border-radius: 8px;
+              font-size: 16px;
+              color: #061f1f;
+            }
+
+            .info h1 {
+              font-size: 26px;
+              color: #265166;
+              font-weight: bold;
+              margin-bottom: 12px;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            }
+
+            .info h2 {
+              font-size: 14px;
+              color: #008080;
+              font-style: italic;
+              margin-bottom: 15px;
+            }
+
+            .info p {
+              margin: 8px 0;
+              font-size: 14px;
+              color: #333;
+            }
+
+            .info p:first-child {
+              margin-top: 0;
+            }
+            
+            .caption-section {
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              color: #1d1c1c;
+            }
+
+            .caption-section .caption {
+              font-size: 18px;
+              font-weight: bold;
+              color: #265166;
+            }
+            .caption-section .print-date {
+              font-size: 12px;
+              font-weight: bold;
+              font-style:italic;
+            }
+
+            /* Print Specific Adjustments */
+            @media print {
+              body {
+                margin: 10px;
+                padding: 0;
+              }
+
+              .info {
+                font-size: 14px;
+              }
+
+              .info h1 {
+                font-size: 24px;
+                margin-bottom: 10px;
+              }
+
+              .info h2 {
+                font-size: 12px;
+                margin-bottom: 10px;
+              }
+
+              .info p {
+                font-size: 12px;
+                margin: 5px 0;
+              }
+
+              .info .contact-info p {
+                font-size: 12px;
+                margin-bottom: 8px;
+              }
+              th {
+                background-color: #fff;
+                color: #000000;
+              }
+            }
             table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
             th, td { border: 1px solid #ccc; padding: 6px; font-size: 12px; }
             th { background: #008080; color: white; text-align: center; }
@@ -559,13 +682,13 @@
         </head>
         <body>
           <div class="header">
-            <img src="${api}/images/logo/logo.png" alt="logo">
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
               <h1>${companyFName} ${companyLName}</h1>
-              ${company.slogan ? `<h2>${company.slogan}</h2>` : ""}
-              ${company.area ? `<p>${company.area}</p>` : ""}
+              ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
+              ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
-              <p>${company.email ? `Email: ${company.email}` : ""}${company.website ? ` || Website: ${company.website}` : ""}</p>
+              <p>${company.email == '' ? '' : `Email: ${company.email}`}${company.website == '' ? '' : ` || Website: ${company.website}`}</p>
             </div>
           </div>
 

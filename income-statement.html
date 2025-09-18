@@ -39,6 +39,16 @@
 </head>
 
 <body class="nav-md">
+    <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+        <span>PSINVENTORY</span>
+        <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- added mobile overlay -->
+    <div class="mobile-overlay" onclick="closeMobileNav()"></div>
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
@@ -52,7 +62,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+                            <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -112,8 +122,8 @@
                         <div class="col-md-4 col-sm-4 col-xs-12" style="margin-top: 24px;">
                             <button type="button" class="btn btn-sm btn-dark pull-left"
                                 onclick="generateIncomeStatement()">Get</button>
-                            <button type="button" id="printBtn" class="btn btn-sm btn-dark pull-left d-none"
-                                onclick="printIncomeStatement()">Print</button>
+                            <button type="button" id="printBtn"
+                                class="btn btn-sm btn-dark pull-left d-none">Print</button>
                         </div>
                         <div class="clearfix"></div>
                     </div>
@@ -174,8 +184,8 @@
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/swal-popup-form.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
 
     <!-- sweetalert2 script -->
     <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
@@ -250,12 +260,13 @@
             let expense_list = ""
             let exp = Object.entries(expenses);
             exp.forEach(([key, value]) => {
+                console.log(key, ": ", expenseNameConverter(key))
                 total_operating_expenses += value
                 expense_list += `
                 <tr class=xl6712647 height=17 style='height:12.75pt'>
                     <td height=17 class=xl6712647 style='height:12.75pt'></td>
                     <td class=xl6712647></td>
-                    <td class=xl7212647>${toTitleCase(key, "_")}</td>
+                    <td class=xl7212647>${expenseNameConverter(key)}</td>
                     <td class=xl7312647 >${value}</td>
                 </tr>
                 `
@@ -413,14 +424,14 @@
                         <tr class=xl6712647 height=17 style='height:12.75pt'>
                             <td height=17 class=xl6712647 style='height:12.75pt'></td>
                             <td class=xl6712647></td>
-                            <td class=xl7212647>Non-operating revenues,expenses</td>
+                            <td class=xl7212647>Non-operating revenues</td>
                             <td class=xl7312647><span style='mso-spacerun:yes'>
                                 </span>${expenses.non_operating_income}</td>
                         </tr>
                         <tr class=xl6712647 height=17 style='height:12.75pt'>
                             <td height=17 class=xl6712647 style='height:12.75pt'></td>
                             <td class=xl6712647></td>
-                            <td class=xl7212647>Non-operating expenses, losses</td>
+                            <td class=xl7212647>Non-operating expenses</td>
                             <td class=xl7312647><span style='mso-spacerun:yes'>
                                 </span>(${expenses.non_operating_expense})</td>
                         </tr>
@@ -856,21 +867,8 @@
             </html>`
 
             document.getElementById("printBtn").addEventListener('click', () => {
-                // Create an iframe to load the content
-                const iframe = document.createElement('iframe');
-                document.body.appendChild(iframe);
-                iframe.style.display = 'none';
-                const doc = iframe.contentDocument || iframe.contentWindow.document;
-                doc.open();
-                doc.write(content);
-                doc.close();
-
-                // Wait for content to load and then print
-                iframe.onload = () => {
-                    document.title = 'income_statement_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-                    iframe.contentWindow.print();
-                    document.body.removeChild(iframe);
-                };
+                title = 'income_statement_' + moment().format('D_MMM_YYYY_hh_mm_ss')
+                printWindow(content, title);
             })
 
         }

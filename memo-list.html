@@ -78,10 +78,20 @@
       margin: 0;
     }
   </style>
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> -->
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+  <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -95,7 +105,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -291,7 +301,7 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
       }
-      fetch(api+'/inventory/memos/list?type=' + tabId, requestOptions)
+      fetch(api + '/inventory/memos/list?type=' + tabId, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           memos = responseData.memos || [];
@@ -351,7 +361,8 @@
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
       }
-      fetch(api+`/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
+      console.log(api + `/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`)
+      fetch(api + `/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
         .then(response => response.json())
         .then(function (responseData) {
           InvoiceData = responseData.invoice_data;

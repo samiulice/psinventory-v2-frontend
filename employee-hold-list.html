@@ -171,6 +171,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -184,7 +194,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -315,7 +325,16 @@
     function renderQuotationTable(quotations) {
       const tbody = document.querySelector('#quotation-table tbody');
       tbody.innerHTML = ''; // clear previous rows
+      if (quotations?.length == 0){
+        const row = document.createElement('tr');
+        // Product detail cells
+          row.innerHTML += `
+            <td class="text-primary text-center" colspan="11">No Data Available</td>
+          `;
 
+          tbody.appendChild(row);
+          return
+      }
       quotations.forEach(quotation => {
         const { memo_no, status, associated_name, created_at, updated_at, details } = quotation;
         const rowspan = details.length;

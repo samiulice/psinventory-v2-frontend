@@ -79,6 +79,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -92,7 +102,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -445,6 +455,10 @@
         tBody = `
           <tr><td colspan=8 style="text-align:center;">No data available</td></tr>`;
       }
+      // Split company name
+      let nameParts = company.name.split(":::").filter(p => p.trim() !== "");
+      const companyFName = nameParts[0] || "";
+      const companyLName = nameParts[1] || "";
       const content = `
         <!DOCTYPE html>
         <html lang="en">
@@ -591,7 +605,7 @@
           <div class="header">
             <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
             <div class="info">
-              <h1>${company.name}</h1>
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile} <br> ${company.email == '' ? '' : `Email: ${company.email}`}</p>
@@ -602,7 +616,7 @@
           <!-- Line with Caption and Print Date -->
           <div class="caption-section">
             <div class="caption">Transaction History Report</div>
-            <div style="color:#0f0f0f; font-size:12px; padding-bottom:10px; text-align:left;text-decoration-line: underline;">
+            <div style="background-color:#eeeeee; color:#0f0f0f; font-size:12px; padding:5px; text-align:left;">
               ${moment(startDateStr).format('MMM D, YYYY')} - ${moment(endDateStr).format('MMM D, YYYY')}</div>
 
             <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>

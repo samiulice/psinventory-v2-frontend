@@ -39,14 +39,9 @@
   <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
 
   <style>
-    * {
-      overflow-x: hidden;
-    }
-
     h2 {
       overflow: hidden;
     }
-
     /* Force the table to fit within its container */
     .datatable-buttons {
       width: 100% !important;
@@ -83,6 +78,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -96,7 +101,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -106,6 +111,7 @@
           <!-- /menu profile quick info -->
 
           <br />
+
           <!-- sidebar menu -->
           <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
             <!-- build by JS DOM -->
@@ -425,210 +431,209 @@
       <tr><td colspan="9" style="text-align:center;">No data available</td></tr>
     `;
       }
-
+      let [companyFName, companyLName = ""] = company.name.split(":::").filter(p => p.trim());
       const content = `
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Stock Report</title>
-      <style>
-        body {
-          font-family: Arial, sans-serif;
-          margin: 0 5mm;
-          padding: 0;
-          background-color: white;
-        }
-
-        .separator {
-          width: 100%;
-          border-bottom: 2px solid #265166;
-          margin: 5px 0;
-        }
-
-        .header {
-          justify-self: center;
-          display: flex;
-          align-items: center;
-          color: white;
-        }
-
-        .header img {
-          width: 120px;
-          height: 120px;
-          padding-right: 10px;
-        }
-
-        .header .name {
-          font-size: 28px;
-          font-weight: bold;
-        }
-
-        /* Info Section Styling for Print */
-        .info {
-          text-align: center;
-          margin-bottom: 10px;
-          padding-left:10px;
-          border-radius: 8px;
-          font-size: 16px;
-          color: #061f1f;
-        }
-
-        .info h1 {
-          font-size: 26px;
-          color: #265166;
-          font-weight: bold;
-          margin-bottom: 12px;
-          text-transform: uppercase;
-          letter-spacing: 1px;
-        }
-
-        .info h2 {
-          font-size: 14px;
-          color: #008080;
-          font-style: italic;
-          margin-bottom: 15px;
-        }
-
-        .info p {
-          margin: 8px 0;
-          font-size: 14px;
-          color: #333;
-        }
-
-        .info p:first-child {
-          margin-top: 0;
-        }
-        
-        .caption-section {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          color: #1d1c1c;
-        }
-
-        .caption-section .caption {
-          font-size: 18px;
-          font-weight: bold;
-          color: #265166;
-        }
-        .caption-section .print-date {
-          font-size: 12px;
-          font-weight: bold;
-          font-style:italic;
-        }
-
-        /* Print Specific Adjustments */
-        @media print {
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Stock Report</title>
+        <style>
           body {
-            margin: 0;
+            font-family: Arial, sans-serif;
+            margin: 0 5mm;
             padding: 0;
+            background-color: white;
           }
 
-          .info {
-            font-size: 14px;
-          }
-
-          .info h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
-          }
-
-          .info h2 {
-            font-size: 12px;
-            margin-bottom: 10px;
-          }
-
-          .info p {
-            font-size: 12px;
+          .separator {
+            width: 100%;
+            border-bottom: 2px solid #265166;
             margin: 5px 0;
           }
 
-          .info .contact-info p {
+          .header {
+            justify-self: center;
+            display: flex;
+            align-items: center;
+            color: white;
+          }
+
+          .header img {
+            width: 120px;
+            height: 120px;
+            padding-right: 10px;
+          }
+
+          .header .name {
+            font-size: 28px;
+            font-weight: bold;
+          }
+
+          /* Info Section Styling for Print */
+          .info {
+            text-align: center;
+            margin-bottom: 10px;
+            padding-left:10px;
+            border-radius: 8px;
+            font-size: 16px;
+            color: #061f1f;
+          }
+
+          .info h1 {
+            font-size: 26px;
+            color: #265166;
+            font-weight: bold;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+          }
+
+          .info h2 {
+            font-size: 14px;
+            color: #008080;
+            font-style: italic;
+            margin-bottom: 15px;
+          }
+
+          .info p {
+            margin: 8px 0;
+            font-size: 14px;
+            color: #333;
+          }
+
+          .info p:first-child {
+            margin-top: 0;
+          }
+          
+          .caption-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #1d1c1c;
+          }
+
+          .caption-section .caption {
+            font-size: 18px;
+            font-weight: bold;
+            color: #265166;
+          }
+          .caption-section .print-date {
             font-size: 12px;
-            margin-bottom: 8px;
+            font-weight: bold;
+            font-style:italic;
+          }
+
+          /* Print Specific Adjustments */
+          @media print {
+            body {
+              margin: 10px;
+              padding: 0;
+            }
+
+            .info {
+              font-size: 14px;
+            }
+
+            .info h1 {
+              font-size: 24px;
+              margin-bottom: 10px;
+            }
+
+            .info h2 {
+              font-size: 12px;
+              margin-bottom: 10px;
+            }
+
+            .info p {
+              font-size: 12px;
+              margin: 5px 0;
+            }
+
+            .info .contact-info p {
+              font-size: 12px;
+              margin-bottom: 8px;
+            }
+            th {
+              background-color: #fff;
+              color: #000000;
+            }
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #fff;
+            font-size: 12px;
+          }
+          th, td {
+            border: 1px solid #ddd;
+            padding: 3px 4px;
+            text-align: right;
+            vertical-align: middle;
+          }
+          td:nth-child(2) {
+            text-align: left;
           }
           th {
-            background-color: #fff;
-            color: #000000;
+            background-color: #265166;
+            color: #fff;
+            text-align:center;
+            font-weight: bold;
           }
-        }
-
-        table {
-          width: 100%;
-          border-collapse: collapse;
-          margin-top: 20px;
-          background-color: #fff;
-          font-size: 12px;
-        }
-        th, td {
-          border: 1px solid #ddd;
-          padding: 3px 4px;
-          text-align: right;
-          vertical-align: middle;
-        }
-        td:nth-child(2) {
-          text-align: left;
-        }
-        th {
-          background-color: #265166;
-          color: #fff;
-          text-align:center;
-          font-weight: bold;
-        }
-        .group-header, .group-header td {
-          background-color: #e0f2f1;
-          color: #265166;
-          font-weight: bold;
-          text-align: center;
-          padding-left: 8px;
-        }
-        .total-row {
-          background-color: #f4f4f4;
-          font-weight: bold;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="header">
-        <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
-        <div class="info">
-          <h1>${company.name}</h1>
-          ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
-          ${company.area == "" ? '' : `<p>${company.area}</p>`}
-          <p>Mobile: ${company.mobile}</p>
-          <p>${company.email == '' ? '' : `Email: ${company.email}`}${company.website == '' ? '' : ` || Website: ${company.website}`}</p>
+          .group-header, .group-header td {
+            background-color: #e0f2f1;
+            color: #265166;
+            font-weight: bold;
+            text-align: center;
+            padding-left: 8px;
+          }
+          .total-row {
+            background-color: #f4f4f4;
+            font-weight: bold;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
+          <div class="info">
+            <h1>${companyFName} ${companyLName}</h1>
+            ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
+            ${company.area == "" ? '' : `<p>${company.area}</p>`}
+            <p>Mobile: ${company.mobile}</p>
+            <p>${company.email == '' ? '' : `Email: ${company.email}`}${company.website == '' ? '' : ` || Website: ${company.website}`}</p>
+          </div>
         </div>
-
-      </div>
-      <!-- Line with Caption and Print Date -->
-      <div class="caption-section">
-        <div class="caption">Stock Report</div>
-        <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
-      </div>
-      <div class="separator"></div>
-      <table>
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Stock</th>
-            <th>Purchase Qty</th>
-            <th>Purchase Rate</th>
-            <th>Total Purchase Cost</th>
-            <th>Sale Qty</th>
-            <th>Sale Rate</th>
-            <th>Total Sale Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          ${tBody}
-        </tbody>
-      </table>
-    </body>
-    </html>
-  `;
+        <!-- Line with Caption and Print Date -->
+        <div class="caption-section">
+          <div class="caption">Stock Report</div>
+          <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
+        </div>
+        <div class="separator"></div>
+        <table>
+          <thead>
+            <tr>
+              <th>Code</th>
+              <th>Name</th>
+              <th>Stock</th>
+              <th>Purchase Qty</th>
+              <th>Purchase Rate</th>
+              <th>Total Purchase Cost</th>
+              <th>Sale Qty</th>
+              <th>Sale Rate</th>
+              <th>Total Sale Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${tBody}
+          </tbody>
+        </table>
+      </body>
+      </html>
+    `;
 
       title = 'stock_report_' + moment().format('D_MMM_YYYY_hh_mm_ss');
       printWindow(content, title);
