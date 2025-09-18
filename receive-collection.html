@@ -31,6 +31,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -44,7 +54,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -92,7 +102,7 @@
             <div class="col-md-4 col-sm-4 col-xs-4">
               <h2>Due History</h2>
             </div>
-            <div style="color: rgb(255, 0, 0); float: right;">Due: &nbsp;&#2547; <label id="due_amount">0</b></label>
+            <div style="color: rgb(255, 0, 0); float: right;">Due: <label id="due_amount">0</b></label>
             </div>
             <div class="clearfix"></div>
           </div>
@@ -126,8 +136,8 @@
                 <div class="row form-group has-feedback">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <label id="date" for="transaction_date">Date *:</label>
-                    <input type="text" id="transaction_date" class="form-control has-feedback-left" placeholder="Select Date"
-                      aria-describedby="inputSuccess2Status4" required>
+                    <input type="text" id="transaction_date" class="form-control has-feedback-left"
+                      placeholder="Select Date" aria-describedby="inputSuccess2Status4" required>
                     <i style="color: rgba(0, 0, 0, 1);" class="fa fa-calendar form-control-feedback left "
                       aria-hidden="true"></i>
                   </div>
@@ -258,14 +268,14 @@
     <!-- Custom Theme Scripts -->
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
 
     <!-- sweetalert2 script -->
     <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
-      let accounts, customers, payableAmount, reception_summary = [];
+      let accounts, customers, payableAmount, reception_summary = [], company = JSON.parse(localStorage.getItem("company"));;
       window.addEventListener("DOMContentLoaded", () => {
         initSingleDatePicker('#transaction_date')
         // fetch-1: On load window Get accounts for destination and customers who have due amount
@@ -277,7 +287,7 @@
             'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
         }
-        fetch(api+'/accounts/receive-collection/get-page-details', requestOptions)
+        fetch(api + '/accounts/receive-collection/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.error === true) {
@@ -368,7 +378,7 @@
           return
         } else if (receivedAmount.value > payableAmount) {
           Swal.fire({
-            title: `Received Amount exceeds max limit(&#2547; ${payableAmount})`,
+            title: `Received Amount exceeds max limit(${payableAmount})`,
             icon: "error"
           });
           return
@@ -433,7 +443,7 @@
           body: JSON.stringify(reception_summary),
         }
         console.log(reception_summary)
-        fetch(api+'/accounts/receive-collection/complete-submission', requestOptions)
+        fetch(api + '/accounts/receive-collection/complete-submission', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log("resp : ", data)
@@ -458,6 +468,9 @@
 
       //renderPrintWindow renders printing window 
       function renderPrintWindow() {
+        let name = company.name.split(":::").filter(p => p.trim() !== "")
+        const companyFName = name[0]
+        const companyLName = name[1] || ""
         let n = reception_summary.length;
         let tBody = '';
 
@@ -577,17 +590,10 @@
         <body>
           <!-- Header Section -->
           <div class="header">
-            ${reception_summary.company ? `
-              <h1>${reception_summary.company.name || ""}</h1>
-              <h2>${reception_summary.company.slogan || ""}</h2>
-              <p>${reception_summary.company.address || ""}</p>
-              <p>Mobile: ${reception_summary.company.mobile || ""} | Email: ${reception_summary.company.email || ""}</p>
-            ` : `
-              <h1>ProjuktiSheba Inventory</h1>
-              <h2>Track Smarter, Stock Better</h2>
-              <p>Teri Bazar, Netrakona Shadar, Netrakona, Mymensingh</p>
-              <p>Mobile: +8801742135093 | Email: psi@projuktisheba.com</p>
-            `}
+              <h1>${companyFName} ${companyLName}</h1>
+              ${company.slogan ? `<h2>${company.slogan || ""}</h2>` :""}
+              ${company.area ? `<p>${company.area || ""}</p>` :""}
+              <p>Mobile: ${company.mobile} | Email: ${company.email}</p>
             
             <!-- Line with Caption and Print Date -->
             <div class="caption-section">

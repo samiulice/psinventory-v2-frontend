@@ -145,6 +145,16 @@
 </head>
 
 <body class="nav-md">
+    <!-- Added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+        <span>PSINVENTORY</span>
+        <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Added mobile overlay -->
+    <div class="mobile-overlay" onclick="closeMobileNav()"></div>
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
@@ -158,7 +168,7 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+                            <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -257,8 +267,8 @@
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/swal-popup-form.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
     <script src="src/assets/js/invoice.js"></script>
 
     <!-- sweetalert2 script -->
@@ -310,11 +320,15 @@
         })
 
         function updateBalanceSheetDiv() {
+            // Split company name
+            let nameParts = company.name.split(":::").filter(p => p.trim() !== "");
+            const companyFName = nameParts[0] || "";
+            const companyLName = nameParts[1] || "";
             let balanceSheetDiv = document.getElementById("balance-sheet-section")
             if (balanceSheetDiv) {
                 balanceSheetDiv.innerHTML = `
                     <div class="header">
-                        <h1>${company.name}</h1>
+                        <h1>${companyFName} ${companyLName}</h1>
                         <p class="slogan">${company.slogan}</p>
                         <p class="contact">
                             ${company.area ? company.area + ',' : ''}${company.upazila ? company.upazila + ',' : ''}${company.district ? company.district : ''}<br>
@@ -430,6 +444,10 @@
         }
 
         function customPrintFunction() {
+            // Split company name
+            let nameParts = company.name.split(":::").filter(p => p.trim() !== "");
+            const companyFName = nameParts[0] || "";
+            const companyLName = nameParts[1] || "";
             let content = `
                 <!DOCTYPE html>
                 <html lang="en">
@@ -545,7 +563,7 @@
 
                 <body>
                     <div class="header">
-                        <h1>${company.name}</h1>
+                        <h1>${companyFName} ${companyLName}</h1>
                         <p class="slogan">${company.slogan}</p>
                         <p class="contact">
                             ${company.area ? company.area + ',' : ''}${company.upazila ? company.upazila + ',' : ''}${company.district ? company.district : ''}<br>
@@ -659,21 +677,8 @@
 
                 </html>
             `
-            // Create an iframe to load the content
-            const iframe = document.createElement('iframe');
-            document.body.appendChild(iframe);
-            iframe.style.display = 'none';
-            const doc = iframe.contentDocument || iframe.contentWindow.document;
-            doc.open();
-            doc.write(content);
-            doc.close();
-
-            // Wait for content to load and then print
-            iframe.onload = () => {
-                document.title = 'balance_sheet_' + moment().format('D_MMM_YYYY_hh_mm_ss')
-                iframe.contentWindow.print();
-                document.body.removeChild(iframe);
-            };
+            title = 'balance_sheet_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+            printWindow(content, title);
         }
 
 

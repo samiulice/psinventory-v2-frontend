@@ -29,6 +29,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -42,7 +52,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -88,7 +98,8 @@
         <div class="x_panel " id="form-content">
           <div class="x_title">
             <h2>Transfer Form</h2>
-            <button type="button" class="btn btn-primary pull-right" id="createNewStakeholder">Add New Stakeholder</button>
+            <button type="button" class="btn btn-primary pull-right" id="createNewStakeholder">Add New
+              Stakeholder</button>
             <div class="clearfix"></div>
           </div>
           <div class="x_content">
@@ -121,8 +132,8 @@
                 <div class="row form-group has-feedback">
                   <div class="col-md-12 col-sm-12 col-xs-12">
                     <label id="date" for="transfer_date">Date *:</label>
-                    <input type="text" id="transfer_date" class="form-control has-feedback-left" placeholder="Select Date"
-                      aria-describedby="inputSuccess2Status4" required>
+                    <input type="text" id="transfer_date" class="form-control has-feedback-left"
+                      placeholder="Select Date" aria-describedby="inputSuccess2Status4" required>
                     <i style="color: rgba(0, 0, 0, 1);" class="fa fa-calendar form-control-feedback left "
                       aria-hidden="true"></i>
                   </div>
@@ -253,8 +264,8 @@
     <!-- Custom Theme Scripts -->
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
     <script src="src/assets/js/swal-popup-form.js"></script>
 
     <!-- sweetalert2 script -->
@@ -264,19 +275,19 @@
       let accounts, stakeholders, transaction_summary = [];
       window.addEventListener("DOMContentLoaded", () => {
         initSingleDatePicker("#transfer_date")
-        document.getElementById("createNewStakeholder").addEventListener("click", ()=>{
+        document.getElementById("createNewStakeholder").addEventListener("click", () => {
           addNewStakeHolder()
         })
         // fetch-1: On load window Get accounts for destination and suppliers who have due amount
         const requestOptions = {
           method: 'post',
-          headers:{
-            'Accept':'application/json',
-            'Content-Type':'application/json',
-            'Authorization':'Bearer ' + localStorage.getItem('token')
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
           }
         }
-        fetch(api+'/accounts/fund-acquisition/get-page-details', requestOptions)
+        fetch(api + '/accounts/fund-acquisition/get-page-details', requestOptions)
           .then(response => response.json())
           .then(data => {
             console.log(data)
@@ -415,7 +426,7 @@
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+localStorage.getItem('token')
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
           },
           body: JSON.stringify(transaction_summary),
         }

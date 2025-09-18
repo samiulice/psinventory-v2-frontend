@@ -21,14 +21,16 @@ function buildUserPage() {
     }
     // }
   }
+  const sidebarLogo = document.getElementById("sidebar-logo")
+  if (sidebarLogo) {
+    sidebarLogo.src = api + "/images/logo/logo.png"
+    sidebarLogo.style.width = "60px"
+    sidebarLogo.style.height = "60px"
+  }
 }
 buildUserPage()
 
 function populateSidebarMenu() {
-  const sidebarLogo = document.getElementById("sidebar-logo")
-  if (sidebarLogo){
-    sidebarLogo.src = api + "/images/logo/logo.png"
-  }
   let menuData = [
     {
       icon: 'fa-home',
@@ -181,8 +183,8 @@ function populateSidebarMenu() {
   sidebar.innerHTML = ""; // Clear existing menu
   sidebar.appendChild(menuSection);
 }
-
 populateSidebarMenu()
+
 
 // Manually show it when needed
 function showPreloader() {
@@ -192,3 +194,58 @@ function showPreloader() {
 function hidePreloader() {
   document.getElementById("preloader-overlay").style.display = "none";
 }
+
+// Added mobile navigation JavaScript functions
+
+// Mobile navigation functions
+function toggleMobileNav() {
+  // Try multiple sidebar selectors
+  const sidebar =
+    document.getElementById("sidebar") ||
+    document.querySelector(".left_col") ||
+    document.querySelector(".main_container .left_col") ||
+    document.querySelector("[class*='sidebar']")
+  const overlay = document.querySelector('.mobile-overlay');
+
+  // Check if sidebar exists before accessing classList
+  if (sidebar) {
+    sidebar.classList.toggle('mobile-open');
+  } else {
+    return; // Exit early if sidebar doesn't exist
+  }
+
+  // Check if overlay exists before accessing classList
+  if (overlay) {
+    overlay.classList.toggle('active');
+  } else {
+  }
+}
+
+function closeMobileNav() {
+  // Try multiple sidebar selectors
+  const sidebar =
+    document.getElementById("sidebar") ||
+    document.querySelector(".left_col") ||
+    document.querySelector(".main_container .left_col") ||
+    document.querySelector("[class*='sidebar']")
+  const overlay = document.querySelector('.mobile-overlay');
+
+  // Check if sidebar exists before accessing classList
+  if (sidebar) {
+    sidebar.classList.remove('mobile-open');
+  }
+
+  // Check if overlay exists before accessing classList
+  if (overlay) {
+    overlay.classList.remove('active');
+  }
+}
+
+// Close mobile nav when clicking on menu items
+document.addEventListener('DOMContentLoaded', function () {
+  const menuItems = document.querySelectorAll('#sidebar-menu a li');
+
+  menuItems.forEach(item => {
+    item.addEventListener('click', closeMobileNav);
+  });
+});

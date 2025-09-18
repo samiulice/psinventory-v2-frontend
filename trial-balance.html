@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Income Statement</title>
+    <title>Trial Balance</title>
 
     <!-- Bootstrap -->
     <link href="src/assets/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -129,6 +129,16 @@
 </head>
 
 <body class="nav-md">
+    <!-- Added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
     <div class="container body">
         <div class="main_container">
             <div class="col-md-3 left_col menu_fixed">
@@ -142,7 +152,8 @@
                     <!-- menu profile quick info -->
                     <div class="profile clearfix">
                         <div class="profile_pic">
-                            <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+                            <img id="sidebar-logo" src="" alt="..."
+                                class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -240,8 +251,8 @@
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/swal-popup-form.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
     <script src="src/assets/js/invoice.js"></script>
 
     <!-- sweetalert2 script -->
@@ -295,9 +306,13 @@
         function updateBalanceSheetDiv() {
             let balanceSheetDiv = document.getElementById("trial-balance-section")
             if (balanceSheetDiv) {
+                // Split company name
+                let nameParts = company.name.split(":::").filter(p => p.trim() !== "");
+                const companyFName = nameParts[0] || "";
+                const companyLName = nameParts[1] || "";
                 balanceSheetDiv.innerHTML = `
                     <div class="header">
-                        <h1>${company.name}</h1>
+                        <h1>${companyFName} ${companyLName}</h1>
                         <p class="slogan">${company.slogan}</p>
                         <p class="contact">
                             ${company.area ? company.area + ',' : ''}${company.upazila ? company.upazila + ',' : ''}${company.district ? company.district : ''}<br>
@@ -388,6 +403,10 @@
         }
 
         function customPrintFunction() {
+            // Split company name
+            let nameParts = company.name.split(":::").filter(p => p.trim() !== "");
+            const companyFName = nameParts[0] || "";
+            const companyLName = nameParts[1] || "";
             let content = `
             <!DOCTYPE html>
             <html lang="en">
@@ -491,7 +510,7 @@
 
             <body>
                 <div class="header">
-                    <h1>${company.name}</h1>
+                    <h1>${companyFName} ${companyLName}</h1>
                     <p class="slogan">${company.slogan}</p>
                     <p class="contact">
                         ${company.area ? company.area + ',' : ''}${company.upazila ? company.upazila + ',' : ''}${company.district ? company.district : ''}<br>

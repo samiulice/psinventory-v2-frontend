@@ -50,6 +50,7 @@
       table-layout: auto;
       /* Fix column width to prevent overflow */
     }
+
     .datatable-buttons tbody tr:nth-child(even) {
       background-color: #e1ebeb;
       /* Light teal for even rows */
@@ -79,6 +80,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -92,7 +103,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -346,8 +357,8 @@
               className: "date",
               render: (data, type, row) => formatDate(row.transaction_date, "date", "-")
             },
-            { data: "transaction_type", title: "Description", className: "description"},
-            { data: "voucher_no", title: "Invoice #", className: "invoice"},
+            { data: "transaction_type", title: "Description", className: "description" },
+            { data: "voucher_no", title: "Invoice #", className: "invoice" },
             {
               title: "Debit(+)",
               className: "debit-amount text-right",
@@ -377,7 +388,7 @@
             }
           ],
           buttons: [
-            
+
             {
               extend: "csv",
               text: "Excel",
@@ -417,7 +428,7 @@
               })
             };
 
-            fetch(api+'/reports/accounts/ledger-book/summary', requestOptions)
+            fetch(api + '/reports/accounts/ledger-book/summary', requestOptions)
               .then(response => response.json())
               .then(responseData => {
                 console.log("Data fetched successfully:", responseData);
@@ -504,6 +515,10 @@
         tBody = `
           <tr><td colspan=8 style="text-align:center;">No data available</td></tr>`;
       }
+      // Split company name
+      let nameParts = company.name.split(":::").filter(p => p.trim() !== "");
+      const companyFName = nameParts[0] || "";
+      const companyLName = nameParts[1] || "";
       const content = `
           <!DOCTYPE html>
           <html lang="en">
@@ -533,86 +548,93 @@
                 color: white;
                 }
 
+                .header {
+                  justify-self: center;
+                  display: flex;
+                  align-items: center;
+                  color: white;
+                }
+
                 .header img {
-                width: 120px;
-                height: 120px;
-                padding-right: 10px;
+                  width: 120px;
+                  height: 120px;
+                  padding-right: 10px;
                 }
 
                 .header .name {
-                font-size: 28px;
-                font-weight: bold;
+                  font-size: 28px;
+                  font-weight: bold;
                 }
 
-                  /* Info Section Styling for Print */
+                /* Info Section Styling for Print */
               .info {
-                  text-align: left;
-                  margin-bottom: 10px;
-                  padding-left:10px;
-                  border-radius: 8px;
-                  font-size: 16px;
-                  color: #061f1f;
+                text-align: center;
+                margin-bottom: 10px;
+                padding-left:10px;
+                border-radius: 8px;
+                font-size: 16px;
+                color: #061f1f;
               }
 
               .info h1 {
-                  font-size: 26px;
-                  color: #265166;
-                  font-weight: bold;
-                  margin-bottom: 12px;
-                  text-transform: uppercase;
-                  letter-spacing: 1px;
+                font-size: 26px;
+                color: #265166;
+                font-weight: bold;
+                margin-bottom: 12px;
+                text-transform: uppercase;
+                letter-spacing: 1px;
               }
 
               .info h2 {
-                  font-size: 14px;
-                  color: #008080;
-                  font-style: italic;
-                  margin-bottom: 15px;
+                font-size: 14px;
+                color: #008080;
+                font-style: italic;
+                margin-bottom: 15px;
               }
 
               .info p {
-                  margin: 8px 0;
-                  font-size: 14px;
-                  color: #333;
+                margin: 8px 0;
+                font-size: 14px;
+                color: #333;
               }
 
               .info p:first-child {
-                  margin-top: 0;
+                margin-top: 0;
               }
 
               /* Print Specific Adjustments */
               @media print {
                 body {
-                margin: 0;
-                padding: 0;
+                  margin: 10px;
+                  padding: 0;
                 }
 
                 .info {
-                font-size: 14px;
+                  font-size: 14px;
                 }
 
                 .info h1 {
-                font-size: 24px;
-                margin-bottom: 10px;
+                  font-size: 24px;
+                  margin-bottom: 10px;
                 }
 
                 .info h2 {
-                font-size: 12px;
-                margin-bottom: 10px;
+                  font-size: 12px;
+                  margin-bottom: 10px;
                 }
 
                 .info p {
-                font-size: 12px;
-                margin: 5px 0;
+                  font-size: 12px;
+                  margin: 5px 0;
                 }
 
                 .info .contact-info p {
-                font-size: 12px;
-                margin-bottom: 8px;
+                  font-size: 12px;
+                  margin-bottom: 8px;
                 }
                 th {
-                background-color: #fff;
-                color: #000000;
+                  background-color: #fff;
+                  color: #000000;
                 }
               }
 
@@ -683,20 +705,19 @@
 
         <body>
           <div class="header">
-              <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
-              <div class="info">
-              <h1>${company.name}</h1>
+            <img id="sidebar-logo" src="${api}/images/logo/logo.png" alt="logo">
+            <div class="info">
+              <h1>${companyFName} ${companyLName}</h1>
               ${company.slogan == "" ? '' : `<h2>${company.slogan}</h2>`}
               ${company.area == "" ? '' : `<p>${company.area}</p>`}
               <p>Mobile: ${company.mobile}</p>
               <p>${company.email == '' ? '' : `Email: ${company.email}`}${company.website == '' ? '' : ` || Website: ${company.website}`}</p>
-              </div>
-
+            </div>
           </div>
           <!-- Line with Caption and Print Date -->
           <div class="caption-section">
             <div class="caption">Ledger Book: <span style="color:#0f0f0f;"> ${accountName}-${accountCode}</span></div>
-            <div style="color:#0f0f0f; font-size:12px; padding-bottom:10px; text-align:center;text-decoration-line: underline;">${moment(startDateStr).format('MMM D, YYYY')} - ${moment(endDateStr).format('MMM D, YYYY')}</div>
+            <div style="background-color:#eeeeee ; color:#0f0f0f; font-size:12px; padding:5px; text-align:center;">${moment(startDateStr).format('MMM D, YYYY')} - ${moment(endDateStr).format('MMM D, YYYY')}</div>
           
             <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
           </div>
@@ -722,20 +743,8 @@
   `
 
 
-      // Create an iframe to load the content
-      const iframe = document.createElement('iframe');
-      document.body.appendChild(iframe);
-      iframe.style.display = 'none';
-      const doc = iframe.contentDocument || iframe.contentWindow.document;
-      doc.open();
-      doc.write(content);
-      doc.close();
-
-      // Wait for content to load and then print
-      iframe.onload = () => {
-        iframe.contentWindow.print();
-        document.body.removeChild(iframe);
-      };
+      title = `${accountName}-${accountCode}` + moment().format('D_MMM_YYYY_hh_mm_ss');
+      printWindow(content, title);
     }
   </script>
 

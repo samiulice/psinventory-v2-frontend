@@ -19,7 +19,7 @@ function checkAuth() {
     // Set the appUser object globally for use in other functions
     window.appUser = { username, token, role, email }; // Make appUser globally accessible
     window.company = JSON.parse(localStorage.getItem('company'))
-  } else{
+  } else {
     console.log("User is not authenticated.");
     // Redirect to login page if no user data found
     window.appUser = null; // Ensure appUser is set to null if not authenticated
@@ -48,6 +48,14 @@ function toTitleCase(str, sep = ' ') {
     .join(' '); // Join the array of words back into a single string with spaces between them.
 }
 
+// Converts snake_case, kebab-case or space-separated strings to Title Case
+const expenseNameConverter = s =>
+  String(s || '')
+    .replace(/[_-]+/g, ' ')        // turn underscores/hyphens into spaces
+    .trim()                        // remove leading/trailing spaces
+    .split(/\s+/)                  // split on one or more spaces
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
+    .join(' ');
 /**
  * Converts a number into its word representation based on the Indian numbering system.
  * Supports numbers up to 99,99,99,999 (99 crores).
@@ -138,6 +146,78 @@ function numberToWords(num) {
   const fraction = fractionalWords.join(' ');
 
   return [main, fraction].filter(x => x).join(' ').replace(/\s+/g, ' ');
+}
+function numberToArabicWords(num) {
+  if (isNaN(num)) return 'عدد غير صالح';
+  if (num === 0) return 'صفر';
+  if (num < 0) return 'سالب ' + numberToArabicWords(-num);
+
+  const [integerPart, fractionalPart] = num.toString().split('.');
+
+  const units = [
+    '', 'واحد', 'اثنان', 'ثلاثة', 'أربعة', 'خمسة',
+    'ستة', 'سبعة', 'ثمانية', 'تسعة', 'عشرة',
+    'أحد عشر', 'اثنا عشر', 'ثلاثة عشر', 'أربعة عشر',
+    'خمسة عشر', 'ستة عشر', 'سبعة عشر', 'ثمانية عشر', 'تسعة عشر'
+  ];
+  const tens = [
+    '', 'عشرة', 'عشرون', 'ثلاثون', 'أربعون', 'خمسون',
+    'ستون', 'سبعون', 'ثمانون', 'تسعون'
+  ];
+  const hundreds = [
+    '', 'مائة', 'مائتان', 'ثلاثمائة', 'أربعمائة',
+    'خمسمائة', 'ستمائة', 'سبعمائة', 'ثمانمائة', 'تسعمائة'
+  ];
+  const scales = ['', 'ألف', 'مليون', 'مليار', 'تريليون'];
+
+  // Convert numbers below 1000
+  function convertChunk(n) {
+    let words = [];
+    if (n >= 100) {
+      words.push(hundreds[Math.floor(n / 100)]);
+      n %= 100;
+    }
+    if (n >= 20) {
+      words.push(tens[Math.floor(n / 10)]);
+      if (n % 10) {
+        words.push(units[n % 10]);
+      }
+    } else if (n > 0) {
+      words.push(units[n]);
+    }
+    return words.join(' و ');
+  }
+
+  // Process integer part
+  let amount = parseInt(integerPart, 10);
+  if (amount >= 1e15) return 'الرقم كبير جدًا';
+
+  let words = [];
+  let scaleIndex = 0;
+
+  while (amount > 0) {
+    const chunk = amount % 1000;
+    if (chunk !== 0) {
+      let chunkWords = convertChunk(chunk);
+      if (scales[scaleIndex]) {
+        chunkWords += ' ' + scales[scaleIndex];
+      }
+      words.unshift(chunkWords);
+    }
+    amount = Math.floor(amount / 1000);
+    scaleIndex++;
+  }
+
+  // Process fractional part (decimal digits one by one)
+  let fractionWords = [];
+  if (fractionalPart) {
+    fractionWords.push('فاصلة');
+    for (let digit of fractionalPart) {
+      fractionWords.push(units[parseInt(digit)] || 'صفر');
+    }
+  }
+
+  return [...words, ...fractionWords].join(' و ').replace(/ و و /g, ' و ');
 }
 
 
@@ -696,73 +776,46 @@ function reloadUI() {
 
 // Built-in way to convert a sentence to title case in JavaScript
 function toTitleCase(str) {
-    if (!str) return '';  // handle undefined/null
-    return str
-      .toLocaleLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+  if (!str) return '';  // handle undefined/null
+  return str
+    .toLocaleLowerCase()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 }
 
 
 
 function printWindow(contentHtml, docTitle = 'Print Document') {
-  console.log(docTitle);
-
-  // Create a hidden iframe
+  // Create an iframe to load the content
+  // Create an iframe to load the content
   const iframe = document.createElement('iframe');
-  iframe.style.position = 'absolute';
-  iframe.style.width = '0';
-  iframe.style.height = '0';
-  iframe.style.border = '0';
   document.body.appendChild(iframe);
 
-  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  // CHANGE 1: Hide the iframe reliably by positioning it off-screen
+  iframe.style.position = 'absolute';
+  iframe.style.left = '-9999px';
+  iframe.style.top = '-9999px';
 
-  // Open and write content (reliable)
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
   doc.open();
   doc.write(contentHtml);
   doc.close();
 
-  // Set the title
-  doc.title = docTitle;
+  // Wait for content to load and then print
+  iframe.onload = () => {
+    // You are setting the main document title here, which is fine, but it
+    // might be better to set the iframe's title inside its <title> tag.
+    document.title = docTitle
 
-  // Function to wait for images to load
-  const waitImagesAndPrint = () => {
-    const images = Array.from(doc.images);
-    let loadedCount = 0;
+    iframe.contentWindow.focus(); // Focus on the iframe
+    iframe.contentWindow.print();
 
-    if (images.length === 0) {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
+    // CHANGE 2: Delay the removal of the iframe to allow the print job to process
+    setTimeout(() => {
       document.body.removeChild(iframe);
-      return;
-    }
-
-    images.forEach(img => {
-      if (img.complete) {
-        loadedCount++;
-      } else {
-        img.onload = img.onerror = () => {
-          loadedCount++;
-          if (loadedCount === images.length) {
-            iframe.contentWindow.focus();
-            iframe.contentWindow.print();
-            document.body.removeChild(iframe);
-          }
-        };
-      }
-    });
-
-    if (loadedCount === images.length) {
-      iframe.contentWindow.focus();
-      iframe.contentWindow.print();
-      document.body.removeChild(iframe);
-    }
+    }, 500); // A half-second delay is usually enough
   };
-
-  // Use a small timeout to ensure all resources are ready
-  setTimeout(waitImagesAndPrint, 50);
 }
 
 

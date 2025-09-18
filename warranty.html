@@ -35,6 +35,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -48,7 +58,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -258,7 +268,7 @@
       } if (searchType === "delivered") {
         caption.innerText = "Warranty Delivery List"
       }
-      warrantyHistoryTBody.innerHTML = '<tr><td colspan="7" class="text-info text-center">Processing...</td>'
+      warrantyHistoryTBody.innerHTML = '<tr><td colspan="9" class="text-info text-center">Processing <i class="fa fa-spin fa-spinner"></i></td>'
       console.log("payload: ", payload);
       const requestOptions = {
         method: 'post',
@@ -304,7 +314,7 @@
                 `
               });
             } else {
-              content = `<tr><td colspan="7" class="text-danger text-center">No Data Available For ${caption.innerText} </td>`
+              content = `<tr><td colspan="9" class="text-danger text-center">No Data Available For ${caption.innerText} </td>`
             }
             warrantyHistoryTBody.innerHTML = content;
           }
@@ -351,7 +361,7 @@
           .then(data => {
             console.log(data)
             if (data.error === true) {
-              showErrorMessage(data.message)
+              showErrorMessage("No record of product history")
             } else {
               //update ViewProductListContainer
               if (data.message === 'Product Unsold') {

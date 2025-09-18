@@ -31,6 +31,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -44,7 +54,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -265,15 +275,15 @@
     <!-- Custom Theme Scripts -->
     <script src="src/assets/js/custom.js"></script>
     <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
-  <script src="src/assets/js/build.js"></script>
+    <script src="src/assets/js/config.js"></script>
+    <script src="src/assets/js/build.js"></script>
     <script src="src/assets/js/swal-popup-form.js"></script>
 
     <!-- sweetalert2 script -->
     <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
     <script>
-      let accounts, suppliers, payment_summary = [], expense_types = [];
+      let accounts, suppliers, payment_summary = [], expense_types = [], company = JSON.parse(localStorage.getItem("company"));
       window.addEventListener("DOMContentLoaded", () => {
         initSingleDatePicker("#transfer_date");
         document.getElementById("createExpenseType").addEventListener("click", () => {
@@ -450,6 +460,9 @@
 
       //renderPrintWindow renders printing window 
       function renderPrintWindow() {
+        let name = company.name.split(":::").filter(p => p.trim() !== "")
+        const companyFName = name[0]
+        const companyLName = name[1] || ""
         let n = payment_summary.length;
         let tBody = '';
 
@@ -479,7 +492,6 @@
         <head>
           <meta charset="UTF-8">
           <title>Company Report</title>
-          <link rel="stylesheet" type="text/css" href="styles.css">
           <style>
               /* Header styling */
             .header {
@@ -568,17 +580,10 @@
         <body>
           <!-- Header Section -->
           <div class="header">
-            ${payment_summary.company ? `
-              <h1>${payment_summary.company.name || ""}</h1>
-              <h2>${payment_summary.company.slogan || ""}</h2>
-              <p>${payment_summary.company.address || ""}</p>
-              <p>Mobile: ${payment_summary.company.mobile || ""} | Email: ${payment_summary.company.email || ""}</p>
-            ` : `
-              <h1>ProjuktiSheba Inventory</h1>
-              <h2>Track Smarter, Stock Better</h2>
-              <p>Teri Bazar, Netrakona Shadar, Netrakona, Mymensingh</p>
-              <p>Mobile: +8801742135093 | Email: psi@projuktisheba.com</p>
-            `}
+            <h1>${companyFName} ${companyLName}</h1>
+              ${company.slogan ? `<h2>${company.slogan || ""}</h2>` : ""}
+              ${company.area ? `<p>${company.area || ""}</p>` : ""}
+              <p>Mobile: ${company.mobile} | Email: ${company.email}</p>
             
             <!-- Line with Caption and Print Date -->
             <div class="caption-section">

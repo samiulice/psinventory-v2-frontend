@@ -32,19 +32,23 @@
   <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
   <!--  -->
 
-  <style>
-    html,
-    body {
-      height: 100% !important;
-    }
-  </style>
 
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+    <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
-      <div class="col-md-3 left_col menu_fixed">
+      <div class="col-md-3 left_col menu_fixed" id="sidebar">
         <div class="left_col scroll-view">
           <div class="navbar nav_title" style="border: 0;">
             <a href="index.html" class="site_title"><span>PS INVENTORY</span></a>
@@ -53,7 +57,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="/placeholder.svg" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -65,14 +69,14 @@
           <br />
 
           <!-- sidebar menu -->
-          <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+          <div id="sidebar-menu" class="main_menu_side main_menu">
             <!-- build by JS DOM -->
           </div>
           <!-- /sidebar menu -->
 
 
           <!-- /menu footer buttons -->
-          <div class="sidebar-footer hidden-small">
+          <div class="sidebar-footer">
             <a data-toggle="tooltip" data-placement="top" title="Settings" href="settings.html">
               <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
             </a>
@@ -193,7 +197,6 @@
     </div>
     <!-- /page content -->
   </div>
-  </div>
 
   <!-- jQuery -->
   <script src="src/assets/vendors/jquery/dist/jquery.min.js"></script>
@@ -238,6 +241,7 @@
 
   <!-- sweetalert2 script -->
   <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
+
   <script>
     window.addEventListener("DOMContentLoaded", event => {
       let pageData, products;
@@ -245,7 +249,7 @@
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer '+localStorage.getItem('token')
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
         }
       };
       fetch(`${api}/get-dash-board-data`, requestOptions)
@@ -281,7 +285,7 @@
           t_purchases += pageData.last_seven_days_purchases[i];
           t_expenses += pageData.last_seven_days_expense[i];
         }
-        if(appUser.role == "operator"){
+        if (appUser.role == "operator") {
           t_sales = 0
           t_purchases = 0
           t_expenses = 0
@@ -316,6 +320,8 @@
             }
             ,
             options: {
+              responsive: true,
+              maintainAspectRatio: false,
               scales: {
                 yAxes: [{
                   ticks: {
@@ -344,7 +350,7 @@
                 </div>
                 <div class="product-info">
                     <span style="font-weight:600">${element.product_name}</span>
-                    <p>⚠ <span class="warning-text">${element.quantity_purchased - element.quantity_sold === 0 ? 'Out of Stock!':'Low Stock'}</span> Minimum required: ${element.stock_alert_level}</p>
+                    <p>⚠ <span class="warning-text">${element.quantity_purchased - element.quantity_sold === 0 ? 'Out of Stock!' : 'Low Stock'}</span> Minimum required: ${element.stock_alert_level}</p>
                 </div>
             </div>
             `

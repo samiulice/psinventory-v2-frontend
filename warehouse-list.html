@@ -80,6 +80,16 @@
 </head>
 
 <body class="nav-md">
+  <!-- added mobile navigation toggle button -->
+  <div class="mobile-nav-toggle-container">
+    <span>PSINVENTORY</span>
+    <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
+      <i class="fa fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- added mobile overlay -->
+  <div class="mobile-overlay" onclick="closeMobileNav()"></div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -93,7 +103,7 @@
           <!-- menu profile quick info -->
           <div class="profile clearfix">
             <div class="profile_pic">
-              <img id="sidebar-logo" src="src/assets/images/logo.png" alt="..." class="img-circle profile_img">
+              <img id="sidebar-logo" src="" alt="..." class="img-circle profile_img">
             </div>
             <div class="profile_info">
               <span>Welcome,</span>
@@ -426,7 +436,7 @@
           /* Print Specific Adjustments */
           @media print {
             body {
-              margin: 0;
+              margin: 10px;
               padding: 0;
             }
 
@@ -538,7 +548,7 @@
           </div>
           <!-- Line with Caption and Print Date -->
           <div class="caption-section">
-            <div class="caption">List of Suppliers</div>
+            <div class="caption">List of Warehouses</div>
             <div class="print-date">Printed on: ${moment().format("DD-MMM-YYYY")}</div>
           </div>
           <div class="separator"></div>
@@ -562,7 +572,7 @@
         </html>
       `
       // Create an iframe to load the content
-      title = 'supplier_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
+      title = 'warehouse_list_' + moment().format('D_MMM_YYYY_hh_mm_ss');
       printWindow(content, title);
     }
 
