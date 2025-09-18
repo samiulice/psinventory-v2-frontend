@@ -753,8 +753,16 @@ function printPurchaseReturnInvoice() {
 
 }
 function printSaleInvoice() {
-    // --- HTML & LOGIC ---
-    const newWindow = window.open("", "_blank");
+    // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
 
     let tableRows = '';
     InvoiceData.sold_products.forEach((p, i) => {
@@ -935,14 +943,18 @@ function printSaleInvoice() {
         </html>
     `;
 
-    newWindow.document.write(content);
-    newWindow.document.close();
-    
-    // The old QR code logic is removed from here.
-    // The setTimeout is now only for printing.
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
+
 }
 
 
