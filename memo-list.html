@@ -330,14 +330,16 @@
 
                 // Create the Print button
                 const td = document.createElement('td');
+                // create button
                 const btn = document.createElement('button');
                 btn.className = "btn btn-primary btn-xs";
                 btn.textContent = "Print";
-                btn.dataset.memo = v.memo_no; // attach memo_no to button
+                btn.dataset.memo = v.memo_no; // attach memo to dataset
 
-                btn.addEventListener("click", function () {
-                  printInvoice(tabId, this.dataset.memo);
+                btn.addEventListener("click", function (event) {
+                  printInvoice(tabId, event);  // only pass tabId + event
                 });
+
 
                 td.appendChild(btn);
                 tr.appendChild(td);
@@ -351,42 +353,39 @@
         });
     }
 
-    function printInvoice(tabId, memo_no) {
-      //fetch details
-      const requestOptions = {
+    function printInvoice(tabId, event) {
+      const btn = event.target;
+      const memo_no = btn.dataset.memo;   // read memo_no from dataset
+      const oldHtml = btn.innerHTML;
+
+      btn.disabled = true;
+      btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
+
+      fetch(api + `/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, {
         method: 'post',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
         },
-      }
-      console.log(api + `/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`)
-      fetch(api + `/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, requestOptions)
-        .then(response => response.json())
-        .then(function (responseData) {
+      })
+        .then(r => r.json())
+        .then(responseData => {
           InvoiceData = responseData.invoice_data;
-          company = responseData.company;
-          console.log(responseData)
-          if (tabId === "purchase") {
-            printPurchaseInvoice()
-          } else if (tabId === "purchase-return") {
-            printPurchaseReturnInvoice()
-          } else if (tabId === "sale") {
-            printSaleInvoice()
-          } else if (tabId === "sale-return") {
-            printSaleReturnInvoice()
-          }
+          company = JSON.parse(localStorage.getItem("company"));
 
-
+          if (tabId === "purchase") printPurchaseInvoice();
+          else if (tabId === "purchase-return") printPurchaseReturnInvoice();
+          else if (tabId === "sale") printSaleInvoice();
+          else if (tabId === "sale-return") printSaleReturnInvoice();
         })
-        .catch(function (error) {
-          console.error('Error fetching data:', error);
+        .catch(err => console.error('Error fetching data:', err))
+        .finally(() => {
+          btn.disabled = false;
+          btn.innerHTML = oldHtml;
         });
-
-
-      //render the invoice
     }
+
   </script>
   <script>
     document.addEventListener('DOMContentLoaded', function () {

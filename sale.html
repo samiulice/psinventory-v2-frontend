@@ -494,591 +494,594 @@
       <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
       <script>
-        let selectedCustomer = null, refNo = "", refID = 0, selectedProductItem = null, selectedProductIndex = null, selectedProductQuantity = 1, products = [], SerialNumbers = [], selectedCurrentSerials = [], OldSerialNumbers = [], customers = [], headAccounts = [], categories = [], brands = [], sold_product = [], sale_details = [], note = "", InvoiceData, company;
-        window.addEventListener("DOMContentLoaded", event => {
-          initSingleDatePicker("#sale_date");
+    let selectedCustomer = null, refNo = "", refID = 0, selectedProductItem = null, selectedProductIndex = null, selectedProductQuantity = 1, products = [], SerialNumbers = [], selectedCurrentSerials = [], OldSerialNumbers = [], customers = [], headAccounts = [], categories = [], brands = [], sold_product = [], sale_details = [], note = "", InvoiceData, company;
+    window.addEventListener("DOMContentLoaded", event => {
+        initSingleDatePicker("#sale_date");
 
-          document.getElementById("createCustomerBtn").addEventListener("click", e => {
+        document.getElementById("createCustomerBtn").addEventListener("click", e => {
             addNewCustomer("sale", customers);
-          });
-
-          const params = new URLSearchParams(window.location.search);
-          const memo = params.get("memo");
-          const associatedID = parseInt(params.get("associated_id")) || 0;
-          const associatedName = params.get("associated_name") || "";
-          // Initialize promises for fetch requests
-          const requestOptions = {
-            method: "POST",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-          };
-          const fetchCustomers = fetch(api + '/mis/customer/view/active', requestOptions)
-            .then(response => response.json())
-            .then(function (responseData) {
-              customers = responseData.customers || [];
-              company = responseData.company;
-            })
-            .catch(function (error) {
-              console.error('Error fetching customers data:', error);
-            });
-
-          const fetchHeadAccounts = fetch(api + '/accounts/get-cash-bank-accounts', requestOptions)
-            .then(response => response.json())
-            .then(function (responseData) {
-              headAccounts = responseData.head_accounts || [];
-            })
-            .catch(function (error) {
-              console.error('Error fetching head_accounts data:', error);
-            });
-
-          const fetchCategories = fetch(api + '/inventory/category/list/active', requestOptions)
-            .then(response => response.json())
-            .then(function (responseData) {
-              categories = responseData.categories || [];
-            })
-            .catch(function (error) {
-              console.error('Error fetching categories data:', error);
-            });
-
-          const fetchProducts = fetch(api + `/inventory/products/available?memo=${memo}`, requestOptions)
-            .then(response => response.json())
-            .then(function (responseData) {
-              products = responseData.products || [];
-              console.log(products)
-            })
-            .catch(function (error) {
-              console.error('Error fetching products data:', error);
-            });
-
-          const fetchBrands = fetch(api + '/inventory/brand/list/active', requestOptions)
-            .then(response => response.json())
-            .then(function (responseData) {
-              brands = responseData.brands || [];
-            })
-            .catch(function (error) {
-              console.error('Error fetching brands data:', error);
-            });
-
-          // Wait for all fetch calls to complete
-          Promise.all([fetchCustomers, fetchHeadAccounts, fetchCategories, fetchProducts, fetchBrands])
-            .then(() => {
-              console.log("All fetch requests completed.");
-              updateAccountsDiv()
-              updateProductsDiv()
-              updateCustomerDiv()
-              //get url params
-              if (associatedID !== null && associatedID !== 0) {
-                defaultValues(associatedID, memo)
-              }
-            })
-            .catch(error => {
-              console.error("Error completing all fetch requests:", error);
-            })
-            .finally(event => {
-              hidePreloader()
-            });
         });
 
-        //updateCustomerDiv updates customer selection options with the fetched data
-        function updateCustomerDiv() {
-          const container = document.getElementById('customer-autocomplete-container');
-          const input = document.getElementById("customer");
-          const suggestions = document.getElementById("customer-suggestions");
+        const params = new URLSearchParams(window.location.search);
+        const memo = params.get("memo");
+        const associatedID = parseInt(params.get("associated_id")) || 0;
+        const associatedName = params.get("associated_name") || "";
+        // Initialize promises for fetch requests
+        const requestOptions = {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        };
+        const fetchCustomers = fetch(api + '/mis/customer/view/active', requestOptions)
+            .then(response => response.json())
+            .then(function(responseData) {
+                customers = responseData.customers || [];
+                company = responseData.company;
+            })
+            .catch(function(error) {
+                console.error('Error fetching customers data:', error);
+            });
 
-          // Function to populate suggestions
-          function populateSuggestions(filteredCustomers) {
+        const fetchHeadAccounts = fetch(api + '/accounts/get-cash-bank-accounts', requestOptions)
+            .then(response => response.json())
+            .then(function(responseData) {
+                headAccounts = responseData.head_accounts || [];
+            })
+            .catch(function(error) {
+                console.error('Error fetching head_accounts data:', error);
+            });
+
+        const fetchCategories = fetch(api + '/inventory/category/list/active', requestOptions)
+            .then(response => response.json())
+            .then(function(responseData) {
+                categories = responseData.categories || [];
+            })
+            .catch(function(error) {
+                console.error('Error fetching categories data:', error);
+            });
+
+        const fetchProducts = fetch(api + `/inventory/products/available?memo=${memo}`, requestOptions)
+            .then(response => response.json())
+            .then(function(responseData) {
+                products = responseData.products || [];
+                console.log(products)
+            })
+            .catch(function(error) {
+                console.error('Error fetching products data:', error);
+            });
+
+        const fetchBrands = fetch(api + '/inventory/brand/list/active', requestOptions)
+            .then(response => response.json())
+            .then(function(responseData) {
+                brands = responseData.brands || [];
+            })
+            .catch(function(error) {
+                console.error('Error fetching brands data:', error);
+            });
+
+        // Wait for all fetch calls to complete
+        Promise.all([fetchCustomers, fetchHeadAccounts, fetchCategories, fetchProducts, fetchBrands])
+            .then(() => {
+                console.log("All fetch requests completed.");
+                updateAccountsDiv()
+                updateProductsDiv()
+                updateCustomerDiv()
+                //get url params
+                if (associatedID !== null && associatedID != 0) {
+                    defaultValues(associatedID, memo)
+                }
+            })
+            .catch(error => {
+                console.error("Error completing all fetch requests:", error);
+            })
+            .finally(event => {
+                hidePreloader()
+            });
+    });
+
+    //updateCustomerDiv updates customer selection options with the fetched data
+    function updateCustomerDiv() {
+        const container = document.getElementById('customer-autocomplete-container');
+        const input = document.getElementById("customer");
+        const suggestions = document.getElementById("customer-suggestions");
+
+        // Function to populate suggestions
+        function populateSuggestions(filteredCustomers) {
             suggestions.innerHTML = '';
             if (filteredCustomers.length === 0) {
-              suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
-              return;
+                suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
+                return;
             }
             filteredCustomers.forEach(customer => {
-              const div = document.createElement("div");
-              div.className = "autocomplete-item";
-              div.innerHTML = `
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.innerHTML = `
                 <div class="d-flex justify-content-between">
                   <span>${customer.account_name}</span>
                   <small class="text-muted">${customer.account_code}</small>
                 </div>
               `;
-              div.onclick = () => {
-                input.value = customer.account_name;
-                suggestions.style.display = 'none';
-                selectedCustomer = customer;
-              };
-              suggestions.appendChild(div);
+                div.onclick = () => {
+                    input.value = customer.account_name;
+                    suggestions.style.display = 'none';
+                    selectedCustomer = customer;
+                };
+                suggestions.appendChild(div);
             });
 
-          }
+        }
 
-          input.addEventListener("input", function (e) {
+        input.addEventListener("input", function(e) {
             const searchTerm = e.target.value.toLowerCase();
             suggestions.style.display = 'block';
 
             if (!searchTerm) {
-              suggestions.style.display = 'none';
-              return;
+                suggestions.style.display = 'none';
+                return;
             }
 
             const filtered = customers
-              .filter(c =>
-                c.account_name.toLowerCase().includes(searchTerm) ||
-                c.mobile.includes(searchTerm)
-              )
-              .slice(0, 15);
+                .filter(c =>
+                    c.account_name.toLowerCase().includes(searchTerm) ||
+                    c.mobile.includes(searchTerm)
+                )
+                .slice(0, 15);
             populateSuggestions(filtered);
-          });
+        });
 
-          // Show all suggestions on first click
-          input.addEventListener("focus", function () {
+        // Show all suggestions on first click
+        input.addEventListener("focus", function() {
             const filtered = customers.slice(0, 15);
             suggestions.style.display = 'block';
             populateSuggestions(filtered);
-          });
+        });
 
-          // Hide suggestions when clicking outside
-          document.addEventListener("click", (e) => {
+        // Hide suggestions when clicking outside
+        document.addEventListener("click", (e) => {
             if (!container.contains(e.target)) {
-              suggestions.style.display = 'none';
+                suggestions.style.display = 'none';
             }
-          });
-        }
+        });
+    }
 
-        //updateAccountsDiv updates account selection options with the fetched data 
-        function updateAccountsDiv() {
-          const account = document.getElementById("head_account")
-          account.innerHTML = '';
+    //updateAccountsDiv updates account selection options with the fetched data 
+    function updateAccountsDiv() {
+        const account = document.getElementById("head_account")
+        account.innerHTML = '';
 
-          if (headAccounts) {
+        if (headAccounts) {
             headAccounts.forEach((ac, i) => {
-              account.innerHTML += `<option value=${i}>${ac.account_name}</option>`;
+                account.innerHTML += `<option value=${i}>${ac.account_name}</option>`;
             });
             account.selectedIndex = 0
-          } else {
+        } else {
             account.innerHTML = `<option value="" selected disabled>No Account Available</option>`;
-          }
         }
+    }
 
-        function updateProductsDiv() {
-          const container = document.getElementById('product-autocomplete-container');
-          const input = document.getElementById("product_item");
-          const suggestions = document.getElementById("product-suggestions");
+    function updateProductsDiv() {
+        const container = document.getElementById('product-autocomplete-container');
+        const input = document.getElementById("product_item");
+        const suggestions = document.getElementById("product-suggestions");
 
-          // Function to populate suggestions
-          function populateSuggestions(filteredProducts) {
+        // Function to populate suggestions
+        function populateSuggestions(filteredProducts) {
             suggestions.innerHTML = '';
             if (filteredProducts.length === 0) {
-              suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
-              return;
+                suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`;
+                return;
             }
             filteredProducts.forEach((item, index) => {
-              const div = document.createElement("div");
-              div.className = "autocomplete-item";
-              div.innerHTML = `
+                const div = document.createElement("div");
+                div.className = "autocomplete-item";
+                div.innerHTML = `
                 <div class="d-flex justify-content-between">
                   <span>${item.product_name}</span>
                   <small>${item.product_code}</small>
                 </div>
               `;
-              div.onclick = () => {
-                input.value = item.product_name;
-                suggestions.style.display = 'none';
-                selectedProductItem = item;
-                selectedProductIndex = index;
-                document.getElementById("stock").innerText = item.product_metadata.length || 0;
-              };
-              suggestions.appendChild(div);
+                div.onclick = () => {
+                    input.value = item.product_name;
+                    suggestions.style.display = 'none';
+                    selectedProductItem = item;
+                    selectedProductIndex = index;
+                    document.getElementById("stock").innerText = item.product_metadata.length || 0;
+                };
+                suggestions.appendChild(div);
             });
-          }
+        }
 
-          input.addEventListener("input", function (e) {
+        input.addEventListener("input", function(e) {
             const searchTerm = e.target.value.toLowerCase();
             suggestions.style.display = 'block';
 
             if (!searchTerm) {
-              suggestions.style.display = 'none';
-              return;
+                suggestions.style.display = 'none';
+                return;
             }
 
             const filtered = products
-              .filter(c =>
-                c.product_name.toLowerCase().includes(searchTerm) ||
-                c.product_code.toLowerCase().includes(searchTerm)
-              )
-              .slice(0, 15);
+                .filter(c =>
+                    c.product_name.toLowerCase().includes(searchTerm) ||
+                    c.product_code.toLowerCase().includes(searchTerm)
+                )
+                .slice(0, 15);
             populateSuggestions(filtered);
-          });
+        });
 
-          // Show all suggestions on first click
-          input.addEventListener("focus", function () {
+        // Show all suggestions on first click
+        input.addEventListener("focus", function() {
             const filtered = products.slice(0, 15);
             suggestions.style.display = 'block';
             populateSuggestions(filtered);
-          });
+        });
 
-          // Hide suggestions when clicking outside
-          document.addEventListener("click", (e) => {
+        // Hide suggestions when clicking outside
+        document.addEventListener("click", (e) => {
             if (!container.contains(e.target)) {
-              suggestions.style.display = 'none';
+                suggestions.style.display = 'none';
             }
-          });
-        }
+        });
+    }
 
-        function defaultValues(customerID, memo) {
-          //Show default customer if customerID is provided
-          if (customerID !== null && customerID != 0) {
+    function defaultValues(customerID, memo) {
+        //Show default customer if customerID is provided
+        if (customerID !== null && customerID != 0) {
             const id = parseInt(customerID)
             const defaultCustomer = customers.find(c => c.id === id);
             if (defaultCustomer) {
-              document.getElementById("customer").value = defaultCustomer.account_name;
-              selectedCustomer = defaultCustomer;
+                document.getElementById("customer").value = defaultCustomer.account_name;
+                selectedCustomer = defaultCustomer;
             }
-          }
-          if (memo) {
+        }
+        if (memo) {
             const quotation = JSON.parse(localStorage.getItem(memo));
             console.log("quotation: ", quotation)
             localStorage.removeItem(memo)
             refID = quotation.id;
             refNo = quotation.memo_no;
+            document.getElementById("memo_no").value = quotation.memo_no; // Fix: Set memo field
             let totalDiscount = 0, billAmount = 0;
             quotation.details.forEach(element => {
-              selectedProductItem = products.find(p => p.id == element.product_id);
-              selectedProductIndex = products.findIndex((p) => p.id == element.product_id);
-              selectedProductQuantity = element.quantity;
-              selectedProductItem.mrp = element.rate;
-              billAmount += (element.rate * element.quantity);
-              totalDiscount += (element.item_discount * element.quantity);
+                selectedProductItem = products.find(p => p.id == element.product_id);
+                selectedProductIndex = products.findIndex((p) => p.id == element.product_id);
+                selectedProductQuantity = element.quantity;
+                selectedProductItem.mrp = element.rate;
+                billAmount += (element.rate * element.quantity);
+                totalDiscount += (element.item_discount * element.quantity);
 
-
-              addRow();
-              if (element.serial_number) {
-                let sn = element.serial_number.split(" ")
-                sn.forEach(s => {
-                  OldSerialNumbers.push(s)
-                });
-
-                document.querySelectorAll(`input[name="serialNumber[${element.quantity - 1}][]"]`).forEach((el, i) => {
-                  console.log(el, sn[i])
-                  el.value = sn[i] || '';
-                });
-              }
+                addRow();
+                if (element.serial_number) {
+                    let sn = element.serial_number.split(" ")
+                    sn.forEach(s => {
+                        OldSerialNumbers.push(s)
+                    });
+                    
+                    const row = document.querySelector("#itemTable tbody tr:last-child");
+                    const serialInputs = row.querySelectorAll(`input[name^="serialNumber"]`);
+                    serialInputs.forEach((el, i) => {
+                        el.value = sn[i] || '';
+                    });
+                }
             });
 
-            discountPercentage = (totalDiscount * 100 / billAmount).toFixed(2);
+            const discountPercentage = (totalDiscount * 100 / billAmount).toFixed(2);
             document.getElementById("discount").value = discountPercentage;
-            document.getElementById("total_amount").value = billAmount - totalDiscount;
-            document.getElementById("due_amount").value = billAmount - totalDiscount;
+            document.getElementById("total_amount").value = Math.round(billAmount - totalDiscount);
+            document.getElementById("due_amount").value = Math.round(billAmount - totalDiscount);
+            document.getElementById("paid_amount").max = Math.round(billAmount - totalDiscount);
             console.log(totalDiscount, billAmount)
-          }
         }
-        //updating quantity available section
-        document.getElementById("product_item").addEventListener("change", e => {
-          let item = selectedProductItem;
-          document.getElementById("stock").innerText = item.quantity_purchased - item.quantity_sold;
-        })
+    }
+    //updating quantity available section
+    document.getElementById("product_item").addEventListener("change", e => {
+        let item = selectedProductItem;
+        document.getElementById("stock").innerText = item.quantity_purchased - item.quantity_sold;
+    })
 
-        //togglePriceVisibility toggle MRP section between visible and hidden state
-        function togglePriceVisibility() {
-          let btn = document.getElementById("togglePriceVisibilityBtn");
-          let item = selectedProductItem;
-          if (btn.innerHTML === `<i class="fa-solid fa-info"></i>`) {
-            btn.innerHTML = Math.round((item.purchase_cost - item.purchase_discount) / item.quantity_purchased);
-          } else {
+    //togglePriceVisibility toggle MRP section between visible and hidden state
+    function togglePriceVisibility() {
+        let btn = document.getElementById("togglePriceVisibilityBtn");
+        let item = selectedProductItem;
+        if (btn.innerHTML === `<i class="fa-solid fa-info"></i>`) {
+            btn.innerHTML = Math.round(item.purchase_cost / item.quantity_purchased);
+        } else {
             btn.innerHTML = `<i class="fa-solid fa-info"></i>`;
-          }
         }
+    }
 
-        // Function to add a new row
-        function addRow() {
-          const item = selectedProductItem;
-          const tableBody = document.querySelector("#itemTable tbody");
-          const row = document.createElement("tr");
-
-          checkboxId = moment().format('YYYY-MM-DD_HH-mm-ss-SSS');
-          row.innerHTML = `
-              <td><input type="text" name="itemName[]" class="form-control input-sm" value='${item.product_name + " #" + selectedProductIndex}' required readonly></td>
-              <td><input type="text" name="warranty[]" class="form-control input-sm" value='${item.warranty}' required></td>
-              <td><input type="number" name="quantity[]" class="form-control input-sm" min="1" max="${item.quantity_purchased - item.quantity_sold}" value="${selectedProductQuantity}" onchange="updateRow(this)" required></td>
-              <td><input type="number" name="rate[]" class="form-control input-sm" min="0" value='${item.mrp}' onchange="updateRow(this)" required></td>
-              <td><input type="number" name="subtotal[]" class="form-control input-sm" value="0" readonly></td>
-              <td><div class="serial-numbers" style="overflow-y:scroll; max-height:200px;overflow-y: scroll; scrollbar-width: thin; scrollbar-color: #4f6969 #f1f1f1;"></div></td>
-              <td>
-                <div class="custom-checkbox-wrapper">
-                  <input type='checkbox' class='tgl tgl-ios no-sn-checkbox' id='toggle-checkbox_${checkboxId}' onclick="toggleSerialNumbers(this)">
-                  <label class='tgl-btn' for='toggle-checkbox_${checkboxId}'></label>
-                </div>
-              </td>
-              <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)"><i class="fa-solid fa-trash-can"></i></button></td>
-          `;
-
-          // Store the product ID in a data attribute of the row
-          row.dataset.productId = item.id;
-          row.dataset.productIndex = selectedProductIndex;
-
-          tableBody.appendChild(row);
-          updateRow(row.querySelector('input[name="quantity[]"]'));
+    // Function to add a new row
+    function addRow() {
+        const item = selectedProductItem;
+        if (!item) {
+            showErrorMessage("Please select a product first.");
+            return;
         }
+        const tableBody = document.querySelector("#itemTable tbody");
+        const rowCount = tableBody.rows.length;
+        const row = document.createElement("tr");
 
-        function updateRow(element) {
-          const row = element.closest("tr");
-          const quantityInput = row.querySelector('input[name="quantity[]"]');
-          const maxQuantity = parseInt(quantityInput.getAttribute("max"), 10) || 0; // Get the max allowed quantity
-          let quantity = parseInt(quantityInput.value, 10) || 0;
+        const checkboxId = moment().format('YYYY-MM-DD_HH-mm-ss-SSS');
+        row.innerHTML = `
+            <td><input type="text" name="itemName[]" class="form-control input-sm" value='${item.product_name + " #" + selectedProductIndex}' required readonly></td>
+            <td><input type="text" name="warranty[]" class="form-control input-sm" value='${item.warranty}' required></td>
+            <td><input type="number" name="quantity[]" class="form-control input-sm" min="1" max="${item.quantity_purchased - item.quantity_sold}" value="${selectedProductQuantity}" oninput="updateRow(this)" required></td>
+            <td><input type="number" name="rate[]" class="form-control input-sm" min="0" value='${item.mrp}' oninput="updateRow(this)" required></td>
+            <td><input type="number" name="subtotal[]" class="form-control input-sm" value="0" readonly></td>
+            <td><div class="serial-numbers" style="overflow-y:scroll; max-height:200px;overflow-y: scroll; scrollbar-width: thin; scrollbar-color: #4f6969 #f1f1f1;"></div></td>
+            <td>
+              <div class="custom-checkbox-wrapper">
+                <input type='checkbox' class='tgl tgl-ios no-sn-checkbox' id='toggle-checkbox_${checkboxId}' onclick="toggleSerialNumbers(this)">
+                <label class='tgl-btn' for='toggle-checkbox_${checkboxId}'></label>
+              </div>
+            </td>
+            <td><button type="button" class="btn btn-danger btn-sm" onclick="removeRow(this)"><i class="fa-solid fa-trash-can"></i></button></td>
+        `;
 
-          // Validate and adjust quantity if it exceeds the max allowed
-          if (quantity > maxQuantity) {
+        // Store the product ID and index in a data attribute of the row
+        row.dataset.productId = item.id;
+        row.dataset.productIndex = selectedProductIndex;
+        row.dataset.rowIndex = rowCount; // Fix: Add a unique row index
+
+        tableBody.appendChild(row);
+        updateRow(row.querySelector('input[name="quantity[]"]'));
+
+        // Fix: Clear product input and reset stock display
+        document.getElementById("product_item").value = "";
+        selectedProductItem = null;
+        selectedProductIndex = null;
+        document.getElementById("stock").innerText = "0";
+    }
+
+    function updateRow(element) {
+        const row = element.closest("tr");
+        const quantityInput = row.querySelector('input[name="quantity[]"]');
+        const maxQuantity = parseInt(quantityInput.getAttribute("max"), 10) || 0;
+        let quantity = parseInt(quantityInput.value, 10) || 0;
+
+        // Validate and adjust quantity if it exceeds the max allowed
+        if (quantity > maxQuantity) {
             quantity = maxQuantity;
-            quantityInput.value = maxQuantity; // Set the input value to the max allowed
-          }
+            quantityInput.value = maxQuantity;
+        }
 
-          const rate = parseFloat(row.querySelector('input[name="rate[]"]').value) || 0;
-          const subtotalField = row.querySelector('input[name="subtotal[]"]');
-          const serialNumbersContainer = row.querySelector('.serial-numbers');
-          let noSnCheckbox = row.querySelector('.no-sn-checkbox');
-          noSnCheckbox.readOnly = true;
-          let currentProduct = products[row.dataset.productIndex];
+        const rate = parseFloat(row.querySelector('input[name="rate[]"]').value) || 0;
+        const subtotalField = row.querySelector('input[name="subtotal[]"]');
+        const serialNumbersContainer = row.querySelector('.serial-numbers');
+        const noSnCheckbox = row.querySelector('.no-sn-checkbox');
+        let currentProduct = products[row.dataset.productIndex];
 
-          if (currentProduct.product_metadata[0].serial_number === "unmarked") {
+        if (currentProduct.product_metadata[0].serial_number === "unmarked") {
             noSnCheckbox.checked = true;
-          }
+            noSnCheckbox.disabled = true;
+        } else {
+            noSnCheckbox.disabled = false;
+        }
 
-          // Update subtotal
-          const subtotal = Math.round(quantity * rate);
-          subtotalField.value = subtotal;
-          updateTotal();
+        // Update subtotal
+        const subtotal = Math.round(quantity * rate);
+        subtotalField.value = subtotal;
+        updateTotal();
 
-          if (!noSnCheckbox.checked) {
+        if (!noSnCheckbox.checked) {
             const existingSerials = Array.from(serialNumbersContainer.querySelectorAll('input[type="text"]'))
-              .map((input) => input.value);
+                .map((input) => input.value);
 
             serialNumbersContainer.innerHTML = '';
 
             for (let i = 0; i < quantity; i++) {
-              const serialWrapper = document.createElement("div");
-              serialWrapper.classList.add("input-group");
+                const serialWrapper = document.createElement("div");
+                serialWrapper.classList.add("input-group");
 
-              const serialInput = document.createElement("input");
-              serialInput.type = "text";
-              serialInput.required = true;
-              serialInput.name = `serialNumber[${quantity - 1}][]`;
-              serialInput.placeholder = `Serial ${i + 1}`;
-              serialInput.classList.add("form-control", "input-sm", "validate-sn");
-              serialInput.value = existingSerials[i] || '';
+                const serialInput = document.createElement("input");
+                serialInput.type = "text";
+                serialInput.required = true;
+                serialInput.name = `serialNumber[${row.dataset.rowIndex}][]`; // Fix: Use unique row index
+                serialInput.placeholder = `Serial ${i + 1}`;
+                serialInput.classList.add("form-control", "input-sm", "validate-sn");
+                serialInput.value = existingSerials[i] || '';
 
-              // ========== Focus Management Start ==========
-              // Handle Enter/Tab key from barcode scanner
-              serialInput.addEventListener('keydown', function (e) {
-                if (e.key === 'Enter' || e.key === 'Tab') {
-                  e.preventDefault();
-                  const allSerials = serialNumbersContainer.querySelectorAll('input[type="text"]');
-                  const currentIndex = Array.from(allSerials).indexOf(this);
+                // ========== Focus Management Start ==========
+                // Handle Enter/Tab key from barcode scanner
+                serialInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === 'Tab') {
+                        e.preventDefault();
+                        const allSerials = serialNumbersContainer.querySelectorAll('input[type="text"]');
+                        const currentIndex = Array.from(allSerials).indexOf(this);
 
-                  if (currentIndex < allSerials.length - 1) {
-                    allSerials[currentIndex + 1].focus(); // Next serial field
-                  } else {
-                    // Move to next logical field (rate input)
-                    row.querySelector('input[name="rate[]"]').focus();
-                  }
-                }
-              });
+                        if (currentIndex < allSerials.length - 1) {
+                            allSerials[currentIndex + 1].focus(); // Next serial field
+                        } else {
+                            // Move to next logical field (rate input)
+                            row.querySelector('input[name="rate[]"]').focus();
+                        }
+                    }
+                });
 
-              // Remove button setup
-              const removeBtn = document.createElement("button");
-              removeBtn.type = "button";
-              removeBtn.classList.add("btn", "btn-danger", "btn-sm");
-              removeBtn.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
-              removeBtn.onclick = () => removeSerialNumber(serialWrapper, row);
+                // Remove button setup
+                const removeBtn = document.createElement("button");
+                removeBtn.type = "button";
+                removeBtn.classList.add("btn", "btn-danger", "btn-sm");
+                removeBtn.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
+                removeBtn.onclick = () => removeSerialNumber(serialWrapper, row);
 
-              const span = document.createElement("span");
-              span.classList.add("input-group-btn");
-              span.appendChild(removeBtn);
+                const span = document.createElement("span");
+                span.classList.add("input-group-btn");
+                span.appendChild(removeBtn);
 
-              serialWrapper.appendChild(serialInput);
-              serialWrapper.appendChild(span);
-              serialNumbersContainer.appendChild(serialWrapper);
+                serialWrapper.appendChild(serialInput);
+                serialWrapper.appendChild(span);
+                serialNumbersContainer.appendChild(serialWrapper);
             }
 
             // Attach validation on blur
             const inputFields = document.querySelectorAll(".validate-sn");
             inputFields.forEach((inputField) => {
-              inputField.addEventListener("blur", checkInputValue);
+                inputField.addEventListener("blur", checkInputValue);
             });
-          } else {
+        } else {
             serialNumbersContainer.innerHTML = '';
-          }
         }
-        // Function to handle validation for each input
-        function checkInputValue(event) {
-          const inputValue = event.target.value.trim(); // Normalize input
-          const row = event.target.closest("tr");
-          const product = products[row.dataset.productIndex]; // Get the product for the current row
+    }
 
-          // Check if the serial number exists
-          const isValid = product.product_metadata.some(item => item.serial_number === inputValue);
+    // Function to handle validation for each input
+    function checkInputValue(event) {
+        const inputValue = event.target.value.trim(); // Normalize input
+        const row = event.target.closest("tr");
+        const product = products[row.dataset.productIndex]; // Get the product for the current row
 
-          if (inputValue && !isValid) {
+        // Check if the serial number exists
+        const isValid = product.product_metadata.some(item => item.serial_number === inputValue);
+
+        if (inputValue && !isValid) {
             showErrorMessage(`${inputValue} does not exist, Please enter correct S/N`);
             event.target.value = ""; // Clear the input if invalid
-          }
         }
+    }
 
-        // Function to remove a serial number and update quantity and subtotal
-        function removeSerialNumber(serialInput, row) {
-          const serialWrapper = serialInput.closest("div");
-          serialWrapper.remove();
+    // Function to remove a serial number and update quantity and subtotal
+    function removeSerialNumber(serialInput, row) {
+        const serialWrapper = serialInput.closest("div");
+        serialWrapper.remove();
 
-          // Update quantity and subtotal
-          const quantityField = row.querySelector('input[name="quantity[]"]');
-          let quantity = parseInt(quantityField.value);
-          quantity -= 1;
-          if (quantity < 0) quantity = 0;
-          quantityField.value = quantity;
+        // Update quantity and subtotal
+        const quantityField = row.querySelector('input[name="quantity[]"]');
+        let quantity = parseInt(quantityField.value);
+        quantity -= 1;
+        if (quantity < 0) quantity = 0;
+        quantityField.value = quantity;
 
-          // Recalculate subtotal
-          const rate = row.querySelector('input[name="rate[]"]').value;
-          const subtotalField = row.querySelector('input[name="subtotal[]"]');
-          const subtotal = Math.round(quantity * rate);
-          subtotalField.value = subtotal;
-          updateTotal();
-        }
+        // Recalculate subtotal
+        const rate = row.querySelector('input[name="rate[]"]').value;
+        const subtotalField = row.querySelector('input[name="subtotal[]"]');
+        const subtotal = Math.round(quantity * rate);
+        subtotalField.value = subtotal;
+        updateTotal();
+    }
 
-        document.getElementById("shipment_cost").addEventListener("blur", ev => {
-          updateTotal()
-        })
-        // Function to update the total subtotal in the footer
-        function updateTotal() {
-          let billAmount = 0, discountAmount = 0, totalAmount = 0;
-          document.querySelectorAll('input[name="subtotal[]"]').forEach(subtotalField => {
+    // Fix: Use oninput for real-time updates
+    document.getElementById("shipment_cost").addEventListener("input", updateTotal);
+    document.getElementById("discount").addEventListener("input", updateTotal);
+    document.getElementById("paid_amount").addEventListener("input", updateTotal);
+
+    // Function to update the total subtotal in the footer
+    function updateTotal() {
+        let billAmount = 0;
+        document.querySelectorAll('input[name="subtotal[]"]').forEach(subtotalField => {
             billAmount += parseInt(parseFloat(subtotalField.value) || 0); // Convert subtotal to integer
-          });
-          document.getElementById("bill_amount").value = billAmount;
-          discountAmount = parseFloat(document.getElementById("discount").value) || 0;
-          let shipmentCost = parseInt(document.getElementById("shipment_cost").value) || 0;
-          totalAmount = Math.round(billAmount - billAmount * discountAmount / 100) + shipmentCost;
-          document.getElementById("total_amount").value = totalAmount;
-          document.getElementById("paid_amount").max = totalAmount;
-          document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("paid_amount").value) || 0;
-        }
+        });
 
-        //updating total amount on change discount input
-        document.getElementById("discount").addEventListener("change", e => {
-          updateTotal()
-        })
-        //updating discount on change total_amount input
-        document.getElementById("total_amount").addEventListener("change", e => {
-          let totalAmount = parseInt(document.getElementById("total_amount").value) || 0;
-          document.getElementById("paid_amount").max = totalAmount
-          document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("paid_amount").value) || 0;
+        document.getElementById("bill_amount").value = billAmount;
+        const discountPercentage = parseFloat(document.getElementById("discount").value) || 0;
+        const shipmentCost = parseInt(document.getElementById("shipment_cost").value) || 0;
 
-          let shipmentCost = parseInt(document.getElementById("shipment_cost").value) || 0;
-          totalAmount -= shipmentCost
-          let billAmount = parseInt(document.getElementById("bill_amount").value) || 0;
-          document.getElementById("discount").value = parseFloat((billAmount - totalAmount) * 100 / billAmount).toFixed(2);
+        // Fix: Correct calculation order
+        const totalAmount = Math.round(billAmount * (1 - discountPercentage / 100) + shipmentCost);
+        document.getElementById("total_amount").value = totalAmount;
+        document.getElementById("paid_amount").max = totalAmount;
 
-        })
-        //updating due amount on change paid_amount input
-        document.getElementById("paid_amount").addEventListener("change", e => {
-          let totalAmount = parseInt(document.getElementById("total_amount").value) || 0
-          let paidAmount = parseInt(document.getElementById("paid_amount").value) || 0
-          document.getElementById("due_amount").value = totalAmount - paidAmount;
-        })
+        const paidAmount = parseInt(document.getElementById("paid_amount").value) || 0;
+        // Fix: Correct due amount calculation
+        document.getElementById("due_amount").value = totalAmount - paidAmount;
+    }
 
-        // Function to remove a row
-        function removeRow(button) {
-          const row = button.closest("tr");
-          row.remove();
-          updateTotal();
-        }
+    // Function to remove a row
+    function removeRow(button) {
+        const row = button.closest("tr");
+        row.remove();
+        updateTotal();
+    }
 
-        // Function to toggle serial numbers based on "No SN" checkbox
-        function toggleSerialNumbers(checkbox) {
-          const row = checkbox.closest("tr");
-          updateRow(row.querySelector('input[name="quantity[]"]')); // Update row when toggling
-        }
+    // Function to toggle serial numbers based on "No SN" checkbox
+    function toggleSerialNumbers(checkbox) {
+        const row = checkbox.closest("tr");
+        updateRow(row.querySelector('input[name="quantity[]"]')); // Update row when toggling
+    }
 
-        // Function to get all table data including serial numbers
-        function getTableData() {
-          const tableBody = document.querySelector("#itemTable tbody");
-          const rows = tableBody.querySelectorAll("tr");
-          const data = [];
+    // Function to get all table data including serial numbers
+    function getTableData() {
+        const tableBody = document.querySelector("#itemTable tbody");
+        const rows = tableBody.querySelectorAll("tr");
+        const data = [];
 
-          rows.forEach(row => {
+        rows.forEach(row => {
             const product_name = row.querySelector('input[name="itemName[]"]').value;
             const warranty = parseInt(row.querySelector('input[name="warranty[]"]').value);
             const quantity = parseInt(row.querySelector('input[name="quantity[]"]').value);
             const rate = parseInt(row.querySelector('input[name="rate[]"]').value);
             const subtotal = parseInt(row.querySelector('input[name="subtotal[]"]').value);
+            // Fix: Use the dynamic name to get serial numbers
             let serial_numbers = Array.from(row.querySelectorAll('input[name^="serialNumber"]')).map(input => input.value);
             const no_serial_number = row.querySelector('.no-sn-checkbox').checked;
 
             const parts = product_name.split("#");
-            let item = products[parseInt(parts[parts.length - 1])]
+            const item = products[parseInt(parts[parts.length - 1])];
             //update product mrp
             item.mrp = rate;
             let serial_numbers_id = []
 
             //insert serial number for non SN Product
             if (no_serial_number) {
-              for (let i = 0; i < quantity; i++) {
-                let pm = item.product_metadata[i];
-                // serial_numbers.push(pm.serial_number)
-                serial_numbers_id.push(pm.id)
-              }
-            } else {
-              serial_numbers.forEach(sn => {
-                let pm = item.product_metadata.find(pmx => pmx.serial_number === sn)
-                if (pm) {
-                  serial_numbers_id.push(pm.id)
+                for (let i = 0; i < quantity; i++) {
+                    let pm = item.product_metadata[i];
+                    // serial_numbers.push(pm.serial_number)
+                    serial_numbers_id.push(pm.id)
                 }
-              })
+            } else {
+                serial_numbers.forEach(sn => {
+                    let pm = item.product_metadata.find(pmx => pmx.serial_number === sn)
+                    if (pm) {
+                        serial_numbers_id.push(pm.id)
+                    }
+                })
             }
 
             data.push({
-              item,
-              warranty,
-              quantity,
-              rate,
-              subtotal,
-              serial_numbers,
-              serial_numbers_id,
+                item,
+                warranty,
+                quantity,
+                rate,
+                subtotal,
+                serial_numbers,
+                serial_numbers_id,
             });
-          });
+        });
 
-          return data;
-        }
+        return data;
+    }
 
-        //submit form 
-        function submitForm() {
-          const form = document.getElementById("itemForm")
-          // Prevent actual form submission
-          if (!form.checkValidity()) {
+    //submit form 
+    function submitForm() {
+        const form = document.getElementById("itemForm")
+        // Prevent actual form submission
+        if (!form.checkValidity()) {
             form.reportValidity(); // Show default browser validation messages
             return;
-          }
-          //disable submit btn
-          document.getElementById("submitBtn").innerHTML = 'Processing &nbsp;<i class="fa fa-spinner fa-spin"></i>';
-          document.getElementById("submitBtn").disabled = true;
-          const tableData = getTableData();
+        }
+        //disable submit btn
+        document.getElementById("submitBtn").innerHTML = 'Processing &nbsp;<i class="fa fa-spinner fa-spin"></i>';
+        document.getElementById("submitBtn").disabled = true;
+        const tableData = getTableData();
 
-          //calculate total purchase cost of the selected product
-          let totalPurchaseCost = 0
-          let description = ''
-          tableData.forEach((productItem, i) => {
+        //calculate total purchase cost of the selected product
+        let totalPurchaseCost = 0
+        let description = ''
+        tableData.forEach((productItem, i) => {
             totalPurchaseCost += productItem.quantity * (productItem.item.purchase_cost - productItem.item.purchase_discount) / productItem.item.quantity_purchased;
             if (i > 0) {
-              description += "|||"
+                description += "|||"
             }
             description += 'SALE: ' + productItem.item.product_name + ' - ' + productItem.quantity + ' @ ' + (productItem.rate * (1 - parseFloat(document.getElementById("discount").value) / 100.0)).toFixed(0)
-          })
+        })
 
-          //get text input from field note
-          const noteContent = (document.getElementById("note")?.value?.trim() || "");
-          description += noteContent;
+        //get text input from field note
+        const noteContent = (document.getElementById("note")?.value?.trim() || "");
+        description += "UerNotes:" + noteContent;
 
-          const reqBody = {
+        const reqBody = {
             sale_date: document.getElementById("sale_date").value,
             customer: selectedCustomer,
             ref: refNo,
@@ -1096,40 +1099,45 @@
             due_amount: parseInt(document.getElementById("due_amount").value),
             sold_products: tableData,
             old_serial_numbers: OldSerialNumbers,
-          }
-          console.log("Request Body: ", reqBody); // Log table data to console
-          const requestOptions = {
+        }
+        console.log("Request Body: ", reqBody); // Log table data to console
+        const requestOptions = {
             method: 'post',
             headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + localStorage.getItem('token'),
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
             },
             body: JSON.stringify(reqBody),
-          }
-          fetch(api + '/inventory/products/sale', requestOptions)
+        }
+        fetch(api + '/inventory/products/sale', requestOptions)
             .then(response => response.json())
             .then(data => {
-              console.log("Response: ", data)
-              if (data.error === true) {
-                showErrorMessage(data.message)
-                //disable submit btn
-                document.getElementById("submitBtn").innerHTML = 'Complete Sale</i>';
-                document.getElementById("submitBtn").disabled = false;
-              } else {
-                showSuccessMessage(data.message);
-                InvoiceData = data.sales_invoice_data
-                company = data.company_profile
-                setTimeout(() => {
-                  document.getElementById("submitBtn").classList.add('d-none');
-                  document.getElementById("printInvoiceBtn").classList.remove('d-none');
-                }, 1000);
+                console.log("Response: ", data)
+                if (data.error === true) {
+                    showErrorMessage(data.message)
+                    // Fix: Re-enable the submit button on error
+                    document.getElementById("submitBtn").innerHTML = 'Complete Sale';
+                    document.getElementById("submitBtn").disabled = false;
+                } else {
+                    showSuccessMessage(data.message);
+                    InvoiceData = data.sales_invoice_data
+                    company = data.company_profile
+                    setTimeout(() => {
+                        document.getElementById("submitBtn").classList.add('d-none');
+                        document.getElementById("printInvoiceBtn").classList.remove('d-none');
+                    }, 1000);
 
-              }
+                }
             })
-        }
+            .catch(error => {
+                showErrorMessage("An unexpected error occurred.");
+                document.getElementById("submitBtn").innerHTML = 'Complete Sale';
+                document.getElementById("submitBtn").disabled = false;
+            });
+    }
 
-      </script>
+</script>
 </body>
 
 </html>

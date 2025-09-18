@@ -1689,14 +1689,23 @@ function printPurchaseReturnInvoice() {
 }
 
 function printSaleInvoice() {
-    const newWindow = window.open("", "_blank");
+    // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     // //product list table
     let tBody = ""
     let company_info = ""
     let name = company.name.split(":::").filter(p => p.trim() !== "")
     const companyFName = name[0]
     const companyLName = name[1] || ""
-    let pLn = InvoiceData.sold_products.length
+    let pLn = InvoiceData.sold_products?.length || 0
     for (let i = 0; i < pLn; i++) {
         const items = InvoiceData.sold_products[i]
         let serialNumbers = ""
@@ -2211,11 +2220,11 @@ function printSaleInvoice() {
                               </div>
                               <div class="detail-row">
                                   <div class="detail-label">Note</div>
-                                  <div class="detail-value">: ${!InvoiceData.Note || InvoiceData.Note === "" ? "" : `<b> (${InvoiceData.Note})</b>`}</div>
+                                  <div class="detail-value">: <b> ${InvoiceData.note?.split("UerNotes:")[1] || ""}</b></div>
                               </div>
                               <div class="detail-row">
                                   <div class="detail-label">Ref:</div>
-                                  <div class="detail-value">: <b>${refNo}</b></div>
+                                  <div class="detail-value">: <b>${InvoiceData.ref || ""}</b></div>
                               </div>
                           </div>
                       </div>
@@ -2256,30 +2265,16 @@ function printSaleInvoice() {
         </html>
         `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }
