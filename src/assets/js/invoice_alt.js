@@ -1,22 +1,41 @@
 //printPurchaseInvoice prints the current invoice
 function printPurchaseInvoice() {
-    // --- HTML & LOGIC ---
+    // Step 1: Generate the QR code as a data URL in a hidden element
+    const tempDiv = document.createElement("div");
+    tempDiv.style.display = "none";
+    document.body.appendChild(tempDiv);
+    
+    // The QRCode library needs a DOM element to render into
+    new QRCode(tempDiv, {
+        text: `https://its.pssoft.xyz/memo-list.html?print=${InvoiceData.memo_no}`,
+        width: 72,
+        height: 72,
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Extract the base64-encoded image source from the generated canvas/img tag
+    const qrCodeImageSrc = tempDiv.querySelector("img")?.src || tempDiv.querySelector("canvas")?.toDataURL();
+
+    // Step 2: Remove the temporary element
+    document.body.removeChild(tempDiv);
+
+    // Step 3: Open a new window to write the invoice content
     const newWindow = window.open("", "_blank");
 
     // Build the item rows HTML
     let tableRows = '';
     InvoiceData.purchased_product.forEach((p, i) => {
         tableRows += `<div class="item-row">
-                        <div class="item-cell sr-no">${i + 1}</div>
-                        <div class="item-cell description">
-                            <div class="product-name">${p.item.product_name}</div>
-                            <div>${p.item.product_name == p.item.product_description ? "" : (p.item.product_description || "")}</div>
-                        </div>
-                        <div class="item-cell unit">PCS</div>
-                        <div class="item-cell quantity">${p.quantity}</div>
-                        <div class="item-cell price">${p.rate}</div>
-                        <div class="item-cell total">${p.quantity * p.rate}</div>
-                      </div>`;
+                         <div class="item-cell sr-no">${i + 1}</div>
+                         <div class="item-cell description">
+                             <div class="product-name">${p.item.product_name}</div>
+                             <div>${p.item.product_name == p.item.product_description ? "" : (p.item.product_description || "")}</div>
+                         </div>
+                         <div class="item-cell unit">PCS</div>
+                         <div class="item-cell quantity">${p.quantity}</div>
+                         <div class="item-cell price">${p.rate}</div>
+                         <div class="item-cell total">${p.quantity * p.rate}</div>
+                     </div>`;
     });
     
     // Split company name
@@ -31,7 +50,6 @@ function printPurchaseInvoice() {
             <meta charset="UTF-8">
             <title>ITS Purchase Invoice</title>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
             <style>
                 * { margin: 0; padding: 0; box-sizing: border-box; }
                 html, body { height: 100%; }
@@ -115,7 +133,7 @@ function printPurchaseInvoice() {
             </style>
         </head>
         <body>
-             <div class="invoice-container">
+            <div class="invoice-container">
                 <div class="header-section">
                     <div class="header-content">
                         <div class="company-info"><div class="company-name">${companyFName} ${companyLName}</div><div>VAT No : 310189726000003</div><div>OLAYA COMPUTER MARKET</div><div>L1 - Showroom No - 40</div></div>
@@ -125,17 +143,17 @@ function printPurchaseInvoice() {
                 </div>
                 <div class="invoice-details">
                     <div class="invoice-header">
-                         <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">P.O No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">رقم طلب الشراء:</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell three-col"><span class="field-label">Invoice Type:</span><span class="field-value">cash</span><span class="arabic-text" style="float: right;">نوع الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Invoice No:</span><span class="field-value">${InvoiceData.memo_no}</span><span class="arabic-text" style="float: right;">رقم الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Date:</span><span class="field-value">${moment(InvoiceData.purchase_date).format("DD/MM/YYYY")} ${moment(InvoiceData.created_at).format("hh:mm A")}</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell two-col"><span class="field-label">Supplier Mob No:</span><span class="field-value">${InvoiceData.supplier.mobile}</span><span class="arabic-text" style="float: right;">رقم هاتف المورد:</span></td><td class="field-cell two-col"><span class="field-label">Supplier Vat No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">الرقم الضريبي للمورد:</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Supplier Name:</span><span class="field-value">${InvoiceData.supplier.account_name.toUpperCase()}</span><span class="arabic-text" style="float: right;">اسم المورد:</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Supplier Address:</span><span class="field-value">${InvoiceData.supplier.area || '-'}</span><span class="arabic-text" style="float: right;">عنوان المورد:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">P.O No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">رقم طلب الشراء:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell three-col"><span class="field-label">Invoice Type:</span><span class="field-value">cash</span><span class="arabic-text" style="float: right;">نوع الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Invoice No:</span><span class="field-value">${InvoiceData.memo_no}</span><span class="arabic-text" style="float: right;">رقم الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Date:</span><span class="field-value">${moment(InvoiceData.purchase_date).format("DD/MM/YYYY")} ${moment(InvoiceData.created_at).format("hh:mm A")}</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell two-col"><span class="field-label">Supplier Mob No:</span><span class="field-value">${InvoiceData.supplier.mobile}</span><span class="arabic-text" style="float: right;">رقم هاتف المورد:</span></td><td class="field-cell two-col"><span class="field-label">Supplier Vat No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">الرقم الضريبي للمورد:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Supplier Name:</span><span class="field-value">${InvoiceData.supplier.account_name.toUpperCase()}</span><span class="arabic-text" style="float: right;">اسم المورد:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Supplier Address:</span><span class="field-value">${InvoiceData.supplier.area || '-'}</span><span class="arabic-text" style="float: right;">عنوان المورد:</span></td></tr></tbody></table>
                     </div>
                 </div>
                 <div class="items-table">
                     <div class="table-header">
                         <div class="header-cell sr-no">مقرلا<br>Sr.No</div>
-                        <div class="header-cell description" style="text-align:center;">ناــــــــيــــــــبلا<br>Description</div>
+                        <div class="header-cell description" style="text-align:center;">نايبلا<br>Description</div>
                         <div class="header-cell unit">ةدحولا<br>Unit</div>
                         <div class="header-cell quantity">هيمكلا<br>Quantity</div>
                         <div class="header-cell price">ةدحولا رعس<br>U.Price</div>
@@ -152,34 +170,25 @@ function printPurchaseInvoice() {
                 </div>
                 <div class="totals-section">
                     <div class="total-row"><div class="total-label">SubTotal / يعرفلا عومجملا</div><div class="total-amount">${InvoiceData.bill_amount}</div></div>
-                    <div class="total-row"><div class="total-label">Discount / مصخ</div><div class="total-amount">${InvoiceData.discount}</div></div>                    
+                    <div class="total-row"><div class="total-label">Discount / مصخ</div><div class="total-amount">${InvoiceData.discount}</div></div>
                     <div class="total-row"><div class="total-label">Net Amount / غلبملا يفاص</div><div class="total-amount">${InvoiceData.total_amount}</div></div>
                     <div class="total-row"><div class="total-label">VAT (15%) / ةبيرضلا</div><div class="total-amount">${Math.ceil(InvoiceData.total_amount * 0.15)}</div></div>
                     <div class="total-row"><div class="total-label" style="font-weight:bold;"><span>${numberToArabicWords(Math.ceil(InvoiceData.total_amount * 1.15))}<br>
-                            ${numberToWords(Math.ceil(InvoiceData.total_amount * 1.15)) + " " + company.currency} Only.</span></div>
+                    ${numberToWords(Math.ceil(InvoiceData.total_amount * 1.15)) + " " + company.currency} Only.</span></div>
                     <div class="total-label" style="font-weight:bold; max-width:100px">Total / يلامجلا غلبملا</div><div class="total-amount" style="font-size: 14px;">${Math.ceil(InvoiceData.total_amount * 1.15)}</div></div>
                 </div>
                 <div class="footer-section">
                     <div class="footer-content">
-                        <div class="qr-section"><div class="qr-code" id="qrcode"></div></div>
+                        <div class="qr-section">
+                            <img class="qr-code" src="${qrCodeImageSrc}" alt="QR Code">
+                        </div>
                         <div class="signature-section">
                             <div class="signature-box"><div class="signature-label">Signature</div><div class="signature-line"></div><div class="signature-arabic">توقيع</div></div>
                             <div class="signature-box"><div class="signature-label">Stamp</div><div class="signature-line"></div><div class="signature-arabic">ختم</div></div>
                         </div>
                     </div>
                 </div>
-             </div>
-             <script>
-                const qrDiv = document.getElementById('qrcode');
-                if (qrDiv) {
-                    new QRCode(qrDiv, {
-                        text: "https://its.pssoft.xyz/memo-list.html?print=${InvoiceData.memo_no}",
-                        width: 72,
-                        height: 72,
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                }
-             </script>
+            </div>
         </body>
         </html>
     `;
@@ -187,6 +196,7 @@ function printPurchaseInvoice() {
     newWindow.document.write(content);
     newWindow.document.close();
     
+    // Wait for the new window content to fully render before printing
     setTimeout(() => {
         newWindow.print();
     }, 500);
@@ -753,21 +763,48 @@ function printPurchaseReturnInvoice() {
 
 }
 function printSaleInvoice() {
-    // --- HTML & LOGIC ---
-    const newWindow = window.open("", "_blank");
+    // Step 1: Generate the QR code as a data URL in a hidden element
+    const tempDiv = document.createElement("div");
+    tempDiv.style.display = "none";
+    document.body.appendChild(tempDiv);
+    
+    // The QRCode library needs a DOM element to render into
+    new QRCode(tempDiv, {
+        text: `https://its.pssoft.xyz/memo-list.html?print=${InvoiceData.memo_no}`,
+        width: 72,
+        height: 72,
+        correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Extract the base64-encoded image source from the generated canvas/img tag
+    const qrCodeImageSrc = tempDiv.querySelector("img")?.src || tempDiv.querySelector("canvas")?.toDataURL();
+
+    // Step 2: Remove the temporary element
+    document.body.removeChild(tempDiv);
+
+    // Step 3: Create the print iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px";
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
 
     let tableRows = '';
     InvoiceData.sold_products.forEach((p, i) => {
         tableRows += `<div class="item-row">
-                        <div class="item-cell sr-no">${i + 1}</div>
-                        <div class="item-cell description">
-                            <div class="product-name">${p.item.product_name}</div>
-                            <div>${p.item.product_name == p.item.product_description ? "" : (p.item.product_description || "")}</div>
-                        </div>
-                        <div class="item-cell unit">PCS</div>
-                        <div class="item-cell quantity">${p.quantity}</div>
-                        <div class="item-cell price">${p.rate}</div>
-                        <div class="item-cell total">${p.quantity * p.rate}</div>
+                         <div class="item-cell sr-no">${i + 1}</div>
+                         <div class="item-cell description">
+                             <div class="product-name">${p.item.product_name}</div>
+                             <div>${p.item.product_name == p.item.product_description ? "" : (p.item.product_description || "")}</div>
+                         </div>
+                         <div class="item-cell unit">PCS</div>
+                         <div class="item-cell quantity">${p.quantity}</div>
+                         <div class="item-cell price">${p.rate}</div>
+                         <div class="item-cell total">${p.quantity * p.rate}</div>
                       </div>`;
     });
     
@@ -782,7 +819,6 @@ function printSaleInvoice() {
             <meta charset="UTF-8">
             <title>ITS Invoice</title>
             <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
             <style>
                 * { margin: 0; padding: 0; box-sizing: border-box; }
                 html, body { height: 100%; }
@@ -866,7 +902,7 @@ function printSaleInvoice() {
             </style>
         </head>
         <body>
-             <div class="invoice-container">
+            <div class="invoice-container">
                 <div class="header-section">
                     <div class="header-content">
                         <div class="company-info"><div class="company-name">${companyFName} ${companyLName}</div><div>VAT No : 310189726000003</div><div>OLAYA COMPUTER MARKET</div><div>L1 - Showroom No - 40</div></div>
@@ -876,17 +912,17 @@ function printSaleInvoice() {
                 </div>
                 <div class="invoice-details">
                     <div class="invoice-header">
-                         <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">P.O No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">رقم طلب الشراء:</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell three-col"><span class="field-label">Invoice Type:</span><span class="field-value">cash</span><span class="arabic-text" style="float: right;">نوع الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Invoice No:</span><span class="field-value">${InvoiceData.memo_no}</span><span class="arabic-text" style="float: right;">رقم الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Date:</span><span class="field-value">${moment(InvoiceData.sale_date).format("DD/MM/YYYY")} ${moment(InvoiceData.created_at).format("hh:mm A")}</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell two-col"><span class="field-label">Customer Mob No:</span><span class="field-value">${InvoiceData.customer.mobile}</span><span class="arabic-text" style="float: right;">رقم هاتف العميل:</span></td><td class="field-cell two-col"><span class="field-label">Customer Vat No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">الرقم الضريبي للعميل:</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Customer Name:</span><span class="field-value">${InvoiceData.customer.account_name.toUpperCase()}</span><span class="arabic-text" style="float: right;">اسم العميل:</span></td></tr></tbody></table>
-                         <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Customer Address:</span><span class="field-value">${InvoiceData.customer.area || '-'}</span><span class="arabic-text" style="float: right;">عنوان العميل:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">P.O No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">رقم طلب الشراء:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell three-col"><span class="field-label">Invoice Type:</span><span class="field-value">cash</span><span class="arabic-text" style="float: right;">نوع الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Invoice No:</span><span class="field-value">${InvoiceData.memo_no}</span><span class="arabic-text" style="float: right;">رقم الفاتورة:</span></td><td class="field-cell three-col"><span class="field-label">Date:</span><span class="field-value">${moment(InvoiceData.sale_date).format("DD/MM/YYYY")} ${moment(InvoiceData.created_at).format("hh:mm A")}</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell two-col"><span class="field-label">Customer Mob No:</span><span class="field-value">${InvoiceData.customer.mobile}</span><span class="arabic-text" style="float: right;">رقم هاتف العميل:</span></td><td class="field-cell two-col"><span class="field-label">Customer Vat No:</span><span class="field-value"></span><span class="arabic-text" style="float: right;">الرقم الضريبي للعميل:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Customer Name:</span><span class="field-value">${InvoiceData.customer.account_name.toUpperCase()}</span><span class="arabic-text" style="float: right;">اسم العميل:</span></td></tr></tbody></table>
+                        <table class="header-row"><tbody><tr><td class="field-cell full-width"><span class="field-label">Customer Address:</span><span class="field-value">${InvoiceData.customer.area || '-'}</span><span class="arabic-text" style="float: right;">عنوان العميل:</span></td></tr></tbody></table>
                     </div>
                 </div>
                 <div class="items-table">
                     <div class="table-header">
                         <div class="header-cell sr-no">مقرلا<br>Sr.No</div>
-                        <div class="header-cell description" style="text-align:center;">ناــــــــيــــــــبلا<br>Description</div>
+                        <div class="header-cell description" style="text-align:center;">نايبلا<br>Description</div>
                         <div class="header-cell unit">ةدحولا<br>Unit</div>
                         <div class="header-cell quantity">هيمكلا<br>Quantity</div>
                         <div class="header-cell price">ةدحولا رعس<br>U.Price</div>
@@ -903,48 +939,41 @@ function printSaleInvoice() {
                 </div>
                 <div class="totals-section">
                     <div class="total-row"><div class="total-label">SubTotal / يعرفلا عومجملا</div><div class="total-amount">${InvoiceData.bill_amount}</div></div>
-                    <div class="total-row"><div class="total-label">Discount / مصخ</div><div class="total-amount">${InvoiceData.discount}</div></div>                    
+                    <div class="total-row"><div class="total-label">Discount / مصخ</div><div class="total-amount">${InvoiceData.discount}</div></div>
                     <div class="total-row"><div class="total-label">Net Amount / غلبملا يفاص</div><div class="total-amount">${InvoiceData.total_amount}</div></div>
                     <div class="total-row"><div class="total-label">VAT (15%) / ةبيرضلا</div><div class="total-amount">${Math.ceil(InvoiceData.total_amount * 0.15)}</div></div>
                     <div class="total-row"><div class="total-label" style="font-weight:bold;"><span>${numberToArabicWords(Math.ceil(InvoiceData.total_amount * 1.15))}<br>
-                            ${numberToWords(Math.ceil(InvoiceData.total_amount * 1.15)) + " " + company.currency} Only.</span></div>
+                    ${numberToWords(Math.ceil(InvoiceData.total_amount * 1.15)) + " " + company.currency} Only.</span></div>
                     <div class="total-label" style="font-weight:bold; max-width:100px">Total / يلامجلا غلبملا</div><div class="total-amount" style="font-size: 14px;">${Math.ceil(InvoiceData.total_amount * 1.15)}</div></div>
                 </div>
                 <div class="footer-section">
                     <div class="footer-content">
-                        <div class="qr-section"><div class="qr-code" id="qrcode"></div></div>
+                        <div class="qr-section">
+                            <img class="qr-code" src="${qrCodeImageSrc}" alt="QR Code">
+                        </div>
                         <div class="signature-section">
                             <div class="signature-box"><div class="signature-label">Signature</div><div class="signature-line"></div><div class="signature-arabic">توقيع</div></div>
                             <div class="signature-box"><div class="signature-label">Stamp</div><div class="signature-line"></div><div class="signature-arabic">ختم</div></div>
                         </div>
                     </div>
                 </div>
-             </div>
-             <script>
-                const qrDiv = document.getElementById('qrcode');
-                if (qrDiv) {
-                    new QRCode(qrDiv, {
-                        text: "https://its.pssoft.xyz/memo-list.html?print=${InvoiceData.memo_no}",
-                        width: 72,
-                        height: 72,
-                        correctLevel: QRCode.CorrectLevel.H
-                    });
-                }
-             </script>
+            </div>
         </body>
         </html>
     `;
 
-    newWindow.document.write(content);
-    newWindow.document.close();
-    
-    // The old QR code logic is removed from here.
-    // The setTimeout is now only for printing.
+    // Step 4: Write to the iframe document and print
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait for the iframe content to fully render before printing
     setTimeout(() => {
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print();
     }, 500);
 }
-
 
 function printSaleChallan() {
     const newWindow = window.open("", "_blank");

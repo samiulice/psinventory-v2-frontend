@@ -81,7 +81,7 @@
 </head>
 
 <body class="nav-md">
-  <!-- added mobile navigation toggle button -->
+  <!-- Added mobile navigation toggle button -->
   <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
@@ -89,9 +89,21 @@
     </button>
   </div>
 
-
-  <!-- added mobile overlay -->
+  <!-- Added mobile overlay -->
   <div class="mobile-overlay" onclick="closeMobileNav()"></div>
+  <!-- Fullscreen Preloader Overlay -->
+  <div id="preloader-overlay">
+    <div class="preloader">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
   <div class="container body">
     <div class="main_container">
       <div class="col-md-3 left_col menu_fixed">
@@ -269,6 +281,16 @@
   <script>
     let memos, InvoiceData, company
     document.addEventListener('DOMContentLoaded', function () {
+
+      const params = new URLSearchParams(window.location.search);
+      const memo = params.get("print");
+      if (memo?.trim() != "") {
+        memoType = ""
+        if (memo?.startsWith("SL", 0)) {
+          printInvoice("sale", memo, null)
+        }
+
+      }
       updateTable("sale")
       // Tab switching
       const tabButtons = document.querySelectorAll('.tab-btn');
@@ -337,7 +359,7 @@
                 btn.dataset.memo = v.memo_no; // attach memo to dataset
 
                 btn.addEventListener("click", function (event) {
-                  printInvoice(tabId, event);  // only pass tabId + event
+                  printInvoice(tabId, v.memo_no, event);  // only pass tabId + event
                 });
 
 
@@ -350,16 +372,19 @@
         })
         .catch(function (error) {
           console.error('Error fetching data:', error);
+        })
+        .finally(() => {
+          hidePreloader()
         });
     }
 
-    function printInvoice(tabId, event) {
-      const btn = event.target;
-      const memo_no = btn.dataset.memo;   // read memo_no from dataset
-      const oldHtml = btn.innerHTML;
+    function printInvoice(tabId, memo_no, event = null) {
+      showPreloader()
+      const btn = event?.target;
+      if (btn) {
+        btn.disabled = true;
+      }
 
-      btn.disabled = true;
-      btn.innerHTML = `<i class="fa fa-spinner fa-spin"></i>`;
 
       fetch(api + `/inventory/memo/details?type=${tabId}&memo_no=${memo_no}`, {
         method: 'post',
@@ -381,8 +406,11 @@
         })
         .catch(err => console.error('Error fetching data:', err))
         .finally(() => {
-          btn.disabled = false;
-          btn.innerHTML = oldHtml;
+          if (btn) {
+            btn.disabled = false;
+          }
+
+          hidePreloader()
         });
     }
 

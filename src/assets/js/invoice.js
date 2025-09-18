@@ -1,7 +1,15 @@
 //printPurchaseInvoice prints the current invoice
 function printPurchaseInvoice() {
-    // product list table
-    const newWindow = window.open("", "_blank");
+     // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     let tBody = ""
     let company_info = ""
     let name = company.name.split(":::").filter(p => p.trim() !== "")
@@ -564,38 +572,32 @@ function printPurchaseInvoice() {
         </html>
         `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }
 
 //printPurchaseChallan prints the current challan
 function printPurchaseChallan() {
-    // product list table
-    const newWindow = window.open("", "_blank");
+     // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     let tBody = ""
     let company_info = ""
     let name = company.name.split(":::").filter(p => p.trim() !== "")
@@ -1100,36 +1102,31 @@ function printPurchaseChallan() {
     </html>
     `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }
 
 function printPurchaseReturnInvoice() {
-    const newWindow = window.open("", "_blank");
+     // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     let tBody = ""
     let company_info = ""
     let name = company.name.split(":::").filter(p => p.trim() !== "")
@@ -1660,30 +1657,16 @@ function printPurchaseReturnInvoice() {
         </html>
         `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }
@@ -2279,7 +2262,16 @@ function printSaleInvoice() {
 
 }
 function printSaleChallan() {
-    const newWindow = window.open("", "_blank");
+     // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     // //product list table
     let tBody = ""
     let name = company.name.split(":::").filter(p => p.trim() !== "")
@@ -2756,36 +2748,31 @@ function printSaleChallan() {
         </html>
         `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }
 
 function printSaleReturnInvoice() {
-    const newWindow = window.open("", "_blank");
+     // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     // //product list table
     let tBody = ""
     let company_info = ""
@@ -3316,37 +3303,32 @@ function printSaleReturnInvoice() {
         </html>
         `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }
 
 
 function printQuotation() {
-    const newWindow = window.open("", "_blank");
+     // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     // //product list table
     let tBody = ""
     let company_info = ""
@@ -3836,36 +3818,31 @@ function printQuotation() {
         </html>
         `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }
 
 function printEmployeeQuotation() {
-    const newWindow = window.open("", "_blank");
+     // Create a hidden iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px"; // keep it off-screen
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
     // //product list table
     let tBody = ""
     let name = window.company.name.split(":::").filter(p => p.trim() !== "")
@@ -4362,30 +4339,16 @@ function printEmployeeQuotation() {
         </html>
         `
 
-    // Write content to the new window
-    newWindow.document.write(content);
-    newWindow.document.close();
-    // Add a slight delay before printing to ensure content is fully loaded
+    // Write to iframe document
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait a little to ensure resources (images, CSS) are loaded
     setTimeout(() => {
-        const invoiceContentDiv = newWindow.document.getElementById('invoice-content');
-        const invoiceFooterDiv = newWindow.document.getElementById('invoice-footer');
-        if (!invoiceContentDiv || !invoiceFooterDiv) return;
-
-        const rect1 = invoiceContentDiv.getBoundingClientRect();
-        const rect2 = invoiceFooterDiv.getBoundingClientRect();
-
-        // Check if elements overlap
-        const noOverlap =
-            rect1.right < rect2.left ||
-            rect1.left > rect2.right ||
-            rect1.bottom < rect2.top ||
-            rect1.top > rect2.bottom;
-
-        if (!noOverlap) {
-            invoiceFooterDiv.classList.remove('invoice-footer-fixed');
-            invoiceFooterDiv.classList.add('invoice-footer-scroll');
-        }
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print(); // trigger system print dialog
     }, 500);
 
 }

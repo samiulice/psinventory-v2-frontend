@@ -714,6 +714,25 @@ function showSuccessMessage(message) {
     width: 360,
   });
 }
+// Show success message function
+function showQuestionMessage(message) {
+  const Toast = Swal.mixin({
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
+  Toast.fire({
+    icon: "question",
+    title: message,
+    width: 360,
+  });
+}
 
 // Show error message function
 function showErrorMessage(message) {
