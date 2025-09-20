@@ -512,7 +512,7 @@
           });
           // Show popup form for adding a new product type
           document.getElementById("createProductBtn").addEventListener("click", e => {
-            let flag = addNewProduct("purchase", brands, categories, products);
+            addNewProduct("purchase");
           });
 
           // Initialize fetch promises
@@ -587,11 +587,11 @@
         });
         //show popup form for adding new product category
         document.getElementById("createCategoryBtn").addEventListener("click", e => {
-          addNewCategory("purchase", categories);
+          addNewCategory("purchase");
         });
         //show popup form for adding new product type
         document.getElementById("createBrandBtn").addEventListener("click", e => {
-          addNewBrand("purchase", brands);
+          addNewBrand("purchase");
         });
 
         //updateSupplierDiv updates supplier selection options with the fetched data

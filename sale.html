@@ -553,7 +553,7 @@
           // wire serial-search input if present
           const serialSearchInput = document.getElementById("serial_search");
           if (serialSearchInput) {
-            serialSearchInput.addEventListener("blur", function () {
+            serialSearchInput.addEventListener("change", function () {
               const serialNumber = this.value.trim();
               if (!serialNumber) return;
 
@@ -641,7 +641,7 @@
           if (!input) return;
           function populate(list) {
             suggestions.innerHTML = '';
-            if (!list.length) { suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`; return; }
+            if (!list.length) { suggestions.innerHTML = `<div class="autocomplete-item">No customers found</div>`; return; }
             list.forEach(c => {
               const div = document.createElement('div');
               div.className = 'autocomplete-item';
@@ -656,7 +656,10 @@
             suggestions.style.display = 'block';
             populate(customers.filter(c => c.account_name.toLowerCase().includes(t) || (c.mobile || '').includes(t)).slice(0, 15));
           });
-          input.addEventListener('focus', () => populate(customers.slice(0, 15)));
+          input.addEventListener("focus", function () {
+            suggestions.style.display = 'block';
+            populate(customers.slice(0, 15));
+          });
           document.addEventListener('click', e => { if (!container.contains(e.target)) suggestions.style.display = 'none'; });
         }
 
@@ -675,7 +678,7 @@
           if (!input) return;
           function populate(list) {
             suggestions.innerHTML = '';
-            if (!list.length) { suggestions.innerHTML = `<div class="autocomplete-item">No results found</div>`; return; }
+            if (!list.length) { suggestions.innerHTML = `<div class="autocomplete-item">No products found</div>`; return; }
             list.forEach(item => {
               const div = document.createElement("div");
               div.className = "autocomplete-item";
@@ -956,12 +959,20 @@
         }
 
         document.getElementById("discount")?.addEventListener("change", () => updateTotal());
-        document.getElementById("shipment_cost")?.addEventListener("blur", () => updateTotal());
+        document.getElementById("shipment_cost")?.addEventListener("change", () => updateTotal());
         document.getElementById("paid_amount")?.addEventListener("change", () => {
           const total = parseFloat(document.getElementById("total_amount").value) || 0;
           const paid = parseFloat(document.getElementById("paid_amount").value) || 0;
           document.getElementById("due_amount").value = total - paid;
         });
+        //updating discount on change total_amount input
+        document.getElementById("total_amount").addEventListener("change", e => {
+          let totalAmount = parseInt(document.getElementById("total_amount").value) || 0;
+          let billAmount = parseInt(document.getElementById("bill_amount").value) || 0;
+          document.getElementById("discount").value = parseFloat((billAmount - totalAmount) * 100 / billAmount).toFixed(2);
+          document.getElementById("paid_amount").max = totalAmount
+          document.getElementById("due_amount").value = totalAmount - parseInt(document.getElementById("paid_amount").value) || 0;
+        })
 
         //togglePriceVisibility toggle MRP section between visible and hidden state
         function togglePriceVisibility() {

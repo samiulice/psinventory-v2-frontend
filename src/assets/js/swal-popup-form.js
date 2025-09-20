@@ -1,7 +1,7 @@
 //addNewBrand show a popup form and then make an api call to insert brand data to the database table
-function addNewBrand(page, brands) {
+function addNewBrand(context) {
   Swal.fire({
-    title: 'Add New Brand',
+    title: "Add New Brand",
     width: 450,
     html: `
         <div class="x_panel">
@@ -30,22 +30,22 @@ function addNewBrand(page, brands) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-brand');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-brand");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -55,62 +55,64 @@ function addNewBrand(page, brands) {
             name: form.name.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-brand');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-brand");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
       let brand = {
         name: data.name,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(brand),
-      }
+      };
 
-      fetch(api + '/inventory/brand/new', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/inventory/brand/new", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else {
-            if (page === "purchase") {
-              brands.push(data.result)
-              showSuccessMessage(data.message)
+            if (context === "purchase") {
+              brands.push(data.result);
+              showSuccessMessage(data.message);
             } else {
-              location.reload()
+              location.reload();
             }
           }
         });
@@ -120,9 +122,9 @@ function addNewBrand(page, brands) {
 
 //updateBrand show a popup form and then make an api call to update brand data to the database table
 function updateBrand(btnIndex) {
-  let brand = brands[btnIndex]
+  let brand = brands[btnIndex];
   Swal.fire({
-    title: 'Update Brand',
+    title: "Update Brand",
     width: 450,
     html: `
         <div class="x_panel">
@@ -131,7 +133,9 @@ function updateBrand(btnIndex) {
                     <!-- Brand Name -->
                     <div class="col-6 form-group has-feedback">
                       <label for="name">Brand Name:</label>
-                        <input type="text" class="form-control has-feedback-left" id="name" name="name" value="${brand.name}" autocomplete="off" autofocus required>
+                        <input type="text" class="form-control has-feedback-left" id="name" name="name" value="${
+                          brand.name
+                        }" autocomplete="off" autofocus required>
                         <div class="invalid-feedback d-none text-danger">Please enter the brand name.</div>
                         <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-tags" aria-hidden="true"></span>
                     </div>
@@ -140,11 +144,15 @@ function updateBrand(btnIndex) {
                         <label style="color:#5F5454; background:white;">Category Status:</label>
 
                         <input type="radio" id="status_active" name="status" 
-                              ${brand.status === 'Active' ? 'checked' : ''} autocomplete="off">
+                              ${
+                                brand.status === "Active" ? "checked" : ""
+                              } autocomplete="off">
                         <label for="status_active">Active</label>
 
                         <input type="radio" id="status_inactive" name="status" 
-                              ${brand.status !== 'Active' ? 'checked' : ''} autocomplete="off">
+                              ${
+                                brand.status !== "Active" ? "checked" : ""
+                              } autocomplete="off">
                         <label for="status_inactive">Inactive</label>
                       </div>
                     </div>
@@ -165,22 +173,22 @@ function updateBrand(btnIndex) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('edit-brand');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("edit-brand");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -188,38 +196,40 @@ function updateBrand(btnIndex) {
         if (isValid) {
           resolve({
             name: form.name.value,
-            status: form.status_active.checked ? "Active" : "Inactive"
+            status: form.status_active.checked ? "Active" : "Inactive",
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('edit-brand');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("edit-brand");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -227,37 +237,39 @@ function updateBrand(btnIndex) {
       brand.name = data.name;
       brand.status = data.status;
 
-      console.log("Updated:", brand)
+      console.log("Updated:", brand);
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(brand),
-      }
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      let originalHTML = btn.innerHTML;   // save current button content
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      };
+      let btn = document.getElementById("edit-btn-" + btnIndex);
+      let originalHTML = btn.innerHTML; // save current button content
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       btn.disabled = true;
-      fetch(api + '/inventory/brand/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/inventory/brand/update", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            alertQuestion(data.message)
-            btn.innerHTML = originalHTML;   // reset to original
+            alertQuestion(data.message);
+            btn.innerHTML = originalHTML; // reset to original
             btn.disabled = false;
-            btn.classList.remove('btn-primary');
-            btn.classList.add('btn-danger');
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-danger");
           } else {
-            const row = document.getElementById('edit-btn-' + btnIndex).closest('tr');
+            const row = document
+              .getElementById("edit-btn-" + btnIndex)
+              .closest("tr");
 
             // update name
-            row.querySelector('.brand-name').textContent = brand.name;
+            row.querySelector(".brand-name").textContent = brand.name;
 
             // update status with span badge
-            const statusCell = row.querySelector('.brand-status');
+            const statusCell = row.querySelector(".brand-status");
             if (brand.status === "Active") {
               statusCell.innerHTML = `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>`;
             } else {
@@ -266,20 +278,22 @@ function updateBrand(btnIndex) {
 
             //update timestamp
             const now = new Date();
-            row.querySelector('.updated-at').textContent = moment(now.toISOString()).format("DD-MMM-YYYY");
+            row.querySelector(".updated-at").textContent = moment(
+              now.toISOString()
+            ).format("DD-MMM-YYYY");
 
             //update brand list
             brands[btnIndex].name = brands.name;
             brands[btnIndex].status = brands.status;
-            
-            brands[btnIndex].updated_at= now.toISOString();
 
-            btn.innerHTML = originalHTML;   // reset back to "Edit"
+            brands[btnIndex].updated_at = now.toISOString();
+
+            btn.innerHTML = originalHTML; // reset back to "Edit"
             btn.disabled = false;
-            btn.classList.remove('btn-danger');
-            btn.classList.add('btn-primary');
+            btn.classList.remove("btn-danger");
+            btn.classList.add("btn-primary");
 
-            showSuccessMessage('Brand updated successfully');
+            showSuccessMessage("Brand updated successfully");
           }
         });
     }
@@ -287,42 +301,36 @@ function updateBrand(btnIndex) {
 }
 
 //addNewProduct show a popup form and then make an api call to insert item data to the database table
-function addNewProduct(page, brands, categories, products) {
-  let brandList = '';
-  let categoryList = '';
+function addNewProduct(context) {
+  let brandList = "";
+  let categoryList = "";
   bLen = brands.length;
   if (bLen > 0) {
-    brandList += `<select id="brand" class="form-control form-select has-feedback-left">`
-    for (let i = 0; i < bLen; i++) {
-      const b = brands[i];
-      if (b.status == "Active") {
-        brandList += `<option value="${b.id}">${b.name}</option>`;
-      }
-    }
-    brandList += '</select>';
+    brandList += `<select id="brand" class="form-control form-select has-feedback-left">`;
+    brands.forEach((b) => {
+      brandList += `<option value="${b.id}">${b.name}</option>`;
+    });
+    brandList += "</select>";
   } else {
     brandList += `<select id="brand" class="form-control form-select has-feedback-left" readonly>
                     <option value="" selected disabled>Please add brand first</option>
-                  </select>`
+                  </select>`;
   }
   cLen = categories.length;
   if (cLen > 0) {
-    categoryList += `<select id="category" class="form-control form-select has-feedback-left">
-                      <option value="${categories[0].id}" selected>${categories[0].name}</option>`
+    categoryList += `<select id="category" class="form-control form-select has-feedback-left">`;
 
-    for (let i = 0; i < cLen; i++) {
-      const c = categories[i];
-      if (c.status == "Active") {
-        categoryList += `<option value="${c.id}">${c.name}</option>`;
-      }
-    }
-    categoryList += '</select>';
+    categories.forEach((c) => {
+      categoryList += `<option value="${c.id}">${c.name}</option>`;
+    });
+    categoryList += "</select>";
   } else {
     categoryList += `<select id="category" class="form-control form-select has-feedback-left" readonly>
                     <option value="" selected disabled>Please add category first</option>
-                  </select>`
+                  </select>`;
   }
-  let htmlContent = `
+  let htmlContent =
+    `
     <div class="x_panel">
       <div class="x_content text-left">
         <form autocomplete="off" id="add-product" class="needs-validation" novalidate>
@@ -369,14 +377,16 @@ function addNewProduct(page, brands, categories, products) {
             <!-- Category -->
             <div class="col-6 form-group has-feedback">
               <label for="category">Category:</label>  
-            ` + categoryList +
+            ` +
+    categoryList +
     `<div class="invalid-feedback d-none text-danger">Please select category name.</div>
               <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-list" aria-hidden="true"></span>
             </div>
             <!-- Brand -->
             <div class="col-6 form-group has-feedback">
               <label for="brand">Brand:</label>  
-            `  + brandList +
+            ` +
+    brandList +
     `<div class="invalid-feedback d-none text-danger">Please select brand name.</div>
             <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-tags" aria-hidden="true"></span>
             </div>
@@ -389,7 +399,7 @@ function addNewProduct(page, brands, categories, products) {
     </div>
           `;
   Swal.fire({
-    title: 'Add New product',
+    title: "Add New product",
     width: 450,
     height: 520,
     html: htmlContent,
@@ -399,22 +409,22 @@ function addNewProduct(page, brands, categories, products) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-product');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-product");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -428,39 +438,41 @@ function addNewProduct(page, brands, categories, products) {
             description: form.description.value,
             brand_id: form.brand.value,
             category_id: form.category.value,
-            category_name: form.category.options[form.category.selectedIndex].text,
-
+            category_name:
+              form.category.options[form.category.selectedIndex].text,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-product');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-product");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -473,48 +485,48 @@ function addNewProduct(page, brands, categories, products) {
         stock_alert_level: parseInt(data.stock_alert_level),
         warranty: parseInt(data.warranty),
         mrp: parseInt(data.max_retail_price),
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(product),
-      }
-      console.log(product)
+      };
+      console.log(product);
 
-      fetch(api + '/inventory/product/new', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
+      fetch(api + "/inventory/product/new", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
             showSuccessMessage(data.message);
             //push new product item to the existing items array
-            products.push(data.result)
-            if (page === "purchase") {
+            products.push(data.result);
+            if (context === "purchase") {
               //update Product div
               updateProductsDiv();
-              selectedProductItem = data.result
+              selectedProductItem = data.result;
               selectedProductIndex = products.length - 1;
-              addRow()
+              addRow();
             }
           }
         });
     }
   });
-
 }
 
 //updateProduct show a popup form and then make an api call to update item info to the database table
 function updateProduct(brands, categories, product) {
-  let brandList = '', categoryList = '';
+  let brandList = "",
+    categoryList = "";
   bLen = brands.length;
   if (bLen > 0) {
-    brandList += `<select id="brand" class="form-control form-select has-feedback-left">`
+    brandList += `<select id="brand" class="form-control form-select has-feedback-left">`;
     for (let i = 0; i < bLen; i++) {
       const b = brands[i];
       if (b.id === product.brand.id) {
@@ -523,15 +535,15 @@ function updateProduct(brands, categories, product) {
         brandList += `<option value="${b.id}">${b.name}</option>`;
       }
     }
-    brandList += '</select>';
+    brandList += "</select>";
   } else {
     brandList += `<select id="brand" class="form-control form-select has-feedback-left" readonly>
                     <option value="" selected disabled>Please add brand first</option>
-                  </select>`
+                  </select>`;
   }
   cLen = categories.length;
   if (cLen > 0) {
-    categoryList += `<select id="category" class="form-control form-select has-feedback-left">`
+    categoryList += `<select id="category" class="form-control form-select has-feedback-left">`;
 
     for (let i = 0; i < cLen; i++) {
       const c = categories[i];
@@ -541,13 +553,14 @@ function updateProduct(brands, categories, product) {
         categoryList += `<option value="${c.id}">${c.name}</option>`;
       }
     }
-    categoryList += '</select>';
+    categoryList += "</select>";
   } else {
     categoryList += `<select id="category" class="form-control form-select has-feedback-left" readonly>
                     <option value="" selected disabled>Please add category first</option>
-                  </select>`
+                  </select>`;
   }
-  let htmlContent = `
+  let htmlContent =
+    `
     
       <div class="x_content text-left">
         <form autocomplete="off" id="update-product" class="needs-validation" novalidate>
@@ -593,22 +606,28 @@ function updateProduct(brands, categories, product) {
 
             <div class="col-6 form-group has-feedback">
               <label for="category">Category:</label>  
-            ` + categoryList +
+            ` +
+    categoryList +
     `<div class="invalid-feedback d-none text-danger">Please select category name.</div>
               <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-list" aria-hidden="true"></span>
             </div>
             <div class="col-6 form-group has-feedback">
               <label for="brand">Brand:</label>  
-            `  + brandList +
+            ` +
+    brandList +
     `<div class="invalid-feedback d-none text-danger">Please select brand name.</div>
               <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-tags" aria-hidden="true"></span>
             </div>
             <div class="col-6 form-group">
               <div class="toggle-wrapper">
                 <label for="" style="color:#5F5454;background:white">Product Status:</label>
-                <input type="radio" id="status_active" name="role" ${product.product_status === true ? "checked" : ""} autocomplete="off" >
+                <input type="radio" id="status_active" name="role" ${
+                  product.product_status === true ? "checked" : ""
+                } autocomplete="off" >
                 <label for="status_active">Active</label>
-                <input type="radio" id="status_inactive" name="role" ${product.product_status === true ? "" : "checked"} autocomplete="off" >
+                <input type="radio" id="status_inactive" name="role" ${
+                  product.product_status === true ? "" : "checked"
+                } autocomplete="off" >
                 <label for="status_inactive">Inactive</label>
               </div>
             </div>
@@ -621,7 +640,7 @@ function updateProduct(brands, categories, product) {
       </div>
   `;
   Swal.fire({
-    title: 'Update Product',
+    title: "Update Product",
     width: 450,
     height: 450,
     html: htmlContent,
@@ -631,22 +650,22 @@ function updateProduct(brands, categories, product) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('update-product');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("update-product");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -663,35 +682,37 @@ function updateProduct(brands, categories, product) {
             category_id: form.category.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('update-product');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("update-product");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -704,40 +725,39 @@ function updateProduct(brands, categories, product) {
         category_id: parseInt(data.category_id),
         stock_alert_level: parseInt(data.stock_alert_level),
         warranty: parseInt(data.warranty),
-        mrp: parseInt(data.max_retail_price)
-      }
+        mrp: parseInt(data.max_retail_price),
+      };
 
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(UpdatedInfo),
-      }
-      console.log(UpdatedInfo)
+      };
+      console.log(UpdatedInfo);
 
-      fetch(api + '/inventory/product/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
+      fetch(api + "/inventory/product/update", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
-            showSuccessMessage(data.message)
+            showSuccessMessage(data.message);
             // location.reload();
           }
         });
     }
   });
-
 }
 
 //addNewCategory show a popup form and then make an api call to insert category data to the database table
-function addNewCategory(page, categories) {
+function addNewCategory(context) {
   Swal.fire({
-    title: 'Add Product Category',
+    title: "Add Product Category",
     width: 450,
     html: `
         <div class="x_panel">
@@ -766,22 +786,22 @@ function addNewCategory(page, categories) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-category');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-category");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -791,61 +811,62 @@ function addNewCategory(page, categories) {
             name: form.name.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-category');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-category");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
       let category = {
         name: data.name,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(category),
-      }
+      };
 
-      fetch(api + '/inventory/category/new', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/inventory/category/new", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
             showSuccessMessage(data.message);
-            if (page === "purchase") {
+            if (context === "purchase") {
               categories.push(data.result);
-              updateCategoriesDiv();
             } else {
               setTimeout(() => {
                 location.reload();
@@ -859,10 +880,10 @@ function addNewCategory(page, categories) {
 
 //updateCategory show a popup form and then make an api call to update category data to the database table
 function updateCategory(btnIndex) {
-  let category = categories[parseInt(btnIndex)]
-  console.log("category: ", category)
+  let category = categories[parseInt(btnIndex)];
+  console.log("category: ", category);
   Swal.fire({
-    title: 'Update Category',
+    title: "Update Category",
     width: 450,
     html: `
         <div class="x_panel">
@@ -871,7 +892,9 @@ function updateCategory(btnIndex) {
                     <!-- Brand Name -->
                     <div class="col-6 form-group has-feedback">
                       <label for="name">Category Name:</label>
-                        <input type="text" class="form-control has-feedback-left" id="name" name="name" value="${category.name}" autocomplete="off" autofocus required>
+                        <input type="text" class="form-control has-feedback-left" id="name" name="name" value="${
+                          category.name
+                        }" autocomplete="off" autofocus required>
                         <div class="invalid-feedback d-none text-danger">Please enter the brand name.</div>
                         <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-tags" aria-hidden="true"></span>
                     </div>
@@ -880,11 +903,15 @@ function updateCategory(btnIndex) {
                         <label style="color:#5F5454; background:white;">Category Status:</label>
 
                         <input type="radio" id="status_active" name="role" 
-                              ${category.status === 'Active' ? 'checked' : ''} autocomplete="off">
+                              ${
+                                category.status === "Active" ? "checked" : ""
+                              } autocomplete="off">
                         <label for="status_active">Active</label>
 
                         <input type="radio" id="status_inactive" name="role" 
-                              ${category.status !== 'Active' ? 'checked' : ''} autocomplete="off">
+                              ${
+                                category.status !== "Active" ? "checked" : ""
+                              } autocomplete="off">
                         <label for="status_inactive">Inactive</label>
                       </div>
                     </div>
@@ -905,22 +932,22 @@ function updateCategory(btnIndex) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('edit-brand');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("edit-brand");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -928,38 +955,40 @@ function updateCategory(btnIndex) {
         if (isValid) {
           resolve({
             name: form.name.value,
-            status: form.status_active.checked ? "Active" : "Inactive"
+            status: form.status_active.checked ? "Active" : "Inactive",
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('edit-brand');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("edit-brand");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -967,38 +996,40 @@ function updateCategory(btnIndex) {
       category.name = data.name;
       category.status = data.status;
 
-      console.log("Updated:", category)
+      console.log("Updated:", category);
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(category),
-      }
+      };
 
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      let originalHTML = btn.innerHTML;   // save current button content
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      let btn = document.getElementById("edit-btn-" + btnIndex);
+      let originalHTML = btn.innerHTML; // save current button content
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       btn.disabled = true;
-      fetch(api + '/inventory/category/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/inventory/category/update", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            alertQuestion(data.message)
-            btn.innerHTML = originalHTML;   // reset if error
+            alertQuestion(data.message);
+            btn.innerHTML = originalHTML; // reset if error
             btn.disabled = false;
-            btn.classList.remove('btn-primary');
-            btn.classList.add('btn-danger');
+            btn.classList.remove("btn-primary");
+            btn.classList.add("btn-danger");
           } else {
-            const row = document.getElementById('edit-btn-' + btnIndex).closest('tr');
+            const row = document
+              .getElementById("edit-btn-" + btnIndex)
+              .closest("tr");
 
             // update name
-            row.querySelector('.category-name').textContent = category.name;
-            
+            row.querySelector(".category-name").textContent = category.name;
+
             // update status with span badge
-            const statusCell = row.querySelector('.category-status');
+            const statusCell = row.querySelector(".category-status");
             if (category.status === "Active") {
               statusCell.innerHTML = `<span class="label label-primary" style="font-size:12px; padding:2px 5px">Active</span>`;
             } else {
@@ -1007,20 +1038,22 @@ function updateCategory(btnIndex) {
 
             //update timestamp
             const now = new Date();
-            row.querySelector('.updated-at').textContent = moment(now.toISOString()).format("DD-MMM-YYYY");
+            row.querySelector(".updated-at").textContent = moment(
+              now.toISOString()
+            ).format("DD-MMM-YYYY");
 
             //update category list
             categories[btnIndex].name = category.name;
             categories[btnIndex].status = category.status;
-            
-            categories[btnIndex].updated_at= now.toISOString();
 
-            btn.innerHTML = originalHTML;   // reset back to "Edit"
+            categories[btnIndex].updated_at = now.toISOString();
+
+            btn.innerHTML = originalHTML; // reset back to "Edit"
             btn.disabled = false;
-            btn.classList.remove('btn-danger');
-            btn.classList.add('btn-primary');
+            btn.classList.remove("btn-danger");
+            btn.classList.add("btn-primary");
 
-            showSuccessMessage('Brand updated successfully');
+            showSuccessMessage("Brand updated successfully");
           }
         });
     }
@@ -1030,7 +1063,7 @@ function updateCategory(btnIndex) {
 //AddNewService show a popup form and then make an api call to insert service data to the database table
 function addNewService(src, services) {
   Swal.fire({
-    title: 'Add Service',
+    title: "Add Service",
     width: 450,
     html: `
       <div class="x_panel">
@@ -1074,22 +1107,22 @@ function addNewService(src, services) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-service');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-service");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -1101,69 +1134,71 @@ function addNewService(src, services) {
             base_fee: form.base_fee.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-service');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-service");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
       let service = {
         name: data.name,
         description: data.description,
-        base_fee: parseInt(data.base_fee)
-      }
+        base_fee: parseInt(data.base_fee),
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(service),
-      }
+      };
 
-      fetch(api + '/inventory/service/new', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/inventory/service/new", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
             showSuccessMessage(data.message);
-            if (src === 'service') {
+            if (src === "service") {
               selectedServiceItem = data.service;
-              services.push(selectedServiceItem)
+              services.push(selectedServiceItem);
               updateServicesDiv();
-              addRow(data.service)
+              addRow(data.service);
             } else {
               setTimeout(function () {
                 location.reload();
-              }, 3000); // Adjust the delay as needed 
+              }, 3000); // Adjust the delay as needed
             }
           }
         });
@@ -1174,7 +1209,7 @@ function addNewService(src, services) {
 //updateService show a popup form and then make an api call to update service info to the database table
 function updateService(serviceInfo, btnIndex) {
   Swal.fire({
-    title: 'Update Service Account',
+    title: "Update Service Account",
     width: 450,
     html: `
       <div class="x_panel">
@@ -1183,7 +1218,9 @@ function updateService(serviceInfo, btnIndex) {
                   <!-- Service Name -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="name" name="name"
-                        value="${serviceInfo.name}" placeholder="Service Name" autofocus autocomplete="off" required>
+                        value="${
+                          serviceInfo.name
+                        }" placeholder="Service Name" autofocus autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter the service name.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-tag" aria-hidden="true"></span>
                   </div>
@@ -1191,23 +1228,31 @@ function updateService(serviceInfo, btnIndex) {
                   <!-- Description -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="description" name="description"
-                        value="${serviceInfo.description}" placeholder="Description" autocomplete="off">
+                        value="${
+                          serviceInfo.description
+                        }" placeholder="Description" autocomplete="off">
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-comment" aria-hidden="true"></span>
                   </div>
 
                   <!-- Base Fee -->
                   <div class="col-4 form-group has-feedback">
                       <input type="number" class="form-control has-feedback-left" id="base_fee" name="base_fee"
-                        value="${serviceInfo.base_fee}" placeholder="Base Fee" autocomplete="off" required>
+                        value="${
+                          serviceInfo.base_fee
+                        }" placeholder="Base Fee" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter a valid base_fee amount.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-question-sign" aria-hidden="true"></span>
                   </div>
                   <div class="col-4">
                     <div class="toggle-wrapper">
                       <label for="status" style="color:#5F5454;background:white">Service Status:</label>
-                      <input type="radio" id="status_active" name="status" ${serviceInfo.status ? 'checked' : ''} autocomplete="off" >
+                      <input type="radio" id="status_active" name="status" ${
+                        serviceInfo.status ? "checked" : ""
+                      } autocomplete="off" >
                       <label for="status_active">Active</label>
-                      <input type="radio" id="status_inactive" name="status" ${serviceInfo.status ? '' : 'checked'} autocomplete="off" >
+                      <input type="radio" id="status_inactive" name="status" ${
+                        serviceInfo.status ? "" : "checked"
+                      } autocomplete="off" >
                       <label for="status_inactive">Inactive</label>
                     </div>
                   </div>
@@ -1227,22 +1272,22 @@ function updateService(serviceInfo, btnIndex) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('update-service');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("update-service");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -1255,35 +1300,37 @@ function updateService(serviceInfo, btnIndex) {
             status: form.status_active.checked,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('update-service');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("update-service");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -1293,31 +1340,31 @@ function updateService(serviceInfo, btnIndex) {
         description: data.description,
         base_fee: parseInt(data.base_fee),
         status: data.status,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(service),
-      }
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      };
+      let btn = document.getElementById("edit-btn-" + btnIndex);
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       btn.disabled = true;
 
-      fetch(api + '/inventory/service/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/inventory/service/update", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else {
             setTimeout(() => {
-              btn.innerHTML = 'Saved'
+              btn.innerHTML = "Saved";
             }, 1500);
             setTimeout(() => {
-              location.reload()
+              location.reload();
             }, 1500);
           }
         });
@@ -1362,7 +1409,7 @@ function cancelService(id) {
         </div>
           `;
   Swal.fire({
-    title: 'Cancel Service',
+    title: "Cancel Service",
     width: 450,
     html: htmlContent,
     showCloseButton: true,
@@ -1370,24 +1417,23 @@ function cancelService(id) {
     showCancelButton: false,
     allowOutsideClick: false,
     preConfirm: () => {
-
       return new Promise((resolve) => {
-        const form = document.getElementById('cancel-service');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("cancel-service");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -1399,36 +1445,37 @@ function cancelService(id) {
             delivered_by: form.delivered_by.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('cancel-service');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("cancel-service");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
-
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -1437,24 +1484,24 @@ function cancelService(id) {
         delivery_date: data.delivery_date,
         note: data.note,
         delivered_by: data.delivered_by,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(reqBody),
-      }
-      fetch(api + '/inventory/services/purchase/cancel', requestOptions)
-        .then(response => response.json())
+      };
+      fetch(api + "/inventory/services/purchase/cancel", requestOptions)
+        .then((response) => response.json())
         .then(function (data) {
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else {
             setTimeout(() => {
-              btn.innerHTML = 'Saved'
+              btn.innerHTML = "Saved";
             }, 1000);
           }
           // setTimeout(() => {
@@ -1462,16 +1509,16 @@ function cancelService(id) {
           // }, 2000);
         })
         .catch(function (error) {
-          console.error('Error fetching data:', error);
+          console.error("Error fetching data:", error);
         });
     }
   });
-  initSingleDatePicker("#delivery_date")
+  initSingleDatePicker("#delivery_date");
 }
 //addNewCustomer show a popup form and then make an api call to insert customer data to the database table
-function addNewCustomer(page, customers) {
+function addNewCustomer(context, customers) {
   Swal.fire({
-    title: 'Add Customer',
+    title: "Add Customer",
     width: 450,
     html: `
       <div class="x_panel">
@@ -1530,22 +1577,22 @@ function addNewCustomer(page, customers) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-customer');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-customer");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -1556,38 +1603,40 @@ function addNewCustomer(page, customers) {
             contact_person: form.contact_person.value,
             mobile: form.mobile.value,
             email: form.email.value,
-            area: form.area.value
+            area: form.area.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-customer');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-customer");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -1598,33 +1647,34 @@ function addNewCustomer(page, customers) {
         contact_person: data.contact_person,
         mobile: data.mobile,
         email: data.email,
-        area: data.area
-      }
+        area: data.area,
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(customer),
-      }
+      };
 
-      fetch(api + '/mis/customer/new', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/mis/customer/new", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
             showSuccessMessage(data.message);
-            if (page === "sale") {
-              customers.push(data.result)
+            if (context === "sale") {
+              customers.push(data.result);
               selectedCustomer = data.result;
-              document.getElementById("customer").value = selectedCustomer.account_name;
+              document.getElementById("customer").value =
+                selectedCustomer.account_name;
             } else {
               setTimeout(function () {
                 location.reload();
-              }, 3000); // Adjust the delay as needed 
+              }, 3000); // Adjust the delay as needed
             }
           }
         });
@@ -1635,7 +1685,7 @@ function addNewCustomer(page, customers) {
 //updateCustomer show a popup form and then make an api call to update customer info to the database table
 function updateCustomer(cusInfo, btnIndex) {
   Swal.fire({
-    title: 'Update Customer Account',
+    title: "Update Customer Account",
     width: 450,
     html: `
       <div class="x_panel">
@@ -1644,7 +1694,9 @@ function updateCustomer(cusInfo, btnIndex) {
                   <!-- Account Name -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="account_name" name="account_name"
-                        value="${cusInfo.account_name || ""}" autofocus placeholder="Account Name" autocomplete="off" required>
+                        value="${
+                          cusInfo.account_name || ""
+                        }" autofocus placeholder="Account Name" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter the account name.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
                   </div>
@@ -1652,7 +1704,9 @@ function updateCustomer(cusInfo, btnIndex) {
                   <!-- Contact Person Name -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="contact_person" name="contact_person"
-                        value="${cusInfo.contact_person || ""}"  placeholder="Contact Person Name" autocomplete="off">
+                        value="${
+                          cusInfo.contact_person || ""
+                        }"  placeholder="Contact Person Name" autocomplete="off">
                       <div class="invalid-feedback d-none text-danger">Please enter the contact person name.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
                   </div>
@@ -1660,7 +1714,9 @@ function updateCustomer(cusInfo, btnIndex) {
                   <!-- Mobile Number -->
                   <div class="col-4 form-group has-feedback">
                       <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
-                        value="${cusInfo.mobile || ""}"  placeholder="Mobile Number" autocomplete="off" required>
+                        value="${
+                          cusInfo.mobile || ""
+                        }"  placeholder="Mobile Number" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
                   </div>
@@ -1668,7 +1724,9 @@ function updateCustomer(cusInfo, btnIndex) {
                   <!-- Email -->
                   <div class="col-4 form-group has-feedback">
                       <input type="email" class="form-control has-feedback-left" id="email" name="email"
-                        value="${cusInfo.email || ""}"  placeholder="Email" autocomplete="off">
+                        value="${
+                          cusInfo.email || ""
+                        }"  placeholder="Email" autocomplete="off">
                       <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
                   </div>
@@ -1676,15 +1734,21 @@ function updateCustomer(cusInfo, btnIndex) {
                   <!-- Area -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="area" name="area"
-                        value="${cusInfo.area || ""}"  placeholder="Road/House No." autocomplete="off">
+                        value="${
+                          cusInfo.area || ""
+                        }"  placeholder="Road/House No." autocomplete="off">
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-home" aria-hidden="true"></span>
                   </div>
                   <div class="col-4">
                     <div class="toggle-wrapper">
                       <label for="account_status" style="color:#5F5454;background:white">Account Status:</label>
-                      <input type="radio" id="status_active" name="account_status" ${cusInfo.account_status ? 'checked' : ''} autocomplete="off" >
+                      <input type="radio" id="status_active" name="account_status" ${
+                        cusInfo.account_status ? "checked" : ""
+                      } autocomplete="off" >
                       <label for="status_active">Active</label>
-                      <input type="radio" id="status_inactive" name="account_status" ${cusInfo.account_status ? '' : 'checked'} autocomplete="off" >
+                      <input type="radio" id="status_inactive" name="account_status" ${
+                        cusInfo.account_status ? "" : "checked"
+                      } autocomplete="off" >
                       <label for="status_inactive">Inactive</label>
                     </div>
                   </div>
@@ -1704,22 +1768,22 @@ function updateCustomer(cusInfo, btnIndex) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('update-customer');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("update-customer");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -1734,35 +1798,37 @@ function updateCustomer(cusInfo, btnIndex) {
             status: form.status_active.checked,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('update-customer');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("update-customer");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -1774,31 +1840,31 @@ function updateCustomer(cusInfo, btnIndex) {
         email: data.email,
         area: data.area,
         account_status: data.status,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(customer),
-      }
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      };
+      let btn = document.getElementById("edit-btn-" + btnIndex);
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       btn.disabled = true;
 
-      fetch(api + '/mis/customer/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/mis/customer/update", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else {
             setTimeout(() => {
-              btn.innerHTML = 'Saved'
+              btn.innerHTML = "Saved";
             }, 1500);
             setTimeout(() => {
-              location.reload()
+              location.reload();
             }, 1500);
           }
         });
@@ -1809,7 +1875,7 @@ function updateCustomer(cusInfo, btnIndex) {
 // addNewEmployee show a popup form and then make an api call to insert employee data to the database table
 function addNewEmployee() {
   Swal.fire({
-    title: 'Add Employee',
+    title: "Add Employee",
     width: 450,
     html: `
       <div class="x_panel">
@@ -1879,22 +1945,22 @@ function addNewEmployee() {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-employee');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-employee");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -1906,38 +1972,40 @@ function addNewEmployee() {
             email: form.email.value,
             mobile: form.mobile.value,
             monthly_salary: form.monthly_salary.value,
-            area: form.area.value
+            area: form.area.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-employee');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-employee");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -1948,27 +2016,27 @@ function addNewEmployee() {
         email: data.email,
         mobile: data.mobile,
         monthly_salary: parseInt(data.monthly_salary),
-        area: data.area
-      }
+        area: data.area,
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(employee),
-      }
+      };
 
-      fetch(api + '/hr/employee', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
-          console.log(employee)
+      fetch(api + "/hr/employee", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          console.log(employee);
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
-            employees.push(data.result)
+            employees.push(data.result);
             showSuccessMessage(data.message);
           }
         });
@@ -1976,14 +2044,12 @@ function addNewEmployee() {
   });
 }
 
-
-
 //updateEmployee show a popup form and then make an api call to update employee info to the database table
 function updateEmployeeDetails(btnIndex) {
-  let emp = employees[parseInt(btnIndex)]
-  console.log(emp)
+  let emp = employees[parseInt(btnIndex)];
+  console.log(emp);
   Swal.fire({
-    title: 'Update Employee Account',
+    title: "Update Employee Account",
     width: 450,
     html: `
       <div class="x_panel">
@@ -1992,7 +2058,9 @@ function updateEmployeeDetails(btnIndex) {
                   <!-- Account Name -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="account_name" name="account_name"
-                          placeholder="Account Name" value="${emp.account_name}" autocomplete="off" autofocus required>
+                          placeholder="Account Name" value="${
+                            emp.account_name
+                          }" autocomplete="off" autofocus required>
                       <div class="invalid-feedback d-none text-danger">Please enter the account name.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-user"></span>
                   </div>
@@ -2000,7 +2068,9 @@ function updateEmployeeDetails(btnIndex) {
                   <!-- Designation -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="designation" name="designation"
-                          placeholder="Designation (e.g. HR, MD)" value=${emp.designation}" autocomplete="off" required>
+                          placeholder="Designation (e.g. HR, MD)" value=${
+                            emp.designation
+                          }" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter the designation.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-briefcase"></span>
                   </div>
@@ -2008,7 +2078,9 @@ function updateEmployeeDetails(btnIndex) {
                   <!-- Email -->
                   <div class="col-4 form-group has-feedback">
                       <input type="email" class="form-control has-feedback-left" id="email" name="email"
-                          placeholder="Email" value="${emp.email}" autocomplete="off" required>
+                          placeholder="Email" value="${
+                            emp.email
+                          }" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-envelope"></span>
                   </div>
@@ -2016,7 +2088,9 @@ function updateEmployeeDetails(btnIndex) {
                   <!-- Mobile -->
                   <div class="col-4 form-group has-feedback">
                       <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
-                          placeholder="Mobile Number" value="${emp.mobile}" autocomplete="off" required>
+                          placeholder="Mobile Number" value="${
+                            emp.mobile
+                          }" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-phone"></span>
                   </div>
@@ -2024,7 +2098,9 @@ function updateEmployeeDetails(btnIndex) {
                   <!-- Monthly Salary -->
                   <div class="col-4 form-group has-feedback">
                       <input type="number" class="form-control has-feedback-left" id="monthly_salary" name="monthly_salary"
-                          placeholder="Monthly Salary" value="${emp.monthly_salary}" autocomplete="off" required>
+                          placeholder="Monthly Salary" value="${
+                            emp.monthly_salary
+                          }" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter the monthly salary.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-usd"></span>
                   </div>
@@ -2032,7 +2108,9 @@ function updateEmployeeDetails(btnIndex) {
                   <!-- Area -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="area" name="area"
-                          placeholder="Area (Road/House)" value="${emp.area}" autocomplete="off">
+                          placeholder="Area (Road/House)" value="${
+                            emp.area
+                          }" autocomplete="off">
                       <div class="invalid-feedback d-none text-danger">Please enter the area.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-map-marker"></span>
                   </div>
@@ -2041,9 +2119,13 @@ function updateEmployeeDetails(btnIndex) {
                   <div class="col-4 form-group has-feedback">
                       <div class="toggle-wrapper">
                       <label for="status" style="color:#5F5454;background:white">Account Status: </label>
-                      <input type="radio" id="status_active" name="account_status" ${emp.account_status == true ? "checked" : ""} autocomplete="off" >
+                      <input type="radio" id="status_active" name="account_status" ${
+                        emp.account_status == true ? "checked" : ""
+                      } autocomplete="off" >
                       <label for="status_active">Active</label>
-                      <input type="radio" id="status_inactive" name="account_status" ${emp.account_status == true ? "" : "checked"} autocomplete="off" >
+                      <input type="radio" id="status_inactive" name="account_status" ${
+                        emp.account_status == true ? "" : "checked"
+                      } autocomplete="off" >
                       <label for="status_inactive">Inactive</label>
                     </div>
                   </div>
@@ -2064,22 +2146,22 @@ function updateEmployeeDetails(btnIndex) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('update-employee');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("update-employee");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -2095,35 +2177,37 @@ function updateEmployeeDetails(btnIndex) {
             status: form.status_active.checked,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('update-employee');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("update-employee");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -2138,32 +2222,32 @@ function updateEmployeeDetails(btnIndex) {
         monthly_salary: salary,
         area: data.area,
         account_status: data.status,
-      }
+      };
       const requestOptions = {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(employee),
-      }
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      };
+      let btn = document.getElementById("edit-btn-" + btnIndex);
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       btn.disabled = true;
 
-      fetch(api + '/hr/employee', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
+      fetch(api + "/hr/employee", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else {
             setTimeout(() => {
-              btn.innerHTML = 'Saved'
+              btn.innerHTML = "Saved";
             }, 1500);
             setTimeout(() => {
-              location.reload()
+              location.reload();
             }, 1500);
           }
         });
@@ -2173,7 +2257,7 @@ function updateEmployeeDetails(btnIndex) {
 
 function grantUserAccess(btnIndex, id) {
   Swal.fire({
-    title: 'Grant Employee Access',
+    title: "Grant Employee Access",
     width: 450,
     html: `
   <div class="x_panel">
@@ -2224,14 +2308,14 @@ function grantUserAccess(btnIndex, id) {
     showConfirmButton: false,
     allowOutsideClick: false,
     willOpen: () => {
-      const form = document.getElementById('update-employee');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("update-employee");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         Swal.resetValidationMessage();
 
         // Form validation
         if (!form.checkValidity()) {
-          Swal.showValidationMessage('Please fill out all required fields.');
+          Swal.showValidationMessage("Please fill out all required fields.");
           return;
         }
 
@@ -2240,14 +2324,15 @@ function grantUserAccess(btnIndex, id) {
 
         // Password match check
         if (password !== confirmPassword) {
-          Swal.showValidationMessage('Passwords do not match.');
+          Swal.showValidationMessage("Passwords do not match.");
           return;
         }
 
         // Fixed role detection
-        const role = form.querySelector('input[name="role"]:checked').id === 'role_admin'
-          ? 'admin'
-          : 'operator';
+        const role =
+          form.querySelector('input[name="role"]:checked').id === "role_admin"
+            ? "admin"
+            : "operator";
 
         // Disable button during processing
         const submitBtn = form.querySelector('button[type="submit"]');
@@ -2255,91 +2340,94 @@ function grantUserAccess(btnIndex, id) {
         submitBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Saving...';
 
         // API request
-        fetch(api + '/hr/employee/access', {
-          method: 'PUT',
+        fetch(api + "/hr/employee/access", {
+          method: "PUT",
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
           body: JSON.stringify({ id, password, role }),
         })
-          .then(response => response.json())
-          .then(data => {
+          .then((response) => response.json())
+          .then((data) => {
             if (data.error) {
-              throw new Error(data.message || 'Failed to update access');
+              throw new Error(data.message || "Failed to update access");
             }
-            Swal.fire('Success', 'Employee access granted successfully.', 'success')
-              .then(() => location.reload());
+            Swal.fire(
+              "Success",
+              "Employee access granted successfully.",
+              "success"
+            ).then(() => location.reload());
           })
-          .catch(error => {
+          .catch((error) => {
             Swal.showValidationMessage(error.message);
             submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Save Changes';
+            submitBtn.innerHTML = "Save Changes";
           });
       });
-    }
+    },
   });
 }
 function togglePassword() {
-  const passwordField = document.getElementById('password');
-  const confirmPasswordField = document.getElementById('confirmPassword');
-  const toggleIcon = document.querySelector('.password-toggle svg');
+  const passwordField = document.getElementById("password");
+  const confirmPasswordField = document.getElementById("confirmPassword");
+  const toggleIcon = document.querySelector(".password-toggle svg");
 
-  if (passwordField.type === 'password') {
-    passwordField.type = 'text';
-    confirmPasswordField.type = 'text';
-    toggleIcon.innerHTML = '<path d="M12 6a9.77 9.77 0 0 1 8.82 5.5 9.77 9.77 0 0 1-8.82 5.5A9.77 9.77 0 0 1 3.18 11.5 9.77 9.77 0 0 1 12 6zm0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5a2.5 2.5 0 0 1 0 5 2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>';
+  if (passwordField.type === "password") {
+    passwordField.type = "text";
+    confirmPasswordField.type = "text";
+    toggleIcon.innerHTML =
+      '<path d="M12 6a9.77 9.77 0 0 1 8.82 5.5 9.77 9.77 0 0 1-8.82 5.5A9.77 9.77 0 0 1 3.18 11.5 9.77 9.77 0 0 1 12 6zm0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5a2.5 2.5 0 0 1 0 5 2.5 2.5 0 0 1 0-5m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/>';
   } else {
-    passwordField.type = 'password';
-    confirmPasswordField.type = 'password'
-    toggleIcon.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+    passwordField.type = "password";
+    confirmPasswordField.type = "password";
+    toggleIcon.innerHTML =
+      '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
   }
 }
-
 
 function removeUserAccess(btnIndex, id) {
   Swal.fire({
     title: `Are you sure to remove user access`,
     text: "The user cannot get access to the application anymore",
-    icon: 'info',
-    confirmButtonText: 'OK',
+    icon: "info",
+    confirmButtonText: "OK",
     showCancelButton: true,
     allowOutsideClick: false,
-    width: '480px',
+    width: "480px",
     preConfirm: async () => {
       // Return a Promise so Swal waits for the request
       try {
-        const response = await fetch(api + '/hr/employee/access', {
-          method: 'PUT',
+        const response = await fetch(api + "/hr/employee/access", {
+          method: "PUT",
           headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
-          body: JSON.stringify({ id, password: "", role: "" })
+          body: JSON.stringify({ id, password: "", role: "" }),
         });
         const data = await response.json();
         if (data.error) {
           alertQuestion(data.message);
         } else {
-          alertSuccess(data.message)
+          alertSuccess(data.message);
           setTimeout(() => {
             location.reload();
           }, 2000);
         }
       } catch (error) {
-        Swal.fire('Error', error.message, 'error');
+        Swal.fire("Error", error.message, "error");
       }
-    }
+    },
   });
 }
 
-
 //addNewSupplier show a popup form and then make an api call to insert supplier data to the database table
-function addNewSupplier(page, suppliers) {
+function addNewSupplier(context, suppliers) {
   Swal.fire({
-    title: 'Add Supplier',
+    title: "Add Supplier",
     width: 450,
     html: `
       <div class="x_panel">
@@ -2399,22 +2487,22 @@ function addNewSupplier(page, suppliers) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-supplier');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-supplier");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -2425,38 +2513,40 @@ function addNewSupplier(page, suppliers) {
             contact_person: form.contact_person.value,
             mobile: form.mobile.value,
             email: form.email.value,
-            area: form.area.value
+            area: form.area.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-supplier');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-supplier");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -2466,33 +2556,34 @@ function addNewSupplier(page, suppliers) {
         contact_person: data.contact_person,
         mobile: data.mobile,
         email: data.email,
-        area: data.area
-      }
+        area: data.area,
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(supplier),
-      }
+      };
 
-      fetch(api + '/mis/supplier/new', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/mis/supplier/new", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
             showSuccessMessage(data.message);
-            if (page === "purchase") {
+            if (context === "purchase") {
               suppliers.push(data.result);
               selectedSupplier = data.result || null;
-              document.getElementById("supplier").value = selectedSupplier.account_name;
+              document.getElementById("supplier").value =
+                selectedSupplier.account_name;
             } else {
               setTimeout(function () {
                 location.reload();
-              }, 3000); // Adjust the delay as needed 
+              }, 3000); // Adjust the delay as needed
             }
           }
         });
@@ -2503,7 +2594,7 @@ function addNewSupplier(page, suppliers) {
 //updateSupplier show a popup form and then make an api call to update supplier info to the database table
 function updateSupplier(supInfo, btnIndex) {
   Swal.fire({
-    title: 'Update Supplier Account',
+    title: "Update Supplier Account",
     width: 450,
     html: `
       <div class="x_panel">
@@ -2521,7 +2612,9 @@ function updateSupplier(supInfo, btnIndex) {
                   <!-- Contact Person Name -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="contact_person" name="contact_person"
-                        value="${supInfo.contact_person || ""}"  placeholder="Contact Person Name" autocomplete="off">
+                        value="${
+                          supInfo.contact_person || ""
+                        }"  placeholder="Contact Person Name" autocomplete="off">
                       <div class="invalid-feedback d-none text-danger">Please enter the contact person name.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-user" aria-hidden="true"></span>
                   </div>
@@ -2529,7 +2622,9 @@ function updateSupplier(supInfo, btnIndex) {
                   <!-- Mobile Number -->
                   <div class="col-4 form-group has-feedback">
                       <input type="tel" class="form-control has-feedback-left" id="mobile" name="mobile"
-                        value="${supInfo.mobile || ""}"  placeholder="Mobile Number" autocomplete="off" required>
+                        value="${
+                          supInfo.mobile || ""
+                        }"  placeholder="Mobile Number" autocomplete="off" required>
                       <div class="invalid-feedback d-none text-danger">Please enter a valid mobile number.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-phone" aria-hidden="true"></span>
                   </div>
@@ -2537,7 +2632,9 @@ function updateSupplier(supInfo, btnIndex) {
                   <!-- Email -->
                   <div class="col-4 form-group has-feedback">
                       <input type="email" class="form-control has-feedback-left" id="email" name="email"
-                        value="${supInfo.email || ""}"  placeholder="Email" autocomplete="off">
+                        value="${
+                          supInfo.email || ""
+                        }"  placeholder="Email" autocomplete="off">
                       <div class="invalid-feedback d-none text-danger">Please enter a valid email address.</div>
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon  glyphicon-envelope" aria-hidden="true"></span>
                   </div>
@@ -2545,15 +2642,21 @@ function updateSupplier(supInfo, btnIndex) {
                   <!-- Area -->
                   <div class="col-4 form-group has-feedback">
                       <input type="text" class="form-control has-feedback-left" id="area" name="area"
-                        value="${supInfo.area || ""}"  placeholder="Road/House No." autocomplete="off">
+                        value="${
+                          supInfo.area || ""
+                        }"  placeholder="Road/House No." autocomplete="off">
                       <span style="color: rgba(0, 0, 0, 1); transform:translate(-40%,-10%)" class="form-control-feedback left glyphicon glyphicon-home" aria-hidden="true"></span>
                   </div>
                   <div class="col-4">
                     <div class="toggle-wrapper">
                       <label for="account_status" style="color:#5F5454;background:white">Account Status:</label>
-                      <input type="radio" id="status_active" name="account_status" ${supInfo.account_status ? 'checked' : ''} autocomplete="off" >
+                      <input type="radio" id="status_active" name="account_status" ${
+                        supInfo.account_status ? "checked" : ""
+                      } autocomplete="off" >
                       <label for="status_active">Active</label>
-                      <input type="radio" id="status_inactive" name="account_status" ${supInfo.account_status ? '' : 'checked'} autocomplete="off" >
+                      <input type="radio" id="status_inactive" name="account_status" ${
+                        supInfo.account_status ? "" : "checked"
+                      } autocomplete="off" >
                       <label for="status_inactive">Inactive</label>
                     </div>
                   </div>
@@ -2572,22 +2675,22 @@ function updateSupplier(supInfo, btnIndex) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('update-supplier');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("update-supplier");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -2602,35 +2705,37 @@ function updateSupplier(supInfo, btnIndex) {
             status: form.status_active.checked,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('update-supplier');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("update-supplier");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -2642,31 +2747,31 @@ function updateSupplier(supInfo, btnIndex) {
         email: data.email,
         area: data.area,
         account_status: data.status,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(supplier),
-      }
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      };
+      let btn = document.getElementById("edit-btn-" + btnIndex);
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       btn.disabled = true;
 
-      fetch(api + '/mis/supplier/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/mis/supplier/update", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else {
             setTimeout(() => {
-              btn.innerHTML = 'Saved'
+              btn.innerHTML = "Saved";
             }, 1500);
             setTimeout(() => {
-              location.reload()
+              location.reload();
             }, 1500);
           }
         });
@@ -2677,7 +2782,7 @@ function updateSupplier(supInfo, btnIndex) {
 //addNewStakeHolder show a popup form and then make an api call to insert stakeholder data to the database table
 function addNewStakeHolder() {
   Swal.fire({
-    title: 'Add Stakeholder',
+    title: "Add Stakeholder",
     width: 450,
     html: `
       <div class="x_panel">
@@ -2749,22 +2854,22 @@ function addNewStakeHolder() {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-stake-holder');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-stake-holder");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -2776,38 +2881,40 @@ function addNewStakeHolder() {
             contact_person: form.contact_person.value,
             mobile: form.mobile.value,
             email: form.email.value,
-            area: form.area.value
+            area: form.area.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-stake-holder');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-stake-holder");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -2818,28 +2925,28 @@ function addNewStakeHolder() {
         contact_person: data.contact_person,
         mobile: data.mobile,
         email: data.email,
-        area: data.area
-      }
+        area: data.area,
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(proprietor),
-      }
+      };
 
-      fetch(api + '/add-stake-holder', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
+      fetch(api + "/add-stake-holder", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
             showSuccessMessage(data.message);
             setTimeout(() => {
-              location.reload()
+              location.reload();
             }, 2000);
           }
         });
@@ -2848,8 +2955,11 @@ function addNewStakeHolder() {
 }
 
 //checkoutWarrantyProducts show a popup checkout warranty for and make an api call to update database table for checkout process
-function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSerialID) {
-
+function checkoutWarrantyProducts(
+  warrantyHistoryID,
+  productSerialNo,
+  productSerialID
+) {
   let htmlContent = `
         <div class="x_panel">
             <div class="x_content">
@@ -2885,7 +2995,7 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
         </div>
           `;
   Swal.fire({
-    title: 'Checkout Warranty',
+    title: "Checkout Warranty",
     width: 450,
     html: htmlContent,
     showCloseButton: true,
@@ -2894,22 +3004,22 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('checkout-wp');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("checkout-wp");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -2921,35 +3031,37 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
             comment: form.comment.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('checkout-wp');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("checkout-wp");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -2960,42 +3072,42 @@ function checkoutWarrantyProducts(warrantyHistoryID, productSerialNo, productSer
         checkout_date: data.arrival_date,
         new_serial_number: data.new_s_n,
         comment: data.comment,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(wpData),
-      }
-      console.log(wpData)
+      };
+      console.log(wpData);
 
-      fetch(api + '/inventory/products/warranty/checkout', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log(data)
+      fetch(api + "/inventory/products/warranty/checkout", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
           if (data.error === true) {
-            showErrorMessage(data.message)
+            showErrorMessage(data.message);
           } else {
             showSuccessMessage(data.message);
           }
         });
     }
   });
-  initSingleDatePicker("#arrival_date")
+  initSingleDatePicker("#arrival_date");
 }
 
 //Function to show SweetAlert2 prompt and handle the delivery process for a warranty product
 function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
   // Display a SweetAlert2 confirmation prompt to proceed with delivery
   Swal.fire({
-    title: 'Proceed with delivery?',   // Prompt message
-    showCancelButton: true,            // Show the cancel button
-    confirmButtonText: 'Yes',          // Text for the confirm button
-    cancelButtonText: 'Cancel',        // Text for the cancel button
-    icon: 'warning',                   // Icon type to indicate a warning action
+    title: "Proceed with delivery?", // Prompt message
+    showCancelButton: true, // Show the cancel button
+    confirmButtonText: "Yes", // Text for the confirm button
+    cancelButtonText: "Cancel", // Text for the cancel button
+    icon: "warning", // Icon type to indicate a warning action
   }).then((result) => {
     // Check if the user confirmed by clicking "Yes"
     if (result.isConfirmed) {
@@ -3007,36 +3119,36 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
 
       // Fetch API request options, including method, headers, and body (as JSON)
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
-        body: JSON.stringify(wpData),  // Convert data object to a JSON string
+        body: JSON.stringify(wpData), // Convert data object to a JSON string
       };
 
       // Log the data being sent to the API (for debugging purposes)
       console.log(wpData);
 
       // Send a POST request to the API endpoint for warranty delivery
-      fetch(api + '/inventory/products/warranty/delivery', requestOptions)
-        .then(response => response.json())  // Parse the response as JSON
-        .then(data => {
+      fetch(api + "/inventory/products/warranty/delivery", requestOptions)
+        .then((response) => response.json()) // Parse the response as JSON
+        .then((data) => {
           // Check if the API returned an error
           if (data.error === true) {
-            showErrorMessage(data.message);  // Show error message if there's an issue
+            showErrorMessage(data.message); // Show error message if there's an issue
           } else {
-            showSuccessMessage(data.message);  // Show success message on success
+            showSuccessMessage(data.message); // Show success message on success
             setTimeout(function () {
               location.reload();
-            }, 3000); // Adjust the delay as needed 
+            }, 3000); // Adjust the delay as needed
           }
         })
-        .catch(error => {
+        .catch((error) => {
           // Handle any errors that occur during the fetch request
-          console.error('Error during the request:', error);
-          showErrorMessage('An error occurred during the delivery process.');
+          console.error("Error during the request:", error);
+          showErrorMessage("An error occurred during the delivery process.");
         });
     }
   });
@@ -3044,15 +3156,15 @@ function confirmWarrantyDeliveryProcess(warrantyHistoryID, productSerialID) {
 
 //viewWarrantyHistory shows warranty history
 function viewWarrantyHistory(warrantyHistory) {
-  let mm = warrantyHistory.memo_no.split("-").pop() //get the last part of the memo
+  let mm = warrantyHistory.memo_no.split("-").pop(); //get the last part of the memo
   // Display a SweetAlert2 confirmation prompt to proceed with delivery
   Swal.fire({
     width: 720,
-    title: 'Warranty Information',   // Prompt message
-    showCancelButton: false,            // Show the cancel button
-    confirmButtonText: 'Ok',          // Text for the confirm button
+    title: "Warranty Information", // Prompt message
+    showCancelButton: false, // Show the cancel button
+    confirmButtonText: "Ok", // Text for the confirm button
     // cancelButtonText: 'Cancel',        // Text for the cancel button
-    allowOutsideClick: false,          //disable outside click
+    allowOutsideClick: false, //disable outside click
 
     html: `<div class="row">
           <div class="col-md-6 col-sm-6 col-xs-12">
@@ -3072,11 +3184,19 @@ function viewWarrantyHistory(warrantyHistory) {
                 </tr>
                 <tr>
                   <td>Received By:</td>
-                  <td><b>${warrantyHistory.received_by ? warrantyHistory.received_by : ""}</b></td>
+                  <td><b>${
+                    warrantyHistory.received_by
+                      ? warrantyHistory.received_by
+                      : ""
+                  }</b></td>
                 </tr>
                 <tr>
                   <td>Receiption Date:</td>
-                  <td><b>${formatDate(warrantyHistory.requested_date, "date", "-")}</b></td>
+                  <td><b>${formatDate(
+                    warrantyHistory.requested_date,
+                    "date",
+                    "-"
+                  )}</b></td>
                 </tr>
                 <tr>
                   <td>Complain:</td>
@@ -3107,11 +3227,19 @@ function viewWarrantyHistory(warrantyHistory) {
                 </tr>
                 <tr>
                   <td>Delivered By:</td>
-                  <td><b>${warrantyHistory.delivered_by ? warrantyHistory.delivered_by : ""}</td>
+                  <td><b>${
+                    warrantyHistory.delivered_by
+                      ? warrantyHistory.delivered_by
+                      : ""
+                  }</td>
                 </tr>
                 <tr>
                   <td>Delivery Date:</td>
-                  <td><b>${formatDate(warrantyHistory.delivery_date, "date", "-")}</b></td>
+                  <td><b>${formatDate(
+                    warrantyHistory.delivery_date,
+                    "date",
+                    "-"
+                  )}</b></td>
                 </tr>
                 <tr>
                   <td>Comment:</td>
@@ -3126,42 +3254,42 @@ function viewWarrantyHistory(warrantyHistory) {
             </table>
           </div>
         </div>
-      `
-  }).then((result) => {
-  });
+      `,
+  }).then((result) => {});
 }
 
 // Function to initialize the SweetAlert2 form with date range picker
 function showDateRangePickerPopup() {
   Swal.fire({
-    title: 'Select Date Range',
-    html: '<div id="daterange-container" style="cursor: pointer; padding: 5px; border: 1px solid #ccc; width: 100%;">' +
+    title: "Select Date Range",
+    html:
+      '<div id="daterange-container" style="cursor: pointer; padding: 5px; border: 1px solid #ccc; width: 100%;">' +
       '<span>Click to select date range</span> <i class="fa fa-calendar"></i></div>',
     showCancelButton: true,
-    confirmButtonText: 'Submit',
+    confirmButtonText: "Submit",
     width: 450,
     preConfirm: () => {
-      const daterangepicker = $('#daterange-container').data('daterangepicker');
-      const startDate = daterangepicker.startDate.format('MM/DD/YYYY');
-      const endDate = daterangepicker.endDate.format('MM/DD/YYYY');
+      const daterangepicker = $("#daterange-container").data("daterangepicker");
+      const startDate = daterangepicker.startDate.format("MM/DD/YYYY");
+      const endDate = daterangepicker.endDate.format("MM/DD/YYYY");
       return { startDate, endDate };
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const { startDate, endDate } = result.value;
-      console.log("Pop:", startDate, endDate)
+      console.log("Pop:", startDate, endDate);
       showFilteredReport(startDate, endDate);
     }
   });
 
   // Initialize the date range picker in the SweetAlert popup
-  DateRangePicker_Cal('daterange-container');
+  DateRangePicker_Cal("daterange-container");
 }
 
 //addNewExpenseType show a popup form and then make an api call to insert expense data to the database table
-function addNewExpenseType(page, expenses) {
+function addNewExpenseType(context, expenses) {
   Swal.fire({
-    title: 'Add New Expense',
+    title: "Add New Expense",
     width: 450,
     html: `
       <div class="x_panel">
@@ -3190,22 +3318,22 @@ function addNewExpenseType(page, expenses) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-expense');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-expense");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -3215,62 +3343,63 @@ function addNewExpenseType(page, expenses) {
             name: form.name.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-expense');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-expense");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
       let expense_type = {
         expense_name: data.name,
-      }
+      };
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(expense_type),
-      }
+      };
 
-      fetch(api + '/inventory/expenses/type/new', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/inventory/expenses/type/new", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           console.log(data);
           if (data.error === true) {
-            alertQuestion(data.message)
-
+            alertQuestion(data.message);
           } else {
-            if (page === "expense") {
-              expenses.push(data.result)
-              showSuccessMessage(data.message)
+            if (context === "expense") {
+              expenses.push(data.result);
+              showSuccessMessage(data.message);
             }
             //else {
             // location.reload()
@@ -3284,7 +3413,7 @@ function addNewExpenseType(page, expenses) {
 //updateExpense show a popup form and then make an api call to update expense data to the database table
 function updateExpense(expenseType, btnIndex) {
   Swal.fire({
-    title: 'Update Expense',
+    title: "Update Expense",
     width: 450,
     html: `
       <div class="x_panel">
@@ -3313,22 +3442,22 @@ function updateExpense(expenseType, btnIndex) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('update-expense');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("update-expense");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -3338,35 +3467,37 @@ function updateExpense(expenseType, btnIndex) {
             new_name: form.name.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('update-expense');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("update-expense");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -3374,32 +3505,32 @@ function updateExpense(expenseType, btnIndex) {
         exp_id: expenseType.id,
         old_name: expenseType.expense_name,
         new_name: data.new_name,
-      }
-      let btn = document.getElementById('edit-btn-' + btnIndex);
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      };
+      let btn = document.getElementById("edit-btn-" + btnIndex);
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       const requestOptions = {
-        method: 'post',
+        method: "post",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(payload),
-      }
-      console.log("Payload:", payload)
-      fetch(api + '/inventory/expenses/type/update', requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          console.log("Response:", data)
+      };
+      console.log("Payload:", payload);
+      fetch(api + "/inventory/expenses/type/update", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Response:", data);
           setInterval(() => {
-            let btn = document.getElementById('edit-btn-' + btnIndex);
-            btn.innerHTML = 'Saved'
+            let btn = document.getElementById("edit-btn-" + btnIndex);
+            btn.innerHTML = "Saved";
           }, 1000);
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else if (btnIndex >= 0) {
             setInterval(() => {
-              location.reload()
+              location.reload();
             }, 1000);
           }
         });
@@ -3407,11 +3538,10 @@ function updateExpense(expenseType, btnIndex) {
   });
 }
 
-
 // CreateWarehouse show a popup form and then make an api call to insert warehouse data to the database table
 function CreateWarehouse() {
   Swal.fire({
-    title: 'Add New Warehouse',
+    title: "Add New Warehouse",
     width: 450,
     html: `
       <div class="x_panel">
@@ -3456,22 +3586,22 @@ function CreateWarehouse() {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
-        const form = document.getElementById('add-warehouse');
-        const formFields = form.querySelectorAll('.form-control, .form-select');
+        const form = document.getElementById("add-warehouse");
+        const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
 
         // Reset all feedback messages
-        form.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        form.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
 
         // Check each field
-        formFields.forEach(field => {
+        formFields.forEach((field) => {
           if (!field.checkValidity()) {
             isValid = false;
             const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+            if (feedback && feedback.classList.contains("invalid-feedback")) {
+              feedback.classList.remove("d-none");
             }
           }
         });
@@ -3483,35 +3613,37 @@ function CreateWarehouse() {
             description: form.description.value,
           });
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
     },
     willOpen: () => {
-      const form = document.getElementById('add-warehouse');
-      form.addEventListener('submit', function (event) {
+      const form = document.getElementById("add-warehouse");
+      form.addEventListener("submit", function (event) {
         event.preventDefault();
         event.stopPropagation();
-        document.querySelectorAll('.invalid-feedback').forEach(feedback => {
-          feedback.classList.add('d-none');
+        document.querySelectorAll(".invalid-feedback").forEach((feedback) => {
+          feedback.classList.add("d-none");
         });
         let isValid = true;
-        form.querySelectorAll('.form-control, .form-select').forEach(field => {
-          if (!field.checkValidity()) {
-            isValid = false;
-            const feedback = field.nextElementSibling;
-            if (feedback && feedback.classList.contains('invalid-feedback')) {
-              feedback.classList.remove('d-none');
+        form
+          .querySelectorAll(".form-control, .form-select")
+          .forEach((field) => {
+            if (!field.checkValidity()) {
+              isValid = false;
+              const feedback = field.nextElementSibling;
+              if (feedback && feedback.classList.contains("invalid-feedback")) {
+                feedback.classList.remove("d-none");
+              }
             }
-          }
-        });
+          });
         if (isValid) {
           Swal.getConfirmButton().click();
         } else {
-          Swal.showValidationMessage('Please correct the errors in the form.');
+          Swal.showValidationMessage("Please correct the errors in the form.");
         }
       });
-    }
+    },
   }).then((result) => {
     if (result.isConfirmed) {
       const data = result.value;
@@ -3519,30 +3651,29 @@ function CreateWarehouse() {
         name: data.name,
         address: data.address,
         description: data.description,
-      }
+      };
       const requestOptions = {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
         },
         body: JSON.stringify(warehouse),
-      }
-      let btn = document.getElementById('submit-btn');
-      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>'
+      };
+      let btn = document.getElementById("submit-btn");
+      btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i>';
       btn.disabled = true;
 
-      fetch(api + '/warehouse', requestOptions)
-        .then(response => response.json())
-        .then(data => {
+      fetch(api + "/warehouse", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
           if (data.error === true) {
-            alertQuestion(data.message)
+            alertQuestion(data.message);
           } else {
-            alertSuccess(data.message, location.reload())
+            alertSuccess(data.message, location.reload());
           }
         });
     }
   });
 }
-
