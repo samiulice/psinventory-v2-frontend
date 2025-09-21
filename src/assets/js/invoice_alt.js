@@ -19,8 +19,17 @@ function printPurchaseInvoice() {
     // Step 2: Remove the temporary element
     document.body.removeChild(tempDiv);
 
-    // Step 3: Open a new window to write the invoice content
-    const newWindow = window.open("", "_blank");
+    // Step 3: Create the print iframe
+    let printFrame = document.getElementById("printFrame");
+    if (!printFrame) {
+        printFrame = document.createElement("iframe");
+        printFrame.id = "printFrame";
+        printFrame.style.position = "absolute";
+        printFrame.style.top = "-10000px";
+        printFrame.style.left = "-10000px";
+        document.body.appendChild(printFrame);
+    }
+
 
     // Build the item rows HTML
     let tableRows = '';
@@ -193,12 +202,16 @@ function printPurchaseInvoice() {
         </html>
     `;
 
-    newWindow.document.write(content);
-    newWindow.document.close();
-    
-    // Wait for the new window content to fully render before printing
+    // Step 4: Write to the iframe document and print
+    const frameDoc = printFrame.contentWindow || printFrame.contentDocument;
+    frameDoc.document.open();
+    frameDoc.document.write(content);
+    frameDoc.document.close();
+
+    // Wait for the iframe content to fully render before printing
     setTimeout(() => {
-        newWindow.print();
+        frameDoc.focus();
+        frameDoc.print();
     }, 500);
 }
 

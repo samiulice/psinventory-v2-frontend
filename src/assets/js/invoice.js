@@ -76,11 +76,11 @@ function printPurchaseInvoice() {
     });
 
     //member of associations
-    let members_of = "";
-    const associations = company.associations_logo_links.split(":::").filter(association => association.trim() !== "")
-    associations.forEach(association => {
-        members_of += `<img src=${api}/images/${association} alt="${association}">`
-    });
+    // let members_of = "";
+    // const associations = company.associations_logo_links.split(":::").filter(association => association.trim() !== "")
+    // associations.forEach(association => {
+    //     members_of += `<img src=${api}/images/${association} alt="${association}">`
+    // });
 
     const content = `
         <!DOCTYPE html>
@@ -557,9 +557,9 @@ function printPurchaseInvoice() {
                   </div>
                   <div class="dotted-line"></div>
                   <div class="invoice-footer-info">
-                    <div class="member-logos">
-                      ${members_of === "" ? "" : `<span>Member of:</span>${members_of}`}
-                    </div>
+                    <!-- <div class="member-logos">
+                      <span>Member of:</span>
+                    </div> -->
                       <div class="print-info">
                           <div class="print-date">
                               Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
@@ -1087,14 +1087,14 @@ function printPurchaseChallan() {
               </div>
               <div class="dotted-line"></div>
               <div class="invoice-footer-info">
-                <div class="member-logos">
-                  ${members_of === "" ? "" : `<span>Member of:</span>${members_of}`}
+                <!-- <div class="member-logos">
+                    <span>Member of:</span>
+                </div> -->
+                <div class="print-info">
+                    <div class="print-date">
+                        Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
+                    </div>
                 </div>
-                  <div class="print-info">
-                      <div class="print-date">
-                          Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
-                      </div>
-                  </div>
               </div>
           </div>
         </div>
@@ -1642,10 +1642,10 @@ function printPurchaseReturnInvoice() {
                   </div>
                   <div class="dotted-line"></div>
                   <div class="invoice-footer-info">
-                    <div class="member-logos">
-                      ${members_of === "" ? "" : `<span>Member of:</span>${members_of}`}
-                    </div>
-                      <div class="print-info">
+                    <!-- <div class="member-logos">
+                      <span>Member of:</span>
+                    </div> -->
+                    <div class="print-info">
                           <div class="print-date">
                               Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
                           </div>
@@ -2233,10 +2233,10 @@ function printSaleInvoice() {
                   </div>
                   <div class="dotted-line"></div>
                   <div class="invoice-footer-info">
-                    <div class="member-logos">
-                      ${members_of === "" ? "" : `<span>Member of:</span>${members_of}`}
-                    </div>
-                      <div class="print-info">
+                    <!-- <div class="member-logos">
+                      <span>Member of:</span>
+                    </div> -->
+                    <div class="print-info">
                           <div class="print-date">
                               Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
                           </div>
@@ -3288,10 +3288,10 @@ function printSaleReturnInvoice() {
                   </div>
                   <div class="dotted-line"></div>
                   <div class="invoice-footer-info">
-                    <div class="member-logos">
-                      ${members_of === "" ? "" : `<span>Member of:</span>${members_of}`}
-                    </div>
-                      <div class="print-info">
+                    <!-- <div class="member-logos">
+                      <span>Member of:</span>
+                    </div> -->
+                    <div class="print-info">
                           <div class="print-date">
                               Print Date &amp; Time : <span id="currentDateTime">${moment().format("DD-MMMM-YYYY hh:mm:ssA")}</span>
                           </div>
