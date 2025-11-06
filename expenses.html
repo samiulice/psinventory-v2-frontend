@@ -32,7 +32,7 @@
 
 <body class="nav-md">
   <!-- added mobile navigation toggle button -->
-    <div class="mobile-nav-toggle-container">
+  <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
       <i class="fa fa-bars"></i>
@@ -110,7 +110,7 @@
               <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="row form-group has-feedback">
                   <div class="col-md-12 col-sm-12 col-xs-12">
-                    <label for="expense-type">Expense Type*: </label>
+                    <label for="expense-type">Expense Type *: </label>
                     <select class="form-control  has-feedback-left" name="expense-type" id="expense-type"
                       class="form-select">
                       <option value="" disabled selected>Select Expense Type</option>
@@ -286,6 +286,10 @@
       let accounts, suppliers, payment_summary = [], expense_types = [], company = JSON.parse(localStorage.getItem("company"));
       window.addEventListener("DOMContentLoaded", () => {
         initSingleDatePicker("#transfer_date");
+        // Detect and remove single or double quotes
+        preventQuotesInput("carrier", "Carrier");
+        preventQuotesInput("chq-no", "Receipt Number");
+        preventQuotesInput("description", "Description");
         document.getElementById("createExpenseType").addEventListener("click", () => {
           addNewExpenseType("expense", expense_types)
         })

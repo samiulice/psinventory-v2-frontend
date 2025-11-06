@@ -74,7 +74,7 @@
 
 <body class="nav-md">
   <!-- added mobile navigation toggle button -->
-    <div class="mobile-nav-toggle-container">
+  <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
       <i class="fa fa-bars"></i>
@@ -437,6 +437,16 @@
   <!-- Common js-script -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
+
+      preventQuotesInput("company-name-f", "Company Name (Full)");
+      preventQuotesInput("company-name-l", "Company Name (Short)");
+      preventQuotesInput("company-slogan", "Company Slogan");
+      preventQuotesInput("company-mobile", "Mobile Number");
+      preventQuotesInput("company-telephone", "Telephone Number");
+      preventQuotesInput("company-email", "Email Address");
+      preventQuotesInput("company-website", "Website URL");
+      preventQuotesInput("company-address", "Company Address");
+
       if (window.appUser.role === "operator") {
         const tabUI = document.getElementById("general-tab");
         tabUI.querySelectorAll("button").forEach(btn => btn.remove());

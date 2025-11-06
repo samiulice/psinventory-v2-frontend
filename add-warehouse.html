@@ -73,7 +73,7 @@
 
 <body class="nav-md">
   <!-- Added mobile navigation toggle button -->
-    <div class="mobile-nav-toggle-container">
+  <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
       <i class="fa fa-bars"></i>
@@ -245,6 +245,13 @@
   <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
   <script>
+
+    window.addEventListener("DOMContentLoaded", () => {
+      // Detect and remove single or double quotes
+      preventQuotesInput("name", "Warehouse Name");
+      preventQuotesInput("address", "Address");
+      preventQuotesInput("description", "Description");
+    })
     let employees, manager;
     const requestOptions = {
       method: 'POST',
@@ -329,7 +336,7 @@
 
 
     document.getElementById("submitBtn").addEventListener("click", function () {
-      
+
       const form = document.getElementById("warehouse-form");
 
       if (!form.checkValidity()) {

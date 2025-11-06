@@ -191,7 +191,7 @@
 
 <body class="nav-md">
   <!-- Added mobile navigation toggle button -->
-    <div class="mobile-nav-toggle-container">
+  <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
       <i class="fa fa-bars"></i>
@@ -492,7 +492,7 @@
       <!-- Custom Theme Scripts -->
       <script src="src/assets/js/custom.js"></script>
       <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
+      <script src="src/assets/js/config.js"></script>
       <script src="src/assets/js/build.js"></script>
       <script src="src/assets/js/swal-popup-form.js"></script>
       <script src="src/assets/js/invoice.js"></script>
@@ -506,6 +506,10 @@
         let products = [], memos = [], selectedProductItem = null, selectedProductIndex = 0, selectedMemo = null, selectedSupplier = null, suppliers = [], headAccounts = [], categories = [], brands = [], purchased_product = [], purchase_details = [], InvoiceData, company;
         window.addEventListener("DOMContentLoaded", event => {
           initSingleDatePicker("#purchase_date");
+          // Detect and remove single or double quotes
+          preventQuotesInput("challan_no", "Challan No");
+          preventQuotesInput("note", "Note");
+
           fetchMemos(document.getElementById('purchase_date').value, 'purchase_history')
           // Show popup form for adding a new supplier
           document.getElementById("createSupplierBtn").addEventListener("click", e => {
@@ -582,7 +586,7 @@
             .catch(error => {
               console.error("Error completing all fetch requests:", error);
             })
-            .finally(event=>{
+            .finally(event => {
               hidePreloader()
             })
         });

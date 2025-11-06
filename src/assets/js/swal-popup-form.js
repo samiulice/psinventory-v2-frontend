@@ -1,3 +1,23 @@
+function attachPreventQuotes(inputIds, labels = []) {
+  inputIds.forEach((id, index) => {
+    const input = document.getElementById(id);
+    if (!input) return;
+
+    const label = labels[index] || `Field ${index + 1}`;
+
+    input.addEventListener("input", () => {
+      // Remove quotes automatically
+      if (/['"]/.test(input.value)) {
+        input.value = input.value.replace(/['"]/g, "");
+      }
+      // Hide SweetAlert validation message as soon as user types
+      if (Swal.getValidationMessage()) {
+        Swal.hideValidationMessage();
+      }
+    });
+  });
+}
+
 //addNewBrand show a popup form and then make an api call to insert brand data to the database table
 function addNewBrand(context) {
   Swal.fire({
@@ -30,6 +50,15 @@ function addNewBrand(context) {
     allowOutsideClick: false,
     preConfirm: () => {
       return new Promise((resolve) => {
+        // Validate quotes
+        const hasNoQuotes = [
+          ...document.querySelectorAll("#edit-brand input"),
+        ].every((input) => !/['"]/.test(input.value));
+
+        if (!hasNoQuotes) {
+          Swal.showValidationMessage("Please remove quotes from all fields.");
+          return false; // stops the preConfirm
+        }
         const form = document.getElementById("add-brand");
         const formFields = form.querySelectorAll(".form-control, .form-select");
         let isValid = true;
@@ -60,6 +89,8 @@ function addNewBrand(context) {
       });
     },
     willOpen: () => {
+      // Attach quote prevention to input fields AFTER popup is created
+      attachPreventQuotes(["name"], ["Brand Name"]);
       const form = document.getElementById("add-brand");
       form.addEventListener("submit", function (event) {
         event.preventDefault();

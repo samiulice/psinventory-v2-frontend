@@ -40,8 +40,6 @@
   <link rel="stylesheet" href="src/assets/sweetalert2/sweetalert2.min.css">
 
   <style>
-    
-
     h2 {
       overflow: hidden;
     }
@@ -197,7 +195,7 @@
 
 <body class="nav-md">
   <!-- added mobile navigation toggle button -->
-    <div class="mobile-nav-toggle-container">
+  <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
       <i class="fa fa-bars"></i>
@@ -417,10 +415,14 @@
                 title: "Actions",
                 className: "actions",
                 render: function (data, type, row, meta) {
-                  const rowObj = encodeURIComponent(JSON.stringify(row));
-                  return `<button class="btn btn-danger btn-xs" onclick="editProductInfo('${rowObj}')"><i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit</button>`
+                  return `
+                    <button class="btn btn-danger btn-xs" onclick="editProductInfo(${row.id})">
+                      <i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit
+                    </button>
+                  `;
                 }
-              },
+              }
+
             ],
             buttons: [
               {
@@ -477,9 +479,9 @@
 
     };
 
-    function editProductInfo(productInfo) {
-      const rowData = JSON.parse(decodeURIComponent(productInfo));
-      console.log(rowData);
+    function editProductInfo(productID) {
+      const rowData = reportData.find(p=> p.id == productID)
+      console.log(rowData)
       updateProduct(brands, categories, rowData)
     }
 

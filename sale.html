@@ -521,6 +521,11 @@
 
         window.addEventListener("DOMContentLoaded", () => {
           initSingleDatePicker("#sale_date");
+
+          // Detect and remove single or double quotes
+          preventQuotesInput("challan_no", "Challan No");
+          preventQuotesInput("note", "Note");
+          
           document.getElementById("createCustomerBtn").addEventListener("click", () => addNewCustomer("sale", customers));
 
           const params = new URLSearchParams(window.location.search);

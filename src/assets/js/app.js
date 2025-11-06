@@ -839,3 +839,41 @@ function printWindow(contentHtml, docTitle = 'Print Document') {
 
 
 
+
+
+function validateNoQuotes(fieldValue, fieldLabel = "field") {
+  // Check for single or double quotes
+  if (/['"]/.test(fieldValue)) {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Invalid Characters Detected',
+      text: `Please avoid using single (') or double (") quotes in the ${fieldLabel}.`,
+      confirmButtonColor: '#d33'
+    });
+    return false;
+  }
+  return true;
+}
+
+function preventQuotesInput(inputId, fieldLabel = "field") {
+  const input = document.getElementById(inputId);
+  if (!input) return;
+
+  input.addEventListener("input", function () {
+    // Detect and remove single or double quotes
+    if (/['"]/.test(this.value)) {
+      this.value = this.value.replace(/['"]/g, ""); // Remove quotes
+
+      // Show SweetAlert2 warning
+      Swal.fire({
+        toast: true,
+        position: "top-end",
+        icon: "info",
+        title: `Please avoid using single (') or double (") quotes in the ${fieldLabel}.`,
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    }
+  });
+}

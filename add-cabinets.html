@@ -73,7 +73,7 @@
 
 <body class="nav-md">
   <!-- Added mobile navigation toggle button -->
-    <div class="mobile-nav-toggle-container">
+  <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
       <i class="fa fa-bars"></i>
@@ -145,8 +145,8 @@
                     <label for="name">Container Name * :</label>
                     <input type="text" class="form-control has-feedback-left input-sm" id="name" name="name"
                       placeholder="Enter container Name">
-                    <i style="color: rgba(0, 0, 0, 1);"
-                      class="fa fa-cube form-control-feedback left input-sm-feedback" aria-hidden="true"></i>
+                    <i style="color: rgba(0, 0, 0, 1);" class="fa fa-cube form-control-feedback left input-sm-feedback"
+                      aria-hidden="true"></i>
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-6 col-xs-12">
@@ -245,6 +245,13 @@
   <script src="src/assets/sweetalert2/sweetalert2.all.min.js"></script>
 
   <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      // Detect and remove single or double quotes
+      preventQuotesInput("name", "Container Name");
+      preventQuotesInput("dimension", "Dimension");
+      preventQuotesInput("description", "Description");
+
+    })
     let warehouses, selectedWarehouse;
     const requestOptions = {
       method: 'GET',

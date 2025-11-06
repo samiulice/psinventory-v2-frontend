@@ -195,7 +195,7 @@
 
 <body class="nav-md">
   <!-- Added mobile navigation toggle button -->
-    <div class="mobile-nav-toggle-container">
+  <div class="mobile-nav-toggle-container">
     <span>PSINVENTORY</span>
     <button class="mobile-nav-toggle" onclick="toggleMobileNav()">
       <i class="fa fa-bars"></i>
@@ -374,7 +374,8 @@
                 <button type="button" id="submitBtn" onclick="submitForm()" class="btn btn-danger btn-sm">Save
                   Quotation</button>
                 <button type="button" id="printInvoiceBtn" class="d-none btn btn-dark btn-sm"
-                  onclick="printEmployeeQuotation()"><i class="fa-solid fa-print"></i>&nbsp;&nbsp;Print Quotation</button>
+                  onclick="printEmployeeQuotation()"><i class="fa-solid fa-print"></i>&nbsp;&nbsp;Print
+                  Quotation</button>
               </div>
             </div>
           </div>
@@ -416,7 +417,7 @@
       <!-- Custom Theme Scripts -->
       <script src="src/assets/js/custom.js"></script>
       <script src="src/assets/js/app.js"></script>
-  <script src="src/assets/js/config.js"></script>
+      <script src="src/assets/js/config.js"></script>
       <script src="src/assets/js/build.js"></script>
       <script src="src/assets/js/swal-popup-form.js"></script>
       <script src="src/assets/js/invoice.js"></script>
@@ -428,7 +429,7 @@
         let selectedEmployee = null, selectedProductItem = null, selectedProductIndex = null, products = [], SerialNumbers = [], employees = [], sold_product = [], sale_details = [], note = "", InvoiceData, company;
         window.addEventListener("DOMContentLoaded", event => {
           initSingleDatePicker("#sale_date");
-
+          
           document.getElementById("createEmployeeBtn").addEventListener("click", e => {
             addNewEmployee("sale", employees);
           });
@@ -936,7 +937,7 @@
             });
 
         }
-        
+
       </script>
 </body>
 

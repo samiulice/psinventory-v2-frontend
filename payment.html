@@ -277,6 +277,11 @@
     <script>
       let accounts, suppliers, payableAmount, payment_summary = [],company = JSON.parse(localStorage.getItem("company"));;
       window.addEventListener("DOMContentLoaded", () => {
+        // Detect and remove single or double quotes
+        preventQuotesInput("carrier", "Carrier");
+        preventQuotesInput("chq-no", "Receipt No");
+        preventQuotesInput("description", "Description");
+        
         initSingleDatePicker("#transfer_date")
         // fetch-1: On load window Get accounts for destination and suppliers who have due amount
         const requestOptions = {

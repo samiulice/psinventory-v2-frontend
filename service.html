@@ -305,7 +305,7 @@
               <div class="col-md-8 col-sm-6 col-xs-12">
                 <div class="pull-left">
                   <button type="button" class="btn btn-sm btn-primary pull-right" id="createServiceBtn">
-                    <i class="fa fa-plus">&nbsp;&nbsp;</i>Create Service
+                    <i class="fa fa-plus">&nbsp;&nbsp;</i>Add Service
                   </button>
                 </div>
                 <div class="pull-right">
@@ -370,6 +370,11 @@
     window.addEventListener("DOMContentLoaded", event => {
       initSingleDatePicker("#date");
       initSingleDatePicker("#delivery_date");
+
+      // Detect and remove single or double quotes
+        preventQuotesInput("note", "Note");
+        preventQuotesInput("received_by", "Received By");
+        
       document.getElementById("received_by").value = appUser.username
       // Show popup form for adding a new customer
       document.getElementById("createCustomerBtn").addEventListener("click", e => {
