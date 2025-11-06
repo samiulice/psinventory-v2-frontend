@@ -453,7 +453,7 @@
             <table id="itemTable" class="table table-sm">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th style="width: 500px;">Name</th>
                   <th>Warranty</th>
                   <th>Quantity</th>
                   <th>Rate</th>
@@ -508,7 +508,6 @@
           refNo = "",
           refID = 0,
           selectedProductItem = null,
-          selectedProductIndex = null,
           selectedProductQuantity = 1,
           products = [],
           OldSerialNumbers = [],
@@ -605,7 +604,6 @@
               } else {
                 // add new product row with this serial
                 selectedProductItem = foundProduct;
-                selectedProductIndex = products.findIndex(p => p.id === foundProduct.id);
                 selectedProductQuantity = 1;
                 addRow([serialNumber]); // add row and populate serial
               }
@@ -693,7 +691,6 @@
                 input.value = item.product_name;
                 suggestions.style.display = 'none';
                 selectedProductItem = item;
-                selectedProductIndex = products.findIndex(p => p.id === item.id);
                 document.getElementById("stock").innerText = (item.product_metadata || []).length;
               };
               suggestions.appendChild(div);
@@ -705,7 +702,6 @@
             if (!searchTerm) {
               suggestions.style.display = 'none';
               selectedProductItem = null;
-              selectedProductIndex = null;
               document.getElementById("stock").innerText = '';
               return;
             }
@@ -719,11 +715,9 @@
             const exact = products.findIndex(p => (p.product_name || '').toLowerCase() === searchTerm);
             if (exact !== -1) {
               selectedProductItem = products[exact];
-              selectedProductIndex = exact;
               document.getElementById("stock").innerText = (selectedProductItem.product_metadata || []).length;
             } else {
               selectedProductItem = null;
-              selectedProductIndex = null;
             }
           });
 
@@ -809,7 +803,7 @@
 
         /* ----------------- addRow (accepts initialSerials array) ----------------- */
         function addRow(initialSerials = []) {
-          if (!selectedProductItem || selectedProductIndex === null) {
+          if (!selectedProductItem) {
             showErrorMessage("Please select a valid product.");
             return;
           }
@@ -848,11 +842,10 @@
           // new row HTML
           const row = document.createElement("tr");
           row.dataset.productId = item.id;
-          row.dataset.productIndex = selectedProductIndex;
           const initQty = allowed.length || selectedProductQuantity;
 
           row.innerHTML = `
-    <td><input type="text" name="itemName[]" class="form-control input-sm" value='${item.product_name + " #" + selectedProductIndex}' readonly></td>
+    <td><input type="text" name="itemName[]" class="form-control input-sm" value='${item.product_name + " #" + item.id}' readonly></td>
     <td><input type="text" name="warranty[]" class="form-control input-sm" value='${item.warranty || ""}' required></td>
     <td><input type="number" name="quantity[]" class="form-control input-sm" min="1" max="${item.quantity_purchased - item.quantity_sold}" value="${initQty}" onchange="updateRow(this)" required></td>
     <td><input type="number" name="rate[]" class="form-control input-sm" min="0" value='${item.mrp || 0}' onchange="updateRow(this)" required></td>
@@ -1006,7 +999,7 @@
             const no_serial_number = !!row.querySelector('.no-sn-checkbox').checked;
 
             const parts = product_name.split("#");
-            let item = products[parseInt(parts[parts.length - 1])];
+            let item = products.find(product => product.id == parts[1]);
             if (item) item.mrp = rate;
             let serial_numbers_id = [];
 
@@ -1119,7 +1112,6 @@
           console.log(quotation.details)
           quotation.details.forEach(element => {
             selectedProductItem = products.find(p => p.id == element.product_id);
-            selectedProductIndex = products.findIndex((p) => p.id == element.product_id);
             selectedProductQuantity = element.quantity;
             if (selectedProductItem) selectedProductItem.mrp = element.rate;
             billAmount += (element.rate * element.quantity);
